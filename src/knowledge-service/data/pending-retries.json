@@ -1,0 +1,18 @@
+[
+  {
+    "id": "retry_1782034649045_r5753n7xh",
+    "operation": "session_start",
+    "payload": {
+      "terminal": "backend",
+      "task": "test-task"
+    },
+    "attempts": 1,
+    "maxAttempts": 3,
+    "lastError": "Connection timeout",
+    "lastAttemptAt": "2026-06-21T09:37:29.045Z",
+    "nextRetryAt": "2026-06-21T09:37:59.045Z",
+    "createdAt": "2026-06-21T09:37:29.045Z",
+    "terminal": "backend",
+    "priority": "high"
+  }
+]

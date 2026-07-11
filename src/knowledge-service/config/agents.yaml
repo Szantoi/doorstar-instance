@@ -1,0 +1,75 @@
+# Agent Token Configuration
+#
+# Defines which tokens map to which agent identities.
+# Changes are auto-reloaded every 30 seconds (no restart needed).
+#
+# Token format: any unique string
+# Agent name: any string (used in tool-permissions.yaml)
+#
+# Note: You can also use environment variables:
+#   MCP_AUTH_TOKEN=xxx       -> master token (root access)
+#   MCP_TOKEN_<NAME>=xxx     -> agent token (overrides this file)
+
+version: "1.1"
+updated: "2026-06-24"
+
+# Master token (has root/admin access to all tools)
+# If not set here, uses MCP_AUTH_TOKEN env variable
+# IMPORTANT: This must match the MCP_AUTH_TOKEN in ~/.claude/settings.json
+master_token: "IoUpLUgr4v6Mj5lt4u2XD1JOy5iGmVdxne473srMl2o="
+
+# Agent tokens
+# Format: token -> agent_name
+#
+# The agent_name is used to look up permissions in tool-permissions.yaml
+# Each terminal has its own token for audit trail purposes.
+agents:
+  # ─── SpaceOS Core Terminals (7) ──────────────────────────────────────────
+  # Coordinator
+  "6ozohLp1ESnTWhWhlkUiyxTwh3cm3Ia+yGT/5YXgqhs=": "conductor"
+
+  # Support terminals
+  "DAP3+yV6SIQo9PH9zcoDYzLp3/XGpP1hFpiOjVO8ru4=": "architect"
+  "luBZgBbnTwLKsQ1HKmVMYo+j3Cwul64QVxOVb5/7wYE=": "librarian"
+  "aT/iZsIUyNY94CjuHChyGVgv5MFES5/l3V99gorrxcQ=": "explorer"
+
+  # Developer terminals
+  "jKB4yyFknSgwRiC8ewLbdFuPxEo8Vgi157lW5QBsmsY=": "backend"
+  "hsS4SbZGWWljJ8VNTkG18ys2X40BPbl2bH33h6+WIqk=": "frontend"
+  "gZnKTnAZ2pgRrkee1EQ7qvcMKBCJ4tDsFgCId5oFGzw=": "designer"
+
+  # ─── Federation Bridges (Inter-Island Communication) ─────────────────────
+  # Cabinet island bridge (Windows dev machine)
+  "XRQ6Uk9X6PBNJbUzwRV9bbxUCFnIbkVKs9eEgNjUgc8=": "cabinet-bridge"
+
+  # ─── External Teams (examples) ───────────────────────────────────────────
+  # Marketing team - read-only access
+  "mkt-pm-token-abc123": "marketing-pm"
+  "mkt-content-token-def456": "marketing-content"
+  "mkt-analyst-token-ghi789": "marketing-analyst"
+
+  # External agents can be added here:
+  # "external-agent-token-abc": "external-reader"
+  # "partner-system-token-xyz": "partner-api"
+
+# Agent groups (optional)
+# Define groups of agents that share permissions
+groups:
+  developers:
+    - backend
+    - frontend
+    - designer
+
+  support:
+    - architect
+    - librarian
+    - explorer
+
+  coordinators:
+    - root
+    - conductor
+
+# Default agent for requests without valid token
+# Set to null to reject unauthenticated requests
+# Set to an agent name to allow anonymous access with limited permissions
+default_agent: null

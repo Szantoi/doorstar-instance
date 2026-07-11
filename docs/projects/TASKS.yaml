@@ -1,0 +1,493 @@
+version: "1.0"
+project: "doorstar-softlaunch"
+created: "2026-07-08"
+updated: "2026-07-08"
+description: "Doorstar Kft. Soft Launch — First Paying Customer (Q3 2026)"
+
+config:
+  default_model: sonnet
+  auto_dispatch: false  # Manual dispatch (critical path, high business risk)
+  notify_telegram: true
+  retry_on_blocked: 3
+  escalation_to: root
+
+context:
+  business_impact: "CRITICAL - First production customer, Q3 2026 revenue target"
+  prerequisites_status:
+    - "✅ EPIC-JOINERY-V2 DONE (Modules.Joinery deployed, 2026-05-15)"
+    - "✅ B2B Handshake DONE (TenantHandshakeAllowlist implemented)"
+    - "✅ VPS Infrastructure RUNNING (Kernel, Joinery, Orchestrator)"
+    - "❌ Keycloak Doorstar realm PENDING (ProdReady Sprint status unknown)"
+  documentation:
+    - "docs/knowledge/architecture/SpaceOS_Doorstar_Onboarding_v4.md"
+    - "EPICS.yaml: EPIC-DOORSTAR-SOFTLAUNCH (target: 2026-09-30)"
+
+milestones:
+  # ========================================
+  # M1: KEYCLOAK DOORSTAR TENANT
+  # ========================================
+  - id: M1-KEYCLOAK
+    name: Keycloak Doorstar Tenant Setup Complete
+    status: pending
+    blocked_by: []
+    estimated_nwt: 120
+    description: |
+      Keycloak `spaceos` realm configuration + Doorstar tenant group creation + user seed.
+      Deliverable: JWT token with `tenant_id`, `tenant_type`, `enabled_modules` claims working.
+
+    tasks:
+      - id: TASK-DS-001
+        name: Verify Keycloak `spaceos` realm exists
+        terminal: backend
+        model: haiku
+        priority: critical
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-002"]
+        estimated_nwt: 15
+        description: |
+          Check if `spaceos` Keycloak realm exists (ProdReady Sprint artifact).
+          If NOT: escalate to Root (prerequisite missing).
+          Output: realm config verification report.
+
+      - id: TASK-DS-002
+        name: Create Doorstar group + attributes
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-001"]
+        triggers_on_done: ["TASK-DS-003"]
+        estimated_nwt: 30
+        description: |
+          Create Keycloak group: `doorstar`
+          Attributes:
+            - `tenant_id`: {DOORSTAR_TENANT_UUID}
+            - `tenant_type`: "Manufacturer"
+            - `enabled_modules`: '["door"]'
+          Protocol mappers: Group Attribute → JWT Claim
+          Output: group config + mapper config JSON
+
+      - id: TASK-DS-003
+        name: Seed Doorstar users (admin + 2 operators)
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-002"]
+        triggers_on_done: ["TASK-DS-004"]
+        estimated_nwt: 30
+        description: |
+          Create 3 Keycloak users:
+            - doorstar-admin (realm role: Admin)
+            - doorstar-op1 (realm role: User)
+            - doorstar-op2 (realm role: User)
+          Assign to `doorstar` group.
+          Output: user credentials (secure delivery to Root).
+
+      - id: TASK-DS-004
+        name: JWT token validation test
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-003"]
+        triggers_on_done: []
+        estimated_nwt: 45
+        description: |
+          Integration test:
+            1. Authenticate as doorstar-admin
+            2. Decode JWT token
+            3. Verify claims: tenant_id, tenant_type, enabled_modules, allowed_hosts
+            4. Call Kernel /api/health with JWT → 200 OK
+            5. Call Kernel /api/tenants/me → tenant metadata
+          Output: Integration test report + JWT claim screenshot.
+
+  # ========================================
+  # M2: KERNEL + JOINERY DATABASE SEED
+  # ========================================
+  - id: M2-SEED
+    name: Kernel + Joinery Database Seed Complete
+    status: pending
+    blocked_by: ["M1-KEYCLOAK"]
+    estimated_nwt: 90
+    description: |
+      Seed Kernel (Tenants, Facilities) and Joinery (DoorstarSeedData.cs) databases.
+      Deliverable: Doorstar tenant + facility + Joinery domain rules seeded, validated.
+
+    tasks:
+      - id: TASK-DS-005
+        name: Kernel tenant seed (Tenants + Facilities)
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-006"]
+        estimated_nwt: 30
+        description: |
+          Execute SQL seed script (docs/knowledge/.../Doorstar_v4.md section 7):
+            - INSERT Doorstar tenant (TenantId from TASK-DS-002)
+            - INSERT Facility (Doorstar Üzem)
+          Validation:
+            - SELECT * FROM "Tenants" WHERE "Name" = 'Doorstar Kft.'
+            - RLS policy test: SET app.current_tenant_id = '{DOORSTAR_UUID}';
+          Output: SQL execution log + validation results.
+
+      - id: TASK-DS-006
+        name: Joinery DoorstarSeedData.cs compilation
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-005"]
+        triggers_on_done: ["TASK-DS-007"]
+        estimated_nwt: 30
+        description: |
+          Review DoorstarSeedData.cs status (Modules.Joinery).
+          If MISSING: escalate to Root (prerequisite missing).
+          If EXISTS: verify compilation + startup assertion logic.
+          Output: Seed data validation report.
+
+      - id: TASK-DS-007
+        name: Joinery seed validation tests (BE-03)
+        terminal: backend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: ["TASK-DS-006"]
+        triggers_on_done: []
+        estimated_nwt: 30
+        description: |
+          Execute xUnit tests (docs/knowledge/.../Doorstar_v4.md section 9.4):
+            - AllPartDimensionRules_HaveValidComponentType
+            - AllDoorTypeRules_CoverEveryDoorTypeEnum
+            - GlobalConstants_ContainRequiredKeys
+          Validation: All tests PASS.
+          Output: Test execution report (xUnit XML + logs).
+
+  # ========================================
+  # M3: ORCHESTRATOR MEDIATION ROUTES
+  # ========================================
+  - id: M3-ORCHESTRATOR
+    name: Orchestrator Joinery Mediation Routes Complete
+    status: pending
+    blocked_by: ["M2-SEED"]
+    estimated_nwt: 180
+    description: |
+      Implement Orchestrator mediation pattern (ADR-010):
+        - POST /bff/joinery/orders → Kernel FlowEpic + Joinery DoorOrder
+        - Saga compensation logic (archive epic on Joinery failure)
+        - Proxy routes for pass-through endpoints
+      Deliverable: E2E test (Portal → Orchestrator → Kernel + Joinery).
+
+    tasks:
+      - id: TASK-DS-008
+        name: Implement joineryOrders.ts route (mediated)
+        terminal: backend
+        model: opus
+        priority: critical
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-009"]
+        estimated_nwt: 90
+        description: |
+          Implement Orchestrator route (docs/knowledge/.../Doorstar_v4.md section 6.3):
+            - POST /bff/joinery/orders
+            - ① Kernel: POST /api/epics (create FlowEpic)
+            - ② Joinery: POST /api/joinery/orders (with flowEpicId)
+            - Saga compensation: archiveEpicWithRetry (3× retry, exponential backoff)
+          Security:
+            - JWT forwarding (tenant_id claim)
+            - Idempotency-Key header (Kernel)
+            - 10s timeout (AbortController)
+          Output: TypeScript implementation + integration test.
+
+      - id: TASK-DS-009
+        name: Implement joineryProxy.ts route (pass-through)
+        terminal: backend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: ["TASK-DS-008"]
+        triggers_on_done: ["TASK-DS-010"]
+        estimated_nwt: 30
+        description: |
+          Implement proxy route (docs/knowledge/.../Doorstar_v4.md section 6.4):
+            - http-proxy-middleware
+            - Target: http://127.0.0.1:5002
+            - Path rewrite: ^/bff/joinery → /api/joinery
+            - 10s timeout
+          Output: TypeScript implementation.
+
+      - id: TASK-DS-010
+        name: E2E integration test (Orchestrator → Kernel + Joinery)
+        terminal: backend
+        model: opus
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-009"]
+        triggers_on_done: ["TASK-DS-011"]
+        estimated_nwt: 60
+        description: |
+          Playwright E2E test:
+            1. Authenticate as doorstar-admin
+            2. POST /bff/joinery/orders (valid DoorOrder payload)
+            3. Verify:
+               - 201 response (orderId + flowEpicId)
+               - Kernel FlowEpic created (SELECT * FROM "FlowEpics")
+               - Joinery DoorOrder created (SELECT * FROM "DoorOrders")
+               - flowEpicId link correct
+            4. Test saga compensation:
+               - Inject Joinery 500 error
+               - Verify FlowEpic archived (3× retry log)
+          Output: Playwright test suite + execution report.
+
+      - id: TASK-DS-011
+        name: Nginx upstream config + health check
+        terminal: backend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: ["TASK-DS-010"]
+        triggers_on_done: []
+        estimated_nwt: 0
+        description: |
+          Nginx config (docs/knowledge/.../Doorstar_v4.md section 8.2):
+            - upstream joinery_backend { server 127.0.0.1:5002 max_fails=3 fail_timeout=30s; }
+            - location /bff/joinery/ { proxy_pass http://joinery_backend; }
+          Joinery health check:
+            - GET /health endpoint implementation (if missing)
+          Output: Nginx config snippet + health check curl test.
+          NOTE: VPS Operator executes (not Backend terminal).
+
+  # ========================================
+  # M4: B2B HANDSHAKE VALIDATION
+  # ========================================
+  - id: M4-B2B
+    name: B2B Handshake Validation Complete
+    status: pending
+    blocked_by: ["M3-ORCHESTRATOR"]
+    estimated_nwt: 90
+    description: |
+      Validate B2B Handshake system with Doorstar tenant:
+        - TenantHandshakeAllowlist seed data
+        - JWT `allowed_hosts` claim population
+        - Inter-tenant API call validation
+      Deliverable: B2B integration test passing.
+
+    tasks:
+      - id: TASK-DS-012
+        name: B2B allowlist seed (Doorstar ↔ Suppliers)
+        terminal: backend
+        model: sonnet
+        priority: medium
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-013"]
+        estimated_nwt: 30
+        description: |
+          Seed TenantHandshakeAllowlist:
+            - Doorstar ↔ Guest Tenant (for demo B2B flow)
+            - Create guest tenant seed data
+          SQL execution + validation.
+          Output: Seed script + execution log.
+
+      - id: TASK-DS-013
+        name: JWT `allowed_hosts` claim validation
+        terminal: backend
+        model: sonnet
+        priority: medium
+        status: pending
+        blocked_by: ["TASK-DS-012"]
+        triggers_on_done: ["TASK-DS-014"]
+        estimated_nwt: 30
+        description: |
+          Integration test:
+            1. Authenticate as doorstar-admin
+            2. Decode JWT
+            3. Verify `allowed_hosts` claim contains guest tenant host
+            4. GET /api/handshakes/allowed-hosts → verify response
+          Output: Integration test report.
+
+      - id: TASK-DS-014
+        name: B2B inter-tenant API call test
+        terminal: backend
+        model: opus
+        priority: medium
+        status: pending
+        blocked_by: ["TASK-DS-013"]
+        triggers_on_done: []
+        estimated_nwt: 30
+        description: |
+          E2E B2B test:
+            1. Doorstar tenant → Guest tenant API call (simulated quote request)
+            2. Verify B2BHandshakeVerifier allows the call
+            3. Verify RLS isolation (Doorstar cannot see Guest data)
+          Output: Playwright E2E test + report.
+
+  # ========================================
+  # M5: USER ACCEPTANCE TESTING (UAT)
+  # ========================================
+  - id: M5-UAT
+    name: Doorstar UAT Complete
+    status: pending
+    blocked_by: ["M4-B2B"]
+    estimated_nwt: 240
+    description: |
+      User Acceptance Testing with Doorstar stakeholders:
+        - Doorstar admin + 2 operators onboarded
+        - UAT scenario execution (Order → Gyártólap PDF → Batch Anyaglista)
+        - Bug fixes from UAT feedback
+        - Performance + security validation
+      Deliverable: UAT sign-off from Doorstar.
+
+    tasks:
+      - id: TASK-DS-015
+        name: Doorstar user onboarding (training session)
+        terminal: frontend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-016"]
+        estimated_nwt: 60
+        description: |
+          Coordinate with Root:
+            - Schedule Doorstar stakeholder training session
+            - Prepare UAT environment (staging VPS or production)
+            - Deliver user credentials (doorstar-admin, op1, op2)
+            - Training materials: Portal navigation, Order creation, PDF download
+          Output: Training session report + UAT access credentials.
+
+      - id: TASK-DS-016
+        name: UAT scenario execution (Order → Gyártólap PDF)
+        terminal: frontend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-015"]
+        triggers_on_done: ["TASK-DS-017"]
+        estimated_nwt: 90
+        description: |
+          Doorstar stakeholder executes UAT scenario:
+            1. Login as doorstar-admin
+            2. Create DoorOrder (Portal UI)
+            3. Download Gyártólap PDF
+            4. Verify batch Anyaglista generation
+            5. Validate PDF content (correctness, formatting)
+          Frontend terminal: observe session, collect feedback, log bugs.
+          Output: UAT execution log + bug report (if any).
+
+      - id: TASK-DS-017
+        name: Bug fixes from UAT feedback
+        terminal: backend
+        model: opus
+        priority: critical
+        status: pending
+        blocked_by: ["TASK-DS-016"]
+        triggers_on_done: ["TASK-DS-018"]
+        estimated_nwt: 60
+        description: |
+          Fix bugs reported during UAT:
+            - Priority: CRITICAL/HIGH bugs only (blocking UAT sign-off)
+            - MEDIUM/LOW bugs → post-launch backlog
+          Regression testing after fixes.
+          Output: Bug fix commit log + regression test report.
+
+      - id: TASK-DS-018
+        name: Performance + security audit
+        terminal: backend
+        model: opus
+        priority: high
+        status: pending
+        blocked_by: ["TASK-DS-017"]
+        triggers_on_done: []
+        estimated_nwt: 30
+        description: |
+          Performance validation:
+            - API response times (<500ms for 95th percentile)
+            - Gyártólap PDF generation time (<3s)
+          Security audit:
+            - JWT validation (tenant_id claim enforcement)
+            - RLS isolation test (Doorstar cannot see other tenant data)
+            - OWASP Top 10 checklist
+          Output: Performance report + security audit report.
+
+  # ========================================
+  # M6: SOFT LAUNCH (PRODUCTION GO-LIVE)
+  # ========================================
+  - id: M6-SOFTLAUNCH
+    name: Soft Launch Complete (Production Go-Live)
+    status: pending
+    blocked_by: ["M5-UAT"]
+    estimated_nwt: 180
+    description: |
+      Production go-live with limited feature set:
+        - Final production deployment (version tag)
+        - Monitoring dashboard setup (Grafana, Prometheus)
+        - Doorstar support SLA agreement
+        - Post-launch monitoring (first 2 weeks)
+      Deliverable: Doorstar Kft. live on production SpaceOS.
+
+    tasks:
+      - id: TASK-DS-019
+        name: Production deployment (version tag)
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: []
+        triggers_on_done: ["TASK-DS-020"]
+        estimated_nwt: 30
+        description: |
+          Production deployment:
+            - Git tag: v1.0.0-doorstar-softlaunch
+            - Deploy Kernel, Joinery, Orchestrator (systemd restart)
+            - Verify services active (systemctl status)
+            - Health check all endpoints (Kernel, Joinery, Orchestrator)
+          Output: Deployment log + health check results.
+          NOTE: VPS Operator executes (coordinate via Root).
+
+      - id: TASK-DS-020
+        name: Monitoring dashboard setup (Grafana, Prometheus)
+        terminal: backend
+        model: opus
+        priority: high
+        status: pending
+        blocked_by: ["TASK-DS-019"]
+        triggers_on_done: ["TASK-DS-021"]
+        estimated_nwt: 90
+        description: |
+          Monitoring infrastructure (if not exists from ProdReady Sprint):
+            - Prometheus: scrape Kernel, Joinery, Orchestrator metrics
+            - Grafana: dashboards (API response times, error rates, DB queries)
+            - Alerts: CRITICAL errors, 5xx spike, DB down
+          If ProdReady Sprint monitoring exists: integrate Doorstar tenant filter.
+          Output: Grafana dashboard URL + Prometheus config.
+
+      - id: TASK-DS-021
+        name: Support SLA agreement + post-launch monitoring
+        terminal: root
+        model: haiku
+        priority: medium
+        status: pending
+        blocked_by: ["TASK-DS-020"]
+        triggers_on_done: []
+        estimated_nwt: 60
+        description: |
+          Root coordinates:
+            - Doorstar support SLA agreement (24h response time for CRITICAL)
+            - Post-launch monitoring plan (first 2 weeks daily check)
+            - Escalation path: Doorstar → Root → Backend terminal
+            - Feedback collection (user satisfaction survey)
+          Output: SLA agreement document + monitoring checklist.
+
+# ========================================
+# ESTIMATED TOTALS
+# ========================================
+# Total tasks: 21
+# Total NWT: 900 (~30 hours)
+# Timeline: 2.5 months (2026-07-08 → 2026-09-30)
+# Critical path: M1 → M2 → M3 → M4 → M5 → M6 (sequential)
+# Parallelization opportunity: M4 (B2B) can partially overlap M3 (Orchestrator)

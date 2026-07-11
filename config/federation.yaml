@@ -1,0 +1,88 @@
+# Federation Bridge Configuration
+# 4-island architecture: Nexus, JoineryTech, Doorstar, SpaceOS
+
+version: "1.0"
+updated: "2026-07-11"
+
+islands:
+  nexus:
+    path: /opt/nexus
+    role: infra
+    description: "Agent infrastructure development"
+    ports:
+      knowledge_service: 3456
+      datahaven: 3457
+    tmux_prefix: nexus-
+    terminals:
+      - root
+      - backend
+      - qa
+
+  joinerytech:
+    path: /opt/joinerytech
+    role: platform
+    description: "Faipar SaaS platform"
+    ports:
+      knowledge_service: 3458
+      datahaven: 3459
+    tmux_prefix: jt-
+    terminals:
+      - root
+      - conductor
+      - backend
+      - frontend
+      - designer
+    upstream: nexus
+
+  doorstar:
+    path: /opt/doorstar
+    role: customer
+    description: "Doorstar Kft. implementation"
+    ports:
+      knowledge_service: 3460
+      datahaven: 3461
+    tmux_prefix: ds-
+    terminals:
+      - root
+      - conductor
+      - backend
+      - frontend
+    upstream: joinerytech
+
+  spaceos:
+    path: /opt/spaceos
+    role: orchestration
+    description: "Agent orchestration & research"
+    ports:
+      knowledge_service: 3462
+      datahaven: 3463
+    tmux_prefix: spaceos-
+    terminals:
+      - root
+      - conductor
+      - architect
+      - librarian
+      - explorer
+
+# Federation messaging
+messaging:
+  inbox_path: terminals/federation/inbox
+  outbox_path: terminals/federation/outbox
+  archive_path: terminals/federation/archive
+
+# Release flow
+release_flow:
+  - from: nexus
+    to: [joinerytech, doorstar, spaceos]
+    type: infrastructure
+
+  - from: joinerytech
+    to: [doorstar]
+    type: platform
+
+# Port allocation summary
+ports:
+  nexus: 3456-3457
+  joinerytech: 3458-3459
+  doorstar: 3460-3461
+  spaceos: 3462-3463
