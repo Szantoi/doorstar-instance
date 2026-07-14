@@ -29,3 +29,6 @@ Thumbs.db
 # SQLite runtime files
 *.db-shm
 *.db-wal
+
+# Island runtime state (migrated DBs, caches) — never on git
+data/
