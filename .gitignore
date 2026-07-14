@@ -12,6 +12,7 @@ logs/
 # Secrets
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 .mcp-token*
