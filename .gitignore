@@ -24,3 +24,7 @@ Thumbs.db
 .vscode/
 .idea/
 
+
+# SQLite runtime files
+*.db-shm
+*.db-wal

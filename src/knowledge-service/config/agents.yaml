@@ -39,8 +39,9 @@ agents:
   "gZnKTnAZ2pgRrkee1EQ7qvcMKBCJ4tDsFgCId5oFGzw=": "designer"
 
   # ─── Federation Bridges (Inter-Island Communication) ─────────────────────
-  # Cabinet island bridge (Windows dev machine)
-  "XRQ6Uk9X6PBNJbUzwRV9bbxUCFnIbkVKs9eEgNjUgc8=": "cabinet-bridge"
+  # Cabinet island bridge - ROTATED 2026-07-11 (security incident)
+  # Now uses PostgreSQL messaging API instead of file-based federation
+  "tt2nTCcL0m/2ZviXrTY7CgNtJP/tc6PxA7NAP3HJjiM=": "cabinet-bridge"
 
   # ─── External Teams (examples) ───────────────────────────────────────────
   # Marketing team - read-only access
