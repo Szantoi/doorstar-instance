@@ -1,7 +1,7 @@
 # Federation messages (file-based, not Git)
-terminals/*/inbox/
-terminals/*/outbox/
-terminals/*/archive/
+**/terminals/*/inbox/
+**/terminals/*/outbox/
+**/terminals/*/archive/
 
 # Build & runtime
 node_modules/

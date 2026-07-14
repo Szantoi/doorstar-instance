@@ -32,6 +32,7 @@
 |----------|--------|
 | **root** | Ügyfél-specifikus döntések, Cabinet kommunikáció |
 | **conductor** | Production koordináció |
+| **monitor** | Health-monitoring, eszkaláció-figyelés |
 | **backend** | 6-STAGE workflow implementáció |
 | **frontend** | Doorstar UI testreszabás |
 
@@ -106,3 +107,9 @@ Cabinet VPS (partner)
 ---
 
 _Doorstar Sziget — Ajtógyártás Production Workflow_
+
+## MINŐSÉGI ELVÁRÁSOK
+
+Kötelező: **[QUALITY.md](QUALITY.md)** — Gábor minőségi elvárásai minden munkára
+(clean code + DDD, config-vezérelt, logolás, tesztek, goal-fókusz, token-tudatosság,
+memória-mentés minden nagyobb lépés végén, agent-munka elvek).

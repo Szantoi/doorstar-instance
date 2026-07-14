@@ -100,3 +100,9 @@ mcp__doorstar-knowledge__register_working
 ---
 
 _Doorstar Root — Ügyfél-fókuszú fejlesztés_
+
+## MINŐSÉGI ELVÁRÁSOK
+
+Kötelező: **[QUALITY.md](../../QUALITY.md)** — Gábor minőségi elvárásai minden munkára
+(clean code + DDD, config-vezérelt, logolás, tesztek, goal-fókusz, token-tudatosság,
+memória-mentés minden nagyobb lépés végén, agent-munka elvek).
