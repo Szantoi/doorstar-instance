@@ -1,0 +1,13 @@
+{
+  "_comment": "Workshop stations for the Üzemi Tábla board. `stage` maps each physical station to one of the 6 macro production stages (Stage enum in prisma/schema.prisma, aligned with joinerytech-platform's WorkflowStepName). `defaultWorkflow` is the kanban column sequence used when a station has no StationWorkflow override in the DB. Edit this file to add/rename/remove stations — nothing station-related is hardcoded in application code.",
+  "stations": [
+    { "key": "Körfűrész", "stage": "SZABASZAT_ELOGYARTAS", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "CNC", "stage": "MEGMUNKALAS", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "Bürkle", "stage": "MEGMUNKALAS", "defaultWorkflow": ["Felvett", "Élzárás", "Lécezés", "Kész"] },
+    { "key": "Csiszoló", "stage": "FELULETKEZELES", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "Fújó", "stage": "FELULETKEZELES", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "Asztalos", "stage": "OSSZESZERELES", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "Egyéb", "stage": "CSOMAGOLAS", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] },
+    { "key": "Száll./Kész", "stage": "KISZALLITASRA_MEGJELOLES", "defaultWorkflow": ["Felvett", "Folyamatban", "Kész"] }
+  ]
+}

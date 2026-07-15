@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: doorstar-production-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: doorstar
+      POSTGRES_PASSWORD: doorstar
+      POSTGRES_DB: doorstar_production
+    ports:
+      - "5462:5432"
+    volumes:
+      - doorstar-production-db-data:/var/lib/postgresql/data
+
+volumes:
+  doorstar-production-db-data:

@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "./theme/tokens.css";
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--surface-desk);
+  color: var(--text-ink);
+  font-family: var(--font-ui);
+}
+
+a {
+  color: var(--marker-blue);
+}
+a:hover {
+  color: var(--marker-red);
+}
+
+::placeholder {
+  color: var(--text-faint);
+  opacity: 1;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

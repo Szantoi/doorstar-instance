@@ -1,0 +1,83 @@
+/*
+ * Üzemi Tábla design tokens — ported from the Claude Design project
+ * "Faipari üzem táblája" (tokens/colors.css, spacing.css, typography.css).
+ * Two-layer visual language: the white "board" (marker-pen colors, Caveat
+ * handwriting) vs. the dark "chrome" UI shell (Barlow Semi Condensed).
+ * Do not rename these without updating komponensek in src/components/ui.
+ */
+:root {
+  /* Filctoll (marker) colors — the board's ink colors = status */
+  --marker-blue: #1e3fbf; /* felvett / folyamatban */
+  --marker-red: #d1262e; /* probléma */
+  --marker-green: #148a3d; /* kész */
+  --marker-orange: #d97706; /* kiosztva, nincs felvéve */
+  --marker-black: #1c1c1e;
+
+  --status-assigned: var(--marker-orange);
+  --status-inprogress: var(--marker-blue);
+  --status-done: var(--marker-green);
+  --status-problem: var(--marker-red);
+
+  --surface-board: #fcfcf8;
+  --surface-pool: #fdf9ea;
+  --surface-today: #fff3c4;
+  --surface-row-head: #f4f4ef;
+  --surface-sheet-head: #f0efe8;
+  --surface-assigned: #fff4e8;
+  --surface-desk: #cfcdc6;
+  --surface-frame-hi: #e8e8ea;
+  --surface-frame-lo: #a9a9ad;
+
+  --chrome-bg: #26262a;
+  --chrome-bg-2: #3a3a3e;
+  --chrome-control: #4a4a50;
+  --chrome-fg: #eeeeee;
+  --chrome-accent: #ffd35a;
+
+  --line-strong: #26262a;
+  --line-soft: #d8d6cc;
+  --line-softer: #eceae2;
+  --line-input: #b9b9b0;
+
+  --text-ink: #1c1c1e;
+  --text-muted: #77756e;
+  --text-faint: #9a9a94;
+
+  --load-ok: #d9e8d3;
+  --load-warn: #f7e3b5;
+  --load-over: #f3c1c1;
+
+  --font-hand: "Caveat", cursive;
+  --font-ui: "Barlow Semi Condensed", sans-serif;
+
+  --hand-size-card: 19px;
+  --hand-size-list: 21px;
+  --hand-size-field: 24px;
+  --hand-size-title: 30px;
+
+  --ui-size-label: 12px;
+  --ui-size-body: 13px;
+  --ui-size-table: 14px;
+  --ui-size-head: 16px;
+
+  --label-tracking: 1px;
+  --head-tracking: 1.5px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+
+  --radius-btn: 4px;
+  --radius-chip: 3px;
+  --radius-none: 0;
+
+  --border-grid: 2px solid var(--line-strong);
+  --border-grid-strong: 3px solid var(--line-strong);
+  --border-panel: 2px solid var(--line-strong);
+
+  --shadow-panel: 0 4px 14px rgba(0, 0, 0, 0.15);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --shadow-frame: 0 10px 30px rgba(0, 0, 0, 0.3);
+}

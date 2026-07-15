@@ -1,0 +1,217 @@
+// Üzemi Tábla domain schema.
+//
+// Vocabulary is deliberately kept close to joinerytech-platform's
+// spaceos-modules-production (.NET) module — ProductionJob / WorkflowStep /
+// the 6-stage WorkflowStepName enum — so this can be reconciled or merged
+// into that module later. See src/production-service/README.md.
+//
+// Station names (Körfűrész, CNC, Asztalos, ...) are NOT modeled as an enum:
+// they are config-driven (config/stations.json) per QUALITY.md ("nincs
+// hardcodolt adat"). Task/EpicStep just reference a station by its config key.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The 6 macro production stages — mirrors Production.Domain's
+/// WorkflowStepName enum (SzabaszatElőgyártás=1 .. KiszállításraMegjelölés=6).
+enum Stage {
+  SZABASZAT_ELOGYARTAS
+  MEGMUNKALAS
+  FELULETKEZELES
+  OSSZESZERELES
+  CSOMAGOLAS
+  KISZALLITASRA_MEGJELOLES
+}
+
+/// Job-level roll-up status — mirrors Production.Domain's ProductionStatus.
+enum ProductionStatus {
+  QUEUED
+  IN_PROGRESS
+  SHIPPING_READY
+}
+
+enum SheetKind {
+  QUANTITIES
+  CUTTING
+  HARDWARE
+}
+
+/// A customer job / megrendelés. Aggregate root, analogous to ProductionJob
+/// in the .NET module (OrderId/CustomerId/ProjectName/Deadline/Status there).
+model Project {
+  id        String           @id @default(cuid())
+  key       String           @unique
+  name      String
+  num       String?
+  kezdes    String?
+  beepites  String?
+  szinTok   String?
+  szinLap   String?
+  status    ProductionStatus @default(QUEUED)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  epics  Epic[]
+  tasks  Task[]
+  sheets ProjectSheet[]
+}
+
+/// One manufactured component within a project's work-order sheet
+/// (e.g. "Tok 22-es", "Ajtólap 5-ös") — a row group on the munkalap.
+model Epic {
+  id            String  @id @default(cuid())
+  projectId     String
+  project       Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name          String
+  quantityLabel String?
+  position      Int     @default(0)
+  disabled      Boolean @default(false)
+
+  steps EpicStep[]
+
+  @@index([projectId])
+}
+
+/// A single manufacturing step of an Epic (e.g. "Marás" at station "CNC").
+/// Analogous to Production.Domain's WorkflowStep, but per-component and
+/// per-station rather than one of the fixed 6 macro stages — `stage` derives
+/// the macro stage via config/stations.json's station→stage mapping.
+model EpicStep {
+  id         String    @id @default(cuid())
+  epicId     String
+  epic       Epic      @relation(fields: [epicId], references: [id], onDelete: Cascade)
+  name       String
+  station    String?
+  quantity   Float?
+  unitHours  Float?
+  planDate   DateTime?
+  planLocked Boolean   @default(false)
+  disabled   Boolean   @default(false)
+  position   Int       @default(0)
+
+  tasks Task[]
+
+  @@index([epicId])
+}
+
+/// A physical card on the board: either a scheduled EpicStep instance
+/// (placed on a specific week/day, dependency-ordered) or a free-standing
+/// task typed straight onto the board / kanban ("Szabad feladat").
+model Task {
+  id            String   @id @default(cuid())
+  projectId     String?
+  project       Project? @relation(fields: [projectId], references: [id])
+  epicStepId    String?
+  epicStep      EpicStep? @relation(fields: [epicStepId], references: [id])
+  epicName      String?
+  title         String
+  station       String?
+  week          String
+  day           Int
+  stepIndex     Int      @default(0)
+  acknowledged  Boolean  @default(false)
+  urgent        Boolean  @default(false)
+  problem       Boolean  @default(false)
+  dueDate       String?
+  description   String   @default("")
+  dependsOnId   String?  @unique
+  dependsOn     Task?    @relation("TaskDependency", fields: [dependsOnId], references: [id])
+  dependent     Task?    @relation("TaskDependency")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  comments TaskComment[]
+  images   TaskImage[]
+  audit    TaskAuditEntry[]
+
+  @@index([week, day])
+  @@index([station])
+  @@index([projectId])
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+}
+
+model TaskImage {
+  id        String   @id @default(cuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model TaskAuditEntry {
+  id     String   @id @default(cuid())
+  taskId String
+  task   Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  label  String
+  at     DateTime @default(now())
+}
+
+/// Per-station kanban workflow (ordered step names), e.g. Bürkle:
+/// ["Felvett","Élzárás","Lécezés","Kész"]. Falls back to the config default
+/// (["Felvett","Folyamatban","Kész"]) when no row exists for a station.
+model StationWorkflow {
+  station String @id
+  steps   Json
+}
+
+/// Free-standing checklist shown in the board sidebar ("Lista").
+model OrderChecklistItem {
+  id       String  @id @default(cuid())
+  label    String
+  done     Boolean @default(false)
+  position Int     @default(0)
+}
+
+/// Weekly free-text notes ("Infó" row on the board), keyed by ISO Monday date.
+model WeekNote {
+  week String @id
+  text String @default("")
+}
+
+/// Reusable full work-order-sheet template (a whole set of epics/steps),
+/// e.g. "Ajtó (alap)".
+model SheetTemplate {
+  id    String @id @default(cuid())
+  name  String @unique
+  epics Json
+}
+
+/// Reusable single-epic template, addable into any project's sheet.
+model EpikTemplate {
+  id   String @id @default(cuid())
+  name String @unique
+  epic Json
+}
+
+/// Global capacity assumption used by the load monitor (hours/day/station).
+model CapacitySetting {
+  id          String @id @default("default")
+  hoursPerDay Float  @default(8)
+}
+
+/// Free-form sub-sheets of a project's munkalap that vary heavily by product
+/// type (quantities breakdown, cutting list, door/furniture hardware specs).
+/// Kept as JSON rather than normalized — see README "Design decisions".
+model ProjectSheet {
+  id        String    @id @default(cuid())
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  kind      SheetKind
+  data      Json
+  updatedAt DateTime  @updatedAt
+
+  @@unique([projectId, kind])
+}
