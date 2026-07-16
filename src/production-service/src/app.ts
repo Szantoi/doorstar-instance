@@ -13,7 +13,11 @@ import { overviewRouter } from "./routes/overview.js";
 export function createApp() {
   const app = express();
 
-  app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:4611" }));
+  // Same app is reachable at more than one public domain (nginx proxies
+  // /api under whichever one the browser is on, so most requests are
+  // same-origin anyway) — CORS_ORIGIN accepts a comma-separated list.
+  const allowedOrigins = (process.env.CORS_ORIGIN ?? "http://localhost:4611").split(",").map((o) => o.trim());
+  app.use(cors({ origin: allowedOrigins.length > 1 ? allowedOrigins : allowedOrigins[0] }));
   // Task photo attachments are compressed JPEG data URIs, comfortably over
   // the default 100kb body limit.
   app.use(express.json({ limit: "3mb" }));
