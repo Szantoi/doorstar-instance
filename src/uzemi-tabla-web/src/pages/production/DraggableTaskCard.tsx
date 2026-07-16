@@ -28,7 +28,18 @@ export function DraggableTaskCard({ task, showDay = false, onOpen }: DraggableTa
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={{ transform: CSS.Translate.toString(transform), opacity: isDragging ? 0.4 : 1, touchAction: "none" }}
+      style={{
+        transform: CSS.Translate.toString(transform),
+        opacity: isDragging ? 0.9 : 1,
+        touchAction: "none",
+        // Without this the card being dragged has no stacking context of
+        // its own, so it visually slides UNDER a neighboring cell's
+        // background fill (e.g. the "today" column highlight) instead of
+        // floating over it, and appears to "jump" into place on drop.
+        position: "relative",
+        zIndex: isDragging ? 50 : "auto",
+        boxShadow: isDragging ? "0 6px 16px rgba(0,0,0,.35)" : undefined,
+      }}
     >
       <TaskCard
         title={task.projectNum ? `${task.projectNum} — ${task.title}` : task.title}
