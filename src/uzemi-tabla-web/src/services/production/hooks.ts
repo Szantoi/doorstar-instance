@@ -10,9 +10,11 @@ const keys = {
   load: (week: string) => ["production", "load", week] as const,
   projects: ["production", "projects"] as const,
   project: (key: string) => ["production", "project", key] as const,
+  epikRollup: (key: string) => ["production", "epikRollup", key] as const,
   templates: ["production", "templates"] as const,
   epikTemplates: ["production", "epikTemplates"] as const,
   sheet: (key: string, kind: string) => ["production", "sheet", key, kind] as const,
+  task: (id: string) => ["production", "task", id] as const,
 };
 
 export function useStations() {
@@ -42,6 +44,7 @@ export function useUpdateTask(week: string) {
       invalidate();
       qc.invalidateQueries({ queryKey: ["production", "kanban"] });
       qc.invalidateQueries({ queryKey: ["production", "load"] });
+      qc.invalidateQueries({ queryKey: ["production", "task"] });
     },
   });
 }
@@ -49,6 +52,34 @@ export function useUpdateTask(week: string) {
 export function useDeleteTask(week: string) {
   const invalidate = useInvalidateBoard(week);
   return useMutation({ mutationFn: productionApi.deleteTask, onSuccess: invalidate });
+}
+
+export function useTask(id: string) {
+  return useQuery({ queryKey: keys.task(id), queryFn: () => productionApi.getTask(id), enabled: !!id });
+}
+
+export function useAddComment(taskId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (text: string) => productionApi.addComment(taskId, text),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.task(taskId) }),
+  });
+}
+
+export function useAddImage(taskId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (url: string) => productionApi.addImage(taskId, url),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.task(taskId) }),
+  });
+}
+
+export function useDeleteImage(taskId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (imageId: string) => productionApi.deleteImage(imageId),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.task(taskId) }),
+  });
 }
 
 export function useOrders() {
@@ -96,6 +127,25 @@ export function useKanban(station: string, week: string) {
   });
 }
 
+export function useSaveStationWorkflow(station: string, week: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (steps: string[]) => productionApi.saveStationWorkflow(station, steps),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.kanban(station, week) }),
+  });
+}
+
+export function useDeleteWorkflowColumn(station: string, week: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (index: number) => productionApi.deleteWorkflowColumn(station, index),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.kanban(station, week) });
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+    },
+  });
+}
+
 export function useLoad(week: string) {
   return useQuery({ queryKey: keys.load(week), queryFn: () => productionApi.getLoad(week) });
 }
@@ -116,11 +166,23 @@ export function useProject(key: string) {
   return useQuery({ queryKey: keys.project(key), queryFn: () => productionApi.getProject(key), enabled: !!key });
 }
 
+export function useEpikRollup(key: string) {
+  return useQuery({ queryKey: keys.epikRollup(key), queryFn: () => productionApi.getEpikRollup(key), enabled: !!key });
+}
+
 export function useCreateProject() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: productionApi.createProject,
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.projects }),
+  });
+}
+
+export function useUpdateProject(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (patch: Partial<ProjectDetail>) => productionApi.updateProject(key, patch),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
   });
 }
 
@@ -150,6 +212,23 @@ export function useTemplates() {
 
 export function useEpikTemplates() {
   return useQuery({ queryKey: keys.epikTemplates, queryFn: productionApi.getEpikTemplates });
+}
+
+export function useApplyEpikTemplate(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (name: string) => productionApi.applyEpikTemplate(name, key),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+  });
+}
+
+export function useSaveEpikTemplate() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ name, epic }: { name: string; epic: ProjectDetail["epics"][number] }) =>
+      productionApi.saveEpikTemplate(name, epic),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.epikTemplates }),
+  });
 }
 
 export function useApplyTemplate(key: string) {

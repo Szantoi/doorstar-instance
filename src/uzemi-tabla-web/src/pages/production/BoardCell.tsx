@@ -29,6 +29,7 @@ export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, pool }
   return (
     <div
       ref={setNodeRef}
+      onDoubleClick={() => canManage && !adding && setAdding(true)}
       style={{
         flex: 1,
         minWidth: "150px",
@@ -39,6 +40,30 @@ export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, pool }
         background: isOver ? "var(--surface-today)" : undefined,
       }}
     >
+      {tasks.length > 1 && (
+        <div
+          title="Feladatok száma ezen a napon"
+          style={{
+            position: "absolute",
+            top: "4px",
+            right: "4px",
+            minWidth: "18px",
+            height: "18px",
+            borderRadius: "50%",
+            background: "var(--chrome-bg)",
+            color: "#fff",
+            fontSize: "11px",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "0 4px",
+            boxShadow: "1px 1px 2px rgba(0,0,0,.3)",
+          }}
+        >
+          {tasks.length}
+        </div>
+      )}
       {tasks.map((t) => (
         <DraggableTaskCard key={t.id} task={t} onOpen={onOpen} />
       ))}

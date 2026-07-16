@@ -25,6 +25,10 @@ export const updateTaskSchema = z.object({
 
 export const addCommentSchema = z.object({ text: z.string().min(1) });
 
+// Client downscales/compresses to a JPEG data URI before upload — capped
+// generously so a stray full-resolution photo can't bloat the DB row.
+export const addImageSchema = z.object({ url: z.string().min(1).max(2_000_000) });
+
 export const orderItemSchema = z.object({ label: z.string().min(1) });
 export const updateOrderItemSchema = z.object({
   label: z.string().min(1).optional(),

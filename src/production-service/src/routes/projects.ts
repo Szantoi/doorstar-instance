@@ -8,7 +8,7 @@ import {
   scheduleSchema,
   projectSheetKindSchema,
 } from "../domain/schemas.js";
-import { resolveFlow, isDone } from "../domain/taskStatus.js";
+import { resolveFlow, isDone, markerStatus } from "../domain/taskStatus.js";
 import { issueSession } from "../services/scheduler.js";
 import { logger } from "../logger.js";
 
@@ -36,6 +36,57 @@ projectsRouter.get("/projects", async (_req, res) => {
     };
   });
   res.json(cards);
+});
+
+/** GET /api/production/projects/:key/epik-rollup — per-epik done/total +
+ * next-up step, computed from every Task ever issued for this project
+ * (across all weeks), grouped by epicName. Mirrors the design mock's
+ * projects-list epik rows and "Epik áttekintés" modal. */
+projectsRouter.get("/projects/:key/epik-rollup", async (req, res) => {
+  const project = await prisma.project.findUnique({ where: { key: req.params.key } });
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+
+  const [tasks, workflowRows] = await Promise.all([
+    prisma.task.findMany({ where: { projectId: project.id }, orderBy: [{ week: "asc" }, { day: "asc" }] }),
+    prisma.stationWorkflow.findMany(),
+  ]);
+  const workflows = new Map(workflowRows.map((w) => [w.station, w.steps as string[]]));
+
+  const groups = new Map<string, typeof tasks>();
+  for (const t of tasks) {
+    const groupName = t.epicName ?? "(epik nélkül)";
+    if (!groups.has(groupName)) groups.set(groupName, []);
+    groups.get(groupName)!.push(t);
+  }
+
+  const epikRows = Array.from(groups.entries()).map(([name, ts]) => {
+    const withStatus = ts.map((t) => {
+      const flow = resolveFlow(t.station, workflows);
+      return { t, done: isDone(t, flow), status: markerStatus(t, flow) };
+    });
+    const done = withStatus.filter((x) => x.done).length;
+    const next = withStatus.find((x) => !x.done)?.t ?? null;
+    return {
+      name,
+      done,
+      total: ts.length,
+      next: next ? { id: next.id, title: next.title, week: next.week, day: next.day, station: next.station } : null,
+      steps: withStatus.map(({ t, done, status }) => ({
+        id: t.id,
+        title: t.title,
+        week: t.week,
+        day: t.day,
+        station: t.station,
+        status,
+        isDone: done,
+      })),
+    };
+  });
+
+  res.json({ epikRows });
 });
 
 projectsRouter.post("/projects", validateBody(createProjectSchema), async (req, res) => {

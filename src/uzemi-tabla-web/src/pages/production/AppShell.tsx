@@ -2,6 +2,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useUiStore } from "@/store/uiStore";
 import { useStations } from "@/services/production/hooks";
 import { weekLabel } from "@/lib/dates";
+import { Toast } from "@/components/ui/Toast";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 
 const NAV_ITEMS = [
   { to: "/", label: "Tábla", end: true },
@@ -103,6 +105,8 @@ export function AppShell() {
         </div>
       </div>
       <Outlet />
+      <Toast />
+      <ConfirmDialog />
     </div>
   );
 }

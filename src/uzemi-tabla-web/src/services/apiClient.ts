@@ -1,5 +1,6 @@
 /** Thin typed fetch wrapper, mirroring joinerytech-portal's
  * src/services/apiClient.ts (apiFetch<T>(path, {method, query, body})). */
+import { useUiStore } from "@/store/uiStore";
 
 export class ApiError extends Error {
   constructor(
@@ -29,9 +30,19 @@ function buildQuery(query?: ApiFetchOptions["query"]): string {
 }
 
 export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
+  // Sent so the backend can apply the same "Vezető vs. Állomás" restriction
+  // the UI does. This is not real auth — a shop-floor tool with no login —
+  // just a safety rail against the app itself letting a station touch
+  // another station's work; a direct API call could still spoof these.
+  const { role, myStation } = useUiStore.getState();
+
   const res = await fetch(`${path}${buildQuery(options.query)}`, {
     method: options.method ?? "GET",
-    headers: options.body ? { "Content-Type": "application/json" } : undefined,
+    headers: {
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      "X-Role": role,
+      "X-Station": myStation,
+    },
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
 

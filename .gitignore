@@ -8,6 +8,7 @@ node_modules/
 dist/
 logs/
 *.log
+*.tsbuildinfo
 
 # Secrets
 .env

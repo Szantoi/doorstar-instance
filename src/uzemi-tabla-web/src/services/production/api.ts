@@ -2,6 +2,7 @@ import { apiFetch } from "../apiClient";
 import { PRODUCTION_API_BASE as BASE } from "./config";
 import type {
   BoardResponse,
+  EpikRollup,
   EpikTemplate,
   IssueSessionResult,
   KanbanResponse,
@@ -13,6 +14,7 @@ import type {
   SheetTemplate,
   StationConfig,
   Task,
+  TaskDetail,
 } from "./types";
 
 export const productionApi = {
@@ -28,8 +30,14 @@ export const productionApi = {
 
   deleteTask: (id: string) => apiFetch<void>(`${BASE}/tasks/${id}`, { method: "DELETE" }),
 
+  getTask: (id: string) => apiFetch<TaskDetail>(`${BASE}/tasks/${id}`),
+
   addComment: (id: string, text: string) =>
     apiFetch(`${BASE}/tasks/${id}/comments`, { method: "POST", body: { text } }),
+
+  addImage: (id: string, url: string) =>
+    apiFetch(`${BASE}/tasks/${id}/images`, { method: "POST", body: { url } }),
+  deleteImage: (id: string) => apiFetch<void>(`${BASE}/images/${id}`, { method: "DELETE" }),
 
   getOrders: () => apiFetch<OrderChecklistItem[]>(`${BASE}/orders`),
   addOrder: (label: string) => apiFetch<OrderChecklistItem>(`${BASE}/orders`, { method: "POST", body: { label } }),
@@ -45,6 +53,8 @@ export const productionApi = {
     apiFetch<KanbanResponse>(`${BASE}/kanban`, { query: { station, week } }),
   saveStationWorkflow: (station: string, steps: string[]) =>
     apiFetch(`${BASE}/kanban/${encodeURIComponent(station)}/workflow`, { method: "PUT", body: { steps } }),
+  deleteWorkflowColumn: (station: string, index: number) =>
+    apiFetch(`${BASE}/kanban/${encodeURIComponent(station)}/workflow/${index}`, { method: "DELETE" }),
 
   getLoad: (week: string) => apiFetch<LoadReport>(`${BASE}/load`, { query: { week } }),
   setCapacity: (hoursPerDay: number) => apiFetch(`${BASE}/capacity`, { method: "PUT", body: { hoursPerDay } }),
@@ -53,6 +63,7 @@ export const productionApi = {
   createProject: (input: { key: string; name: string; num?: string }) =>
     apiFetch<ProjectDetail>(`${BASE}/projects`, { method: "POST", body: input }),
   getProject: (key: string) => apiFetch<ProjectDetail>(`${BASE}/projects/${encodeURIComponent(key)}`),
+  getEpikRollup: (key: string) => apiFetch<EpikRollup>(`${BASE}/projects/${encodeURIComponent(key)}/epik-rollup`),
   updateProject: (key: string, patch: Partial<ProjectDetail>) =>
     apiFetch<ProjectDetail>(`${BASE}/projects/${encodeURIComponent(key)}`, { method: "PUT", body: patch }),
   saveEpics: (key: string, epics: ProjectDetail["epics"]) =>
@@ -81,6 +92,8 @@ export const productionApi = {
     apiFetch(`${BASE}/epik-templates/${encodeURIComponent(name)}/apply/${encodeURIComponent(projectKey)}`, {
       method: "POST",
     }),
+  saveEpikTemplate: (name: string, epic: ProjectDetail["epics"][number]) =>
+    apiFetch(`${BASE}/epik-templates`, { method: "POST", body: { name, epic } }),
 
   getOverview: () => apiFetch<ProductionOverview>(`${BASE}/overview`),
 };

@@ -7,12 +7,12 @@ import { logger } from "../logger.js";
 
 export const boardRouter = Router();
 
-async function loadWorkflows(): Promise<Map<string, string[]>> {
+export async function loadWorkflows(): Promise<Map<string, string[]>> {
   const rows = await prisma.stationWorkflow.findMany();
   return new Map(rows.map((r) => [r.station, r.steps as string[]]));
 }
 
-async function taskVM(task: Awaited<ReturnType<typeof prisma.task.findFirstOrThrow>>, workflows: Map<string, string[]>) {
+export async function taskVM(task: Awaited<ReturnType<typeof prisma.task.findFirstOrThrow>>, workflows: Map<string, string[]>) {
   const flow = resolveFlow(task.station, workflows);
   const dep = task.dependsOnId ? await prisma.task.findUnique({ where: { id: task.dependsOnId } }) : null;
   const depFlow = dep ? resolveFlow(dep.station, workflows) : [];
@@ -22,6 +22,7 @@ async function taskVM(task: Awaited<ReturnType<typeof prisma.task.findFirstOrThr
     isDone: isDone(task, flow),
     flowLabel: currentStepName(task, flow),
     depDone: !dep || isDone(dep, depFlow),
+    dependsOnTitle: dep?.title ?? null,
   };
 }
 

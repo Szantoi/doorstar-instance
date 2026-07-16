@@ -12,6 +12,7 @@ interface UiState {
   prevWeek: () => void;
   nextWeek: () => void;
   goToday: () => void;
+  setWeek: (week: string) => void;
 }
 
 export const useUiStore = create<UiState>((set) => ({
@@ -23,4 +24,5 @@ export const useUiStore = create<UiState>((set) => ({
   prevWeek: () => set((s) => ({ week: shiftWeek(s.week, -1) })),
   nextWeek: () => set((s) => ({ week: shiftWeek(s.week, 1) })),
   goToday: () => set({ week: monday(new Date()) }),
+  setWeek: (week) => set({ week }),
 }));

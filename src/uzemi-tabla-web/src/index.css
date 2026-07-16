@@ -37,4 +37,31 @@ a:hover {
   .no-print {
     display: none !important;
   }
+  /* The app shell is a fixed-height flex column with internal scroll
+     containers — none of that survives to paper. Reset both back to
+     normal document flow so the print-area's full content lays out
+     across as many pages as it needs instead of being clipped/scrolled. */
+  .app-root {
+    height: auto !important;
+    display: block !important;
+  }
+  .scrollwrap {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .print-area {
+    box-shadow: none !important;
+    border: 1px solid #fff !important;
+    max-width: none !important;
+  }
+  /* The munkalap always shows the Munkamenet grid and the active
+     sub-sheet together on screen (useful while working), but the source
+     paper forms are one form per page — printing should match that,
+     picked at print time via the two distinct print buttons. */
+  body.print-only-munkamenet .subsheets-block {
+    display: none !important;
+  }
+  body.print-only-subsheet .munkamenet-block {
+    display: none !important;
+  }
 }

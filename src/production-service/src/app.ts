@@ -14,7 +14,9 @@ export function createApp() {
   const app = express();
 
   app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:4611" }));
-  app.use(express.json());
+  // Task photo attachments are compressed JPEG data URIs, comfortably over
+  // the default 100kb body limit.
+  app.use(express.json({ limit: "3mb" }));
   app.use(pinoHttp({ logger }));
 
   app.get("/healthz", (_req, res) => res.json({ status: "ok" }));

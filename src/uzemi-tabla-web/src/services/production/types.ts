@@ -40,6 +40,38 @@ export interface Task {
   isDone: boolean;
   flowLabel: string | null;
   depDone: boolean;
+  dependsOnTitle: string | null;
+}
+
+export interface TaskComment {
+  id: string;
+  text: string;
+  createdAt: string;
+}
+
+export interface TaskImage {
+  id: string;
+  url: string;
+  createdAt: string;
+}
+
+export interface TaskAuditEntry {
+  id: string;
+  label: string;
+  at: string;
+}
+
+/** Full single-task fetch (GET /tasks/:id) — the list/board/kanban Task
+ * shape plus its comments/images/audit, which aren't worth carrying on
+ * every board card. */
+export interface TaskDetail extends Task {
+  comments: TaskComment[];
+  images: TaskImage[];
+  audit: TaskAuditEntry[];
+  /** The planned quantity/unit-hours from the linked EpicStep, if any —
+   * read-only here; the source of truth is the project's Munkamenet sheet. */
+  epicStep: { quantity: number | null; unitHours: number | null } | null;
+  project: { name: string; num: string | null } | null;
 }
 
 export interface OrderChecklistItem {
@@ -100,6 +132,36 @@ export interface LoadReport {
 }
 
 export type ProductionStatus = "QUEUED" | "IN_PROGRESS" | "SHIPPING_READY";
+
+export interface EpikRollupStep {
+  id: string;
+  title: string;
+  week: string;
+  day: number;
+  station: string | null;
+  status: MarkerStatus;
+  isDone: boolean;
+}
+
+export interface EpikRollupNext {
+  id: string;
+  title: string;
+  week: string;
+  day: number;
+  station: string | null;
+}
+
+export interface EpikRollupRow {
+  name: string;
+  done: number;
+  total: number;
+  next: EpikRollupNext | null;
+  steps: EpikRollupStep[];
+}
+
+export interface EpikRollup {
+  epikRows: EpikRollupRow[];
+}
 
 export interface ProjectCard {
   key: string;
@@ -210,6 +272,7 @@ export interface HardwareRow {
   uveg: string;
   zar: string;
   kilincs: string;
+  cnc: string;
   megj: string;
 }
 

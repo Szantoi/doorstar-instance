@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { Link } from "react-router-dom";
+import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { useUiStore } from "@/store/uiStore";
+import { useToastStore } from "@/store/toastStore";
 import { useBoard, useCreateTask, useSaveWeekNote, useStations, useUpdateTask } from "@/services/production/hooks";
 import { addDays, DAY_NAMES, iso } from "@/lib/dates";
 import { BoardCell } from "./BoardCell";
@@ -20,8 +22,9 @@ function cellId(station: string | null, day: number) {
 }
 
 export function BoardPage() {
-  const { role, week } = useUiStore();
+  const { role, myStation, week } = useUiStore();
   const canManage = role === "vezeto";
+  const showToast = useToastStore((s) => s.show);
   const { data: stationsData } = useStations();
   const stations = useMemo(() => stationsData?.stations.map((s) => s.key) ?? [], [stationsData]);
 
@@ -32,6 +35,10 @@ export function BoardPage() {
 
   const [openTask, setOpenTask] = useState<Task | null>(null);
   const [noteDraft, setNoteDraft] = useState<string | null>(null);
+  // A minimum drag distance so a plain click (which dnd-kit would otherwise
+  // treat as a zero-distance drag, swallowing the card's onClick) opens the
+  // task modal instead of silently "dropping" the card back where it was.
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const todayIso = iso(new Date());
 
@@ -54,6 +61,19 @@ export function BoardPage() {
     if (!task) return;
     const nextStation = station === "__pool__" ? null : station;
     if (task.station === nextStation && task.day === day) return;
+
+    if (!canManage) {
+      // A station operator may only move their own (or unassigned) tasks,
+      // and only ever onto their own station's column — never into the
+      // pool or another station's row. Mirrors the mock's canDrag/dropTo.
+      const mayTouch = task.station === null || task.station === myStation;
+      const validTarget = nextStation === myStation;
+      if (!mayTouch || !validTarget) {
+        showToast(`Csak a saját állomásod (${myStation}) oszlopába helyezhetsz át feladatot.`);
+        return;
+      }
+    }
+
     updateTask.mutate({ id: task.id, patch: { station: nextStation, day } });
   }
 
@@ -63,7 +83,7 @@ export function BoardPage() {
 
   return (
     <div style={{ flex: 1, overflow: "auto", padding: "16px 20px 28px" }}>
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <div
           style={{
             minWidth: "1420px",
@@ -132,8 +152,8 @@ export function BoardPage() {
               {stations.map((station) => (
                 <div key={station} style={{ display: "flex", borderBottom: "2px solid var(--line-strong)" }}>
                   <div style={{ width: "84px", flex: "none", borderRight: "3px solid var(--line-strong)", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-row-head)" }}>
-                    <a
-                      href={`/kanban?station=${encodeURIComponent(station)}`}
+                    <Link
+                      to={`/kanban?station=${encodeURIComponent(station)}`}
                       title="Állomás kanban megnyitása"
                       style={{
                         writingMode: "vertical-rl",
@@ -151,7 +171,7 @@ export function BoardPage() {
                       }}
                     >
                       {station}
-                    </a>
+                    </Link>
                   </div>
                   {Array.from({ length: 7 }, (_, day) => (
                     <BoardCell

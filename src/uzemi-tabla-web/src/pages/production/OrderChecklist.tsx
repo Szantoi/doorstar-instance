@@ -46,14 +46,15 @@ export function OrderChecklist({ canManage }: { canManage: boolean }) {
         {orders.map((o, i) => (
           <div key={o.id} style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
             <div
-              onClick={() => updateOrder.mutate({ id: o.id, patch: { done: !o.done } })}
+              onClick={() => canManage && updateOrder.mutate({ id: o.id, patch: { done: !o.done } })}
+              title={!canManage ? "Csak Vezető szerepkörben jelölhető" : undefined}
               style={{
                 fontFamily: "var(--font-hand)",
                 fontWeight: 700,
                 fontSize: "19px",
                 color: o.done ? "var(--marker-green)" : "var(--marker-blue)",
                 opacity: o.done ? 0.75 : 1,
-                cursor: "pointer",
+                cursor: canManage ? "pointer" : "default",
                 flex: 1,
               }}
             >
