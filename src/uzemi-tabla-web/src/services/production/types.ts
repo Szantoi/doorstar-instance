@@ -63,12 +63,18 @@ export interface KanbanColumn {
   tasks: Task[];
 }
 
+/** A free/pool task also carries the station its EpicStep was actually
+ * planned for (null for free-standing tasks with no station requirement). */
+export interface PoolTask extends Task {
+  designatedStation: string | null;
+}
+
 export interface KanbanResponse {
   station: string;
   week: string;
   flow: string[];
   assigned: Task[];
-  pool: Task[];
+  pool: PoolTask[];
   columns: KanbanColumn[];
 }
 

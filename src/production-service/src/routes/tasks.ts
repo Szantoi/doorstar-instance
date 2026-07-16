@@ -46,6 +46,24 @@ tasksRouter.post("/tasks", validateBody(createTaskSchema), async (req, res) => {
 /** PATCH /api/production/tasks/:id — move/update a card (drag-drop, pick-up, progress, problem flag, ...). */
 tasksRouter.patch("/tasks/:id", validateBody(updateTaskSchema), async (req, res) => {
   const patch = req.body as Record<string, unknown>;
+
+  if (typeof patch.station === "string") {
+    // Claiming a free-pool task (current station is null) must go to the
+    // station its EpicStep was actually planned for, if it has one — a
+    // station cannot pick up another station's designated work. Reassigning
+    // an already-assigned task (dispatcher override on the Board) is
+    // untouched by this check.
+    const current = await prisma.task.findUnique({
+      where: { id: req.params.id },
+      include: { epicStep: { select: { station: true } } },
+    });
+    const designated = current?.epicStep?.station ?? null;
+    if (current && current.station === null && designated && designated !== patch.station) {
+      res.status(400).json({ error: "station_mismatch", designatedStation: designated });
+      return;
+    }
+  }
+
   const task = await prisma.task.update({
     where: { id: req.params.id },
     data: {

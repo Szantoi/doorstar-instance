@@ -32,8 +32,13 @@ export function KanbanPage() {
     if (!over || !kanban) return;
     const columnIndex = kanban.columns.findIndex((c) => c.name === over.id);
     if (columnIndex === -1) return;
-    const task = (active.data.current as { task: Task } | undefined)?.task;
+    const task = (active.data.current as { task: Task & { designatedStation?: string | null } } | undefined)?.task;
     if (!task) return;
+    if (task.station === null && task.designatedStation && task.designatedStation !== activeStation) {
+      // Free-pool task planned for a different station — dragging it here
+      // must not silently reassign it (mirrors the "Felveszem" button rule).
+      return;
+    }
     updateTask.mutate({ id: task.id, patch: { stepIndex: columnIndex, acknowledged: true, station: activeStation } });
   }
 
@@ -90,17 +95,32 @@ export function KanbanPage() {
                 Szabad feladatok a héten
               </div>
               <div style={{ padding: "8px", minHeight: "120px" }}>
-                {kanban.pool.map((t) => (
-                  <div key={t.id} style={{ border: "1px dashed #b9a24a", background: "#fff", marginBottom: "8px", padding: "7px 9px" }}>
-                    <DraggableTaskCard task={t} onOpen={setOpenTask} />
-                    <button
-                      onClick={() => updateTask.mutate({ id: t.id, patch: { station: activeStation } })}
-                      style={{ marginTop: "5px", border: "1px solid var(--line-strong)", background: "var(--chrome-bg)", color: "#fff", fontWeight: 600, fontSize: "12px", padding: "3px 10px", cursor: "pointer", borderRadius: "3px" }}
-                    >
-                      Felveszem
-                    </button>
-                  </div>
-                ))}
+                {kanban.pool.map((t) => {
+                  const foreign = !!t.designatedStation && t.designatedStation !== activeStation;
+                  return (
+                    <div key={t.id} style={{ border: "1px dashed #b9a24a", background: "#fff", marginBottom: "8px", padding: "7px 9px" }}>
+                      <DraggableTaskCard task={t} onOpen={setOpenTask} />
+                      <button
+                        disabled={foreign}
+                        title={foreign ? `Ez a(z) ${t.designatedStation} állomás feladata` : undefined}
+                        onClick={() => updateTask.mutate({ id: t.id, patch: { station: activeStation } })}
+                        style={{
+                          marginTop: "5px",
+                          border: "1px solid var(--line-strong)",
+                          background: foreign ? "#ccc" : "var(--chrome-bg)",
+                          color: foreign ? "#777" : "#fff",
+                          fontWeight: 600,
+                          fontSize: "12px",
+                          padding: "3px 10px",
+                          cursor: foreign ? "not-allowed" : "pointer",
+                          borderRadius: "3px",
+                        }}
+                      >
+                        {foreign ? `${t.designatedStation} feladata` : "Felveszem"}
+                      </button>
+                    </div>
+                  );
+                })}
                 {kanban.pool.length === 0 && <div style={{ fontSize: "12.5px", color: "#a9a79e", padding: "6px" }}>Nincs szabad feladat ezen a héten.</div>}
               </div>
             </div>

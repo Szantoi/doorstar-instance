@@ -22,11 +22,22 @@ kanbanRouter.get("/kanban", async (req, res) => {
   const workflowRow = await prisma.stationWorkflow.findUnique({ where: { station } });
   const flow = resolveFlow(station, new Map(workflowRow ? [[station, workflowRow.steps as string[]]] : []));
 
-  const [assigned, pool, stationTasks] = await Promise.all([
+  const [assigned, poolRaw, stationTasks] = await Promise.all([
     prisma.task.findMany({ where: { station, week, stepIndex: 0, acknowledged: false } }),
-    prisma.task.findMany({ where: { station: null, week } }),
+    prisma.task.findMany({
+      where: { station: null, week },
+      include: { epicStep: { select: { station: true } } },
+    }),
     prisma.task.findMany({ where: { station, week, NOT: { AND: [{ stepIndex: 0 }, { acknowledged: false }] } } }),
   ]);
+
+  // A pool task planned from an EpicStep carries that step's station as its
+  // "designated" station — only that station (or a station-less free task)
+  // should be able to claim it. Prevents e.g. Fújó picking up a CNC-only step.
+  const pool = poolRaw.map(({ epicStep, ...task }) => ({
+    ...task,
+    designatedStation: epicStep?.station ?? null,
+  }));
 
   const columns = flow.map((name, index) => ({
     name,
