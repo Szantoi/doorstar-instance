@@ -12,6 +12,7 @@ const keys = {
   project: (key: string) => ["production", "project", key] as const,
   templates: ["production", "templates"] as const,
   epikTemplates: ["production", "epikTemplates"] as const,
+  sheet: (key: string, kind: string) => ["production", "sheet", key, kind] as const,
 };
 
 export function useStations() {
@@ -156,5 +157,23 @@ export function useApplyTemplate(key: string) {
   return useMutation({
     mutationFn: (name: string) => productionApi.applyTemplate(name, key),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+  });
+}
+
+type SheetKind = "QUANTITIES" | "CUTTING" | "HARDWARE";
+
+export function useSheet<T>(key: string, kind: SheetKind) {
+  return useQuery({
+    queryKey: keys.sheet(key, kind),
+    queryFn: () => productionApi.getSheet(key, kind) as Promise<T | null>,
+    enabled: !!key,
+  });
+}
+
+export function useSaveSheet<T>(key: string, kind: SheetKind) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: T) => productionApi.saveSheet(key, kind, data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.sheet(key, kind) }),
   });
 }

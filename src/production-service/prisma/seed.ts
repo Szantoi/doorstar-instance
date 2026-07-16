@@ -118,6 +118,54 @@ async function main() {
     }
   }
 
+  await prisma.projectSheet.create({
+    data: {
+      projectId: koroknai.id,
+      kind: "QUANTITIES",
+      data: {
+        menny: [
+          { name: "Ajtólap", felulet: "Festett", db: "6 db" },
+          { name: "Tokmag", felulet: "Festett", db: "18 db" },
+          { name: "Borítás", felulet: "Festett", db: "36 db" },
+          { name: "Blende", felulet: "—", db: "Nincs" },
+        ],
+        mennyBreak: [
+          { label: "Tokmag · Síkban · Fix oldali · 48 mm", vsz: "6 db", fugg: "12 db" },
+          { label: "Tokmag · Tokba · Mozgó oldali · 68 mm", vsz: "6 db", fugg: "12 db" },
+          { label: "Borítás · Síkban · 22 mm", vsz: "6 db", fugg: "12 db" },
+          { label: "Borítás · Tokba · 22 mm", vsz: "6 db", fugg: "12 db" },
+        ],
+      },
+    },
+  });
+
+  await prisma.projectSheet.create({
+    data: {
+      projectId: koroknai.id,
+      kind: "CUTTING",
+      data: {
+        rows: [
+          { i: 1, sz: "62,2", h: "199,8", db: 2, anyag: "Mély MDF", megj: "Síkban" },
+          { i: 2, sz: "66,2", h: "196,8", db: 2, anyag: "Mély MDF", megj: "Síkban" },
+          { i: 3, sz: "64,2", h: "196,8", db: 2, anyag: "Mély MDF", megj: "Síkban" },
+        ],
+      },
+    },
+  });
+
+  await prisma.projectSheet.create({
+    data: {
+      projectId: koroknai.id,
+      kind: "HARDWARE",
+      data: {
+        rows: [
+          { i: 1, nyitas: "FNY · Bal", pant: "AGB 2.0", lap: "68 × 203", tok: "76 × 207", uveg: "13,5", zar: "BB 50", kilincs: "1040", megj: "" },
+          { i: 2, nyitas: "FNY · Bal", pant: "AGB 2.0", lap: "72 × 200", tok: "80 × 204", uveg: "13,5", zar: "BB 50", kilincs: "1040", megj: "" },
+        ],
+      },
+    },
+  });
+
   await Promise.all(
     [
       { day: 0, station: "Körfűrész", project: tormay, title: "Szabás + méretre vágás", stepIndex: 1 },

@@ -10,6 +10,7 @@ import {
   useTemplates,
 } from "@/services/production/hooks";
 import type { Epic, EpicStep } from "@/services/production/types";
+import { ProjectSubSheets } from "./ProjectSubSheets";
 
 let localIdSeq = 0;
 function localId() {
@@ -263,6 +264,8 @@ export function ProjectDetailPage() {
         ))}
 
         {epics.length === 0 && <div style={{ color: "var(--text-muted)", fontSize: "14px" }}>Nincs még epik felvéve ehhez a projekthez.</div>}
+
+        <ProjectSubSheets projectKey={key} canManage={canManage} />
       </div>
     </div>
   );

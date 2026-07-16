@@ -52,10 +52,9 @@ npm run dev   # http://localhost:3461
   and saves as one bulk `PUT .../epics` on demand, rather than autosaving
   every keystroke like the original mock — the backend's bulk-replace
   contract makes per-field autosave awkward without introducing per-row
-  update endpoints first.
+  update endpoints first. The quantities/cutting/hardware sub-sheets
+  (`ProjectSubSheets.tsx`) follow the same local-edit-then-save pattern.
 - `TaskDetailModal`'s "next step" button uses each station's *default*
   workflow rather than fetching a possible per-station override
   (`StationWorkflow` override, e.g. Bürkle's 4-step flow) — status/done
   coloring is still correct either way since that's computed server-side.
-- Quantities / cutting-list / hardware sub-sheets (`ProjectSheet`, backend
-  endpoints already exist) have no UI yet.
