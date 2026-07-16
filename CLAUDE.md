@@ -175,16 +175,41 @@ saját portot külön engedélyezni kell (`sudo ufw allow <port>/tcp`).
 
 **EPIC-DOORSTAR-SOFTLAUNCH:**
 - Target: 2026-09-30
-- Progress: 67%
+- Progress: 85%
+- Frissítve: 2026-07-16
 
 | Milestone | Státusz |
 |-----------|---------|
 | Domain spec | ✅ APPROVED |
 | Architecture | ✅ APPROVED |
-| OpenAPI draft | ⏳ In progress |
-| Implementation | ⏳ Pending |
-| Testing | ⏳ Pending |
-| Soft Launch | ⏳ Pending |
+| OpenAPI draft | ⏳ Nincs formális OpenAPI dokumentum (a REST API maga kész és fut) |
+| Implementation | ✅ Üzemi Tábla (production board) — tábla, kanban, terhelés, projektek/munkalap, mind kész, mock-audittal ellenőrizve |
+| Testing | ⏳ Backend vitest suite fut (3 teszt) + kiterjedt Playwright-alapú manuális ellenőrzés minden funkción; nincs formális teszt-lefedettségi cél |
+| Soft Launch | ⏳ Első éles deploy megtörtént (lásd lent) demó adatokkal, megrendelőnek elküldve — a valós ügyféladatra állás még hátravan |
+
+### Élő állapot (2026-07-16)
+Az Üzemi Tábla éles, a megrendelőnek elküldve:
+- https://doorstar.asztalostech.hu
+- https://doorstar.joinerytech.hu
+
+Részletek a VPS-HOZZÁFÉRÉS szekcióban fent.
+
+### KÖVETKEZŐ LÉPÉSEK (TODO)
+- [ ] Megrendelői visszajelzés bevárása, majd döntés: mikor váltunk demó
+      adatról valós ügyféladatra (jelenleg Koroknai/Derby/LFA/Tormay/Matyi
+      demó projektekkel fut).
+- [ ] Formális OpenAPI spec/dokumentum a production-service REST API-hoz
+      (a FELELŐSSÉGI KÖR szerint ez a sziget egyik felelőssége).
+- [ ] Munkamenet-oldal elmaradt részletei (alacsony prioritás, tudatosan
+      elhalasztva a gap-remediation során): per-lépés Kiadás/Munkalap/
+      Visszavon/sorrendezés gombok, "(epik nélkül)" virtuális sor.
+- [ ] `myStation`/szerepkör-ellenőrzés jelenleg csak egy egyszerű
+      `X-Role`/`X-Station` fejléc-alapú védőháló, nem valódi
+      authentikáció — ha a sziget valaha bejelentkezést kap, ezt le kell
+      cserélni.
+- [ ] Minden jövőbeli frontend rebuildnél a VPS-en ellenőrizni kell az
+      `/opt/doorstar/.../dist` jogosultságát (lásd a VPS-HOZZÁFÉRÉS
+      szekció "FONTOS — jogosultság csapda" pontját).
 
 ---
 
