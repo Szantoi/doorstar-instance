@@ -85,7 +85,12 @@ Cabinet VPS (partner)
 | Service | Port | Leírás |
 |---------|------|--------|
 | Knowledge Service | 3460 | MCP API (frozen) |
-| Datahaven Web | 3461 | Dashboard |
+| Üzemi Tábla (uzemi-tabla-web) | 4611 | Production whiteboard UI |
+
+> Port 3461 (`config/federation.yaml`'s `datahaven` slot) marad szabadon a
+> fleet-szintű Datahaven agent-management dashboardnak — az Üzemi Tábla nem
+> azonos vele és nem foglalja el a portját (korábban tévedésből
+> `datahaven-web` néven futott, 3461-en; ez javítva lett).
 
 ---
 

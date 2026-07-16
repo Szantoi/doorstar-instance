@@ -13,7 +13,7 @@ import { overviewRouter } from "./routes/overview.js";
 export function createApp() {
   const app = express();
 
-  app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:3461" }));
+  app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:4611" }));
   app.use(express.json());
   app.use(pinoHttp({ logger }));
 

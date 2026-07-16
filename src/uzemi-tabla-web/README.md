@@ -1,8 +1,14 @@
-# datahaven-web
+# uzemi-tabla-web
 
-Frontend for **Üzemi Tábla** — "Datahaven Web" dashboard per
-`doorstar-instance/CLAUDE.md` (port 3461). Talks to `production-service` via
-`/api/production/*` (proxied in dev, see `vite.config.ts`).
+Frontend for **Üzemi Tábla**, the door-manufacturing production whiteboard
+(port 4611). Talks to `production-service` via `/api/production/*` (proxied
+in dev, see `vite.config.ts`).
+
+> Not to be confused with the fleet-wide **Datahaven** agent-management
+> dashboard (`nexus-core/src/datahaven-web`, live at datahaven.joinerytech.hu,
+> port 3461 per `doorstar-instance/config/federation.yaml`) — this app used
+> to be named `datahaven-web` and squat on that port by mistake; it was
+> renamed to avoid the collision.
 
 ## Why this exists
 
@@ -39,11 +45,11 @@ that's the whole point of the mock.
 ## Local development
 
 Requires `production-service` running (see its README) with
-`CORS_ORIGIN=http://localhost:3461`.
+`CORS_ORIGIN=http://localhost:4611`.
 
 ```bash
 npm install
-npm run dev   # http://localhost:3461
+npm run dev   # http://localhost:4611
 ```
 
 ## Known simplifications (v1)

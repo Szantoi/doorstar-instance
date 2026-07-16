@@ -2,7 +2,7 @@
 
 Backend for **Üzemi Tábla** — the door-manufacturing production board (weekly
 whiteboard, per-station kanban, capacity/load monitor, project work-order
-sheets). Serves `datahaven-web` at `/api/production/*`.
+sheets). Serves `uzemi-tabla-web` at `/api/production/*`.
 
 ## Why this exists
 
