@@ -128,8 +128,8 @@ export function KanbanPage() {
       </div>
 
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-        <div style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
-          <div style={{ width: "230px", flex: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div className="kanban-layout">
+          <div className="kanban-sidebar">
             <div style={{ background: "var(--surface-assigned)", border: "2px solid var(--line-strong)", boxShadow: "var(--shadow-panel)" }}>
               <div style={{ background: "var(--marker-orange)", color: "#fff", fontWeight: 700, fontSize: "13px", letterSpacing: "1.2px", textTransform: "uppercase", padding: "6px 12px" }}>
                 Kiosztva — még nem kezdte el

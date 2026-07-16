@@ -317,7 +317,8 @@ export function ProjectDetailPage() {
             )}
 
             {canManage && (
-            <div style={{ display: "grid", gridTemplateColumns: "30px 1.5fr 1.1fr 62px 90px 140px 90px 40px", fontSize: "13px", alignItems: "center" }}>
+            <div className="h-scroll">
+            <div style={{ display: "grid", gridTemplateColumns: "30px minmax(160px,1.5fr) minmax(120px,1.1fr) 62px 90px 140px 90px 40px", fontSize: "13px", alignItems: "center", minWidth: "700px" }}>
               <div />
               <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Lépés</div>
               <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Állomás</div>
@@ -394,6 +395,7 @@ export function ProjectDetailPage() {
                   </div>
                 </div>
               ))}
+            </div>
             </div>
             )}
           </div>

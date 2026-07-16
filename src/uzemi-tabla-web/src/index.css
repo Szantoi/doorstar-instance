@@ -30,6 +30,37 @@ a:hover {
   opacity: 1;
 }
 
+/* Kanban: sidebar (Kiosztva + Szabad feladatok) sits left of the workflow
+   columns on desktop; below a breakpoint it stacks above them full-width
+   instead of squeezing the columns down past their minWidth. */
+.kanban-layout {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.kanban-sidebar {
+  width: 230px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (max-width: 860px) {
+  .kanban-layout {
+    flex-direction: column;
+  }
+  .kanban-sidebar {
+    width: 100%;
+  }
+}
+
+/* A wide table/grid (munkalap epic editor, sheet tables) scrolls
+   horizontally on its own rather than forcing the whole page to overflow
+   or squeezing its columns unreadably thin. */
+.h-scroll {
+  overflow-x: auto;
+}
+
 @media print {
   body {
     background: #fff;

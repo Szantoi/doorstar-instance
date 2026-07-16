@@ -27,12 +27,18 @@ kanbanRouter.get("/kanban", async (req, res) => {
   const flow = resolveFlow(station, workflows);
 
   const [assignedRaw, poolRaw, stationTasksRaw] = await Promise.all([
-    prisma.task.findMany({ where: { station, week, stepIndex: 0, acknowledged: false } }),
+    prisma.task.findMany({
+      where: { station, week, stepIndex: 0, acknowledged: false },
+      include: { project: { select: { num: true } } },
+    }),
     prisma.task.findMany({
       where: { station: null, week },
-      include: { epicStep: { select: { station: true } } },
+      include: { epicStep: { select: { station: true } }, project: { select: { num: true } } },
     }),
-    prisma.task.findMany({ where: { station, week, NOT: { AND: [{ stepIndex: 0 }, { acknowledged: false }] } } }),
+    prisma.task.findMany({
+      where: { station, week, NOT: { AND: [{ stepIndex: 0 }, { acknowledged: false }] } },
+      include: { project: { select: { num: true } } },
+    }),
   ]);
 
   const assigned = await Promise.all(assignedRaw.map((t) => taskVM(t, workflows)));

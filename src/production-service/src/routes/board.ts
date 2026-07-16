@@ -12,17 +12,26 @@ export async function loadWorkflows(): Promise<Map<string, string[]>> {
   return new Map(rows.map((r) => [r.station, r.steps as string[]]));
 }
 
-export async function taskVM(task: Awaited<ReturnType<typeof prisma.task.findFirstOrThrow>>, workflows: Map<string, string[]>) {
+export async function taskVM(
+  task: Awaited<ReturnType<typeof prisma.task.findFirstOrThrow>> & { project?: { num: string | null } | null },
+  workflows: Map<string, string[]>
+) {
   const flow = resolveFlow(task.station, workflows);
   const dep = task.dependsOnId ? await prisma.task.findUnique({ where: { id: task.dependsOnId } }) : null;
   const depFlow = dep ? resolveFlow(dep.station, workflows) : [];
+  const { project, ...rest } = task;
   return {
-    ...task,
+    ...rest,
     status: markerStatus(task, flow),
     isDone: isDone(task, flow),
     flowLabel: currentStepName(task, flow),
     depDone: !dep || isDone(dep, depFlow),
     dependsOnTitle: dep?.title ?? null,
+    // The board groups by station/day, not project — the munkaszám on the
+    // card itself is what tells a floor worker which order a card belongs
+    // to. Matches the mock's card-title convention ("Megrendelő Munkaszám —
+    // Epik · Lépés").
+    projectNum: project?.num ?? null,
   };
 }
 
@@ -31,7 +40,11 @@ boardRouter.get("/board", async (req, res) => {
   const week = typeof req.query.week === "string" ? req.query.week : monday(new Date());
 
   const [tasks, orders, note, workflows] = await Promise.all([
-    prisma.task.findMany({ where: { week }, orderBy: [{ day: "asc" }, { createdAt: "asc" }] }),
+    prisma.task.findMany({
+      where: { week },
+      orderBy: [{ day: "asc" }, { createdAt: "asc" }],
+      include: { project: { select: { num: true } } },
+    }),
     prisma.orderChecklistItem.findMany({ orderBy: { position: "asc" } }),
     prisma.weekNote.findUnique({ where: { week } }),
     loadWorkflows(),

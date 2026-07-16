@@ -41,6 +41,7 @@ export interface Task {
   flowLabel: string | null;
   depDone: boolean;
   dependsOnTitle: string | null;
+  projectNum: string | null;
 }
 
 export interface TaskComment {

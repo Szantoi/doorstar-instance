@@ -52,7 +52,8 @@ export function SheetTable<T extends Record<string, unknown>>({
 
   return (
     <div>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+      <div className="h-scroll">
+      <table style={{ width: "100%", minWidth: "520px", borderCollapse: "collapse", fontSize: "13px" }}>
         <thead>
           <tr>
             {columns.map((col) => (
@@ -91,6 +92,7 @@ export function SheetTable<T extends Record<string, unknown>>({
           ))}
         </tbody>
       </table>
+      </div>
 
       {canManage && (
         <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>

@@ -31,7 +31,7 @@ export function DraggableTaskCard({ task, showDay = false, onOpen }: DraggableTa
       style={{ transform: CSS.Translate.toString(transform), opacity: isDragging ? 0.4 : 1, touchAction: "none" }}
     >
       <TaskCard
-        title={task.title}
+        title={task.projectNum ? `${task.projectNum} — ${task.title}` : task.title}
         status={task.status}
         urgent={task.urgent}
         meta={cardMeta(task, showDay)}
