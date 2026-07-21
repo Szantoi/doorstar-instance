@@ -52,7 +52,7 @@
 **Session startup:**
 ```bash
 curl -X POST https://datahaven.joinerytech.hu/api/terminal/status \
-  -H "Authorization: Bearer dev-token-spaceos-dashboard-2026" \
+  -H "Authorization: Bearer <REDACTED_RUNTIME_SECRET>" \
   -H "Content-Type: application/json" \
   -d '{"terminal":"<NAME>","status":"working","currentTask":"<TASK>"}'
 ```
@@ -60,7 +60,7 @@ curl -X POST https://datahaven.joinerytech.hu/api/terminal/status \
 **Session shutdown:**
 ```bash
 curl -X POST https://datahaven.joinerytech.hu/api/terminal/status \
-  -H "Authorization: Bearer dev-token-spaceos-dashboard-2026" \
+  -H "Authorization: Bearer <REDACTED_RUNTIME_SECRET>" \
   -H "Content-Type: application/json" \
   -d '{"terminal":"<NAME>","status":"idle"}'
 ```

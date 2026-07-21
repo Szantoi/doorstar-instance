@@ -3,7 +3,7 @@
 **Sziget:** Doorstar (`/opt/doorstar/`)
 **Fókusz:** Doorstar Kft. specifikus fejlesztés
 **Port:** 3460-3461
-**Frissítve:** 2026-07-11
+**Frissítve:** 2026-07-18
 
 ---
 
@@ -44,10 +44,13 @@ A Doorstar sziget a **Doorstar Kft. ügyfél-specifikus implementációjának k�
 
 ## Projekt Dokumentumok
 
-### projects/ (2 dokumentum) ✅ KÉSZ
+### projects/
 
 - `TASKS.yaml` — EPIC-DOORSTAR-SOFTLAUNCH 21 task, 6 milestone
 - `KEYCLOAK_DOORSTAR_CONFIG.md` — Keycloak tenant konfiguráció
+- `EPICS.yaml` — aktív epic-gráf és tasklánc belépési pontok
+- `doorstar-spaceos-convergence/` — Doorstar instance-konvergencia, platform
+  gate-ek és részletes agent-taskok
 
 ---
 
@@ -99,9 +102,12 @@ A Doorstar sziget a **Doorstar Kft. ügyfél-specifikus implementációjának k�
 
 | Epic | Target | Státusz |
 |------|--------|---------|
-| EPIC-DOORSTAR-SOFTLAUNCH | 2026-09-30 | 67% complete |
+| EPIC-DOORSTAR-SOFTLAUNCH | 2026-09-30 | BLOCKED — legacy ownership remap |
+| EPIC-DOORSTAR-SPACEOS-CONVERGENCE | 2026-09-30 | ACTIVE — D0 taskok kiadhatók |
 
-**Milestones:** M1-KEYCLOAK → M2-SEED → M3-ORCHESTRATOR → M4-B2B → M5-UAT → M6-SOFTLAUNCH
+**Aktuális belépési pont:**
+`docs/projects/doorstar-spaceos-convergence/README.md`. A régi M1→M6 lánc csak
+az ownership-remap után aktiválható újra.
 
 ---
 
@@ -115,8 +121,11 @@ A Doorstar sziget a **Doorstar Kft. ügyfél-specifikus implementációjának k�
 
 ## Token Konfiguráció
 
-**API Token:** `doorstar-api-7f2ee55831b27bd4664c42548eea88c8825f4e94`
-**Dashboard Token:** `dev-token-doorstar-dashboard-2026`
+Az API- és dashboard-credentialek nem dokumentált értékek: azokat kizárólag a
+futtatókörnyezeti secret store-ból vagy környezeti változókból szabad betölteni.
+Az értékek kiadása, cseréje és visszavonása a Doorstar root/security felelőse,
+emberi jóváhagyási kapuval. A baseline és a rotációs nyilvántartás:
+`docs/projects/doorstar-spaceos-convergence/DSCONV-00-SECRET-BASELINE.md`.
 
 ---
 

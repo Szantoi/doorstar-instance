@@ -49,17 +49,10 @@ version: "1.1"
 updated: "2026-06-24"
 
 # Master token (root access)
-master_token: "IoUpLUgr4v6Mj5lt4u2XD1JOy5iGmVdxne473srMl2o="
+master_token: "${MCP_AUTH_TOKEN}"
 
-# Terminal tokens (token → terminal_name)
-agents:
-  "6ozohLp1ESnTWhWhlkUiyxTwh3cm3Ia+yGT/5YXgqhs=": "conductor"
-  "DAP3+yV6SIQo9PH9zcoDYzLp3/XGpP1hFpiOjVO8ru4=": "architect"
-  "luBZgBbnTwLKsQ1HKmVMYo+j3Cwul64QVxOVb5/7wYE=": "librarian"
-  "aT/iZsIUyNY94CjuHChyGVgv5MFES5/l3V99gorrxcQ=": "explorer"
-  "jKB4yyFknSgwRiC8ewLbdFuPxEo8Vgi157lW5QBsmsY=": "backend"
-  "hsS4SbZGWWljJ8VNTkG18ys2X40BPbl2bH33h6+WIqk=": "frontend"
-  "gZnKTnAZ2pgRrkee1EQ7qvcMKBCJ4tDsFgCId5oFGzw=": "designer"
+# Terminal tokens are provisioned at runtime (MCP_TOKEN_<TERMINAL>).
+# This document intentionally stores no credential values.
 ```
 
 ### 2. tool-permissions.yaml — Tool → Terminal mapping

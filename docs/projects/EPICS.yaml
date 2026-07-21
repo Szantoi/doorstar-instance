@@ -1,0 +1,31 @@
+version: "1.0.0"
+updated: "2026-07-18"
+
+epics:
+  - id: EPIC-DOORSTAR-SOFTLAUNCH
+    name: Doorstar Soft Launch
+    project: doorstar-softlaunch
+    depends_on: []
+    parallel_with: [EPIC-DOORSTAR-SPACEOS-CONVERGENCE]
+    status: blocked
+    target_date: "2026-09-30"
+    tasks_yaml: docs/projects/TASKS.yaml
+    description: >
+      Legacy ügyfélbevezetési tasklánc. A benne lévő több platformmutáló feladat
+      már nem felel meg a repository-ownership szabálynak, ezért nem
+      diszpécselhető. A LEGACY-TASK-OWNERSHIP-REMAP.md és DSCONV-00 szerinti
+      egyeztetés után a megmaradó UAT/üzemeltetési feladatok újra kiadhatók.
+
+  - id: EPIC-DOORSTAR-SPACEOS-CONVERGENCE
+    name: Doorstar valódi SpaceOS instance-szá alakítása
+    project: doorstar-spaceos-convergence
+    depends_on: []
+    parallel_with: [EPIC-DOORSTAR-SOFTLAUNCH]
+    status: active
+    target_date: "2026-09-30"
+    tasks_yaml: docs/projects/doorstar-spaceos-convergence/TASKS.yaml
+    description: >
+      A Doorstar saját UX-ének, műhelyfolyamatának és adatainak megőrzése mellett
+      platform auth, contract, instance pack, composition app és bundle
+      fogyasztás kialakítása. Platform- és ERP-kód kizárólag a JoineryTech
+      repositoryban készülhet.

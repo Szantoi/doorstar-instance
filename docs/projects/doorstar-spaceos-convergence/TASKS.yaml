@@ -1,0 +1,189 @@
+version: "1.0"
+project: doorstar-spaceos-convergence
+created: "2026-07-18"
+updated: "2026-07-18"
+
+config:
+  default_model: sonnet
+  auto_dispatch: false
+  notify_telegram: true
+  retry_on_blocked: 3
+
+milestones:
+  - id: D0-BASELINE
+    name: Biztonsági baseline és capability mapping
+    status: pending
+    blocked_by: []
+    tasks:
+      - id: DSCONV-00
+        name: Credential hygiene és valós runtime baseline
+        terminal: root
+        model: sonnet
+        priority: critical
+        status: blocked
+        blocked_by: []
+        triggers_on_done: []
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-00-SECRET-BASELINE.md
+        description: >
+          A tracked dokumentumban talált credential-anyag redakciós és rotációs
+          terve, valamint a jelenlegi app/API/DB/deploy/test baseline rögzítése.
+          Külső rotáció és history rewrite csak emberi jóváhagyással.
+
+      - id: DSCONV-01
+        name: Doorstar capability és adatmodell SpaceOS mapping
+        terminal: architect
+        model: sonnet
+        priority: critical
+        status: completed
+        blocked_by: []
+        triggers_on_done: [DSCONV-02, DSCONV-GATE-SECURITY, DSCONV-GATE-INSTANCE]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-01-CAPABILITY-MAPPING.md
+        description: >
+          A production-service, Prisma, UI, station, workflow és ProjectSheet
+          leltára reuse/adapt/template/instance-only/retire döntéssel. Read-only.
+
+  - id: D1-CONTRACT-SECURITY
+    name: Formális API és platformbiztos auth
+    status: pending
+    blocked_by: [D0-BASELINE]
+    tasks:
+      - id: DSCONV-02
+        name: Doorstar OpenAPI és generált frontend kliens
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: [DSCONV-01]
+        triggers_on_done: [DSCONV-03]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-02-OPENAPI-GENERATED-CLIENT.md
+        description: >
+          OpenAPI 3.1 source of truth, Orval kliens, zod/contract drift gate és
+          a kézi frontend API-típusok kiváltása viselkedésváltozás nélkül.
+
+      - id: DSCONV-GATE-SECURITY
+        name: JoineryTech security és Instance Context contract gate
+        terminal: conductor
+        model: haiku
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-01]
+        triggers_on_done: [DSCONV-03]
+        task_file: docs/projects/doorstar-spaceos-convergence/PLATFORM-GATES.md
+        description: >
+          Csak STAB-RLS-PROOF és ERPSEP-06 publikált contract-verzió/hash után
+          zárható. Nem implementációs task.
+
+      - id: DSCONV-03
+        name: JWT, tenant és station-policy bevezetése
+        terminal: backend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: [DSCONV-02, DSCONV-GATE-SECURITY]
+        triggers_on_done: [DSCONV-06]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-03-AUTH-TENANT-POLICY.md
+        description: >
+          Az X-Role/X-Station bizalmi fejléc kiváltása hitelesített claimmel,
+          szerveroldali station membership/policy-val és tenant izolációval.
+
+  - id: D2-INSTANCE-EXTRACTION
+    name: Doorstar instance pack és model adapter
+    status: pending
+    blocked_by: [D0-BASELINE]
+    tasks:
+      - id: DSCONV-GATE-INSTANCE
+        name: JoineryTech module, extension és ownership contract gate
+        terminal: conductor
+        model: haiku
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-01]
+        triggers_on_done: [DSCONV-04, DSCONV-05]
+        task_file: docs/projects/doorstar-spaceos-convergence/PLATFORM-GATES.md
+        description: >
+          ERPSEP-02/03/07 és PROJECT-CORE-ADR pontos artifact-verziója és hash-e
+          szükséges. Nem implementációs task.
+
+      - id: DSCONV-04
+        name: Doorstar brand, station, workflow és form instance packok
+        terminal: frontend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: [DSCONV-GATE-INSTANCE]
+        triggers_on_done: [DSCONV-06]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-04-INSTANCE-PACKS.md
+        description: >
+          A Doorstar vizuális tokenek, terminológia, stations.json, 6-stage
+          template és ProjectSheet schema platform-séma szerinti kivonása.
+
+      - id: DSCONV-05
+        name: Project/workflow adapter és adatmegőrző migráció
+        terminal: backend
+        model: opus
+        priority: critical
+        status: pending
+        blocked_by: [DSCONV-02, DSCONV-GATE-INSTANCE]
+        triggers_on_done: [DSCONV-06]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-05-MODEL-ADAPTER-MIGRATION.md
+        description: >
+          A jelenlegi Prisma Project/Epic/Task/Stage modell adaptere az elfogadott
+          platform ownerhez, mappinggel, backfilllel és rollbackkel.
+
+      - id: DSCONV-06
+        name: Doorstar composition app közös modulcsomagokból
+        terminal: frontend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: [DSCONV-03, DSCONV-04, DSCONV-05]
+        triggers_on_done: [DSCONV-07]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-06-COMPOSITION-APP.md
+        description: >
+          A Doorstar shell közös SpaceOS/ERP csomagokat fogyaszt, az Üzemi Tábla
+          UX-et az instance pack és Doorstar modul adja. Nincs source copy.
+
+  - id: D3-BUNDLE-RELEASE
+    name: Reprodukálható instance deployment és release gate
+    status: pending
+    blocked_by: [D2-INSTANCE-EXTRACTION]
+    tasks:
+      - id: DSCONV-GATE-BUNDLE
+        name: JoineryTech bundle/composer/conformance contract gate
+        terminal: conductor
+        model: haiku
+        priority: high
+        status: blocked
+        blocked_by: [DSCONV-01]
+        triggers_on_done: [DSCONV-07]
+        task_file: docs/projects/doorstar-spaceos-convergence/PLATFORM-GATES.md
+        description: >
+          Csak ERPSEP-08 és ERPSEP-09 publikált, tesztelt verziója után zárható.
+          Nem implementációs task.
+
+      - id: DSCONV-07
+        name: Doorstar instance descriptor, lock, install és rollback
+        terminal: backend
+        model: sonnet
+        priority: high
+        status: pending
+        blocked_by: [DSCONV-06, DSCONV-GATE-BUNDLE]
+        triggers_on_done: [DSCONV-08]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-07-INSTANCE-DEPLOYMENT.md
+        description: >
+          Doorstar descriptor és lock, staging install/upgrade/rollback, health és
+          MainPID bizonyíték. Éles deploy külön emberi kapu.
+
+      - id: DSCONV-08
+        name: Doorstar conformance, regressziós E2E és UAT release-javaslat
+        terminal: frontend
+        model: sonnet
+        priority: critical
+        status: pending
+        blocked_by: [DSCONV-07]
+        triggers_on_done: []
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-08-CONFORMANCE-UAT.md
+        description: >
+          Security/tenant/contract conformance, a jelenlegi Doorstar fő flow
+          összehasonlító E2E-je, performance smoke és emberi UAT. Csak
+          release-javaslat, automatikus élesítés nélkül.
