@@ -146,9 +146,32 @@ egyezést és a health `200` eredményt. Nyitva hagyta a két plaintext
 dokumentációs érték redakcióját, valamint a runtime credential tényleges
 aktivitásának emberi owner-döntését; ezek nélkül a task nem minősíthető késznek.
 
+### 2026-07-21 — rotáció-mechanika feltárás, root döntés: elhalasztva
+
+- Megerősítve: `src/knowledge-service/config/agents.yaml` továbbra is
+  plaintext tartalmazza a master_token-t és mind a 7 terminál tokent — csak a
+  *dokumentáció* (`MCP_AUTH_TOKENS.md`) lett redaktálva 07-18-án, a tényleges
+  futó konfig nem.
+- Új felismerés, ami nem szerepelt a korábbi bejegyzésekben: a fájl saját
+  kommentje szerint ennek a master_token-nek egyeznie kell a
+  `~/.claude/settings.json` `MCP_AUTH_TOKEN` értékével — ez viszont **géphez
+  kötött, repo-független, globális** Claude Code beállítás, amit a gépen futó
+  összes terminál-session használ MCP-hitelesítésre, nem csak a Doorstar
+  szigeté. A rotáció blast radius-a tehát nagyobb, mint amit a 07-18-i
+  bejegyzések feltételeztek.
+- Root döntés: a rotációt **nem indítjuk el most**. A `DSCONV-00` `blocked`
+  marad; a `DSCONV-00-CREDENTIAL-ROTATION-PLAN.md` szerinti előfeltételek
+  (secrets-store hely, jóváhagyott karbantartási ablak, titkosított backup,
+  health-baseline) egyike sem teljesült, és a fenti globális-config-függőség
+  miatt ezeket külön kell megtervezni, mielőtt bármilyen generálás/írás/
+  restart történne.
+- Nem történt credential-generálás, fájlírás vagy service-restart.
+
 ## Átadási bizonyíték
 
 Secret scan: **PASS a tracked dokumentációra**. A runtime credential rotációja
-és aktív státuszának igazolása továbbra is emberi kapun blokkolt. A redaktált
-inventory, a HEAD-ek és a build/test/health bizonyíték a végrehajtási naplóban
-szerepel.
+és aktív státuszának igazolása továbbra is emberi kapun blokkolt — a 07-21-i
+feltárás szerint a blokkoló ok most már a globális
+`~/.claude/settings.json`-fal megosztott master_token, nem csak a hiányzó
+secrets-store terv. A redaktált inventory, a HEAD-ek és a build/test/health
+bizonyíték a végrehajtási naplóban szerepel.
