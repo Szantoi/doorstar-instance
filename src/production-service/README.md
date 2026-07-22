@@ -57,7 +57,8 @@ npm test
 ```
 
 Tests run against the real Postgres from `docker compose up -d` (no mocking
-of Prisma) — each test cleans up the rows it touches in `beforeEach`.
+of Prisma), but always use the isolated `doorstar_test` schema. Production
+and local operational data are therefore never touched by the test suite.
 
 ## API surface
 
@@ -68,14 +69,14 @@ All routes are mounted under `/api/production`:
 | `GET /board?week=` | Tasks + sidebar (orders, week note) for one week |
 | `POST /tasks`, `PATCH /tasks/:id`, `DELETE /tasks/:id` | Board card CRUD |
 | `POST /tasks/:id/comments` | Add a comment to a card |
-| `GET /kanban?station=&week=` | Per-station kanban lanes |
+| `GET /kanban?station=` | Per-station live status lanes, without a date filter |
 | `PUT /kanban/:station/workflow` | Rename/reorder a station's kanban columns |
 | `GET /load?week=` | Capacity heatmap |
 | `PUT /capacity` | Global hours/day/station assumption |
 | `GET /projects`, `POST /projects` | Active project list / create |
 | `GET/PUT/DELETE /projects/:key` | Project detail / scalar field edits / soft-delete archive |
 | `PUT /projects/:key/epics` | Bulk-save the work-order epic/step tree |
-| `POST /projects/:key/schedule` | Issue a session — create board Tasks from the sheet |
+| `POST /projects/:key/schedule` | Issue a fully planned session; missing step dates reject the entire operation |
 | `GET/PUT /projects/:key/sheets/:kind` | Quantities / cutting / hardware sub-sheets |
 | `GET/POST /templates`, `POST /templates/:name/apply/:key` | Full-sheet templates |
 | `GET/POST /epik-templates`, `POST /epik-templates/:name/apply/:key` | Single-epic templates |
