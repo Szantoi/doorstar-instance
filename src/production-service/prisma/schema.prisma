@@ -54,12 +54,17 @@ model Project {
   szinTok   String?
   szinLap   String?
   status    ProductionStatus @default(QUEUED)
+  /// Archive timestamp. Archived projects retain their work sheet, issued
+  /// tasks and audit history, but no longer appear in active project views.
+  deletedAt DateTime?
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 
   epics  Epic[]
   tasks  Task[]
   sheets ProjectSheet[]
+
+  @@index([deletedAt])
 }
 
 /// One manufactured component within a project's work-order sheet
@@ -74,6 +79,9 @@ model Epic {
   disabled      Boolean @default(false)
 
   steps EpicStep[]
+  /// Free-standing board tasks can belong directly to an epic without
+  /// pretending to be one of the work-sheet's manufacturing steps.
+  tasks Task[]
 
   @@index([projectId])
 }
@@ -107,6 +115,8 @@ model Task {
   id            String   @id @default(cuid())
   projectId     String?
   project       Project? @relation(fields: [projectId], references: [id])
+  epicId        String?
+  epic          Epic?    @relation(fields: [epicId], references: [id], onDelete: SetNull)
   epicStepId    String?
   epicStep      EpicStep? @relation(fields: [epicStepId], references: [id])
   epicName      String?
@@ -120,6 +130,10 @@ model Task {
   problem       Boolean  @default(false)
   dueDate       String?
   description   String   @default("")
+  /// Task-level snapshot/override used for board-created work and capacity.
+  /// Issued cards start from their EpicStep values but may be adjusted later.
+  quantity      Float?
+  unitHours     Float?
   dependsOnId   String?  @unique
   dependsOn     Task?    @relation("TaskDependency", fields: [dependsOnId], references: [id])
   dependent     Task?    @relation("TaskDependency")
@@ -133,6 +147,7 @@ model Task {
   @@index([week, day])
   @@index([station])
   @@index([projectId])
+  @@index([epicId])
 }
 
 model TaskComment {

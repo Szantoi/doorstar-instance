@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const createTaskSchema = z.object({
   title: z.string().min(1),
+  /** Human-facing project key; the API resolves it to an internal projectId. */
+  projectKey: z.string().min(1).optional(),
   station: z.string().nullable().optional(),
   week: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   day: z.number().int().min(0).max(6),
@@ -11,6 +13,10 @@ export const createTaskSchema = z.object({
 
 export const updateTaskSchema = z.object({
   title: z.string().min(1).optional(),
+  /** Human-facing key; null removes the project from a free-standing task. */
+  projectKey: z.string().min(1).nullable().optional(),
+  /** Direct epic link for a free-standing task; null removes the link. */
+  epicId: z.string().min(1).nullable().optional(),
   station: z.string().nullable().optional(),
   week: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   day: z.number().int().min(0).max(6).optional(),
@@ -20,6 +26,8 @@ export const updateTaskSchema = z.object({
   problem: z.boolean().optional(),
   dueDate: z.string().nullable().optional(),
   description: z.string().optional(),
+  quantity: z.number().nonnegative().nullable().optional(),
+  unitHours: z.number().nonnegative().nullable().optional(),
   dependsOnId: z.string().nullable().optional(),
 });
 
@@ -78,9 +86,9 @@ export const updateProjectSchema = z.object({
   szinLap: z.string().nullable().optional(),
 });
 
-export const scheduleSchema = z.object({
-  schedDays: z.array(z.boolean()).length(7).optional(),
-});
+/** Publishing uses the per-step planned dates saved on the work sheet.
+ * Deliberately reject the former automatic working-day scheduler payload. */
+export const scheduleSchema = z.object({}).strict();
 
 export const sheetTemplateSchema = z.object({
   name: z.string().min(1),

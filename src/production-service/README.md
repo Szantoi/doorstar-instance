@@ -72,8 +72,8 @@ All routes are mounted under `/api/production`:
 | `PUT /kanban/:station/workflow` | Rename/reorder a station's kanban columns |
 | `GET /load?week=` | Capacity heatmap |
 | `PUT /capacity` | Global hours/day/station assumption |
-| `GET /projects`, `POST /projects` | Project list / create |
-| `GET/PUT /projects/:key` | Project detail / scalar field edits |
+| `GET /projects`, `POST /projects` | Active project list / create |
+| `GET/PUT/DELETE /projects/:key` | Project detail / scalar field edits / soft-delete archive |
 | `PUT /projects/:key/epics` | Bulk-save the work-order epic/step tree |
 | `POST /projects/:key/schedule` | Issue a session — create board Tasks from the sheet |
 | `GET/PUT /projects/:key/sheets/:kind` | Quantities / cutting / hardware sub-sheets |

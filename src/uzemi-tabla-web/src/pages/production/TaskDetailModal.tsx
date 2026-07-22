@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import {
   useAddComment,
   useAddImage,
   useDeleteImage,
   useDeleteTask,
+  useProjects,
+  useProject,
   useStations,
   useTask,
   useUpdateTask,
@@ -31,6 +33,10 @@ function formatDuration(ms: number): string {
   const hours = ms / 3_600_000;
   if (hours >= 1) return `${hours.toFixed(1)} óra`;
   return `${Math.max(1, Math.round(ms / 60_000))} perc`;
+}
+
+function formatWorkHours(hours: number): string {
+  return `${new Intl.NumberFormat("hu-HU", { maximumFractionDigits: 2 }).format(hours)} óra`;
 }
 
 const SECTION_LABEL: React.CSSProperties = {
@@ -65,18 +71,27 @@ export function TaskDetailModal({ task, flow, onClose }: TaskDetailModalProps) {
   const { role, myStation } = useUiStore();
   const showToast = useToastStore((s) => s.show);
   const { data: stationsData } = useStations();
+  const { data: projects = [] } = useProjects();
   const stations = stationsData?.stations.map((s) => s.key) ?? [];
   const updateTask = useUpdateTask(task.week);
   const deleteTask = useDeleteTask(task.week);
   const { data: detail } = useTask(task.id);
+  const { data: selectedProject } = useProject(detail?.project?.key ?? "");
   const addComment = useAddComment(task.id);
   const addImage = useAddImage(task.id);
   const deleteImage = useDeleteImage(task.id);
   const [description, setDescription] = useState(task.description);
   const [title, setTitle] = useState(task.title);
   const [dueDate, setDueDate] = useState(task.dueDate ?? "");
+  const [quantity, setQuantity] = useState<number | "">(task.quantity ?? "");
+  const [unitHours, setUnitHours] = useState<number | "">(task.unitHours ?? "");
   const [commentDraft, setCommentDraft] = useState("");
   const [imageError, setImageError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setQuantity(detail?.quantity ?? "");
+    setUnitHours(detail?.unitHours ?? "");
+  }, [detail?.quantity, detail?.unitHours]);
 
   function submitComment() {
     const text = commentDraft.trim();
@@ -118,6 +133,30 @@ export function TaskDetailModal({ task, flow, onClose }: TaskDetailModalProps) {
   // action, distinct from a station operator picking up/advancing their own work.
   const canEditFields = role === "vezeto";
   const showPick = task.stepIndex === 0 && !task.acknowledged;
+  const projectLockedByWorksheet = detail?.epicStep !== null && detail?.epicStep !== undefined;
+  const selectedProjectIsArchived = detail?.project && !projects.some((project) => project.key === detail.project?.key);
+  const totalWorkHours = quantity === "" || unitHours === "" ? null : quantity * unitHours;
+
+  function updateProject(projectKey: string) {
+    const projectChanged = projectKey !== (detail?.project?.key ?? "");
+    updateTask.mutate(
+      {
+        id: task.id,
+        patch: {
+          projectKey: projectKey || null,
+          ...(projectChanged && detail?.epic ? { epicId: null } : {}),
+        },
+      },
+      { onError: () => showToast("A projekt hozzárendelése nem módosítható.") }
+    );
+  }
+
+  function updateEpic(epicId: string) {
+    updateTask.mutate(
+      { id: task.id, patch: { epicId: epicId || null } },
+      { onError: () => showToast("Az epik hozzárendelése nem módosítható.") }
+    );
+  }
 
   return (
     <div
@@ -167,6 +206,92 @@ export function TaskDetailModal({ task, flow, onClose }: TaskDetailModalProps) {
               onBlur={() => title.trim() && title !== task.title && updateTask.mutate({ id: task.id, patch: { title } })}
               style={FIELD_INPUT}
             />
+          </div>
+          <div style={{ gridColumn: "1 / -1" }}>
+            <label style={FIELD_LABEL}>Projekt</label>
+            <select
+              value={detail?.project?.key ?? ""}
+              disabled={!detail || !canEditFields || projectLockedByWorksheet || updateTask.isPending}
+              title={projectLockedByWorksheet ? "A munkamenetből kiadott feladat projektje az epikből érkezik." : undefined}
+              onChange={(e) => updateProject(e.target.value)}
+              style={FIELD_INPUT}
+            >
+              <option value="">Nincs projekthez rendelve</option>
+              {selectedProjectIsArchived && detail?.project && (
+                <option value={detail.project.key}>
+                  {detail.project.name}{detail.project.num ? ` ${detail.project.num}` : ""} (archivált)
+                </option>
+              )}
+              {projects.map((project) => (
+                <option key={project.key} value={project.key}>
+                  {project.name}{project.num ? ` ${project.num}` : ""}
+                </option>
+              ))}
+            </select>
+            {projectLockedByWorksheet && (
+              <div style={{ fontSize: "11px", color: "var(--text-faint)", marginTop: "3px" }}>
+                Munkamenetből kiadott feladat: a projektet az epik határozza meg.
+              </div>
+            )}
+          </div>
+          <div style={{ gridColumn: "1 / -1" }}>
+            <label style={FIELD_LABEL}>Epik</label>
+            <select
+              value={detail?.epic?.id ?? ""}
+              disabled={!detail || !canEditFields || projectLockedByWorksheet || !selectedProject || updateTask.isPending}
+              title={projectLockedByWorksheet ? "A munkamenetből kiadott feladat epikje az EpicStep forrásából érkezik." : undefined}
+              onChange={(e) => updateEpic(e.target.value)}
+              style={FIELD_INPUT}
+            >
+              <option value="">Nincs epikhez rendelve</option>
+              {selectedProject?.epics.map((epic) => (
+                <option key={epic.id} value={epic.id} disabled={epic.disabled}>
+                  {epic.name}{epic.disabled ? " (kihagyva)" : ""}
+                </option>
+              ))}
+            </select>
+            {!projectLockedByWorksheet && !selectedProject && detail?.project && (
+              <div style={{ fontSize: "11px", color: "var(--text-faint)", marginTop: "3px" }}>
+                Válassz aktív projektet az epik kiválasztásához.
+              </div>
+            )}
+          </div>
+          <div>
+            <label style={FIELD_LABEL}>Mennyiség (db)</label>
+            <input
+              type="number"
+              min={0}
+              value={quantity}
+              disabled={!canEditFields}
+              onChange={(e) => setQuantity(e.target.value === "" ? "" : Number(e.target.value))}
+              onBlur={() => {
+                const value = quantity === "" ? null : quantity;
+                if (value !== (detail?.quantity ?? null)) updateTask.mutate({ id: task.id, patch: { quantity: value } });
+              }}
+              style={FIELD_INPUT}
+            />
+          </div>
+          <div>
+            <label style={FIELD_LABEL}>Egységnyi munkaidő (ó/db)</label>
+            <input
+              type="number"
+              min={0}
+              step={0.01}
+              value={unitHours}
+              disabled={!canEditFields}
+              onChange={(e) => setUnitHours(e.target.value === "" ? "" : Number(e.target.value))}
+              onBlur={() => {
+                const value = unitHours === "" ? null : unitHours;
+                if (value !== (detail?.unitHours ?? null)) updateTask.mutate({ id: task.id, patch: { unitHours: value } });
+              }}
+              style={FIELD_INPUT}
+            />
+          </div>
+          <div style={{ gridColumn: "1 / -1", border: "1px dashed var(--line-input)", padding: "6px 8px", background: "var(--surface-pool)" }}>
+            <span style={FIELD_LABEL}>Teljes munkaidő</span>
+            <strong style={{ fontSize: "14px" }}>
+              {totalWorkHours === null ? "Mennyiség és egységidő megadása után számolható" : `${quantity} db × ${unitHours} ó/db = ${formatWorkHours(totalWorkHours)}`}
+            </strong>
           </div>
           <div>
             <label style={FIELD_LABEL}>Nap</label>

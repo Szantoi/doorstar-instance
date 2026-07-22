@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUiStore } from "@/store/uiStore";
 import { useConfirmStore } from "@/store/confirmStore";
+import { useToastStore } from "@/store/toastStore";
 import { printOnly } from "@/lib/printOnly";
 import {
   useApplyEpikTemplate,
+  useDeleteEpic,
+  useDeleteProject,
   useApplyTemplate,
   useEpikTemplates,
   useProject,
@@ -17,8 +20,6 @@ import {
 } from "@/services/production/hooks";
 import type { Epic, EpicStep } from "@/services/production/types";
 import { ProjectSubSheets } from "./ProjectSubSheets";
-
-const SHORT_DAY_NAMES = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
 
 let localIdSeq = 0;
 function localId() {
@@ -34,6 +35,7 @@ export function ProjectDetailPage() {
   const { key = "" } = useParams();
   const navigate = useNavigate();
   const { role } = useUiStore();
+  const showToast = useToastStore((s) => s.show);
   const canManage = role === "vezeto";
 
   const { data: project } = useProject(key);
@@ -47,16 +49,19 @@ export function ProjectDetailPage() {
   const applyEpikTemplate = useApplyEpikTemplate(key);
   const saveEpikTemplate = useSaveEpikTemplate();
   const updateProject = useUpdateProject(key);
+  const deleteEpic = useDeleteEpic(key);
+  const deleteProject = useDeleteProject(key);
 
   const [epics, setEpics] = useState<Epic[]>([]);
   const [templateSel, setTemplateSel] = useState("");
   const [epikTemplateSel, setEpikTemplateSel] = useState("");
-  const [schedDays, setSchedDays] = useState<boolean[]>(Array(7).fill(false));
   const [dirty, setDirty] = useState(false);
   const [kezdes, setKezdes] = useState("");
   const [beepites, setBeepites] = useState("");
   const [szinTok, setSzinTok] = useState("");
   const [szinLap, setSzinLap] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [projectNum, setProjectNum] = useState("");
 
   useEffect(() => {
     if (project) {
@@ -66,6 +71,8 @@ export function ProjectDetailPage() {
       setBeepites(project.beepites ?? "");
       setSzinTok(project.szinTok ?? "");
       setSzinLap(project.szinLap ?? "");
+      setProjectName(project.name);
+      setProjectNum(project.num ?? "");
     }
   }, [project]);
 
@@ -97,8 +104,20 @@ export function ProjectDetailPage() {
       ? `A(z) "${epic.name}" epik ${issuedCount} lépése már ki van adva a táblára. Törlöd az epiket a munkalapról? (a táblán lévő feladatok megmaradnak, de elárvulnak)`
       : `Biztosan törlöd a(z) "${epic.name}" epiket?`;
     if (!(await useConfirmStore.getState().ask(message))) return;
-    setEpics((prev) => prev.filter((_, i) => i !== index));
-    setDirty(true);
+    const nextEpics = epics.filter((_, i) => i !== index);
+    if (epic.id.startsWith("local-")) {
+      setEpics(nextEpics);
+      setDirty(true);
+      return;
+    }
+    // Persist any other edits first. The API reconciles matching IDs in
+    // place, so their issued task links stay intact when the cache refetches.
+    if (dirty) {
+      await saveEpics.mutateAsync(epics);
+      setDirty(false);
+    }
+    await deleteEpic.mutateAsync(epic.id);
+    setEpics(nextEpics);
   }
 
   function addStep(epicIndex: number) {
@@ -118,6 +137,39 @@ export function ProjectDetailPage() {
 
   function save() {
     saveEpics.mutate(epics, { onSuccess: () => setDirty(false) });
+  }
+
+  async function issueSession() {
+    const missingSteps = epics.flatMap((epic) =>
+      epic.disabled
+        ? []
+        : epic.steps
+            .filter((step) => !step.disabled && !step.tasks?.length && !step.planDate)
+            .map((step) => `${epic.name} · ${step.name || "névtelen lépés"}`)
+    );
+    if (missingSteps.length) {
+      showToast(`Nem adható ki: nincs tervezett napja (${missingSteps.slice(0, 2).join(", ")}${missingSteps.length > 2 ? "…" : ""}).`);
+      return;
+    }
+
+    try {
+      if (dirty) {
+        await saveEpics.mutateAsync(epics);
+        setDirty(false);
+      }
+      await scheduleProject.mutateAsync();
+    } catch {
+      showToast("A munkamenet kiadása nem sikerült. Ellenőrizd a lépések tervezett napját.");
+    }
+  }
+
+  async function archiveProject() {
+    if (!project) return;
+    const message = dirty
+      ? `A(z) "${project.name}" projekt archiválásakor a nem mentett munkalap-módosítások elvesznek. A projekt és a korábbi táblafeladatok megmaradnak, de a projekt kikerül az aktív listából. Folytatod?`
+      : `Archiválod a(z) "${project.name}" projektet? A projekt, a munkalap és a korábbi táblafeladatok megmaradnak, de nem jelenik meg az aktív listában és új feladathoz sem választható.`;
+    if (!(await useConfirmStore.getState().ask(message))) return;
+    deleteProject.mutate(undefined, { onSuccess: () => navigate("/projects") });
   }
 
   async function loadTemplate() {
@@ -147,8 +199,37 @@ export function ProjectDetailPage() {
         <button onClick={() => navigate("/projects")} style={{ border: "1.5px solid #55534c", background: "transparent", color: "#3d3b36", fontWeight: 700, fontSize: "13px", padding: "5px 12px", cursor: "pointer", borderRadius: "3px" }}>
           ‹ Projektek
         </button>
-        <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "30px" }}>{project.name}</div>
-        {project.num && <div style={{ fontSize: "13px", color: "var(--text-muted)" }}>#{project.num}</div>}
+        <div>
+          <label style={{ display: "block", fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.5px", textTransform: "uppercase", color: "var(--text-faint)", marginBottom: "2px" }}>
+            Projekt neve
+          </label>
+          {canManage ? (
+            <input
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              onBlur={() => projectName.trim() && projectName !== project.name && updateProject.mutate({ name: projectName.trim() })}
+              style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "30px", border: "1px solid var(--line-input)", background: "#fff", padding: "0 5px", maxWidth: "min(420px, 72vw)" }}
+            />
+          ) : (
+            <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "30px" }}>{project.name}</div>
+          )}
+        </div>
+        <div>
+          <label style={{ display: "block", fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.5px", textTransform: "uppercase", color: "var(--text-faint)", marginBottom: "2px" }}>
+            Munkaszám
+          </label>
+          {canManage ? (
+            <input
+              value={projectNum}
+              onChange={(e) => setProjectNum(e.target.value)}
+              onBlur={() => projectNum !== (project.num ?? "") && updateProject.mutate({ num: projectNum.trim() || null })}
+              placeholder="—"
+              style={{ border: "1px solid var(--line-input)", background: "#fff", padding: "4px 6px", fontSize: "13px", width: "120px" }}
+            />
+          ) : project.num ? (
+            <div style={{ fontSize: "13px", color: "var(--text-muted)" }}>#{project.num}</div>
+          ) : null}
+        </div>
         <div style={{ flex: 1 }} />
         {dirty && (
           <button onClick={save} style={{ border: "none", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "13px", padding: "6px 14px", cursor: "pointer", borderRadius: "4px" }}>
@@ -158,6 +239,15 @@ export function ProjectDetailPage() {
         <button onClick={() => printOnly("munkamenet")} style={{ border: "none", background: "var(--chrome-bg)", color: "#fff", fontWeight: 700, fontSize: "13.5px", padding: "7px 16px", cursor: "pointer", borderRadius: "4px", letterSpacing: ".5px" }}>
           Munkamenet nyomtatása
         </button>
+        {canManage && (
+          <button
+            onClick={archiveProject}
+            disabled={deleteProject.isPending}
+            style={{ border: "1.5px solid #a3483d", background: "#fff", color: "#8f3329", fontWeight: 700, fontSize: "12.5px", padding: "6px 10px", cursor: "pointer", borderRadius: "4px" }}
+          >
+            {deleteProject.isPending ? "Archiválás…" : "Projekt archiválása"}
+          </button>
+        )}
       </div>
 
       <div className="no-print" style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "14px", maxWidth: "1100px", opacity: canManage ? 1 : 0.6 }}>
@@ -216,24 +306,15 @@ export function ProjectDetailPage() {
             >
               Hozzáad
             </button>
-            <span style={{ color: "#c9c7ba" }}>|</span>
-            <span style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px", color: "var(--text-muted)" }}>Munkanapok:</span>
-            {SHORT_DAY_NAMES.map((label, i) => (
-              <label key={label} style={{ display: "flex", alignItems: "center", gap: "2px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
-                <input
-                  type="checkbox"
-                  checked={schedDays[i]}
-                  onChange={(e) => setSchedDays((prev) => prev.map((v, vi) => (vi === i ? e.target.checked : v)))}
-                />
-                {label}
-              </label>
-            ))}
             <button
-              onClick={() => scheduleProject.mutate(schedDays.some(Boolean) ? schedDays : undefined)}
-              style={{ border: "none", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "13px", padding: "6px 14px", cursor: "pointer", borderRadius: "4px", letterSpacing: ".5px" }}
+              onClick={issueSession}
+              disabled={scheduleProject.isPending || saveEpics.isPending}
+              title="Csak tervezett nappal rendelkező lépések adhatók ki a Táblára."
+              style={{ border: "none", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "13px", padding: "6px 14px", cursor: "pointer", borderRadius: "4px", letterSpacing: ".5px", opacity: scheduleProject.isPending || saveEpics.isPending ? 0.65 : 1 }}
             >
-              Munkamenet kiadása (mai naptól)
+              {scheduleProject.isPending || saveEpics.isPending ? "Kiadás…" : "Munkamenet kiadása"}
             </button>
+            <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>Csak tervezett nappal rendelkező lépések adhatók ki.</span>
             {scheduleProject.data && (
               <span style={{ fontSize: "12px", color: "var(--marker-green)", fontWeight: 700 }}>
                 {scheduleProject.data.createdCount} feladat kiadva
@@ -279,8 +360,8 @@ export function ProjectDetailPage() {
                     <button onClick={() => addStep(epicIndex)} style={{ border: "1px solid var(--line-strong)", background: "#fff", fontWeight: 700, fontSize: "11px", padding: "2px 8px", cursor: "pointer", borderRadius: "3px" }}>
                       + Task
                     </button>
-                    <button onClick={() => removeEpic(epicIndex)} title="Epik törlése" style={{ border: "none", background: "none", color: "#c0c0b8", cursor: "pointer", fontSize: "15px", padding: "0 3px" }}>
-                      ×
+                    <button onClick={() => removeEpic(epicIndex)} title="Epik törlése" style={{ border: "1px solid #a3483d", background: "#fff", color: "#8f3329", fontWeight: 700, fontSize: "11px", padding: "2px 8px", cursor: "pointer", borderRadius: "3px" }}>
+                      Epik törlése
                     </button>
                   </>
                 )}

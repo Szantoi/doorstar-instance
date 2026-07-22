@@ -46,10 +46,10 @@ export function KanbanPage() {
   // on it (Felveszem, drag) is not. Mirrors the mock's onPick role checks.
   const canActOnTab = role === "vezeto" || myStation === activeStation;
 
-  const { data: kanban } = useKanban(activeStation, week);
+  const { data: kanban } = useKanban(activeStation);
   const updateTask = useUpdateTask(week);
-  const saveWorkflow = useSaveStationWorkflow(activeStation, week);
-  const deleteColumn = useDeleteWorkflowColumn(activeStation, week);
+  const saveWorkflow = useSaveStationWorkflow(activeStation);
+  const deleteColumn = useDeleteWorkflowColumn(activeStation);
   const [openTask, setOpenTask] = useState<Task | null>(null);
   const canManageColumns = role === "vezeto";
 
@@ -164,7 +164,7 @@ export function KanbanPage() {
 
             <div style={{ background: "var(--surface-pool)", border: "2px solid var(--line-strong)", boxShadow: "var(--shadow-panel)" }}>
               <div style={{ background: "var(--chrome-bg)", color: "var(--chrome-accent)", fontWeight: 700, fontSize: "13px", letterSpacing: "1.2px", textTransform: "uppercase", padding: "6px 12px" }}>
-                Szabad feladatok a héten
+                Szabad feladatok
               </div>
               <div style={{ padding: "8px", minHeight: "120px" }}>
                 {kanban.pool.map((t) => {
@@ -199,7 +199,7 @@ export function KanbanPage() {
                     </div>
                   );
                 })}
-                {kanban.pool.length === 0 && <div style={{ fontSize: "12.5px", color: "#a9a79e", padding: "6px" }}>Nincs szabad feladat ezen a héten.</div>}
+                {kanban.pool.length === 0 && <div style={{ fontSize: "12.5px", color: "#a9a79e", padding: "6px" }}>Nincs szabad feladat.</div>}
               </div>
             </div>
           </div>

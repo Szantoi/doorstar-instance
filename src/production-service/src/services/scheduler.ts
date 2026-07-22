@@ -1,37 +1,18 @@
 import { prisma } from "../db/client.js";
-import { iso, monday } from "../domain/dates.js";
-
-/** Working-day sequence starting today, honoring an optional weekday mask
- * (index 0=Monday..6=Sunday). An all-false / missing mask means every day
- * is a working day (mirrors the mock's `anyDay` fallback). */
-function workingDays(mask: boolean[] | undefined, count: number): Date[] {
-  const dates: Date[] = [];
-  const anyDay = !!mask && mask.some(Boolean);
-  const d = new Date(`${iso(new Date())}T00:00:00`);
-  while (dates.length < count) {
-    const dow = (d.getDay() + 6) % 7;
-    if (!anyDay || mask![dow]) dates.push(new Date(d));
-    d.setDate(d.getDate() + 1);
-  }
-  return dates;
-}
+import { monday } from "../domain/dates.js";
 
 export interface IssueSessionResult {
   createdCount: number;
   skippedExisting: number;
+  missingPlanDates: Array<{ epicId: string; epicName: string; stepId: string; stepName: string }>;
 }
 
 /**
- * "Munkamenet kiadása" — walks every non-disabled epic/step of a project
- * that doesn't already have a Task on the board, assigns it a plan date
- * (existing locked planDate wins, otherwise the next free working day),
- * and creates a dependency-chained Task per step. Mirrors `schedule()` /
- * `planDates()` / `onBoard()` in the original design mock.
+ * Publishes dependency-chained board tasks only for planned, non-disabled
+ * work-sheet steps. The date check precedes every write, so a partly planned
+ * work sheet can never publish a partial session.
  */
-export async function issueSession(
-  projectId: string,
-  schedDays: boolean[] | undefined
-): Promise<IssueSessionResult> {
+export async function issueSession(projectId: string): Promise<IssueSessionResult> {
   const epics = await prisma.epic.findMany({
     where: { projectId, disabled: false },
     orderBy: { position: "asc" },
@@ -39,36 +20,39 @@ export async function issueSession(
   });
 
   const project = await prisma.project.findUniqueOrThrow({ where: { id: projectId } });
+  const missingPlanDates = epics.flatMap((epic) =>
+    epic.steps
+      .filter((step) => !step.tasks.length && !step.planDate)
+      .map((step) => ({ epicId: epic.id, epicName: epic.name, stepId: step.id, stepName: step.name }))
+  );
+  const skippedExisting = epics.reduce((count, epic) => count + epic.steps.filter((step) => step.tasks.length).length, 0);
 
-  let created = 0;
-  let skipped = 0;
+  if (missingPlanDates.length) {
+    return { createdCount: 0, skippedExisting, missingPlanDates };
+  }
 
+  let createdCount = 0;
   for (const epic of epics) {
-    const days = workingDays(schedDays, epic.steps.length + 1);
-    let dayCursor = 0;
     let prevTaskId: string | null = null;
-
     for (const step of epic.steps) {
       const existing = step.tasks[0];
       if (existing) {
         prevTaskId = existing.id;
-        skipped += 1;
         continue;
       }
 
-      const planDate = step.planLocked && step.planDate ? step.planDate : days[Math.min(dayCursor, days.length - 1)];
-      dayCursor += 1;
-
+      // The early validation guarantees the non-null date: no auto-scheduling.
+      const planDate = step.planDate!;
       const week = monday(planDate);
       const day = (planDate.getDay() + 6) % 7;
-
-      // Explicit annotation breaks a circular-inference issue TS hits on
-      // Task.create's return type because of the self-relation (dependsOn).
       const createdTask: { id: string } = await prisma.task.create({
         data: {
           projectId: project.id,
+          epicId: epic.id,
           epicStepId: step.id,
           epicName: epic.name,
+          quantity: step.quantity,
+          unitHours: step.unitHours,
           title: `${epic.name} · ${step.name}`,
           station: step.station,
           week,
@@ -78,11 +62,10 @@ export async function issueSession(
           audit: { create: [{ label: "Kiadva a táblára" }] },
         },
       });
-
       prevTaskId = createdTask.id;
-      created += 1;
+      createdCount += 1;
     }
   }
 
-  return { createdCount: created, skippedExisting: skipped };
+  return { createdCount, skippedExisting, missingPlanDates: [] };
 }

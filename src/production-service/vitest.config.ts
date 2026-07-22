@@ -5,5 +5,7 @@ export default defineConfig({
     environment: "node",
     setupFiles: ["./tests/setup.ts"],
     testTimeout: 15000,
+    // setup.ts provisions one isolated Prisma schema for this process.
+    fileParallelism: false,
   },
 });

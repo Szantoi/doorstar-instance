@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { useUiStore } from "@/store/uiStore";
 import { useToastStore } from "@/store/toastStore";
-import { useBoard, useCreateTask, useSaveWeekNote, useStations, useUpdateTask } from "@/services/production/hooks";
+import { useBoard, useCreateTask, useProjects, useSaveWeekNote, useStations, useUpdateTask } from "@/services/production/hooks";
 import { addDays, DAY_NAMES, iso } from "@/lib/dates";
 import { BoardCell } from "./BoardCell";
 import { OrderChecklist } from "./OrderChecklist";
@@ -29,6 +29,7 @@ export function BoardPage() {
   const stations = useMemo(() => stationsData?.stations.map((s) => s.key) ?? [], [stationsData]);
 
   const { data: board, isLoading } = useBoard(week);
+  const { data: projects = [] } = useProjects();
   const createTask = useCreateTask(week);
   const updateTask = useUpdateTask(week);
   const saveNote = useSaveWeekNote(week);
@@ -143,7 +144,16 @@ export function BoardPage() {
                     tasks={tasksByCell.get(cellId(null, day)) ?? []}
                     canManage={canManage}
                     onOpen={setOpenTask}
-                    onQuickAdd={(title) => createTask.mutate({ title, station: null, week, day })}
+                    projects={projects}
+                    onQuickAdd={async (title, projectKey) => {
+                      try {
+                        await createTask.mutateAsync({ title, projectKey, station: null, week, day });
+                        return true;
+                      } catch {
+                        showToast("A feladat mentése nem sikerült. A beírt adatok megmaradtak.");
+                        return false;
+                      }
+                    }}
                   />
                 ))}
               </div>
@@ -182,7 +192,16 @@ export function BoardPage() {
                       tasks={tasksByCell.get(cellId(station, day)) ?? []}
                       canManage={canManage}
                       onOpen={setOpenTask}
-                      onQuickAdd={(title) => createTask.mutate({ title, station, week, day })}
+                      projects={projects}
+                      onQuickAdd={async (title, projectKey) => {
+                        try {
+                          await createTask.mutateAsync({ title, projectKey, station, week, day });
+                          return true;
+                        } catch {
+                          showToast("A feladat mentése nem sikerült. A beírt adatok megmaradtak.");
+                          return false;
+                        }
+                      }}
                     />
                   ))}
                 </div>

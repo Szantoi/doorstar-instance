@@ -33,6 +33,8 @@ export interface Task {
   problem: boolean;
   dueDate: string | null;
   description: string;
+  quantity: number | null;
+  unitHours: number | null;
   dependsOnId: string | null;
   createdAt: string;
   updatedAt: string;
@@ -72,7 +74,28 @@ export interface TaskDetail extends Task {
   /** The planned quantity/unit-hours from the linked EpicStep, if any —
    * read-only here; the source of truth is the project's Munkamenet sheet. */
   epicStep: { quantity: number | null; unitHours: number | null } | null;
-  project: { name: string; num: string | null } | null;
+  epic: { id: string; name: string } | null;
+  project: { id: string; key: string; name: string; num: string | null } | null;
+}
+
+/** Fields accepted by PATCH /tasks/:id. Project key is human-facing; the API
+ * resolves it to its internal id and only a manager may change it. */
+export interface UpdateTaskPatch {
+  title?: string;
+  projectKey?: string | null;
+  epicId?: string | null;
+  station?: string | null;
+  week?: string;
+  day?: number;
+  stepIndex?: number;
+  acknowledged?: boolean;
+  urgent?: boolean;
+  problem?: boolean;
+  dueDate?: string | null;
+  description?: string;
+  quantity?: number | null;
+  unitHours?: number | null;
+  dependsOnId?: string | null;
 }
 
 export interface OrderChecklistItem {
@@ -222,6 +245,7 @@ export interface EpikTemplate {
 export interface IssueSessionResult {
   createdCount: number;
   skippedExisting: number;
+  missingPlanDates: Array<{ epicId: string; epicName: string; stepId: string; stepName: string }>;
 }
 
 export interface ProductionOverview {

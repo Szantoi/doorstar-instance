@@ -2,21 +2,19 @@ import { Router } from "express";
 import { prisma } from "../db/client.js";
 import { resolveFlow } from "../domain/taskStatus.js";
 import { DEFAULT_WORKFLOW } from "../config/stations.js";
-import { monday } from "../domain/dates.js";
 import { loadWorkflows, taskVM } from "./board.js";
 
 export const kanbanRouter = Router();
 
 /**
- * GET /api/production/kanban?station=CNC&week=... — the three kanban lanes
- * for one station: newly-assigned-not-started, the shared weekly pool
- * ("Szabad feladatok"), and the station's own workflow columns. Uses the
- * same taskVM as the board so status/isDone/flowLabel/depDone are computed
- * consistently everywhere a task appears.
+ * GET /api/production/kanban?station=CNC — the three status lanes for one
+ * station: newly assigned, the shared pool, and the workflow columns. Unlike
+ * the weekly board, Kanban is a live status view: no task is date-filtered.
+ * Uses the same taskVM as the board so status/isDone/flowLabel/depDone are
+ * computed consistently everywhere a task appears.
  */
 kanbanRouter.get("/kanban", async (req, res) => {
   const station = typeof req.query.station === "string" ? req.query.station : null;
-  const week = typeof req.query.week === "string" ? req.query.week : monday(new Date());
 
   if (!station) {
     res.status(400).json({ error: "station_required" });
@@ -28,15 +26,18 @@ kanbanRouter.get("/kanban", async (req, res) => {
 
   const [assignedRaw, poolRaw, stationTasksRaw] = await Promise.all([
     prisma.task.findMany({
-      where: { station, week, stepIndex: 0, acknowledged: false },
+      where: { station, stepIndex: 0, acknowledged: false },
+      orderBy: { createdAt: "asc" },
       include: { project: { select: { num: true } } },
     }),
     prisma.task.findMany({
-      where: { station: null, week },
+      where: { station: null },
+      orderBy: { createdAt: "asc" },
       include: { epicStep: { select: { station: true } }, project: { select: { num: true } } },
     }),
     prisma.task.findMany({
-      where: { station, week, NOT: { AND: [{ stepIndex: 0 }, { acknowledged: false }] } },
+      where: { station, NOT: { AND: [{ stepIndex: 0 }, { acknowledged: false }] } },
+      orderBy: { createdAt: "asc" },
       include: { project: { select: { num: true } } },
     }),
   ]);
@@ -61,7 +62,6 @@ kanbanRouter.get("/kanban", async (req, res) => {
 
   res.json({
     station,
-    week,
     flow,
     assigned,
     pool,

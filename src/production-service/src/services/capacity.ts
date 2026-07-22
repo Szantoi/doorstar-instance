@@ -25,9 +25,10 @@ export interface LoadReport {
 
 /**
  * Computes per-station/per-day workload for a week. Hours = quantity ×
- * unit-time when both are known on the originating EpicStep, else 1h per
- * task (mirrors the mock's estimate rule). Completed tasks don't count
- * against capacity.
+ * unit-time when both are known on the task. Issued tasks start with a
+ * snapshot of their originating EpicStep values; legacy cards fall back to
+ * the source step. Otherwise the mock's 1h/task estimate applies. Completed
+ * tasks don't count against capacity.
  */
 export async function computeLoad(week: string, hoursPerDayOverride?: number): Promise<LoadReport> {
   const capacity = await prisma.capacitySetting.findUnique({ where: { id: "default" } });
@@ -51,8 +52,8 @@ export async function computeLoad(week: string, hoursPerDayOverride?: number): P
     const flow = resolveFlow(task.station, workflows);
     if (isDone(task, flow)) continue;
 
-    const qty = task.epicStep?.quantity ?? null;
-    const unitHours = task.epicStep?.unitHours ?? null;
+    const qty = task.quantity ?? task.epicStep?.quantity ?? null;
+    const unitHours = task.unitHours ?? task.epicStep?.unitHours ?? null;
     const hours = qty != null && unitHours != null ? qty * unitHours : 1;
 
     const cells = byStation.get(task.station);

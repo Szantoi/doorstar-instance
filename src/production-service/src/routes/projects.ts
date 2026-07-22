@@ -11,12 +11,15 @@ import {
 import { resolveFlow, isDone, markerStatus } from "../domain/taskStatus.js";
 import { issueSession } from "../services/scheduler.js";
 import { logger } from "../logger.js";
+import { requireManager } from "../middleware/requester.js";
+import { findActiveProject } from "../services/projects.js";
 
 export const projectsRouter = Router();
 
 /** GET /api/production/projects — card grid with per-project progress rollup. */
 projectsRouter.get("/projects", async (_req, res) => {
   const projects = await prisma.project.findMany({
+    where: { deletedAt: null },
     orderBy: { createdAt: "asc" },
     include: { tasks: true },
   });
@@ -43,7 +46,7 @@ projectsRouter.get("/projects", async (_req, res) => {
  * (across all weeks), grouped by epicName. Mirrors the design mock's
  * projects-list epik rows and "Epik áttekintés" modal. */
 projectsRouter.get("/projects/:key/epik-rollup", async (req, res) => {
-  const project = await prisma.project.findUnique({ where: { key: req.params.key } });
+  const project = await findActiveProject(req.params.key);
   if (!project) {
     res.status(404).json({ error: "not_found" });
     return;
@@ -90,7 +93,13 @@ projectsRouter.get("/projects/:key/epik-rollup", async (req, res) => {
 });
 
 projectsRouter.post("/projects", validateBody(createProjectSchema), async (req, res) => {
+  if (!requireManager(req, res)) return;
   const body = req.body as { key: string; name: string; num?: string };
+  const existing = await prisma.project.findUnique({ where: { key: body.key } });
+  if (existing) {
+    res.status(409).json({ error: existing.deletedAt ? "project_archived" : "project_key_exists" });
+    return;
+  }
   const project = await prisma.project.create({ data: body });
   logger.info({ key: project.key }, "project created");
   res.status(201).json(project);
@@ -98,8 +107,8 @@ projectsRouter.post("/projects", validateBody(createProjectSchema), async (req, 
 
 /** GET /api/production/projects/:key — full munkalap: epics/steps + sub-sheets. */
 projectsRouter.get("/projects/:key", async (req, res) => {
-  const project = await prisma.project.findUnique({
-    where: { key: req.params.key },
+  const project = await prisma.project.findFirst({
+    where: { key: req.params.key, deletedAt: null },
     include: {
       epics: {
         orderBy: { position: "asc" },
@@ -116,13 +125,34 @@ projectsRouter.get("/projects/:key", async (req, res) => {
 });
 
 projectsRouter.put("/projects/:key", validateBody(updateProjectSchema), async (req, res) => {
-  const project = await prisma.project.update({ where: { key: req.params.key }, data: req.body });
+  if (!requireManager(req, res)) return;
+  const current = await findActiveProject(req.params.key);
+  if (!current) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+  const project = await prisma.project.update({ where: { id: current.id }, data: req.body });
   res.json(project);
 });
 
-/** PUT /api/production/projects/:key/epics — bulk-replace the epic/step tree
- * (the munkalap's editable grid is saved as a whole, matching the source UI). */
+/** Archive a project instead of deleting its work sheet, tasks or history. */
+projectsRouter.delete("/projects/:key", async (req, res) => {
+  if (!requireManager(req, res)) return;
+  const project = await findActiveProject(req.params.key);
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+  await prisma.project.update({ where: { id: project.id }, data: { deletedAt: new Date() } });
+  logger.info({ key: project.key, projectId: project.id }, "project soft deleted");
+  res.status(204).end();
+});
+
+/** PUT /api/production/projects/:key/epics — reconcile the editable work-sheet
+ * tree. Existing IDs are updated in place so an ordinary save never detaches
+ * already issued Tasks from unchanged EpicSteps. */
 projectsRouter.put("/projects/:key/epics", validateBody(saveEpicsSchema), async (req, res) => {
+  if (!requireManager(req, res)) return;
   const { epics } = req.body as {
     epics: Array<{
       id?: string;
@@ -142,33 +172,88 @@ projectsRouter.put("/projects/:key/epics", validateBody(saveEpicsSchema), async 
     }>;
   };
 
-  const project = await prisma.project.findUniqueOrThrow({ where: { key: req.params.key } });
+  const project = await findActiveProject(req.params.key);
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
 
   await prisma.$transaction(async (tx) => {
-    await tx.epic.deleteMany({ where: { projectId: project.id } });
+    const currentEpics = await tx.epic.findMany({
+      where: { projectId: project.id },
+      include: { steps: { select: { id: true } } },
+    });
+    const currentById = new Map(currentEpics.map((epic) => [epic.id, epic]));
+    const retainedEpicIds = new Set<string>();
+
     for (const [epicIndex, epic] of epics.entries()) {
-      await tx.epic.create({
-        data: {
-          projectId: project.id,
-          name: epic.name,
-          quantityLabel: epic.quantityLabel ?? null,
-          disabled: epic.disabled ?? false,
-          position: epicIndex,
-          steps: {
-            create: epic.steps.map((s, stepIndex) => ({
-              name: s.name,
-              station: s.station ?? null,
-              quantity: s.quantity ?? null,
-              unitHours: s.unitHours ?? null,
-              planDate: s.planDate ? new Date(s.planDate) : null,
-              planLocked: s.planLocked ?? false,
-              disabled: s.disabled ?? false,
-              position: stepIndex,
-            })),
+      const epicData = {
+        name: epic.name,
+        quantityLabel: epic.quantityLabel ?? null,
+        disabled: epic.disabled ?? false,
+        position: epicIndex,
+      };
+      const currentEpic = epic.id ? currentById.get(epic.id) : undefined;
+
+      if (!currentEpic) {
+        const createdEpic = await tx.epic.create({
+          data: {
+            projectId: project.id,
+            ...epicData,
+            steps: {
+              create: epic.steps.map((step, stepIndex) => ({
+                name: step.name,
+                station: step.station ?? null,
+                quantity: step.quantity ?? null,
+                unitHours: step.unitHours ?? null,
+                planDate: step.planDate ? new Date(step.planDate) : null,
+                planLocked: step.planLocked ?? false,
+                disabled: step.disabled ?? false,
+                position: stepIndex,
+              })),
+            },
           },
-        },
+        });
+        retainedEpicIds.add(createdEpic.id);
+        continue;
+      }
+
+      retainedEpicIds.add(currentEpic.id);
+      await tx.epic.update({ where: { id: currentEpic.id }, data: epicData });
+      const currentStepIds = new Set(currentEpic.steps.map((step) => step.id));
+      const retainedStepIds = new Set(
+        epic.steps.flatMap((step) => (step.id && currentStepIds.has(step.id) ? [step.id] : []))
+      );
+      await tx.epicStep.deleteMany({
+        where: retainedStepIds.size
+          ? { epicId: currentEpic.id, id: { notIn: Array.from(retainedStepIds) } }
+          : { epicId: currentEpic.id },
       });
+
+      for (const [stepIndex, step] of epic.steps.entries()) {
+        const stepData = {
+          name: step.name,
+          station: step.station ?? null,
+          quantity: step.quantity ?? null,
+          unitHours: step.unitHours ?? null,
+          planDate: step.planDate ? new Date(step.planDate) : null,
+          planLocked: step.planLocked ?? false,
+          disabled: step.disabled ?? false,
+          position: stepIndex,
+        };
+        if (step.id && currentStepIds.has(step.id)) {
+          await tx.epicStep.update({ where: { id: step.id }, data: stepData });
+        } else {
+          await tx.epicStep.create({ data: { epicId: currentEpic.id, ...stepData } });
+        }
+      }
     }
+
+    await tx.epic.deleteMany({
+      where: retainedEpicIds.size
+        ? { projectId: project.id, id: { notIn: Array.from(retainedEpicIds) } }
+        : { projectId: project.id },
+    });
   });
 
   const saved = await prisma.epic.findMany({
@@ -179,16 +264,41 @@ projectsRouter.put("/projects/:key/epics", validateBody(saveEpicsSchema), async 
   res.json(saved);
 });
 
-/** POST /api/production/projects/:key/schedule — "Munkamenet kiadása": create
- * board Tasks from every not-yet-issued epic step. */
-projectsRouter.post("/projects/:key/schedule", validateBody(scheduleSchema), async (req, res) => {
-  const project = await prisma.project.findUnique({ where: { key: req.params.key } });
+/** DELETE /api/production/projects/:key/epics/:epicId — remove exactly one
+ * epic. EpicStep's SET NULL relation preserves cards already issued from that
+ * epic, while leaving every other epic and its issued tasks untouched. */
+projectsRouter.delete("/projects/:key/epics/:epicId", async (req, res) => {
+  if (!requireManager(req, res)) return;
+  const project = await findActiveProject(req.params.key);
   if (!project) {
     res.status(404).json({ error: "not_found" });
     return;
   }
-  const { schedDays } = req.body as { schedDays?: boolean[] };
-  const result = await issueSession(project.id, schedDays);
+  const epic = await prisma.epic.findFirst({ where: { id: req.params.epicId, projectId: project.id } });
+  if (!epic) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+  await prisma.epic.delete({ where: { id: epic.id } });
+  logger.info({ key: project.key, epicId: epic.id }, "project epic deleted");
+  res.status(204).end();
+});
+
+/** POST /api/production/projects/:key/schedule — "Munkamenet kiadása": create
+ * board Tasks from every not-yet-issued epic step. */
+projectsRouter.post("/projects/:key/schedule", validateBody(scheduleSchema), async (req, res) => {
+  if (!requireManager(req, res)) return;
+  const project = await findActiveProject(req.params.key);
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+  const result = await issueSession(project.id);
+  if (result.missingPlanDates.length) {
+    logger.warn({ key: project.key, missingPlanDates: result.missingPlanDates }, "session issue rejected: planned date missing");
+    res.status(409).json({ error: "missing_plan_dates", missingSteps: result.missingPlanDates });
+    return;
+  }
   logger.info({ key: project.key, ...result }, "session issued to board");
   res.json(result);
 });
@@ -197,14 +307,23 @@ projectsRouter.post("/projects/:key/schedule", validateBody(scheduleSchema), asy
  * hardware sub-sheets. Kept as free-form JSON — see schema.prisma comment. */
 projectsRouter.get("/projects/:key/sheets/:kind", async (req, res) => {
   const kind = projectSheetKindSchema.parse(req.params.kind);
-  const project = await prisma.project.findUniqueOrThrow({ where: { key: req.params.key } });
+  const project = await findActiveProject(req.params.key);
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
   const sheet = await prisma.projectSheet.findUnique({ where: { projectId_kind: { projectId: project.id, kind } } });
   res.json(sheet?.data ?? null);
 });
 
 projectsRouter.put("/projects/:key/sheets/:kind", async (req, res) => {
+  if (!requireManager(req, res)) return;
   const kind = projectSheetKindSchema.parse(req.params.kind);
-  const project = await prisma.project.findUniqueOrThrow({ where: { key: req.params.key } });
+  const project = await findActiveProject(req.params.key);
+  if (!project) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
   const sheet = await prisma.projectSheet.upsert({
     where: { projectId_kind: { projectId: project.id, kind } },
     create: { projectId: project.id, kind, data: req.body },

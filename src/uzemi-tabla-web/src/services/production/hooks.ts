@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { productionApi } from "./api";
-import type { OrderChecklistItem, ProjectDetail, Task } from "./types";
+import type { OrderChecklistItem, ProjectDetail, Task, UpdateTaskPatch } from "./types";
 
 const keys = {
   stations: ["production", "stations"] as const,
   board: (week: string) => ["production", "board", week] as const,
   orders: ["production", "orders"] as const,
-  kanban: (station: string, week: string) => ["production", "kanban", station, week] as const,
+  kanban: (station: string) => ["production", "kanban", station] as const,
   load: (week: string) => ["production", "load", week] as const,
   projects: ["production", "projects"] as const,
   project: (key: string) => ["production", "project", key] as const,
@@ -32,26 +32,50 @@ function useInvalidateBoard(week: string) {
 
 export function useCreateTask(week: string) {
   const invalidate = useInvalidateBoard(week);
-  return useMutation({ mutationFn: productionApi.createTask, onSuccess: invalidate });
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: productionApi.createTask,
+    onSuccess: () => {
+      invalidate();
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: ["production", "epikRollup"] });
+      qc.invalidateQueries({ queryKey: ["production", "kanban"] });
+      qc.invalidateQueries({ queryKey: ["production", "load"] });
+    },
+  });
 }
 
 export function useUpdateTask(week: string) {
   const invalidate = useInvalidateBoard(week);
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, patch }: { id: string; patch: Partial<Task> }) => productionApi.updateTask(id, patch),
+    mutationFn: ({ id, patch }: { id: string; patch: UpdateTaskPatch }) => productionApi.updateTask(id, patch),
     onSuccess: () => {
       invalidate();
       qc.invalidateQueries({ queryKey: ["production", "kanban"] });
       qc.invalidateQueries({ queryKey: ["production", "load"] });
       qc.invalidateQueries({ queryKey: ["production", "task"] });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: ["production", "epikRollup"] });
     },
   });
 }
 
 export function useDeleteTask(week: string) {
   const invalidate = useInvalidateBoard(week);
-  return useMutation({ mutationFn: productionApi.deleteTask, onSuccess: invalidate });
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: productionApi.deleteTask,
+    onSuccess: () => {
+      invalidate();
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+      qc.invalidateQueries({ queryKey: ["production", "kanban"] });
+      qc.invalidateQueries({ queryKey: ["production", "load"] });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: ["production", "epikRollup"] });
+    },
+  });
 }
 
 export function useTask(id: string) {
@@ -119,28 +143,28 @@ export function useSaveWeekNote(week: string) {
   });
 }
 
-export function useKanban(station: string, week: string) {
+export function useKanban(station: string) {
   return useQuery({
-    queryKey: keys.kanban(station, week),
-    queryFn: () => productionApi.getKanban(station, week),
+    queryKey: keys.kanban(station),
+    queryFn: () => productionApi.getKanban(station),
     enabled: !!station,
   });
 }
 
-export function useSaveStationWorkflow(station: string, week: string) {
+export function useSaveStationWorkflow(station: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (steps: string[]) => productionApi.saveStationWorkflow(station, steps),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.kanban(station, week) }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.kanban(station) }),
   });
 }
 
-export function useDeleteWorkflowColumn(station: string, week: string) {
+export function useDeleteWorkflowColumn(station: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (index: number) => productionApi.deleteWorkflowColumn(station, index),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: keys.kanban(station, week) });
+      qc.invalidateQueries({ queryKey: keys.kanban(station) });
       qc.invalidateQueries({ queryKey: ["production", "board"] });
     },
   });
@@ -182,7 +206,24 @@ export function useUpdateProject(key: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (patch: Partial<ProjectDetail>) => productionApi.updateProject(key, patch),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+    },
+  });
+}
+
+/** Project deletion is an archive action. The API retains the related work
+ * sheet, issued tasks and audit data; only active project views are refreshed. */
+export function useDeleteProject(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => productionApi.deleteProject(key),
+    onSuccess: () => {
+      qc.removeQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.epikRollup(key) });
+    },
   });
 }
 
@@ -194,10 +235,24 @@ export function useSaveEpics(key: string) {
   });
 }
 
+/** Delete one saved epic without rebuilding the other work-sheet rows. */
+export function useDeleteEpic(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (epicId: string) => productionApi.deleteEpic(key, epicId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.epikRollup(key) });
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+    },
+  });
+}
+
 export function useScheduleProject(key: string) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (schedDays?: boolean[]) => productionApi.scheduleProject(key, schedDays),
+    mutationFn: () => productionApi.scheduleProject(key),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: keys.project(key) });
       qc.invalidateQueries({ queryKey: ["production", "board"] });

@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
-import { useState } from "react";
-import type { Task } from "@/services/production/types";
+import { useRef, useState } from "react";
+import type { ProjectCard, Task } from "@/services/production/types";
 import { DraggableTaskCard } from "./DraggableTaskCard";
 
 interface BoardCellProps {
@@ -10,19 +10,36 @@ interface BoardCellProps {
   tasks: Task[];
   canManage: boolean;
   onOpen: (task: Task) => void;
-  onQuickAdd: (title: string) => void;
+  onQuickAdd: (title: string, projectKey?: string) => Promise<boolean>;
+  projects: ProjectCard[];
   pool?: boolean;
 }
 
-export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, pool }: BoardCellProps) {
+export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, projects, pool }: BoardCellProps) {
   const { setNodeRef, isOver } = useDroppable({ id: cellId });
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("");
+  const [projectKey, setProjectKey] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submittingRef = useRef(false);
 
-  function submit() {
+  async function submit() {
     const title = draft.trim();
-    if (title) onQuickAdd(title);
+    if (!title || submittingRef.current) return;
+    submittingRef.current = true;
+    setIsSubmitting(true);
+    try {
+      const created = await onQuickAdd(title, projectKey || undefined);
+      if (created) cancel();
+    } finally {
+      submittingRef.current = false;
+      setIsSubmitting(false);
+    }
+  }
+
+  function cancel() {
     setDraft("");
+    setProjectKey("");
     setAdding(false);
   }
 
@@ -68,16 +85,16 @@ export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, pool }
         <DraggableTaskCard key={t.id} task={t} onOpen={onOpen} />
       ))}
       {adding ? (
-        <div style={{ display: "flex", gap: "4px", marginTop: "4px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px", padding: "5px", border: "1px dashed var(--line-input)", background: "#fffef8" }}>
           <input
             autoFocus
             value={draft}
+            disabled={isSubmitting}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") submit();
-              if (e.key === "Escape") setAdding(false);
+              if (e.key === "Enter") void submit();
+              if (e.key === "Escape") cancel();
             }}
-            onBlur={submit}
             placeholder="Új feladat…"
             style={{
               flex: 1,
@@ -92,6 +109,24 @@ export function BoardCell({ cellId, tasks, canManage, onOpen, onQuickAdd, pool }
               color: "var(--marker-blue)",
             }}
           />
+          <select
+            value={projectKey}
+            disabled={isSubmitting}
+            onChange={(e) => setProjectKey(e.target.value)}
+            aria-label="Feladat projektje"
+            style={{ minWidth: 0, border: "1px solid var(--line-input)", background: "#fff", color: "var(--text-ink)", fontSize: "12px", padding: "3px 4px" }}
+          >
+            <option value="">Szabad feladat — nincs projekt</option>
+            {projects.map((project) => (
+              <option key={project.key} value={project.key}>
+                {project.num ? `${project.num} — ` : ""}{project.name}
+              </option>
+            ))}
+          </select>
+          <div style={{ display: "flex", gap: "4px" }}>
+            <button type="button" disabled={isSubmitting} onClick={() => void submit()} style={{ border: "none", background: isSubmitting ? "#9fb8c5" : "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "11px", padding: "3px 8px", cursor: isSubmitting ? "wait" : "pointer" }}>{isSubmitting ? "Mentés…" : "Felírom"}</button>
+            <button type="button" disabled={isSubmitting} onClick={cancel} style={{ border: "1px solid var(--line-input)", background: "#fff", color: "var(--text-muted)", fontSize: "11px", padding: "3px 8px", cursor: isSubmitting ? "wait" : "pointer" }}>Mégse</button>
+          </div>
         </div>
       ) : (
         canManage && (

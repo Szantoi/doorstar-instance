@@ -1,0 +1,25 @@
+# Doorstar's domain MCP is launched locally by Codex. It is deliberately
+# limited to the read-only tool allowlist; see src/doorstar-production-mcp.
+[mcp_servers.doorstar_production]
+command = "node"
+args = ["dist/index.js"]
+cwd = "../src/doorstar-production-mcp"
+enabled = true
+required = false
+enabled_tools = [
+  "get_overview",
+  "list_projects",
+  "get_project",
+  "get_board",
+  "get_kanban",
+  "get_load",
+  "get_task",
+  "search_knowledge",
+  "corpus_status",
+]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_production.env]
+DOORSTAR_PRODUCTION_API_BASE_URL = "http://127.0.0.1:4610/api/production"

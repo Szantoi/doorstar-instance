@@ -15,6 +15,7 @@ import type {
   StationConfig,
   Task,
   TaskDetail,
+  UpdateTaskPatch,
 } from "./types";
 
 export const productionApi = {
@@ -22,10 +23,10 @@ export const productionApi = {
 
   getBoard: (week: string) => apiFetch<BoardResponse>(`${BASE}/board`, { query: { week } }),
 
-  createTask: (input: { title: string; station?: string | null; week: string; day: number; urgent?: boolean }) =>
+  createTask: (input: { title: string; projectKey?: string; station?: string | null; week: string; day: number; urgent?: boolean }) =>
     apiFetch<Task>(`${BASE}/tasks`, { method: "POST", body: input }),
 
-  updateTask: (id: string, patch: Partial<Task>) =>
+  updateTask: (id: string, patch: UpdateTaskPatch) =>
     apiFetch<Task>(`${BASE}/tasks/${id}`, { method: "PATCH", body: patch }),
 
   deleteTask: (id: string) => apiFetch<void>(`${BASE}/tasks/${id}`, { method: "DELETE" }),
@@ -49,8 +50,8 @@ export const productionApi = {
   saveWeekNote: (week: string, text: string) =>
     apiFetch(`${BASE}/week-note`, { method: "PUT", body: { week, text } }),
 
-  getKanban: (station: string, week: string) =>
-    apiFetch<KanbanResponse>(`${BASE}/kanban`, { query: { station, week } }),
+  getKanban: (station: string) =>
+    apiFetch<KanbanResponse>(`${BASE}/kanban`, { query: { station } }),
   saveStationWorkflow: (station: string, steps: string[]) =>
     apiFetch(`${BASE}/kanban/${encodeURIComponent(station)}/workflow`, { method: "PUT", body: { steps } }),
   deleteWorkflowColumn: (station: string, index: number) =>
@@ -66,15 +67,19 @@ export const productionApi = {
   getEpikRollup: (key: string) => apiFetch<EpikRollup>(`${BASE}/projects/${encodeURIComponent(key)}/epik-rollup`),
   updateProject: (key: string, patch: Partial<ProjectDetail>) =>
     apiFetch<ProjectDetail>(`${BASE}/projects/${encodeURIComponent(key)}`, { method: "PUT", body: patch }),
+  deleteProject: (key: string) =>
+    apiFetch<void>(`${BASE}/projects/${encodeURIComponent(key)}`, { method: "DELETE" }),
   saveEpics: (key: string, epics: ProjectDetail["epics"]) =>
     apiFetch<ProjectDetail["epics"]>(`${BASE}/projects/${encodeURIComponent(key)}/epics`, {
       method: "PUT",
       body: { epics },
     }),
-  scheduleProject: (key: string, schedDays?: boolean[]) =>
+  deleteEpic: (key: string, epicId: string) =>
+    apiFetch<void>(`${BASE}/projects/${encodeURIComponent(key)}/epics/${encodeURIComponent(epicId)}`, { method: "DELETE" }),
+  scheduleProject: (key: string) =>
     apiFetch<IssueSessionResult>(`${BASE}/projects/${encodeURIComponent(key)}/schedule`, {
       method: "POST",
-      body: { schedDays },
+      body: {},
     }),
   getSheet: (key: string, kind: "QUANTITIES" | "CUTTING" | "HARDWARE") =>
     apiFetch<unknown>(`${BASE}/projects/${encodeURIComponent(key)}/sheets/${kind}`),

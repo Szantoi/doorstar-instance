@@ -16,9 +16,9 @@ overviewRouter.get("/stations", (_req, res) => {
  */
 overviewRouter.get("/overview", async (_req, res) => {
   const [activeJobs, shippingReadyJobs, allProjects] = await Promise.all([
-    prisma.project.count({ where: { status: "IN_PROGRESS" } }),
-    prisma.project.count({ where: { status: "SHIPPING_READY" } }),
-    prisma.project.findMany({ include: { tasks: true } }),
+    prisma.project.count({ where: { status: "IN_PROGRESS", deletedAt: null } }),
+    prisma.project.count({ where: { status: "SHIPPING_READY", deletedAt: null } }),
+    prisma.project.findMany({ where: { deletedAt: null }, include: { tasks: true } }),
   ]);
 
   const today = new Date();

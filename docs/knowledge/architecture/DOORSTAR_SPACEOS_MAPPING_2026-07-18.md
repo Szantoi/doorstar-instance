@@ -83,6 +83,47 @@ Jelenleg nincs JWT, tenant, RLS vagy hitelesített station membership. A fronten
 4. Image URL adat-URI is lehet; blob ownership, méretkorlát és retention contract hiányzik.
 5. A platform és Doorstar production HEAD eltér; migráció előtt comparison E2E, feature-flag és strangler rollback kell.
 
+## Döntési napló — feladat projekt-hozzárendelése (2026-07-22)
+
+A tábla kézzel felírt feladatainak projektje a feladat részletes munkalapján
+is módosítható. A PATCH kérés a stabil, embernek látható `projectKey`-t
+fogadja; a backend azt aktív `Project`-re oldja fel, és csak vezetői szerep
+számára engedi. Az üres érték leválasztja a szabad feladatot a projektről.
+
+Munkamenetből kiadott feladatnál (`epicStepId` kitöltve) a projekt az EpicStep
+forrásprojektjéből ered, ezért a feladatlap és az API is zárolja az
+átrendelést. Ez megőrzi az EpicStep → Task → Project forrásintegritást;
+a projekt ilyen feladatnál a munkamenetben módosítható. A változás audit
+bejegyzést hoz létre, a kliens pedig frissíti a tábla-, kanban-, terhelés-,
+projekt- és epik-rollup nézeteket.
+
+Egy kézzel felírt feladat közvetlenül egy `Epic`-hez is köthető, anélkül,
+hogy azt egy munkamenetbeli `EpicStep`-nek állítanánk be. Az API az epikből
+mindig ugyanahhoz az aktív projekthez rendeli a feladatot, ezért nincs
+keresztprojekt-epik kapcsolat. A `Task.quantity` és `Task.unitHours`
+feladat-szintű kapacitás-snapshot/override: kiadáskor az EpicStep értékeivel
+töltődik, később a vezető a feladatlapon az egységnyi időt (`ó/db`) és a
+mennyiséget módosíthatja. A teljes munkaidő csak számított érték
+(`mennyiség × ó/db`), és a terhelésjelentés ezt használja; régi kártyánál
+hiányzó snapshot esetén az EpicStep az öröklési fallback.
+
+A heti dátumszűrés kizárólag a Board nézet szemantikája. A Kanban élő,
+állomásonkénti státusznézet: nincs benne hét-dátum feltétel, ezért a régi,
+aktuális és jövőre tervezett feladat is a tényleges státuszának megfelelő
+kiosztott/szabad/folyamat-oszlopban látszik. A Kanban-váltáskor a
+TanStack-query kulcs sem tartalmaz hetet.
+
+### Kiadási előfeltétel — tervezett nap (2026-07-22)
+
+Egy munkamenet csak akkor adható ki a Táblára, ha minden még ki nem adott,
+nem kihagyott EpicStephez konkrét `planDate` tartozik. A szabály nem UI-jelzés:
+a `POST /projects/:key/schedule` backend is végrehajtja, és hiány esetén
+`409 missing_plan_dates` választ ad a hiányzó lépések listájával. Az ellenőrzés
+az első Task létrehozása előtt történik, ezért a kiadás atomi üzemi művelet:
+nem jöhet létre félig kiadott munkamenet. A korábbi „mai naptól” automatikus
+munkanap-generálás megszűnt; a Táblán minden kiadott munkalapfeladat napja a
+vezető által a munkalapon megadott tervezett nap.
+
 ## Kötelező platformátadások
 
 | Artifact | Doorstar fogyasztói igény |
