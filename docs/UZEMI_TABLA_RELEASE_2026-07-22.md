@@ -1,7 +1,9 @@
 # Üzemi Tábla — fejlesztési és kiadási összefoglaló
 
-**Dátum:** 2026-07-22  
-**Kiadott Git commit:** `72d5e96`  
+**Dátum:** 2026-07-22
+
+**Kiadott Git commit:** `72d5e96`
+
 **Éles URL:** <https://doorstar.asztalostech.hu>
 
 ## Cél
