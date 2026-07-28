@@ -1,7 +1,7 @@
 version: "1.0"
 project: doorstar-spaceos-convergence
 created: "2026-07-18"
-updated: "2026-07-18"
+updated: "2026-07-21"
 
 config:
   default_model: sonnet
@@ -174,13 +174,42 @@ milestones:
           Doorstar descriptor és lock, staging install/upgrade/rollback, health és
           MainPID bizonyíték. Éles deploy külön emberi kapu.
 
+      - id: DSCONV-GATE-HANDSHAKE
+        name: JoineryTech Collaboration protocol és conformance gate
+        terminal: conductor
+        model: haiku
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-01]
+        triggers_on_done: [DSCONV-09]
+        task_file: docs/projects/doorstar-spaceos-convergence/PLATFORM-GATES.md
+        description: >
+          Csak a JoineryTech B2B-09 PASS artifact, Collaboration package,
+          OpenAPI/event/terms schema verzió és hash után zárható. Nem
+          implementációs task.
+
+      - id: DSCONV-09
+        name: Doorstar vállalatközi kézfogás pilot
+        terminal: frontend
+        model: sonnet
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-GATE-HANDSHAKE, DSCONV-03, DSCONV-05, DSCONV-06]
+        triggers_on_done: [DSCONV-08]
+        task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-09-HANDSHAKE-PILOT.md
+        description: >
+          Doorstar host tenant munkacsomagot ajánl demo partner tenantnak; a
+          partner elfogad/visszautasít, állapotot kezel és proofot ad át, a
+          Doorstar módosítást kér vagy teljesítést fogad el. Actor-szűrt nézet,
+          egyező revision hash/event sequence és attacker/replay teszt kötelező.
+
       - id: DSCONV-08
         name: Doorstar conformance, regressziós E2E és UAT release-javaslat
         terminal: frontend
         model: sonnet
         priority: critical
         status: pending
-        blocked_by: [DSCONV-07]
+        blocked_by: [DSCONV-07, DSCONV-09]
         triggers_on_done: []
         task_file: docs/projects/doorstar-spaceos-convergence/DSCONV-08-CONFORMANCE-UAT.md
         description: >

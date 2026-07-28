@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Explicit content pins for Doorstar Planning compatibility fixtures.",
+  "packs": [
+    {
+      "fileName": "doorstar-planning-input-pack.v1.json",
+      "packSchemaVersion": "1.0",
+      "sha256": "D7D84A3E54016108CDDB9E1686DF108D0A1C1DBA39855ADA0628ABF3C87BC837",
+      "immutable": true
+    },
+    {
+      "fileName": "doorstar-planning-input-pack.v2.json",
+      "packSchemaVersion": "2.0.0",
+      "sha256": "7BB8A9243D19E1A5E28979CBBE795E8A99AC259B4F24A63A65C8BF572F822A55",
+      "immutable": false
+    }
+  ]
+}

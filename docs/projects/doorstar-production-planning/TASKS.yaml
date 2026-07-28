@@ -1,0 +1,149 @@
+version: "1.0"
+project: doorstar-production-planning
+created: "2026-07-27"
+updated: "2026-07-27"
+
+config:
+  auto_dispatch: false
+  notify_telegram: true
+
+milestones:
+  - id: DP0-BASELINE
+    name: Legacy calculation and source baseline
+    status: completed
+    tasks:
+      - id: DSPLAN-00
+        name: Norm-time, historical-log and legacy-planning analysis
+        terminal: root
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-00-LEGACY-BASELINE.md
+        description: >
+          Read-only inventory of the Doorstar unit-time catalogue, work logs
+          and Folyamatok workbook calculation semantics.
+
+  - id: DP1-DOORSTAR-ADAPTER
+    name: Doorstar compatibility adapter and controlled import
+    status: active
+    tasks:
+      - id: DSPLAN-01
+        name: Legacy calculation compatibility baseline
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-01-COMPATIBILITY-BASELINE.md
+        description: >
+          Pure, tested reference calculation for legacy duration, labour and
+          workday semantics. It is not an HTTP scheduler.
+      - id: DSPLAN-02
+        name: Doorstar standard/resource import mapping
+        terminal: backend
+        priority: high
+        status: blocked
+        blocked_by: [DSPLAN-01, DSPLAN-GATE-PLATFORM-CONTRACT, DSPLAN-GATE-KERNEL-HANDSHAKE]
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-02-IMPORT-MAPPING.md
+        description: >
+          Map source standard keys and qualifiers to the published SpaceOS
+          Planning import contract, with unmapped rows quarantined.
+      - id: DSPLAN-04
+        name: Doorstar resource-calendar preflight
+        terminal: backend
+        priority: high
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-04-CALENDAR-PREFLIGHT.md
+        description: >
+          Validate recurring shifts, breaks and capacity policy before a future
+          SpaceOS calendar import. It cannot create a reservation.
+      - id: DSPLAN-05
+        name: Dependency compatibility and assurance baseline
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/knowledge/architecture/DOORSTAR_SCHEDULER_ASSURANCE_AND_DEPENDENCY_SPEC_2026-07-27.md
+        description: >
+          Validate FS/SS/FF/SF semantics, precedence rules and dependency-graph
+          safety as a pure compatibility reference before C# implementation.
+      - id: DSPLAN-07
+        name: Platform planning input-pack v1
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-production-planning/PLATFORM_INPUT_PACK.md
+        description: >
+          Publish a data-minimised, hash-pinned compatibility fixture pack for
+          platform contract review. It proves legacy calculation vectors,
+          FS/SS/FF/SF dependency semantics, partial-release and fixed-bound
+          precedence, selected standard provenance and a preflight-only
+          calendar shape. The H–P 07:00–16:00 pattern is 480 net minutes/day
+          in the Doorstar draft profile. Approval workflow is platform-owned,
+          tenant-configured data with no local defaults. A deterministic
+          preflight rejects altered source hashes or vectors; it cannot import,
+          reserve capacity or deploy.
+      - id: DSPLAN-06
+        name: Gantt and workflow-dependency visualizations
+        terminal: frontend
+        priority: high
+        status: blocked
+        blocked_by: [DSCONV-06, DSPLAN-GATE-PLATFORM-CONTRACT, DSPLAN-GATE-KERNEL-HANDSHAKE]
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-06-PLANNING-VISUALIZATIONS.md
+        description: >
+          Render the published C# Planning proposal as a Gantt timeline and a
+          typed dependency graph without client-side scheduling calculations.
+
+  - id: DP2-SPACEOS-PLATFORM
+    name: SpaceOS C# Production Planning contract and service
+    status: blocked
+    tasks:
+      - id: DSPLAN-GATE-KERNEL-HANDSHAKE
+        name: Kernel Project/FlowEpic/Task handshake contract
+        terminal: root
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-GATE-INSTANCE, DSCONV-GATE-HANDSHAKE]
+        task_file: docs/knowledge/architecture/DOORSTAR_KERNEL_HANDSHAKE_ALIGNMENT_2026-07-28.md
+        description: >
+          Published, hash-pinned kernel and Collaboration contracts must prove
+          the Project/FlowEpic/Task scope reference, tenant context, revision
+          handling and fail-closed semantics before a Doorstar planning import
+          or factory issue can connect to the kernel lifecycle.
+      - id: DSPLAN-GATE-PLATFORM-CONTRACT
+        name: Published C# Planning OpenAPI and tenant contract
+        terminal: conductor
+        priority: critical
+        status: blocked
+        blocked_by: [DSCONV-GATE-SECURITY, DSCONV-GATE-INSTANCE]
+        task_file: docs/projects/doorstar-production-planning/PLATFORM_HANDOFF_EPIC.md
+        description: >
+          JoineryTech platform owner publishes the C# Production Planning
+          service contract, package compatibility manifest and tenant/RLS proof.
+
+  - id: DP3-SHADOW-AND-UAT
+    name: Doorstar calendar shadow run and UAT
+    status: pending
+    tasks:
+      - id: DSPLAN-UI-01
+        name: JoineryTech UI-kit Planning view
+        terminal: frontend
+        priority: high
+        status: blocked
+        blocked_by: [DSCONV-06, DSPLAN-GATE-PLATFORM-CONTRACT, DSPLAN-GATE-KERNEL-HANDSHAKE]
+        task_file: docs/projects/doorstar-production-planning/UI_CONSUMPTION_CONTRACT.md
+        description: >
+          Consume the published JoineryTech UI kit for the Doorstar Planning
+          proposal, calendar and audit screens. Cross-repository source copy
+          and relative imports are prohibited.
+      - id: DSPLAN-03
+        name: Shadow comparison and calendar calibration
+        terminal: frontend
+        priority: high
+        status: pending
+        blocked_by: [DSPLAN-02, DSPLAN-GATE-PLATFORM-CONTRACT, DSPLAN-GATE-KERNEL-HANDSHAKE]
+        task_file: docs/projects/doorstar-production-planning/DSPLAN-03-SHADOW-UAT.md
+        description: >
+          Compare C# proposals with approved legacy examples and Doorstar
+          calendar configuration before publishing capacity reservations.

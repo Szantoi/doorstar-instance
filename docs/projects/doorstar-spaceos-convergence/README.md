@@ -40,7 +40,9 @@ ennek lezárásáig `blocked`, nem diszpécselhető.
 | D2 | [`DSCONV-06`](DSCONV-06-COMPOSITION-APP.md) | auth + pack + adapter | Doorstar composition app |
 | D3 | [`DSCONV-GATE-BUNDLE`](PLATFORM-GATES.md#dsconv-gate-bundle) | külső bundle gate | installer/conformance elérhető |
 | D3 | [`DSCONV-07`](DSCONV-07-INSTANCE-DEPLOYMENT.md) | composition + bundle gate | descriptor/lock/install/rollback |
-| D3 | [`DSCONV-08`](DSCONV-08-CONFORMANCE-UAT.md) | deployment után | security/E2E/UAT release-javaslat |
+| D3 | [`DSCONV-GATE-HANDSHAKE`](PLATFORM-GATES.md#dsconv-gate-handshake) | külső B2B gate | Collaboration package/contract/conformance elérhető |
+| D3 | [`DSCONV-09`](DSCONV-09-HANDSHAKE-PILOT.md) | auth + adapter + composition + handshake gate | kétvállalatos Doorstar pilot |
+| D3 | [`DSCONV-08`](DSCONV-08-CONFORMANCE-UAT.md) | deployment + handshake pilot után | security/E2E/UAT release-javaslat |
 
 ## Cross-repository gate-ek
 
@@ -49,6 +51,7 @@ ennek lezárásáig `blocked`, nem diszpécselhető.
 | Security | STAB-RLS-PROOF + ERPSEP-06 | JWT/tenant/Instance Context contract hash rögzítése |
 | Instance | ERPSEP-02, ERPSEP-03, ERPSEP-07, PROJECT-CORE-ADR | ModuleId, reference, extension és workflow ownership átvétele |
 | Bundle | ERPSEP-08, ERPSEP-09 | installer, lock és conformance verzió rögzítése |
+| Handshake | B2B-09 | Collaboration package, OpenAPI/event/terms schema és conformance hash rögzítése |
 
 ## Definition of Done
 
@@ -56,4 +59,5 @@ ennek lezárásáig `blocked`, nem diszpécselhető.
 - nincs új secret, lint/build warning vagy tesztkihagyás;
 - OpenAPI/client/schema drift CI-ben ellenőrzött;
 - a Doorstar fő flow összehasonlító E2E-je zöld;
+- a Doorstar → partner kézfogás és kétoldalú állapotkezelés pilotja zöld;
 - minden külső artifact pontos verzióval és hash-sel szerepel az átadásban.

@@ -1,0 +1,196 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Doorstar Production Service API",
+    "version": "0.1.0",
+    "description": "Contract for the live Doorstar Üzemi Tábla REST service. The Planning C# service is a separate, future contract."
+  },
+  "servers": [{ "url": "/", "description": "Same-origin nginx deployment" }],
+  "tags": [
+    { "name": "Health" }, { "name": "Board" }, { "name": "Tasks" },
+    { "name": "Kanban" }, { "name": "Capacity" }, { "name": "Projects" },
+    { "name": "Templates" }, { "name": "Overview" }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": { "tags": ["Health"], "operationId": "getHealth", "responses": { "200": { "description": "Service is running", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Health" } } } } } }
+    },
+    "/readyz": {
+      "get": { "tags": ["Health"], "operationId": "getReadiness", "responses": { "200": { "description": "Service and database are ready", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Readiness" } } } }, "503": { "description": "Database is not ready", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Readiness" } } } } } }
+    },
+    "/openapi.json": {
+      "get": { "tags": ["Health"], "operationId": "getOpenApiContract", "responses": { "200": { "description": "The checked-in OpenAPI 3.1 contract", "content": { "application/json": { "schema": { "type": "object" } } } } } }
+    },
+    "/api/production/board": {
+      "get": { "tags": ["Board"], "operationId": "getBoard", "parameters": [{ "$ref": "#/components/parameters/Week" }], "responses": { "200": { "description": "Weekly board", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Board" } } } } } }
+    },
+    "/api/production/week-note": {
+      "put": { "tags": ["Board"], "operationId": "saveWeekNote", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WeekNoteInput" } } } }, "responses": { "200": { "description": "Saved note", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WeekNote" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" } } }
+    },
+    "/api/production/orders": {
+      "get": { "tags": ["Board"], "operationId": "listOrders", "responses": { "200": { "description": "Checklist", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/OrderChecklistItem" } } } } } } },
+      "post": { "tags": ["Board"], "operationId": "createOrder", "parameters": [{ "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderInput" } } } }, "responses": { "201": { "description": "Created item", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderChecklistItem" } } } }, "403": { "$ref": "#/components/responses/ManagerRequired" } } }
+    },
+    "/api/production/orders/{id}": {
+      "patch": { "tags": ["Board"], "operationId": "updateOrder", "parameters": [{ "$ref": "#/components/parameters/Id" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderPatch" } } } }, "responses": { "200": { "description": "Updated item", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderChecklistItem" } } } } } },
+      "delete": { "tags": ["Board"], "operationId": "deleteOrder", "parameters": [{ "$ref": "#/components/parameters/Id" }], "responses": { "204": { "description": "Deleted" } } }
+    },
+    "/api/production/tasks": {
+      "post": { "tags": ["Tasks"], "operationId": "createTask", "parameters": [{ "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateTask" } } } }, "responses": { "201": { "description": "Created task", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/ProjectNotFound" } } }
+    },
+    "/api/production/tasks/{id}": {
+      "get": { "tags": ["Tasks"], "operationId": "getTask", "parameters": [{ "$ref": "#/components/parameters/Id" }], "responses": { "200": { "description": "Task detail", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskDetail" } } } }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Tasks"], "operationId": "updateTask", "parameters": [{ "$ref": "#/components/parameters/Id" }, { "$ref": "#/components/parameters/Role" }, { "$ref": "#/components/parameters/Station" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskPatch" } } } }, "responses": { "200": { "description": "Updated task", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" }, "409": { "$ref": "#/components/responses/Conflict" } } },
+      "delete": { "tags": ["Tasks"], "operationId": "deleteTask", "parameters": [{ "$ref": "#/components/parameters/Id" }], "responses": { "204": { "description": "Deleted" } } }
+    },
+    "/api/production/tasks/{id}/comments": {
+      "post": { "tags": ["Tasks"], "operationId": "addTaskComment", "parameters": [{ "$ref": "#/components/parameters/Id" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CommentInput" } } } }, "responses": { "201": { "description": "Created comment", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskComment" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" } } }
+    },
+    "/api/production/tasks/{id}/images": {
+      "post": { "tags": ["Tasks"], "operationId": "addTaskImage", "parameters": [{ "$ref": "#/components/parameters/Id" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ImageInput" } } } }, "responses": { "201": { "description": "Created image", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskImage" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" } } }
+    },
+    "/api/production/images/{id}": {
+      "delete": { "tags": ["Tasks"], "operationId": "deleteTaskImage", "parameters": [{ "$ref": "#/components/parameters/Id" }], "responses": { "204": { "description": "Deleted" } } }
+    },
+    "/api/production/kanban": {
+      "get": { "tags": ["Kanban"], "operationId": "getKanban", "parameters": [{ "$ref": "#/components/parameters/StationQuery" }], "responses": { "200": { "description": "Station workflow lanes", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Kanban" } } } }, "400": { "$ref": "#/components/responses/StationRequired" } } }
+    },
+    "/api/production/kanban/{station}/workflow": {
+      "put": { "tags": ["Kanban"], "operationId": "saveStationWorkflow", "parameters": [{ "$ref": "#/components/parameters/StationPath" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WorkflowInput" } } } }, "responses": { "200": { "description": "Saved workflow", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StationWorkflow" } } } } } }
+    },
+    "/api/production/kanban/{station}/workflow/{index}": {
+      "delete": { "tags": ["Kanban"], "operationId": "deleteWorkflowColumn", "parameters": [{ "$ref": "#/components/parameters/StationPath" }, { "$ref": "#/components/parameters/Index" }], "responses": { "200": { "description": "Updated workflow", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StationWorkflow" } } } }, "400": { "$ref": "#/components/responses/CannotDeleteColumn" } } }
+    },
+    "/api/production/load": {
+      "get": { "tags": ["Capacity"], "operationId": "getLoad", "parameters": [{ "$ref": "#/components/parameters/Week" }], "responses": { "200": { "description": "Weekly capacity report", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoadReport" } } } } } }
+    },
+    "/api/production/capacity": {
+      "put": { "tags": ["Capacity"], "operationId": "setCapacity", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CapacityInput" } } } }, "responses": { "200": { "description": "Saved capacity setting", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CapacitySetting" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" } } }
+    },
+    "/api/production/stations": {
+      "get": { "tags": ["Overview"], "operationId": "getStations", "responses": { "200": { "description": "Configured stations", "content": { "application/json": { "schema": { "type": "object", "required": ["stations"], "properties": { "stations": { "type": "array", "items": { "$ref": "#/components/schemas/StationConfig" } } } } } } } } }
+    },
+    "/api/production/overview": {
+      "get": { "tags": ["Overview"], "operationId": "getOverview", "responses": { "200": { "description": "Project status counts", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProductionOverview" } } } } } }
+    },
+    "/api/production/projects": {
+      "get": { "tags": ["Projects"], "operationId": "listProjects", "responses": { "200": { "description": "Project cards", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ProjectCard" } } } } } } },
+      "post": { "tags": ["Projects"], "operationId": "createProject", "parameters": [{ "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateProject" } } } }, "responses": { "201": { "description": "Created project", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Project" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "409": { "$ref": "#/components/responses/ProjectKeyConflict" } } }
+    },
+    "/api/production/projects/{key}": {
+      "get": { "tags": ["Projects"], "operationId": "getProject", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }], "responses": { "200": { "description": "Project work sheet", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Project" } } } }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "put": { "tags": ["Projects"], "operationId": "updateProject", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectPatch" } } } }, "responses": { "200": { "description": "Updated project", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Project" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "delete": { "tags": ["Projects"], "operationId": "archiveProject", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "responses": { "204": { "description": "Archived" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/projects/{key}/epik-rollup": {
+      "get": { "tags": ["Projects"], "operationId": "getEpikRollup", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }], "responses": { "200": { "description": "Per-epic task status", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EpikRollup" } } } }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/projects/{key}/epics": {
+      "put": { "tags": ["Projects"], "operationId": "saveEpics", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EpicsInput" } } } }, "responses": { "200": { "description": "Saved epic tree", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Epic" } } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/projects/{key}/epics/{epicId}": {
+      "delete": { "tags": ["Projects"], "operationId": "deleteEpic", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/EpicId" }, { "$ref": "#/components/parameters/Role" }], "responses": { "204": { "description": "Deleted epic" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/projects/{key}/steps/{stepId}/issue": {
+      "post": { "tags": ["Projects"], "operationId": "issueProjectStep", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/StepId" }, { "$ref": "#/components/parameters/Role" }], "responses": { "201": { "description": "Step issued", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IssueStepResult" } } } }, "200": { "description": "Step was already issued", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IssueStepResult" } } } }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" }, "409": { "$ref": "#/components/responses/IssueStepConflict" } } },
+      "delete": { "tags": ["Projects"], "operationId": "revokeProjectStep", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/StepId" }, { "$ref": "#/components/parameters/Role" }], "responses": { "204": { "description": "Issued step revoked" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" }, "409": { "$ref": "#/components/responses/RevokeStepConflict" } } }
+    },
+    "/api/production/projects/{key}/schedule": {
+      "post": { "tags": ["Projects"], "operationId": "issueProjectSession", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "additionalProperties": false } } } }, "responses": { "200": { "description": "Issue result", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IssueSessionResult" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" }, "409": { "$ref": "#/components/responses/MissingPlanDates" } } }
+    },
+    "/api/production/projects/{key}/sheets/{kind}": {
+      "get": { "tags": ["Projects"], "operationId": "getProjectSheet", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/SheetKind" }], "responses": { "200": { "description": "Versioned free-form sheet JSON or null", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectSheetData" } } } }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "put": { "tags": ["Projects"], "operationId": "saveProjectSheet", "parameters": [{ "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/SheetKind" }, { "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectSheetData" } } } }, "responses": { "200": { "description": "Saved free-form sheet JSON", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectSheetData" } } } }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/templates": {
+      "get": { "tags": ["Templates"], "operationId": "listSheetTemplates", "responses": { "200": { "description": "Sheet templates", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/SheetTemplate" } } } } } } },
+      "post": { "tags": ["Templates"], "operationId": "saveSheetTemplate", "parameters": [{ "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SheetTemplateInput" } } } }, "responses": { "201": { "description": "Saved template", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SheetTemplate" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" } } }
+    },
+    "/api/production/templates/{name}/apply/{key}": {
+      "post": { "tags": ["Templates"], "operationId": "applySheetTemplate", "parameters": [{ "$ref": "#/components/parameters/TemplateName" }, { "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "responses": { "200": { "description": "Template epic payload", "content": { "application/json": { "schema": { "type": "object", "required": ["epics"], "properties": { "epics": { "type": "array", "items": { "$ref": "#/components/schemas/EpicInput" } } } } } } }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    },
+    "/api/production/epik-templates": {
+      "get": { "tags": ["Templates"], "operationId": "listEpikTemplates", "responses": { "200": { "description": "Epic templates", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/EpikTemplate" } } } } } } },
+      "post": { "tags": ["Templates"], "operationId": "saveEpikTemplate", "parameters": [{ "$ref": "#/components/parameters/Role" }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EpikTemplateInput" } } } }, "responses": { "201": { "description": "Saved template", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EpikTemplate" } } } }, "400": { "$ref": "#/components/responses/InvalidRequest" }, "403": { "$ref": "#/components/responses/ManagerRequired" } } }
+    },
+    "/api/production/epik-templates/{name}/apply/{key}": {
+      "post": { "tags": ["Templates"], "operationId": "applyEpikTemplate", "parameters": [{ "$ref": "#/components/parameters/TemplateName" }, { "$ref": "#/components/parameters/ProjectKey" }, { "$ref": "#/components/parameters/Role" }], "responses": { "201": { "description": "Created epic", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Epic" } } } }, "403": { "$ref": "#/components/responses/ManagerRequired" }, "404": { "$ref": "#/components/responses/NotFound" } } }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Id": { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+      "ProjectKey": { "name": "key", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } },
+      "EpicId": { "name": "epicId", "in": "path", "required": true, "schema": { "type": "string" } },
+      "StepId": { "name": "stepId", "in": "path", "required": true, "schema": { "type": "string" } },
+      "TemplateName": { "name": "name", "in": "path", "required": true, "schema": { "type": "string" } },
+      "StationPath": { "name": "station", "in": "path", "required": true, "schema": { "type": "string" } },
+      "Index": { "name": "index", "in": "path", "required": true, "schema": { "type": "integer", "minimum": 0 } },
+      "SheetKind": { "name": "kind", "in": "path", "required": true, "schema": { "type": "string", "enum": ["QUANTITIES", "CUTTING", "HARDWARE"] } },
+      "Week": { "name": "week", "in": "query", "required": false, "schema": { "type": "string", "format": "date" } },
+      "StationQuery": { "name": "station", "in": "query", "required": true, "schema": { "type": "string", "minLength": 1 } },
+      "Role": { "name": "X-Role", "in": "header", "required": false, "description": "Temporary login-less role hint. `vezeto` is required by manager-only mutations; this is not authentication.", "schema": { "type": "string", "default": "vezeto" } },
+      "Station": { "name": "X-Station", "in": "header", "required": false, "description": "Temporary station-operator hint; evaluated only for task updates.", "schema": { "type": "string" } }
+    },
+    "responses": {
+      "InvalidRequest": { "description": "Zod validation failed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } } },
+      "NotFound": { "description": "Resource not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "ProjectNotFound": { "description": "Referenced project not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "ManagerRequired": { "description": "Manager role required", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "Conflict": { "description": "Conflicting task association or state", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "StationRequired": { "description": "Station query parameter is missing", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "CannotDeleteColumn": { "description": "First/last or invalid workflow column cannot be deleted", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "ProjectKeyConflict": { "description": "Active or archived project already uses the key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+      "MissingPlanDates": { "description": "No partial session was issued because at least one source step lacks a planned date", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MissingPlanDatesError" } } } }
+      ,"IssueStepConflict": { "description": "A planned date or already-issued predecessor is required", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+      ,"RevokeStepConflict": { "description": "Completed steps and steps with an issued successor cannot be revoked", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+    },
+    "schemas": {
+      "Health": { "type": "object", "required": ["status"], "properties": { "status": { "const": "ok" } } },
+      "Readiness": { "type": "object", "required": ["status"], "properties": { "status": { "enum": ["ready", "not_ready"] } } },
+      "Error": { "type": "object", "required": ["error"], "properties": { "error": { "type": "string" } }, "additionalProperties": true },
+      "ValidationError": { "allOf": [{ "$ref": "#/components/schemas/Error" }, { "type": "object", "required": ["details"], "properties": { "error": { "const": "invalid_request" }, "details": { "type": "object" } } }] },
+      "WeekNoteInput": { "type": "object", "required": ["week", "text"], "properties": { "week": { "type": "string", "format": "date" }, "text": { "type": "string" } }, "additionalProperties": false },
+      "WeekNote": { "type": "object", "required": ["week", "text"], "properties": { "week": { "type": "string", "format": "date" }, "text": { "type": "string" } } },
+      "OrderInput": { "type": "object", "required": ["label"], "properties": { "label": { "type": "string", "minLength": 1 } } },
+      "OrderPatch": { "type": "object", "properties": { "label": { "type": "string", "minLength": 1 }, "done": { "type": "boolean" }, "position": { "type": "integer", "minimum": 0 } }, "additionalProperties": false },
+      "OrderChecklistItem": { "type": "object", "required": ["id", "label", "done", "position"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "done": { "type": "boolean" }, "position": { "type": "integer" } } },
+      "CreateTask": { "type": "object", "required": ["title", "week", "day"], "properties": { "title": { "type": "string", "minLength": 1 }, "projectKey": { "type": "string", "minLength": 1 }, "station": { "type": ["string", "null"] }, "week": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }, "day": { "type": "integer", "minimum": 0, "maximum": 6 }, "urgent": { "type": "boolean" }, "description": { "type": "string" } }, "additionalProperties": false },
+      "TaskPatch": { "type": "object", "properties": { "title": { "type": "string", "minLength": 1 }, "projectKey": { "type": ["string", "null"] }, "epicId": { "type": ["string", "null"] }, "station": { "type": ["string", "null"] }, "week": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }, "day": { "type": "integer", "minimum": 0, "maximum": 6 }, "stepIndex": { "type": "integer", "minimum": 0 }, "acknowledged": { "type": "boolean" }, "urgent": { "type": "boolean" }, "problem": { "type": "boolean" }, "dueDate": { "type": ["string", "null"] }, "description": { "type": "string" }, "quantity": { "type": ["number", "null"], "minimum": 0 }, "unitHours": { "type": ["number", "null"], "minimum": 0 }, "dependsOnId": { "type": ["string", "null"] } }, "additionalProperties": false },
+      "Task": { "type": "object", "required": ["id", "title", "station", "week", "day", "status", "isDone", "depDone"], "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "projectId": { "type": ["string", "null"] }, "epicId": { "type": ["string", "null"] }, "epicStepId": { "type": ["string", "null"] }, "epicName": { "type": ["string", "null"] }, "station": { "type": ["string", "null"] }, "week": { "type": "string" }, "day": { "type": "integer" }, "stepIndex": { "type": "integer" }, "acknowledged": { "type": "boolean" }, "urgent": { "type": "boolean" }, "problem": { "type": "boolean" }, "dueDate": { "type": ["string", "null"] }, "description": { "type": "string" }, "quantity": { "type": ["number", "null"] }, "unitHours": { "type": ["number", "null"] }, "dependsOnId": { "type": ["string", "null"] }, "createdAt": { "type": "string", "format": "date-time" }, "updatedAt": { "type": "string", "format": "date-time" }, "status": { "type": "string", "enum": ["assigned", "inprogress", "done", "problem"] }, "isDone": { "type": "boolean" }, "flowLabel": { "type": ["string", "null"] }, "depDone": { "type": "boolean" }, "dependsOnTitle": { "type": ["string", "null"] }, "projectNum": { "type": ["string", "null"] } } },
+      "TaskComment": { "type": "object", "required": ["id", "text", "createdAt"], "properties": { "id": { "type": "string" }, "text": { "type": "string" }, "createdAt": { "type": "string", "format": "date-time" } } },
+      "TaskImage": { "type": "object", "required": ["id", "url", "createdAt"], "properties": { "id": { "type": "string" }, "url": { "type": "string" }, "createdAt": { "type": "string", "format": "date-time" } } },
+      "CommentInput": { "type": "object", "required": ["text"], "properties": { "text": { "type": "string", "minLength": 1 } }, "additionalProperties": false },
+      "ImageInput": { "type": "object", "required": ["url"], "properties": { "url": { "type": "string", "minLength": 1, "maxLength": 2000000 } }, "additionalProperties": false },
+      "TaskDetail": { "allOf": [{ "$ref": "#/components/schemas/Task" }, { "type": "object", "required": ["comments", "images", "audit", "epicStep", "epic", "project"], "properties": { "comments": { "type": "array", "items": { "$ref": "#/components/schemas/TaskComment" } }, "images": { "type": "array", "items": { "$ref": "#/components/schemas/TaskImage" } }, "audit": { "type": "array", "items": { "$ref": "#/components/schemas/AuditEntry" } }, "epicStep": { "type": ["object", "null"] }, "epic": { "type": ["object", "null"] }, "project": { "type": ["object", "null"] } } }] },
+      "AuditEntry": { "type": "object", "required": ["id", "label", "at"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "at": { "type": "string", "format": "date-time" } } },
+      "WorkflowInput": { "type": "object", "required": ["steps"], "properties": { "steps": { "type": "array", "items": { "type": "string" } } } },
+      "StationWorkflow": { "type": "object", "required": ["station", "steps"], "properties": { "station": { "type": "string" }, "steps": { "type": "array", "items": { "type": "string" } } } },
+      "Kanban": { "type": "object", "required": ["station", "flow", "assigned", "pool", "columns"], "properties": { "station": { "type": "string" }, "flow": { "type": "array", "items": { "type": "string" } }, "assigned": { "type": "array", "items": { "$ref": "#/components/schemas/Task" } }, "pool": { "type": "array", "items": { "allOf": [{ "$ref": "#/components/schemas/Task" }, { "type": "object", "required": ["designatedStation"], "properties": { "designatedStation": { "type": ["string", "null"] } } }] } }, "columns": { "type": "array", "items": { "type": "object", "required": ["name", "isTerminal", "tasks"], "properties": { "name": { "type": "string" }, "isTerminal": { "type": "boolean" }, "tasks": { "type": "array", "items": { "$ref": "#/components/schemas/Task" } } } } } } },
+      "CapacityInput": { "type": "object", "required": ["hoursPerDay"], "properties": { "hoursPerDay": { "type": "number", "exclusiveMinimum": 0 } }, "additionalProperties": false },
+      "CapacitySetting": { "type": "object", "required": ["id", "hoursPerDay"], "properties": { "id": { "const": "default" }, "hoursPerDay": { "type": "number" } } },
+      "LoadReport": { "type": "object", "required": ["week", "hoursPerDay", "stations", "bottlenecks"], "properties": { "week": { "type": "string" }, "hoursPerDay": { "type": "number" }, "stations": { "type": "array", "items": { "type": "object" } }, "bottlenecks": { "type": "array", "items": { "type": "string" } } } },
+      "StationConfig": { "type": "object", "required": ["key", "stage", "defaultWorkflow"], "properties": { "key": { "type": "string" }, "stage": { "type": "string" }, "defaultWorkflow": { "type": "array", "items": { "type": "string" } } } },
+      "ProductionOverview": { "type": "object", "required": ["activeJobs", "completedJobs", "overdueJobs", "shippingReadyJobs"], "properties": { "activeJobs": { "type": "integer" }, "completedJobs": { "type": "integer" }, "overdueJobs": { "type": "integer" }, "shippingReadyJobs": { "type": "integer" } } },
+      "CreateProject": { "type": "object", "required": ["key", "name"], "properties": { "key": { "type": "string", "minLength": 1 }, "name": { "type": "string", "minLength": 1 }, "num": { "type": "string" } }, "additionalProperties": false },
+      "ProjectPatch": { "type": "object", "properties": { "name": { "type": "string", "minLength": 1 }, "num": { "type": ["string", "null"] }, "kezdes": { "type": ["string", "null"] }, "beepites": { "type": ["string", "null"] }, "szinTok": { "type": ["string", "null"] }, "szinLap": { "type": ["string", "null"] } }, "additionalProperties": false },
+      "ProjectCard": { "type": "object", "required": ["key", "name", "num", "status", "totalTasks", "doneTasks", "progressPct"], "properties": { "key": { "type": "string" }, "name": { "type": "string" }, "num": { "type": ["string", "null"] }, "status": { "$ref": "#/components/schemas/ProductionStatus" }, "totalTasks": { "type": "integer" }, "doneTasks": { "type": "integer" }, "progressPct": { "type": "integer" } } },
+      "Project": { "type": "object", "required": ["id", "key", "name", "status", "epics"], "properties": { "id": { "type": "string" }, "key": { "type": "string" }, "name": { "type": "string" }, "num": { "type": ["string", "null"] }, "kezdes": { "type": ["string", "null"] }, "beepites": { "type": ["string", "null"] }, "szinTok": { "type": ["string", "null"] }, "szinLap": { "type": ["string", "null"] }, "status": { "$ref": "#/components/schemas/ProductionStatus" }, "epics": { "type": "array", "items": { "$ref": "#/components/schemas/Epic" } } } },
+      "ProductionStatus": { "type": "string", "enum": ["QUEUED", "IN_PROGRESS", "SHIPPING_READY"] },
+      "EpicInput": { "type": "object", "required": ["name", "steps"], "properties": { "id": { "type": "string" }, "name": { "type": "string", "minLength": 1 }, "quantityLabel": { "type": ["string", "null"] }, "disabled": { "type": "boolean" }, "steps": { "type": "array", "items": { "$ref": "#/components/schemas/EpicStepInput" } } }, "additionalProperties": false },
+      "EpicStepInput": { "type": "object", "required": ["name"], "properties": { "id": { "type": "string" }, "name": { "type": "string", "minLength": 1 }, "station": { "type": ["string", "null"] }, "quantity": { "type": ["number", "null"] }, "unitHours": { "type": ["number", "null"] }, "planDate": { "type": ["string", "null"] }, "planLocked": { "type": "boolean" }, "disabled": { "type": "boolean" } }, "additionalProperties": false },
+      "Epic": { "allOf": [{ "$ref": "#/components/schemas/EpicInput" }, { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" }, "position": { "type": "integer" }, "steps": { "type": "array", "items": { "$ref": "#/components/schemas/EpicStep" } } } }] },
+      "EpicStep": { "allOf": [{ "$ref": "#/components/schemas/EpicStepInput" }, { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" }, "position": { "type": "integer" } } }] },
+      "EpicsInput": { "type": "object", "required": ["epics"], "properties": { "epics": { "type": "array", "items": { "$ref": "#/components/schemas/EpicInput" } } }, "additionalProperties": false },
+      "EpikRollup": { "type": "object", "required": ["epikRows"], "properties": { "epikRows": { "type": "array", "items": { "type": "object" } } } },
+      "IssueSessionResult": { "type": "object", "required": ["createdCount", "skippedExisting", "missingPlanDates"], "properties": { "createdCount": { "type": "integer" }, "skippedExisting": { "type": "integer" }, "missingPlanDates": { "type": "array", "items": { "type": "object" } } } },
+      "IssueStepResult": { "type": "object", "required": ["outcome", "taskId"], "properties": { "outcome": { "type": "string", "enum": ["issued", "already_issued"] }, "taskId": { "type": "string" } } },
+      "MissingPlanDatesError": { "allOf": [{ "$ref": "#/components/schemas/Error" }, { "type": "object", "required": ["error", "missingSteps"], "properties": { "error": { "const": "missing_plan_dates" }, "missingSteps": { "type": "array", "items": { "type": "object" } } } }] },
+      "ProjectSheetData": { "description": "Current legacy free-form JSON. A version discriminator and validation are deferred to DSCONV-04/05.", "type": ["object", "array", "string", "number", "boolean", "null"] },
+      "SheetTemplateInput": { "type": "object", "required": ["name", "epics"], "properties": { "name": { "type": "string", "minLength": 1 }, "epics": { "type": "array", "items": { "$ref": "#/components/schemas/EpicInput" } } }, "additionalProperties": false },
+      "SheetTemplate": { "allOf": [{ "$ref": "#/components/schemas/SheetTemplateInput" }, { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" } } }] },
+      "EpikTemplateInput": { "type": "object", "required": ["name", "epic"], "properties": { "name": { "type": "string", "minLength": 1 }, "epic": { "$ref": "#/components/schemas/EpicInput" } }, "additionalProperties": false },
+      "EpikTemplate": { "allOf": [{ "$ref": "#/components/schemas/EpikTemplateInput" }, { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" } } }] }
+    }
+  }
+}

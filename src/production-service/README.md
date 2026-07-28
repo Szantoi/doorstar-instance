@@ -50,6 +50,10 @@ npm run dev                   # http://localhost:4610
 
 Health check: `GET /healthz`.
 
+The same process also serves its machine-readable API contract at
+`GET /openapi.json`. It is the exact checked-in OpenAPI 3.1 document, not a
+separate hand-maintained runtime variant.
+
 ## Tests
 
 ```bash
@@ -62,10 +66,18 @@ and local operational data are therefore never touched by the test suite.
 
 ## API surface
 
+The formal OpenAPI 3.1 source of truth is
+[`openapi/production-service.openapi.json`](openapi/production-service.openapi.json).
+Run `npm run verify:openapi` after every route change: it discovers Express
+route declarations and fails on missing or stale OpenAPI operations. The
+current `X-Role` / `X-Station` headers are only documented compatibility
+hints, not an authentication mechanism.
+
 All routes are mounted under `/api/production`:
 
 | Route | Purpose |
 |---|---|
+| `GET /openapi.json` | Checked-in OpenAPI 3.1 contract |
 | `GET /board?week=` | Tasks + sidebar (orders, week note) for one week |
 | `POST /tasks`, `PATCH /tasks/:id`, `DELETE /tasks/:id` | Board card CRUD |
 | `POST /tasks/:id/comments` | Add a comment to a card |

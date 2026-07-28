@@ -54,7 +54,20 @@ contract-döntést és kérj root jóváhagyást breaking change-hez.
 
 ## Végrehajtási napló
 
-_Az agent tölti ki._
+- **2026-07-28 — helyi OpenAPI baseline kész:** a futó production-service
+  38 Express-műveletét lefedő, OpenAPI 3.1 JSON szerződés a
+  `src/production-service/openapi/production-service.openapi.json` fájlban
+  található. A `npm run verify:openapi` route-deklarációkból ellenőrzi a teljes
+  route-lefedettséget és a stale operationöket; az első futás zöld volt.
+- A specifikáció rögzíti a jelenlegi, login nélküli `X-Role` / `X-Station`
+  fejléc-viselkedést, de ezt nem állítja be authként. Orval-generálás és a
+  kézi frontend DTO-k kiváltása a DSCONV-GATE-SECURITY és
+  DSCONV-GATE-INSTANCE feloldása után indulhat, ezért a teljes DSCONV-02 státusz
+  továbbra is dependency-blocked.
+- **2026-07-28 — futásidejű kontraktus-kiszolgálás:** a production-service a
+  változatlan, buildkor a `dist/openapi/` mappába másolt specifikációt
+  `GET /openapi.json` útvonalon szolgálja ki. A külön unit teszt a válasz teljes
+  tartalmát a forrásfájllal hasonlítja össze.
 
 ## Átadási bizonyíték
 

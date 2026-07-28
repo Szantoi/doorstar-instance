@@ -28,6 +28,8 @@ policy-jeit, adaptereit és adatmappingjét birtokolja.
 - meglévő Doorstar adatok migrációja;
 - `doorstar-portal` composition és Doorstar E2E/UAT;
 - Doorstar instance descriptor és lock.
+- Doorstar-specifikus kézfogás template/policy és a közös Collaboration
+  platformprotokoll fogyasztói pilotja.
 
 ### JoineryTech/SpaceOS tulajdon — ebben a projektben tilos implementálni
 
@@ -38,6 +40,8 @@ policy-jeit, adaptereit és adatmappingjét birtokolja.
 - közös brand/template/policy schema;
 - module installer, resolver és conformance runner;
 - Project/FlowEpic/StageChain/Production végleges ownership.
+- agreement/work package lifecycle, participant-RLS, terms hash, acceptance
+  evidence, exchange protocol és Collaboration conformance runner.
 
 Ezek forrása a JoineryTech `EPIC-ERP-SEPARATION-2026Q3` és
 `EPIC-PROJECT-CORE-2026Q3`. Doorstar csak publikált contractot vagy csomagot
@@ -51,6 +55,8 @@ fogyaszthat; relatív source `ProjectReference`, másolás vagy cherry-pick tilo
 - a Doorstar saját részei instance packban vannak;
 - platformfrissítés forrásfork nélkül fogyasztható;
 - install/upgrade/rollback és tenant/security conformance bizonyított;
+- Doorstar és demo partner között a delegálás, kétoldalú állapotkezelés,
+  információ-/proof-csere és egyező audit timeline bizonyított;
 - valós ügyféladatra váltás külön emberi release-kapu marad.
 
 ## Out of scope
@@ -71,4 +77,3 @@ fogyaszthat; relatív source `ProjectReference`, másolás vagy cherry-pick tilo
   `joinerytech-platform/docs/knowledge/architecture/SPACEOS_MODULAR_PRODUCT_ARCHITECTURE_2026-07-18.md`
 - sibling repository:
   `joinerytech-platform/docs/tasks/EPIC-ERP-SEPARATION-2026Q3/README.md`
-

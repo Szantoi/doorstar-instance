@@ -63,10 +63,41 @@ maintenance_pilot_verdict: PASS
 verdict: PASS
 ```
 
+## DSCONV-GATE-HANDSHAKE
+
+Kötelező JoineryTech input:
+
+- `PROJECT-CORE-ADR` Accepted ownership döntéssel;
+- `B2B-09` PASS host/guest/attacker conformance bizonyítékkal;
+- versioned Collaboration backend és frontend package/bundle;
+- OpenAPI, event schema és terms schema pontos verziója és SHA-256 hash-e;
+- nem-superuser participant-RLS security verdict;
+- canonical terms/revision hash és replay/idempotency verdict;
+- compatibility range és breaking-change policy.
+
+Gate output:
+
+```yaml
+platform_commit: <sha>
+collaboration_package: <id@version-or-digest>
+openapi_sha256: <hash>
+event_schema_sha256: <hash>
+terms_schema_sha256: <hash>
+conformance_runner: <version>
+security_verdict: PASS
+contract_verdict: PASS
+e2e_verdict: PASS
+verdict: PASS
+```
+
+A gate nem minősíti a platformot elektronikus aláírás-szolgáltatásnak, és nem
+engedélyez valós partnerrel vagy valós szerződéssel végzett production pilotot.
+
 ## Stop / eszkaláció
 
 - `latest`, lokális munkafa vagy dokumentálatlan artifact nem fogadható el.
 - Hash- vagy verzióeltérésnél a gate marad `blocked`.
 - Doorstar agent nem javíthatja a platform artifactot a Doorstar repositoryban.
 - Külső registry-publikálás, deploy vagy signing-key változás emberi kapu.
-
+- `DSCONV-GATE-HANDSHAKE` nem oldható fel lokális platform builddel vagy
+  dokumentálatlan schema-verzióval.
