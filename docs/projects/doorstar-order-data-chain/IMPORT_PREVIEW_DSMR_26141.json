@@ -1,0 +1,298 @@
+{
+  "schemaVersion": "doorstar-import-preview-evidence/v1",
+  "mode": "preview",
+  "databaseWrite": false,
+  "projectKey": "DSMR-26141",
+  "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+  "sourceFingerprintInputs": [
+    {
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/26141_alutok belméret.pdf",
+      "contentSha256": "c2451b0c4e490bf1f67ebb27de3510365c252cd1aa466b8fb7c6aef369ec29c8"
+    },
+    {
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+      "contentSha256": "024c8c1b2ec98d90452a7b720a217dc3a91758d023254ff1881d25d13a32981a"
+    },
+    {
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 alutok.pdf",
+      "contentSha256": "1fc98149916c52433e8dc8d664d93817a907a34114ac51847465d36898293933"
+    },
+    {
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/Felmérés mód. 06.24.pdf",
+      "contentSha256": "020945b728dccf6e53333e1ba49a72f6fa0564fc444ddad86fe7b8f859ea6b3e"
+    }
+  ],
+  "records": [
+    {
+      "recordType": "Project",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "customerName": "Aelan Beauty Kft. (Lantos Péter)",
+      "orderStatus": "SURVEY_PENDING",
+      "reviewRequired": true,
+      "errors": [
+        "survey_measurements_missing",
+        "survey_and_sales_surface_confirmation_required",
+        "schedule_record_not_identified"
+      ],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1",
+        "excerpt": "GYÁRTÁSMEGRENDELÉS; DSMR 26141; Aelan Beauty Kft."
+      }
+    },
+    {
+      "recordType": "OrderRevision",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "revision": 1,
+      "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "code": "1",
+      "name": "Tároló",
+      "quantity": 1,
+      "productType": "Tapétaajtó (Falsíkban záródó) + Raso90 alu tok",
+      "openingDirection": "Jobb be",
+      "openingWidthMm": 750,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre / tapétázásra előkészített, alapozott felülettel; MDF élzárás RAL 1013",
+      "wallTreatment": null,
+      "glazing": null,
+      "technicalNotes": "PZ zár; rejtett pánt (2+1); alumínium szerkezet RAL 1013.",
+      "reviewRequired": true,
+      "errors": ["door_thickness_missing", "surface_requires_survey_confirmation", "wall_treatment_unverified", "glazing_unverified"],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 1",
+        "excerpt": "1. 75 × 215 × ---; Jobb be; Tapétaajtó (Falsíkban záródó) + Raso90 alu tok: RAL 1013"
+      }
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "code": "2",
+      "name": "Rendelő 1.",
+      "quantity": 1,
+      "productType": "Tapétaajtó (Falsíkban záródó) + Raso90 alu tok",
+      "openingDirection": "Bal be",
+      "openingWidthMm": 950,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre / tapétázásra előkészített, alapozott felülettel; MDF élzárás RAL 1013",
+      "wallTreatment": null,
+      "glazing": null,
+      "technicalNotes": "PZ zár; rejtett pánt (2+1); alumínium szerkezet RAL 1013.",
+      "reviewRequired": true,
+      "errors": ["door_thickness_missing", "surface_requires_survey_confirmation", "wall_treatment_unverified", "glazing_unverified"],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 2",
+        "excerpt": "2. 95 × 215 × ---; Bal be; Tapétaajtó (Falsíkban záródó) + Raso90 alu tok: RAL 1013"
+      }
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "code": "3",
+      "name": "Rendelő 2.",
+      "quantity": 1,
+      "productType": "Tapétaajtó (Falsíkban záródó) + Raso90 alu tok",
+      "openingDirection": "Bal be",
+      "openingWidthMm": 950,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre / tapétázásra előkészített, alapozott felülettel; MDF élzárás RAL 1013",
+      "wallTreatment": null,
+      "glazing": null,
+      "technicalNotes": "PZ zár; rejtett pánt (2+1); alumínium szerkezet RAL 1013.",
+      "reviewRequired": true,
+      "errors": ["door_thickness_missing", "surface_requires_survey_confirmation", "wall_treatment_unverified", "glazing_unverified"],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 3",
+        "excerpt": "3. 95 × 215 × ---; Bal be; Tapétaajtó (Falsíkban záródó) + Raso90 alu tok: RAL 1013"
+      }
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "code": "4",
+      "name": "Közlekedő",
+      "quantity": 1,
+      "productType": "Tapétaajtó (Falsíkban záródó) + Raso90 alu tok",
+      "openingDirection": "Jobb be",
+      "openingWidthMm": 750,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre / tapétázásra előkészített, alapozott felülettel; MDF élzárás RAL 1013",
+      "wallTreatment": null,
+      "glazing": null,
+      "technicalNotes": "PZ zár; rejtett pánt (2+1); alumínium szerkezet RAL 1013.",
+      "reviewRequired": true,
+      "errors": ["door_thickness_missing", "surface_requires_survey_confirmation", "wall_treatment_unverified", "glazing_unverified"],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 4",
+        "excerpt": "4. 75 × 215 × ---; Jobb be; Tapétaajtó (Falsíkban záródó) + Raso90 alu tok: RAL 1013"
+      }
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26141",
+      "code": "5",
+      "name": "Vendég WC",
+      "quantity": 1,
+      "productType": "Tapétaajtó (Falsíkban záródó) + Raso90 alu tok",
+      "openingDirection": "Jobb ki",
+      "openingWidthMm": 800,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre / tapétázásra előkészített, alapozott felülettel; MDF élzárás RAL 1013",
+      "wallTreatment": null,
+      "glazing": null,
+      "technicalNotes": "WC zár; rejtett pánt (2+1); alumínium szerkezet RAL 1013.",
+      "reviewRequired": true,
+      "errors": ["door_thickness_missing", "surface_requires_survey_confirmation", "wall_treatment_unverified", "glazing_unverified"],
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 5",
+        "excerpt": "5. 80 × 215 × ---; Jobb ki; Tapétaajtó (Falsíkban záródó) + Raso90 alu tok: RAL 1013"
+      }
+    },
+    {
+      "recordType": "OrderDocument",
+      "action": "CREATE_REFERENCE",
+      "projectKey": "DSMR-26141",
+      "documentKind": "SALES_ORDER",
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+      "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+      "contentSha256": "024c8c1b2ec98d90452a7b720a217dc3a91758d023254ff1881d25d13a32981a",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "OrderDocument",
+      "action": "CREATE_REFERENCE",
+      "projectKey": "DSMR-26141",
+      "documentKind": "SURVEY",
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/Felmérés mód. 06.24.pdf",
+      "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/Felmérés mód. 06.24.pdf",
+      "contentSha256": "020945b728dccf6e53333e1ba49a72f6fa0564fc444ddad86fe7b8f859ea6b3e",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "OrderDocument",
+      "action": "CREATE_REFERENCE",
+      "projectKey": "DSMR-26141",
+      "documentKind": "DRAWING",
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/26141_alutok belméret.pdf",
+      "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/26141_alutok belméret.pdf",
+      "contentSha256": "c2451b0c4e490bf1f67ebb27de3510365c252cd1aa466b8fb7c6aef369ec29c8",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "OrderDocument",
+      "action": "CREATE_REFERENCE",
+      "projectKey": "DSMR-26141",
+      "documentKind": "DRAWING",
+      "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 alutok.pdf",
+      "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 alutok.pdf",
+      "contentSha256": "1fc98149916c52433e8dc8d664d93817a907a34114ac51847465d36898293933",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "DeadlineObservation",
+      "action": "REVIEW",
+      "projectKey": "DSMR-26141",
+      "observedValue": "alu tok: 2026. július; ajtólap: 2026. augusztus",
+      "normalisedValue": null,
+      "conflictWith": [
+        "survey PDF page 1: 2026. július-augusztus",
+        "Ütemterv.xlsx: no exact work-number row identified"
+      ],
+      "reviewRequired": true,
+      "evidence": {
+        "projectKey": "DSMR-26141",
+        "sourceFingerprint": "sha256:3327c274d557751288c2eaf158efc19fa46149490c11dc7e8db0e4a51ca3b161",
+        "sourceFile": "sales/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1",
+        "excerpt": "Várható szállítási idő: alu tok: 2026. július, ajtólap: 2026. augusztus"
+      }
+    }
+  ],
+  "feedbackCandidates": [
+    {
+      "category": "DATA_QUALITY",
+      "message": "MISSING_SURVEY_MEASUREMENTS: All five positions have '---' as third Sales dimension. Confirm door thickness; do not infer it from the opening or frame data."
+    },
+    {
+      "category": "IMPORT_MAPPING",
+      "message": "SOURCE_VALUE_CONFLICT: The later Sales order uses RAL 1013 while the survey text includes white/base-white treatment. Survey must confirm the final face and aluminium-frame finish before approval."
+    },
+    {
+      "category": "WORKFLOW",
+      "message": "DEADLINE_CONFLICT: The Sales document has separate July frame and August leaf stages; the survey has a July-August window. A single committed delivery deadline cannot be inferred."
+    },
+    {
+      "category": "DOCUMENT_REFERENCE",
+      "message": "SOURCE_LINK_AMBIGUOUS: No exact DSMR-26141 row exists in Ütemterv.xlsx. Do not infer a schedule relation from the different-work-number Aelan customer row."
+    }
+  ]
+}

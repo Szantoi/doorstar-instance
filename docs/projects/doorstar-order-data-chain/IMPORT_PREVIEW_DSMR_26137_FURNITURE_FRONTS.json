@@ -1,0 +1,205 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "sourceSheet": "Készméret - Bútorfront",
+  "summary": {
+    "reviewRecordCount": 1,
+    "apiReadyRecordCount": 1,
+    "blockedRecordCount": 0,
+    "actionCounts": {
+      "REVIEW": 1
+    }
+  },
+  "records": [
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-26137",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "FURNITURE_FRONT",
+        "code": "01",
+        "name": "Bútorfront",
+        "itemType": "Egyedi Bútorfront",
+        "componentName": "Bútorfront",
+        "quantity": 1,
+        "widthMm": 409.0,
+        "heightMm": 2318.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "SUPERMATT KASHMIR",
+        "pattern": "alul 50 cm 1 db víz_árny_fug",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "",
+        "evidence": [
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "CODE",
+            "rawValue": "01",
+            "normalizedValue": "01",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "NAME",
+            "rawValue": "Bútorfront",
+            "normalizedValue": "Bútorfront",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Bútorfront",
+            "normalizedValue": "Egyedi Bútorfront",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Bútorfront",
+            "normalizedValue": "Bútorfront",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "WIDTH_MM",
+            "rawValue": "40.9 cm",
+            "normalizedValue": 409.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "HEIGHT_MM",
+            "rawValue": "231.8 cm",
+            "normalizedValue": 2318.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "COLOUR",
+            "rawValue": "SUPERMATT KASHMIR",
+            "normalizedValue": "SUPERMATT KASHMIR",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "PATTERN",
+            "rawValue": "alul 50 cm 1 db víz_árny_fug",
+            "normalizedValue": "alul 50 cm 1 db víz_árny_fug",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/06_Június/26137 - In_Tuition Kft",
+            "relativePath": "26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Bútorfront",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 4
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-26137",
+        "itemKind": "FURNITURE_FRONT",
+        "sourceItemCode": "01",
+        "itemType": "Egyedi Bútorfront",
+        "itemName": null,
+        "componentName": "Bútorfront",
+        "material": "EOL Mély MDF",
+        "widthMm": 409.0,
+        "heightMm": 2318.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "SUPERMATT KASHMIR",
+        "pattern": "alul 50 cm 1 db víz_árny_fug",
+        "note": null
+      },
+      "source": {
+        "relativePath": "2026/06_Június/26137 - In_Tuition Kft/26137 - In_Tuition Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Bútorfront",
+        "logicalRow": 4,
+        "contentSha256": "5791eaad50526c436d85ae4b82bebf4eb2bffb67d83f84ce8bdfa86a0e44a24f",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    }
+  ]
+}

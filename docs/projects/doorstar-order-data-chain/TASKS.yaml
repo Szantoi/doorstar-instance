@@ -1,0 +1,156 @@
+version: "1.0"
+project: doorstar-order-data-chain
+created: "2026-07-29"
+updated: "2026-07-29"
+
+config:
+  auto_dispatch: false
+  notify_telegram: true
+
+milestones:
+  - id: DO0-ARCHITECTURE
+    name: Source mapping and order-domain architecture
+    status: completed
+    tasks:
+      - id: DSORD-00
+        name: Four-workbook source mapping and target architecture
+        terminal: root
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Read-only mapping of the production order, calculator, process and
+          work-package source chain into a versioned Doorstar target model.
+
+  - id: DO1-ORDER-INTAKE
+    name: SharePoint-aware, versioned order intake
+    status: pending
+    tasks:
+      - id: DSORD-01
+        name: SharePoint and GraphRAG security foundation
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-00]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Establish a least-privilege Microsoft Graph connector contract,
+          immutable document references, ACL-aware retrieval boundary and
+          GraphRAG audit model. It must not execute Office macros or grant
+          tenant-wide file access.
+      - id: DSORD-02
+        name: Order header and door-position intake v1
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-01]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Extend the existing Project root with a revisioned order aggregate,
+          typed header and door-position data, validation, audit evidence and
+          a manager-facing UI.
+      - id: DSORD-03
+        name: Technical specification and catalog configuration
+        terminal: frontend
+        priority: high
+        status: pending
+        blocked_by: [DSORD-02]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Add typed surfaces, glass, hardware, material, machining and note
+          sections with configuration-backed choices.
+      - id: DSORD-04
+        name: Revision approval and audit gate
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-02, DSORD-03]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Implement draft, review, approval and supersession states with a
+          content hash and immutable snapshots.
+
+  - id: DO2-GENERATION
+    name: Controlled manufacturing-data generation
+    status: pending
+    tasks:
+      - id: DSORD-05
+        name: Component and cutting-requirement generator
+        terminal: backend
+        priority: critical
+        status: pending
+        blocked_by: [DSORD-04]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Generate revisioned component and cutting snapshots using tested,
+          versioned Doorstar calculation rules.
+      - id: DSORD-06
+        name: Operation-candidate generator and planning preflight
+        terminal: backend
+        priority: critical
+        status: pending
+        blocked_by: [DSORD-05]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Convert approved component requirements into provenance-complete
+          operations compatible with the existing planning preflight.
+      - id: DSORD-07
+        name: Controlled legacy Excel import
+        terminal: backend
+        priority: high
+        status: in_progress
+        blocked_by: [DSORD-04]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Import known, versioned Doorstar workbook profiles through a preview,
+          quarantine and explicit approval gate without executing macros or
+          overwriting approved revisions.
+        result: >
+          Preview provenance, test-schema-only DRAFT application, queryable
+          candidates, deadline observations and field-level position evidence
+          are implemented. Wall panels and furniture fronts now have their own
+          evidence-backed review model and office UI. The manufactured-item
+          preview emits deterministic API payloads with explicit work kind and
+          field evidence; every import run has an evidence drill-down. Selected
+          READY panel/front candidates can be applied idempotently to the same
+          run's test DRAFT through a fingerprint-checked human gate. Bulk
+          preview registration, production import approval and broader workbook
+          profile coverage remain intentionally open.
+      - id: DSORD-08
+        name: Revisioned document repository and work-package links
+        terminal: backend
+        priority: high
+        status: pending
+        blocked_by: [DSORD-04]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Store document metadata and revisioned object-storage references for
+          orders, positions and issued work packages with immutable release
+          links.
+      - id: DSORD-09
+        name: Planned and issued work-package lineage
+        terminal: frontend
+        priority: high
+        status: blocked
+        blocked_by: [DSORD-06, DSORD-08, DSPLAN-GATE-PLATFORM-CONTRACT, DSPLAN-GATE-KERNEL-HANDSHAKE]
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Consume the published scheduling proposal and issue immutable work
+          packages only after full lineage and document validation.
+      - id: DSORD-10
+        name: UTF-8 import hardening and test-data isolation
+        terminal: backend
+        priority: high
+        status: pending
+        blocked_by: []
+        task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
+        description: >
+          Preserve non-ASCII source values through an explicit UTF-8 HTTP
+          round trip, clean integration fixtures after every suite and move
+          Vitest writes to a run-isolated schema so the browsable Doorstar
+          review database cannot be polluted by automated tests.
+        evidence: >
+          DSMR-26148 has correct UTF-8 source-preview values but literal
+          question marks in doorstar_test. Four distinct DSMR-*-TEST projects
+          remain visible as Minta Kft. after the current suite.

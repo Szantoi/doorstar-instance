@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "doorstar-import-preview-evidence/v1",
+  "mode": "preview",
+  "databaseWrite": false,
+  "projectKey": "DSMR-26147",
+  "decision": "REVIEW_WALL_PANEL_WORK_WITHOUT_DOOR_POSITIONS",
+  "observations": [
+    {
+      "recordType": "WallPanelCandidate",
+      "action": "CREATE_OR_REVIEW",
+      "projectKey": "DSMR-26147",
+      "quantity": 1,
+      "workKind": "REMANUFACTURE",
+      "status": "REVIEW",
+      "dimensionsMm": null,
+      "finish": "2009-211-SB1A / ZINK",
+      "surveyRequired": true,
+      "sourceKind": "SALES_ORDER_PDF",
+      "extractionState": "EXTRACTED",
+      "sourceFile": "sales/DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR 2.pdf",
+      "relativePath": "DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR 2.pdf",
+      "locator": "PDF page 1, item 1",
+      "excerpt": "Falpanel ELEMEK ÚJRAGYÁRTÁSA; 2009-211-SB1A / ZINK; Felmérés szerinti kialakításban és méretekben."
+    },
+    {
+      "recordType": "ProjectCandidate",
+      "projectKey": "DSMR-26147",
+      "extractionState": "EXTRACTED",
+      "sourceKind": "SALES_ORDER_PDF",
+      "sourceFile": "sales/DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR 2.pdf",
+      "relativePath": "DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR 2.pdf",
+      "contentSha256": "81517cf43c7b336b2d78df2b134370fb2a274669b0c930f13a9e1732850bb8ab",
+      "locator": "PDF page 1",
+      "excerpt": "Falpanel ELEMEK ÚJRAGYÁRTÁSA; Felmérés szerinti kialakításban és méretekben; várható szállítási idő: 2026. augusztus."
+    }
+  ],
+  "feedbackCandidates": [
+    {
+      "category": "DATA_QUALITY",
+      "message": "MISSING_SURVEY_MEASUREMENTS: The wall-panel rework has no dimensions or final construction in the Sales document; retrieve the referenced survey before production release."
+    },
+    {
+      "category": "DOCUMENT_REFERENCE",
+      "message": "SOURCE_LINK_AMBIGUOUS: Two DWG variants and a manufacturing-size image exist, but they cannot be linked to a Doorstar position without the referenced survey. Exclude .bak files."
+    },
+    {
+      "category": "WORKFLOW",
+      "message": "DEADLINE_CONFLICT: The PDF only gives August 2026; Sales must provide a committed production/delivery date before scheduling."
+    }
+  ]
+}

@@ -1,0 +1,4772 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "sourceSheet": "Készméret - Falpanel",
+  "summary": {
+    "reviewRecordCount": 24,
+    "apiReadyRecordCount": 24,
+    "blockedRecordCount": 0,
+    "actionCounts": {
+      "REVIEW": 24
+    }
+  },
+  "records": [
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "01",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1200.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "01",
+            "normalizedValue": "01",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "120.0 cm",
+            "normalizedValue": 1200.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "01",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1200.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 4,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "02",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1200.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "02",
+            "normalizedValue": "02",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "120.0 cm",
+            "normalizedValue": 1200.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "02",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1200.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 5,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "03",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1180.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "03",
+            "normalizedValue": "03",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "118.0 cm",
+            "normalizedValue": 1180.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "03",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1180.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 6,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "04",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1180.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "04",
+            "normalizedValue": "04",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "118.0 cm",
+            "normalizedValue": 1180.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "04",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1180.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 7,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "05",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1057.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Íves falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "05",
+            "normalizedValue": "05",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "105.7 cm",
+            "normalizedValue": 1057.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Íves falpanel",
+            "normalizedValue": "Íves falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "05",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1057.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Íves falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 8,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "06",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1057.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Íves falpanel",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "06",
+            "normalizedValue": "06",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "105.7 cm",
+            "normalizedValue": 1057.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Íves falpanel",
+            "normalizedValue": "Íves falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "06",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1057.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Íves falpanel"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 9,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "07",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1057.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Íves fal tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "07",
+            "normalizedValue": "07",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "105.7 cm",
+            "normalizedValue": 1057.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Íves fal tokba",
+            "normalizedValue": "Íves fal tokba",
+            "reviewState": "REVIEW",
+            "row": 10
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "07",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1057.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Íves fal tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 10,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "08",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 10577.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Íves fal tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "08",
+            "normalizedValue": "08",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "1057.7 cm",
+            "normalizedValue": 10577.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Íves fal tokba",
+            "normalizedValue": "Íves fal tokba",
+            "reviewState": "REVIEW",
+            "row": 11
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "08",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 10577.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Íves fal tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 11,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "09",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 830.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "1. Ajtó feletti Tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "09",
+            "normalizedValue": "09",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "83.0 cm",
+            "normalizedValue": 830.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "1. Ajtó feletti Tokba",
+            "normalizedValue": "1. Ajtó feletti Tokba",
+            "reviewState": "REVIEW",
+            "row": 12
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "09",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 830.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "1. Ajtó feletti Tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 12,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "10",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 840.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "10",
+            "normalizedValue": "10",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "84.0 cm",
+            "normalizedValue": 840.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta tokba",
+            "normalizedValue": "Ferde illesztés a mita fút rajta tokba",
+            "reviewState": "REVIEW",
+            "row": 13
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 10,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 840.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 13,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "11",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 786.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "11",
+            "normalizedValue": "11",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "78.6 cm",
+            "normalizedValue": 786.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta tokba",
+            "normalizedValue": "Ferde illesztés a mita fút rajta tokba",
+            "reviewState": "REVIEW",
+            "row": 14
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 11,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 786.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 14,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "12",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 640.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta csapos",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "12",
+            "normalizedValue": "12",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "64.0 cm",
+            "normalizedValue": 640.0,
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 15
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta csapos",
+            "normalizedValue": "Ferde illesztés a mita fút rajta csapos",
+            "reviewState": "REVIEW",
+            "row": 15
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 12,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 640.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta csapos"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 15,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "13",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 444.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "13",
+            "normalizedValue": "13",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "44.4 cm",
+            "normalizedValue": 444.0,
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 16
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta",
+            "normalizedValue": "Ferde illesztés a mita fút rajta",
+            "reviewState": "REVIEW",
+            "row": 16
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 13,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 444.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 16,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "14",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 720.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "2. Ajtó feletti csapos",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "14",
+            "normalizedValue": "14",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "72.0 cm",
+            "normalizedValue": 720.0,
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 17
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "2. Ajtó feletti csapos",
+            "normalizedValue": "2. Ajtó feletti csapos",
+            "reviewState": "REVIEW",
+            "row": 17
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 14,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 720.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "2. Ajtó feletti csapos"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 17,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "15",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 820.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta csapos",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "15",
+            "normalizedValue": "15",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "82.0 cm",
+            "normalizedValue": 820.0,
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 18
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta csapos",
+            "normalizedValue": "Ferde illesztés a mita fút rajta csapos",
+            "reviewState": "REVIEW",
+            "row": 18
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 15,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 820.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta csapos"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 18,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "16",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 890.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "16",
+            "normalizedValue": "16",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "89.0 cm",
+            "normalizedValue": 890.0,
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 19
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 19
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 16,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 890.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": null
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 19,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "17",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1193.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "17",
+            "normalizedValue": "17",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "119.3 cm",
+            "normalizedValue": 1193.0,
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 20
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 20
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 17,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1193.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": null
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 20,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "18",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 940.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Ferde illesztés a mita fút rajta tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "18",
+            "normalizedValue": "18",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "94.0 cm",
+            "normalizedValue": 940.0,
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 21
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Ferde illesztés a mita fút rajta tokba",
+            "normalizedValue": "Ferde illesztés a mita fút rajta tokba",
+            "reviewState": "REVIEW",
+            "row": 21
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 18,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 940.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Ferde illesztés a mita fút rajta tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 21,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "19",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 830.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "3. Ajtó feletti Tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "19",
+            "normalizedValue": "19",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "83.0 cm",
+            "normalizedValue": 830.0,
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 22
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "3. Ajtó feletti Tokba",
+            "normalizedValue": "3. Ajtó feletti Tokba",
+            "reviewState": "REVIEW",
+            "row": 22
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 19,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 830.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "3. Ajtó feletti Tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 22,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "20",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 410.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "20",
+            "normalizedValue": "20",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "41.0 cm",
+            "normalizedValue": 410.0,
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "62.0 cm",
+            "normalizedValue": 620.0,
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 23
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Tokba",
+            "normalizedValue": "Tokba",
+            "reviewState": "REVIEW",
+            "row": 23
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 20,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 410.0,
+        "heightMm": 620.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 23,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "21",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 410.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "21",
+            "normalizedValue": "21",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "41.0 cm",
+            "normalizedValue": 410.0,
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "223.0 cm",
+            "normalizedValue": 2230.0,
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 24
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Tokba",
+            "normalizedValue": "Tokba",
+            "reviewState": "REVIEW",
+            "row": 24
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 21,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 410.0,
+        "heightMm": 2230.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "Tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 24,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "22",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1150.0,
+        "heightMm": 650.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "12. Ajtó tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "22",
+            "normalizedValue": "22",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "115.0 cm",
+            "normalizedValue": 1150.0,
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "65.0 cm",
+            "normalizedValue": 650.0,
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 25
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "12. Ajtó tokba",
+            "normalizedValue": "12. Ajtó tokba",
+            "reviewState": "REVIEW",
+            "row": 25
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 22,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1150.0,
+        "heightMm": 650.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "12. Ajtó tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 25,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "23",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 140.0,
+        "heightMm": 2350.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "12. Ajtó tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "23",
+            "normalizedValue": "23",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "14.0 cm",
+            "normalizedValue": 140.0,
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "235.0 cm",
+            "normalizedValue": 2350.0,
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 26
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "12. Ajtó tokba",
+            "normalizedValue": "12. Ajtó tokba",
+            "reviewState": "REVIEW",
+            "row": 26
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 23,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 140.0,
+        "heightMm": 2350.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "12. Ajtó tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 26,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25163",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "24",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 180.0,
+        "heightMm": 2350.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "12. Ajtó tokba",
+        "evidence": [
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "24",
+            "normalizedValue": "24",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "18.0 cm",
+            "normalizedValue": 180.0,
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "235.0 cm",
+            "normalizedValue": 2350.0,
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "Stone Grey Suedette Matt",
+            "normalizedValue": "Stone Grey Suedette Matt",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "PATTERN",
+            "rawValue": "F6",
+            "normalizedValue": " F6",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 27
+          },
+          {
+            "sourceRoot": "2026/04_Április/25163 - Megépít plusz Kft",
+            "relativePath": "25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "12. Ajtó tokba",
+            "normalizedValue": "12. Ajtó tokba",
+            "reviewState": "REVIEW",
+            "row": 27
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25163",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 24,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 180.0,
+        "heightMm": 2350.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "Stone Grey Suedette Matt",
+        "pattern": " F6",
+        "note": "12. Ajtó tokba"
+      },
+      "source": {
+        "relativePath": "2026/04_Április/25163 - Megépít plusz Kft/25163 - Megépít plusz Kft. - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 27,
+        "contentSha256": "9209a0c4901dcc919b825ffe20d926b2d3588fb1cc1471817d053ecca3a6b784",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    }
+  ]
+}

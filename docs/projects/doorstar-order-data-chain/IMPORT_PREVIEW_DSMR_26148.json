@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "doorstar-import-preview-evidence/v1",
+  "mode": "preview",
+  "databaseWrite": false,
+  "projectKey": "DSMR-26148",
+  "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+  "sourceFingerprintInputs": [
+    {
+      "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+      "contentSha256": "EC017886A730729A5A59A310E57514BF86C1BC3FEA7F062759B3C9489FA6D1E1"
+    },
+    {
+      "sourceFile": "deadlines/Ütemterv.xlsx",
+      "contentSha256": "9BBD4D943ECC18E4885611EA05D5ABA1D28CFB31D1AD29CDC99CBC57E62191B3"
+    }
+  ],
+  "records": [
+    {
+      "recordType": "Project",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26148",
+      "customerName": "Séfer Kft. (Offenbächer Ferenc)",
+      "orderStatus": "SURVEY_PENDING",
+      "reviewRequired": true,
+      "errors": [
+        "survey_measurements_missing",
+        "surface_code_unresolved",
+        "deadline_source_requires_owner_confirmation"
+      ],
+      "evidence": [
+        {
+          "projectKey": "DSMR-26148",
+          "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+          "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceKind": "SALES_ORDER_PDF",
+          "extractionState": "EXTRACTED",
+          "locator": "PDF page 1",
+          "excerpt": "MEGRENDELÉS SZÁMA: DSMR 26148; Séfer Kft. / Offenbächer Ferenc"
+        }
+      ]
+    },
+    {
+      "recordType": "OrderRevision",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26148",
+      "revision": 1,
+      "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26148",
+      "code": "1",
+      "name": "Gardrób (férfi)",
+      "quantity": 1,
+      "productType": "Tapéta (Falsíkban záródó) TUT",
+      "openingDirection": "Bal ki",
+      "openingWidthMm": 840,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre előkészített felülettel; festett RAL/NCS kód alapján (pontosítandó)",
+      "wallTreatment": null,
+      "glazing": null,
+      "reviewRequired": true,
+      "errors": [
+        "door_thickness_missing",
+        "surface_code_unresolved",
+        "wall_treatment_unverified",
+        "glazing_unverified"
+      ],
+      "evidence": {
+        "projectKey": "DSMR-26148",
+        "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+        "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 1",
+        "excerpt": "1. 84 × 215 × ---; Bal ki; Tapéta (Falsíkban záródó) TUT; Festett RAL/NCS kód alapján (pontosítandó!)"
+      }
+    },
+    {
+      "recordType": "OrderPosition",
+      "action": "CREATE_DRAFT",
+      "projectKey": "DSMR-26148",
+      "code": "2",
+      "name": "Gardrób (női)",
+      "quantity": 1,
+      "productType": "Tapéta (Falsíkban záródó) TUT",
+      "openingDirection": "Jobb ki",
+      "openingWidthMm": 840,
+      "openingHeightMm": 2150,
+      "openingDepthMm": null,
+      "doorWidthMm": null,
+      "doorHeightMm": null,
+      "doorThicknessMm": null,
+      "surface": "Festésre előkészített felülettel; festett RAL/NCS kód alapján (pontosítandó)",
+      "wallTreatment": null,
+      "glazing": null,
+      "reviewRequired": true,
+      "errors": [
+        "door_thickness_missing",
+        "surface_code_unresolved",
+        "wall_treatment_unverified",
+        "glazing_unverified"
+      ],
+      "evidence": {
+        "projectKey": "DSMR-26148",
+        "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+        "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1, position 2",
+        "excerpt": "2. 84 × 215 × ---; Jobb ki; Tapéta (Falsíkban záródó) TUT; Festett RAL/NCS kód alapján (pontosítandó!)"
+      }
+    },
+    {
+      "recordType": "OrderDocument",
+      "action": "CREATE_REFERENCE",
+      "projectKey": "DSMR-26148",
+      "documentKind": "SALES_ORDER",
+      "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+      "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+      "contentSha256": "EC017886A730729A5A59A310E57514BF86C1BC3FEA7F062759B3C9489FA6D1E1",
+      "reviewRequired": true
+    },
+    {
+      "recordType": "DeadlineObservation",
+      "action": "REVIEW",
+      "projectKey": "DSMR-26148",
+      "observedValue": "2026. augusztus-szeptember",
+      "normalisedValue": null,
+      "conflictWith": [
+        "deadlines/Ütemterv.xlsx#ADAT!D234 (2026-08-15)"
+      ],
+      "reviewRequired": true,
+      "evidence": {
+        "projectKey": "DSMR-26148",
+        "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+        "sourceFile": "sales/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceKind": "SALES_ORDER_PDF",
+        "extractionState": "EXTRACTED",
+        "locator": "PDF page 1",
+        "excerpt": "Várható szállítási idő: 2026. augusztus-szeptember"
+      }
+    },
+    {
+      "recordType": "DeadlineObservation",
+      "action": "REVIEW",
+      "projectKey": "DSMR-26148",
+      "observedValue": "46249",
+      "normalisedValue": "2026-08-15",
+      "conflictWith": [
+        "sales PDF page 1 (2026. augusztus-szeptember)"
+      ],
+      "reviewRequired": true,
+      "evidence": {
+        "projectKey": "DSMR-26148",
+        "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+        "sourceFile": "deadlines/Ütemterv.xlsx",
+        "relativePath": "Ütemterv.xlsx",
+        "sourceKind": "SCHEDULE_XLSX",
+        "extractionState": "EXTRACTED",
+        "locator": "ADAT!D234",
+        "excerpt": "26148 | Séfer Kft. (Offenbächer Ferenc) | vállalt szállítási határidő: 46249"
+      }
+    },
+    {
+      "recordType": "SourceLinkObservation",
+      "action": "QUARANTINE",
+      "projectKey": "DSMR-26148",
+      "decision": "EXCLUDE_FROM_PROJECT",
+      "observedValue": "26148 | Aealan Beauty Kft. (Lantos Péter)",
+      "conflictWith": [
+        "sales PDF page 1 customer: Séfer Kft. / Offenbächer Ferenc"
+      ],
+      "reviewRequired": true,
+      "evidence": {
+        "projectKey": "DSMR-26148",
+        "sourceFingerprint": "sha256:74b084c4503f9b2f5fbf52c93810e0f96ede3ec048fd9bd2965a76bde30b9167",
+        "sourceFile": "deadlines/Ütemterv.xlsx",
+        "relativePath": "Ütemterv.xlsx",
+        "sourceKind": "SCHEDULE_XLSX",
+        "extractionState": "EXTRACTED",
+        "locator": "ADAT!A185:O185",
+        "excerpt": "26148 | Aealan Beauty Kft. (Lantos Péter)"
+      }
+    }
+  ],
+  "feedbackCandidates": [
+    {
+      "category": "DATA_QUALITY",
+      "message": "MISSING_SURVEY_MEASUREMENTS: Positions 1-2 require confirmed door thickness; the Sales PDF's third dimension is '---' and must not be inferred."
+    },
+    {
+      "category": "IMPORT_MAPPING",
+      "message": "SOURCE_VALUE_CONFLICT: Surface is only 'Festett RAL/NCS kód alapján (pontosítandó!)'; do not treat it as a resolved colour specification."
+    },
+    {
+      "category": "WORKFLOW",
+      "message": "DEADLINE_CONFLICT: The Sales PDF provides an August-September window while Ütemterv ADAT!D234 provides 2026-08-15. The date falls within that window, but Sales must confirm which source becomes the committed deadline."
+    },
+    {
+      "category": "DOCUMENT_REFERENCE",
+      "message": "SOURCE_LINK_AMBIGUOUS: Quarantine Ütemterv ADAT row 185 for DSMR-26148 because its customer is Aealan Beauty Kft., not Séfer Kft."
+    }
+  ]
+}

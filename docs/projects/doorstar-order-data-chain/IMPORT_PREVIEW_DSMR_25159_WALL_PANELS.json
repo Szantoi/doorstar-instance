@@ -1,0 +1,2095 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "sourceSheet": "Készméret - Falpanel",
+  "summary": {
+    "reviewRecordCount": 11,
+    "apiReadyRecordCount": 11,
+    "blockedRecordCount": 0,
+    "actionCounts": {
+      "REVIEW": 11
+    }
+  },
+  "records": [
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "01",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 313.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Árnyék fugával",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "01",
+            "normalizedValue": "01",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "31.3 cm",
+            "normalizedValue": 313.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "49.2 cm",
+            "normalizedValue": 492.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 4
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Árnyék fugával",
+            "normalizedValue": "Árnyék fugával",
+            "reviewState": "REVIEW",
+            "row": 4
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "01",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 313.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Árnyék fugával"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 4,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "02",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 313.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "02",
+            "normalizedValue": "02",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "31.3 cm",
+            "normalizedValue": 313.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "216.8 cm",
+            "normalizedValue": 2168.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 5
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni",
+            "normalizedValue": "Gérelni",
+            "reviewState": "REVIEW",
+            "row": 5
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "02",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 313.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 5,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "03",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1091.0,
+        "heightMm": 243.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Felső káva burkolat gérelni, lift",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "03",
+            "normalizedValue": "03",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "109.1 cm",
+            "normalizedValue": 1091.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "24.3 cm",
+            "normalizedValue": 243.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 6
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Felső káva burkolat gérelni, lift",
+            "normalizedValue": "Felső káva burkolat gérelni, lift",
+            "reviewState": "REVIEW",
+            "row": 6
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "03",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1091.0,
+        "heightMm": 243.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Felső káva burkolat gérelni, lift"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 6,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "04",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 1055.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "04",
+            "normalizedValue": "04",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "105.5 cm",
+            "normalizedValue": 1055.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "49.2 cm",
+            "normalizedValue": 492.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 7
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni",
+            "normalizedValue": "Gérelni",
+            "reviewState": "REVIEW",
+            "row": 7
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "04",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 1055.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 7,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "05",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 243.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni káva burkolat, lift",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "05",
+            "normalizedValue": "05",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "24.3 cm",
+            "normalizedValue": 243.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "216.8 cm",
+            "normalizedValue": 2168.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 8
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni káva burkolat, lift",
+            "normalizedValue": "Gérelni káva burkolat, lift",
+            "reviewState": "REVIEW",
+            "row": 8
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "05",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 243.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni káva burkolat, lift"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 8,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "06",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 243.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni káva burkolat, lift",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "06",
+            "normalizedValue": "06",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "24.3 cm",
+            "normalizedValue": 243.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "216.8 cm",
+            "normalizedValue": 2168.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 9
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni káva burkolat, lift",
+            "normalizedValue": "Gérelni káva burkolat, lift",
+            "reviewState": "REVIEW",
+            "row": 9
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "06",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 243.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni káva burkolat, lift"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 9,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "07",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 897.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Alakos marás",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "07",
+            "normalizedValue": "07",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "89.7 cm",
+            "normalizedValue": 897.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "49.2 cm",
+            "normalizedValue": 492.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 10
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Alakos marás",
+            "normalizedValue": "Alakos marás",
+            "reviewState": "REVIEW",
+            "row": 10
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "07",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 897.0,
+        "heightMm": 492.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Alakos marás"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 10,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "08",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 897.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni, csapos ragasztás",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "08",
+            "normalizedValue": "08",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "89.7 cm",
+            "normalizedValue": 897.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "216.8 cm",
+            "normalizedValue": 2168.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 11
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni, csapos ragasztás",
+            "normalizedValue": "Gérelni, csapos ragasztás",
+            "reviewState": "REVIEW",
+            "row": 11
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "08",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 897.0,
+        "heightMm": 2168.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni, csapos ragasztás"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 11,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "09",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 677.0,
+        "heightMm": 463.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Felső csapos",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "09",
+            "normalizedValue": "09",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "67.7 cm",
+            "normalizedValue": 677.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "46.3 cm",
+            "normalizedValue": 463.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 12
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Felső csapos",
+            "normalizedValue": "Felső csapos",
+            "reviewState": "REVIEW",
+            "row": 12
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": "09",
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 677.0,
+        "heightMm": 463.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Felső csapos"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 12,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "10",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 150.0,
+        "heightMm": 463.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "10",
+            "normalizedValue": "10",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "15.0 cm",
+            "normalizedValue": 150.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "46.3 cm",
+            "normalizedValue": 463.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 13
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni",
+            "normalizedValue": "Gérelni",
+            "reviewState": "REVIEW",
+            "row": 13
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 10,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 150.0,
+        "heightMm": 463.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 13,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    },
+    {
+      "recordType": "ManufacturedItemImportPreview",
+      "action": "REVIEW",
+      "apiReady": true,
+      "apiEndpoint": {
+        "method": "POST",
+        "pathTemplate": "/api/production/production-orders/{projectKey}/revisions/{revision}/manufactured-items",
+        "projectKey": "DSMR-25159",
+        "revision": null
+      },
+      "apiPayload": {
+        "kind": "WALL_PANEL",
+        "code": "11",
+        "name": "Falpanel",
+        "itemType": "Egyedi Falpanel",
+        "componentName": "Falpanel",
+        "quantity": 1,
+        "widthMm": 150.0,
+        "heightMm": 2040.0,
+        "thicknessMm": 18.0,
+        "material": "EOL Mély MDF",
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "workKind": "STANDARD",
+        "state": "REVIEW",
+        "notes": "Gérelni",
+        "evidence": [
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "CODE",
+            "rawValue": "11",
+            "normalizedValue": "11",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "ITEM_TYPE",
+            "rawValue": "Egyedi Falpanel",
+            "normalizedValue": "Egyedi Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COMPONENT_NAME",
+            "rawValue": "Falpanel",
+            "normalizedValue": "Falpanel",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "QUANTITY",
+            "rawValue": "1.0",
+            "normalizedValue": 1,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WIDTH_MM",
+            "rawValue": "15.0 cm",
+            "normalizedValue": 150.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "HEIGHT_MM",
+            "rawValue": "204.0 cm",
+            "normalizedValue": 2040.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "THICKNESS_MM",
+            "rawValue": "1.8 cm",
+            "normalizedValue": 18.0,
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "MATERIAL",
+            "rawValue": "EOL Mély MDF",
+            "normalizedValue": "EOL Mély MDF",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "SURFACE",
+            "rawValue": "Fóliás",
+            "normalizedValue": "Fóliás",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "COLOUR",
+            "rawValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "normalizedValue": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "WORK_KIND",
+            "rawValue": "configured:STANDARD",
+            "normalizedValue": "STANDARD",
+            "reviewState": "REVIEW",
+            "row": 14
+          },
+          {
+            "sourceRoot": "2026/05_Május/25159 - Swiss Luxury Kft",
+            "relativePath": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+            "sheet": "Készméret - Falpanel",
+            "field": "NOTES",
+            "rawValue": "Gérelni",
+            "normalizedValue": "Gérelni",
+            "reviewState": "REVIEW",
+            "row": 14
+          }
+        ]
+      },
+      "target": {
+        "projectReference": "DSMR-25159",
+        "itemKind": "WALL_PANEL",
+        "sourceItemCode": 11,
+        "itemType": "Egyedi Falpanel",
+        "itemName": null,
+        "componentName": "Falpanel",
+        "material": "EOL Mély MDF",
+        "widthMm": 150.0,
+        "heightMm": 2040.0,
+        "thicknessMm": 18.0,
+        "quantity": 1.0,
+        "surface": "Fóliás",
+        "colour": "RENOLIT MAGNOLIA SUPERMATT  CLASSIC",
+        "pattern": null,
+        "note": "Gérelni"
+      },
+      "source": {
+        "relativePath": "2026/05_Május/25159 - Swiss Luxury Kft/25159 - Swiss Luxury Kft - Gyartasmegrendelő.xlsm",
+        "sheet": "Készméret - Falpanel",
+        "logicalRow": 14,
+        "contentSha256": "6669e954c89b76e6cc9325f73df65b8cb7f1cb8f6ea3c570e6a2548e80a5169a",
+        "sourceMeasurementUnit": "cm",
+        "conversion": "cm->mm"
+      },
+      "errors": [
+        "requires_human_review"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "doorstar-import-preview-evidence/v1",
+  "mode": "preview",
+  "databaseWrite": false,
+  "projectKey": "DSMR-26151",
+  "decision": "QUARANTINE_PENDING_SURVEY_AND_SALES_FINALISATION",
+  "sourceFingerprint": "sha256:7638fc6f68660015e44bf09de9dc11afe3f35396dd652bd9f129b8ed7dd9870e",
+  "sourceFingerprintInputs": [
+    {
+      "sourceFile": "sales/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "contentSha256": "50a38ad3c6381b5438bb2fa95b36fbb2807bc7a35d966b520358ea3a7988690d"
+    },
+    {
+      "sourceFile": "sales/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/Felmérés_2026-07-06_Powell Lili.png",
+      "contentSha256": "cc7fdc090a6a180672fe492f34e6fee8f9cabe07605c7eb3c6dacf0777b2d774"
+    }
+  ],
+  "observations": [
+    {
+      "recordType": "ProjectCandidate",
+      "projectKey": "DSMR-26151",
+      "customerName": "Dr. Powell Miriam",
+      "extractionState": "UNVERIFIED",
+      "sourceKind": "PRELIMINARY_SALES_ORDER_PDF",
+      "sourceFile": "sales/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "relativePath": "DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "locator": "PDF page 1",
+      "excerpt": "Előzetes gyártásmegrendelés Dani kérésére. A felületet 07.27-i héten választja ki az ügyfél. Marási minta is még pontosítandó."
+    },
+    {
+      "recordType": "PositionObservations",
+      "projectKey": "DSMR-26151",
+      "sourceFingerprint": "sha256:7638fc6f68660015e44bf09de9dc11afe3f35396dd652bd9f129b8ed7dd9870e",
+      "sourceKind": "PRELIMINARY_SALES_ORDER_PDF",
+      "extractionState": "UNVERIFIED",
+      "sourceFile": "sales/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "relativePath": "DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "locator": "PDF pages 1-2, positions 1-7",
+      "excerpt": "Minden harmadik méretmező '---'; Thermofilm I. kategória, de a felület és a marási minta pontosítandó.",
+      "positions": [
+        { "code": "1", "openingWidthMm": 750, "openingHeightMm": 2100, "openingDirection": "Bal ki", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null, "specialRequirement": "Sugárvédelmi ajtólap és rejtett tok, 2 × 0,5 mm ólombetét, extra erős pántolás" },
+        { "code": "2", "openingWidthMm": 750, "openingHeightMm": 2100, "openingDirection": "Bal ki", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null },
+        { "code": "3", "openingWidthMm": 850, "openingHeightMm": 2100, "openingDirection": "Bal be", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null, "lockHint": "WC" },
+        { "code": "4", "openingWidthMm": 750, "openingHeightMm": 2100, "openingDirection": "Jobb ki", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null, "lockHint": "WC" },
+        { "code": "5", "openingWidthMm": 900, "openingHeightMm": 2100, "openingDirection": "Bal be", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null },
+        { "code": "6", "openingWidthMm": 900, "openingHeightMm": 2100, "openingDirection": "Jobb be", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null },
+        { "code": "7", "openingWidthMm": 750, "openingHeightMm": 2100, "openingDirection": "Bal be", "productType": "RASO 90 Tapéta (Falsíkban záródó)", "doorThicknessMm": null }
+      ]
+    },
+    {
+      "recordType": "DeadlineObservation",
+      "projectKey": "DSMR-26151",
+      "observedValue": "2026. szeptember eleje",
+      "normalisedValue": null,
+      "conflictWith": ["deadlines/Ütemterv.xlsx#ADAT!D235 (2026-09-03)"],
+      "sourceKind": "PRELIMINARY_SALES_ORDER_PDF",
+      "extractionState": "UNVERIFIED",
+      "sourceFile": "sales/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "relativePath": "DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+      "locator": "PDF page 1",
+      "excerpt": "Várható szállítási idő: 2026. szeptember eleje; a RASO tokokat 2026.08.03. hétfőn építjük be."
+    },
+    {
+      "recordType": "DeadlineObservation",
+      "projectKey": "DSMR-26151",
+      "observedValue": "46268",
+      "normalisedValue": "2026-09-03",
+      "conflictWith": ["sales PDF page 1: 2026. szeptember eleje"],
+      "sourceKind": "SCHEDULE_XLSX",
+      "extractionState": "EXTRACTED",
+      "sourceFile": "deadlines/Ütemterv.xlsx",
+      "relativePath": "Ütemterv.xlsx",
+      "locator": "ADAT!D235",
+      "excerpt": "26151 | Dr. Powell Miriam | vállalt szállítási határidő: 46268"
+    }
+  ],
+  "feedbackCandidates": [
+    { "category": "DATA_QUALITY", "message": "MISSING_SURVEY_MEASUREMENTS: All seven positions lack door thickness; position 1 also needs confirmed radiation-door construction." },
+    { "category": "IMPORT_MAPPING", "message": "SOURCE_VALUE_CONFLICT: Thermofilm category, final colour and milling pattern are explicitly pending; none may populate an approved surface field." },
+    { "category": "WORKFLOW", "message": "DEADLINE_CONFLICT: The preliminary PDF says early September and has an 2026-08-03 frame-installation note; ADAT!D235 is 2026-09-03. The installation note is not an order deadline." },
+    { "category": "DOCUMENT_REFERENCE", "message": "SOURCE_LINK_AMBIGUOUS: The supplied floor-plan image supports location/size cross-checking but does not by itself establish final production dimensions." }
+  ]
+}

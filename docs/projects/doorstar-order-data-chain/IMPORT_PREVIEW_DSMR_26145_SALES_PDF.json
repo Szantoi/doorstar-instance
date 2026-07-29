@@ -1,0 +1,117 @@
+{
+  "databaseWrite": false,
+  "document": {
+    "action": "CREATE_REFERENCE",
+    "contentSha256": "5357d9833298021d5c3c3833709c1aeed07d6d0f2b69830e6441a20c9d2c0795",
+    "displayName": "DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+    "kind": "SALES_ORDER",
+    "recordType": "OrderDocument",
+    "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+    "reviewRequired": true,
+    "source": "LEGACY_FOLDER"
+  },
+  "macroExecution": false,
+  "mode": "preview",
+  "pages": [
+    {
+      "page": 1,
+      "tableCount": 4,
+      "textExtracted": true
+    }
+  ],
+  "positionCandidates": [],
+  "salesOrder": {
+    "contactName": "Terék Csilla",
+    "contactPhone": "06703334783",
+    "customerName": "Koroknai Richárd",
+    "deliveryAddress": "2040 Budaörs, Öntő u. 8.",
+    "expectedDelivery": null,
+    "expectedDeliveryText": "Szállítása az üvegajtók szállításával együtt történik",
+    "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+    "orderDate": "2026.06.22",
+    "reviewRequired": true,
+    "workNumber": "26145"
+  },
+  "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+  "summary": {
+    "pageCount": 1,
+    "positionCandidateCount": 0,
+    "positionsRequiringReview": 0,
+    "positionsWithCompleteOpeningDimensions": 0,
+    "supplementaryProductCandidateCount": 1
+  },
+  "supplementaryProductCandidates": [
+    {
+      "action": "REVIEW",
+      "errors": [
+        "requires_human_review",
+        "supplementary_product_storage_not_implemented"
+      ],
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Lábazati szegőléc",
+          "page": 1,
+          "rawValue": "Lábazati szegőléc",
+          "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 5,
+          "page": 1,
+          "rawValue": "5",
+          "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Lábazati szegőléc 7 cm magas, sima sarkos, Thermofilm II. 2009-S40-R32Q / SUPERMATT STONE GREY (2,4 fm/szál) - 5 szál | Szállítás és beépítés nélkül",
+          "page": 1,
+          "rawValue": "Lábazati szegőléc 7 cm magas, sima sarkos, Thermofilm II. 2009-S40-R32Q / SUPERMATT STONE GREY (2,4 fm/szál) - 5 szál | Szállítás és beépítés nélkül",
+          "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "extractionState": "SALES_SOURCE_UNVERIFIED",
+      "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+      "recordType": "SalesOrderSupplementaryProductCandidate",
+      "source": {
+        "page": 1,
+        "relativePath": "2026/06_Június/26145 - Koroknai Richárd/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 2,
+        "sourceRoot": "LEGACY_2026"
+      },
+      "target": {
+        "calculation": "2.4 * 5",
+        "code": "1",
+        "description": "Lábazati szegőléc 7 cm magas, sima sarkos, Thermofilm II. 2009-S40-R32Q / SUPERMATT STONE GREY (2,4 fm/szál) - 5 szál",
+        "linearMetresCalculated": 12.0,
+        "linearMetresPerPiece": 2.4,
+        "name": "Lábazati szegőléc",
+        "notes": "Szállítás és beépítés nélkül",
+        "quantity": 5
+      }
+    }
+  ]
+}

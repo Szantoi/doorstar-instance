@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "doorstar-import-preview-evidence/v1",
+  "mode": "preview",
+  "databaseWrite": false,
+  "projectKey": "DSMR-25171",
+  "decision": "QUARANTINE_PRELIMINARY_MEASUREMENTS",
+  "sourceFingerprint": "sha256:731dd0f47580c91e79e9ad96a4ba9bb41fb6d860240c659b6c4eeec9c7c4102b",
+  "observations": [
+    {
+      "recordType": "WallPanelCandidates",
+      "projectKey": "DSMR-25171",
+      "sourceKind": "DRAWING_PDF",
+      "extractionState": "UNVERIFIED",
+      "sourceFile": "sales/DSMR 25171 GN Vagyonkezelő Kft. (Görög Nikoletta) előzetes mérések/Jellegrajz/DSMR 25171 Görög Nikoletta-Falpanel_01.pdf",
+      "relativePath": "DSMR 25171 GN Vagyonkezelő Kft. (Görög Nikoletta) előzetes mérések/Jellegrajz/DSMR 25171 Görög Nikoletta-Falpanel_01.pdf",
+      "contentSha256": "a8f200ead553bc8a862c3d6a0a9ca6bb9166d1f763bf8f5f7544eb89adbfc099",
+      "locator": "PDF page 1",
+      "excerpt": "FP/1–FP/35, P1/P3/P4 minta, panel illesztés; Bútorfront jelölések.",
+      "items": [
+        { "code": "FP/1", "widthMm": 641, "heightMm": 520 }, { "code": "FP/2", "widthMm": 641, "heightMm": 2070 }, { "code": "FP/3", "widthMm": 641, "heightMm": 106 },
+        { "code": "FP/4", "widthMm": 641, "heightMm": 520 }, { "code": "FP/5", "widthMm": 641, "heightMm": 2070 }, { "code": "FP/6", "widthMm": 641, "heightMm": 106 },
+        { "code": "FP/7", "widthMm": 647, "heightMm": 520 }, { "code": "FP/8", "widthMm": 647, "heightMm": 2070 }, { "code": "FP/9", "widthMm": 647, "heightMm": 106 },
+        { "code": "FP/10", "widthMm": 653, "heightMm": 520 }, { "code": "FP/11", "widthMm": 653, "heightMm": 2070 }, { "code": "FP/12", "widthMm": 653, "heightMm": 106 },
+        { "code": "FP/13", "widthMm": 709, "heightMm": 2070 }, { "code": "FP/14", "widthMm": 709, "heightMm": 520 }, { "code": "FP/15", "widthMm": 709, "heightMm": 106 },
+        { "code": "FP/16", "widthMm": 567, "heightMm": 2070 }, { "code": "FP/17", "widthMm": 567, "heightMm": 520 }, { "code": "FP/18", "widthMm": 567, "heightMm": 106 },
+        { "code": "FP/19", "widthMm": 710, "heightMm": 520 }, { "code": "FP/20", "widthMm": 1003, "heightMm": 106 }, { "code": "FP/21", "widthMm": 293, "heightMm": 2070 },
+        { "code": "FP/22", "widthMm": 293, "heightMm": 520 }, { "code": "FP/23", "widthMm": 253, "heightMm": 2070 }, { "code": "FP/24", "widthMm": 253, "heightMm": 520 },
+        { "code": "FP/25", "widthMm": 1053, "heightMm": 106 }, { "code": "FP/26", "widthMm": 800, "heightMm": 520 }, { "code": "FP/27", "widthMm": 683, "heightMm": 2070 },
+        { "code": "FP/28", "widthMm": 683, "heightMm": 520 }, { "code": "FP/29", "widthMm": 683, "heightMm": 106 }, { "code": "FP/30", "widthMm": 683, "heightMm": 2070 },
+        { "code": "FP/31", "widthMm": 683, "heightMm": 520 }, { "code": "FP/32", "widthMm": 683, "heightMm": 106 }, { "code": "FP/33", "widthMm": 683, "heightMm": 520 },
+        { "code": "FP/34", "widthMm": 683, "heightMm": 2070 }, { "code": "FP/35", "widthMm": 683, "heightMm": 106 }
+      ],
+      "reviewRequired": ["panel thickness", "material", "finish/milling pattern", "final site measurement", "panel-to-room linkage"]
+    },
+    {
+      "recordType": "FurnitureFrontObservation",
+      "projectKey": "DSMR-25171",
+      "sourceKind": "DRAWING_PDF",
+      "extractionState": "UNVERIFIED",
+      "sourceFile": "sales/DSMR 25171 GN Vagyonkezelő Kft. (Görög Nikoletta) előzetes mérések/Jellegrajz/DSMR 25171 Görög Nikoletta-Falpanel_01.pdf",
+      "relativePath": "DSMR 25171 GN Vagyonkezelő Kft. (Görög Nikoletta) előzetes mérések/Jellegrajz/DSMR 25171 Görög Nikoletta-Falpanel_01.pdf",
+      "locator": "PDF page 1",
+      "excerpt": "Bútorfront jelölések találhatók a falpanel-elrendezésen.",
+      "reviewRequired": ["front count", "width/height/thickness", "material/finish", "edge banding", "machining", "cabinet linkage"]
+    }
+  ],
+  "feedbackCandidates": [
+    { "category": "DATA_QUALITY", "message": "MISSING_SURVEY_MEASUREMENTS: 35 wall-panel candidates have no confirmed thickness, material or final site measurement." },
+    { "category": "IMPORT_MAPPING", "message": "SOURCE_VALUE_CONFLICT: P1/P3/P4 pattern and panel-joint labels are drawing annotations, not yet confirmed finish specifications." },
+    { "category": "DOCUMENT_REFERENCE", "message": "SOURCE_LINK_AMBIGUOUS: Furniture-front labels exist but no separately dimensioned front schedule is present in the preliminary package." }
+  ]
+}
