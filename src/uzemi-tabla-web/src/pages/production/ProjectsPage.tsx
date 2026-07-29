@@ -46,7 +46,7 @@ function EpikOverviewModal({ row, onClose }: { row: EpikRollupRow; onClose: () =
 
   function openStep(week: string) {
     setWeek(week);
-    navigate("/");
+    navigate("/board");
     onClose();
   }
 

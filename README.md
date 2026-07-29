@@ -10,7 +10,7 @@ A Doorstar Kft. ajtógyártási folyamataihoz készült, ügyfél-specifikus ter
 - Állomásonkénti **Kanban**: élő státusznézet; a régi, aktuális és jövőbeli feladatok is látszanak.
 - **Munkalapok**: projekt, epik és lépés szintű tervezés; mennyiség, egységnyi munkaidő és teljes munkaidő.
 - **Projektkezelés**: létrehozás, név/munkaszám módosítás, epik törlés és soft archive.
-- **Kiadási szabály**: csak teljesen, napra tervezett munkamenet adható ki a Táblára.
+- **Kiadási szabály**: a teljes munkamenet csak minden még ki nem adott lépés napra tervezése után adható ki; egyedi lépéshez is kötelező a tervezett nap és a már kiadott közvetlen előzmény.
 - **Kapacitás**: mennyiség × egységnyi idő alapján számol.
 - **Read-only MCP/RAG**: helyi, lekérdező MCP adapter és kurált Doorstar tudástár-keresés agentek számára.
 
@@ -73,7 +73,7 @@ Az alkalmazás VPS-en fut. A pontos szolgáltatás-, nginx- és jogosultsági el
 ## Fontos döntések
 
 - A **Tábla** heti dátumnézet, a **Kanban** nem dátumszűrt státusznézet.
-- A munkalap az ütemezés forrása. Automatikus „mai naptól” dátumkiosztás nincs; hiányzó tervezett nap esetén a teljes kiadás elutasított.
+- A munkalap az ütemezés forrása. Automatikus „mai naptól” dátumkiosztás nincs; hiányzó tervezett nap esetén a teljes kiadás elutasított. Egyedi kiadásnál az előző aktív lépésnek már a Táblán kell lennie, így a függőségi lánc nem szakadhat meg.
 - A Projekt/Epik/EpicStep a tervet, a Task a kiadott táblakártyát jelenti. Kiadáskor a mennyiség és az `óra/db` feladat-szintű snapshotot kap.
 - A projekt törlése archiválás: a történeti feladatok megmaradnak.
 - Az MCP adapter szándékosan csak olvas. Író agent-képesség külön jogosultsági és audit-tervet igényel.

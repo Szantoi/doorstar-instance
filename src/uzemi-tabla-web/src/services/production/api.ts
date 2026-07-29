@@ -2,13 +2,25 @@ import { apiFetch } from "../apiClient";
 import { PRODUCTION_API_BASE as BASE } from "./config";
 import type {
   BoardResponse,
+  ApplyManufacturedItemCandidatesResult,
   EpikRollup,
   EpikTemplate,
   IssueSessionResult,
+  ImportRun,
+  ImportRunEvidence,
+  ManufacturedItem,
   KanbanResponse,
   LoadReport,
   OrderChecklistItem,
   ProductionOverview,
+  ProductionOrderCard,
+  ProductionOrderDetail,
+  OrderRevisionInput,
+  OrderDocumentInput,
+  OrderFeedback,
+  OrderFeedbackCategory,
+  OrderPositionEvidence,
+  OrderIntakeStage,
   ProjectCard,
   ProjectDetail,
   SheetTemplate,
@@ -61,6 +73,38 @@ export const productionApi = {
   setCapacity: (hoursPerDay: number) => apiFetch(`${BASE}/capacity`, { method: "PUT", body: { hoursPerDay } }),
 
   getProjects: () => apiFetch<ProjectCard[]>(`${BASE}/projects`),
+  getProductionOrders: () => apiFetch<ProductionOrderCard[]>(`${BASE}/production-orders`),
+  getImportRuns: () => apiFetch<ImportRun[]>(`${BASE}/import-runs`),
+  getImportRunEvidence: (importRunId: string) => apiFetch<ImportRunEvidence>(`${BASE}/import-runs/${encodeURIComponent(importRunId)}/evidence`),
+  applyManufacturedItemCandidates: (
+    importRunId: string,
+    input: { orderRevisionId: string; sourceFingerprint: string; candidateIds: string[]; confirmation: "APPLY_READY_MANUFACTURED_ITEMS" },
+  ) => apiFetch<ApplyManufacturedItemCandidatesResult>(
+    `${BASE}/import-runs/${encodeURIComponent(importRunId)}/apply-manufactured-items`,
+    { method: "POST", body: input },
+  ),
+  getProductionOrder: (projectKey: string) => apiFetch<ProductionOrderDetail>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}`),
+  createSalesIntake: (input: OrderRevisionInput & { projectKey: string; projectName: string; projectNum?: string }) =>
+    apiFetch(`${BASE}/production-orders/sales-intake`, { method: "POST", body: input }),
+  advanceOrderIntakeStage: (projectKey: string, revision: number, stage: OrderIntakeStage, exceptionReason?: string) =>
+    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/intake-stage`, { method: "PATCH", body: { stage, exceptionReason } }),
+  updateOrderRevision: (projectKey: string, revision: number, input: OrderRevisionInput) =>
+    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}`, { method: "PUT", body: input }),
+  addOrderDocument: (projectKey: string, revision: number, input: OrderDocumentInput) =>
+    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/documents`, { method: "POST", body: input }),
+  getOrderFeedback: (projectKey: string, revision: number) => apiFetch<OrderFeedback[]>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/feedback`),
+  createOrderFeedback: (projectKey: string, revision: number, category: OrderFeedbackCategory, message: string) =>
+    apiFetch<OrderFeedback>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/feedback`, { method: "POST", body: { category, message } }),
+  resolveOrderFeedback: (projectKey: string, revision: number, feedbackId: string, status: "ACKNOWLEDGED" | "RESOLVED", resolution: string) =>
+    apiFetch<OrderFeedback>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/feedback/${encodeURIComponent(feedbackId)}`, { method: "PATCH", body: { status, resolution } }),
+  resolveOrderPositionEvidence: (projectKey: string, revision: number, positionId: string, evidenceId: string, reviewState: "RESOLVED" | "REJECTED", resolution: string) =>
+    apiFetch<OrderPositionEvidence>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/positions/${encodeURIComponent(positionId)}/evidence/${encodeURIComponent(evidenceId)}`, { method: "PATCH", body: { reviewState, resolution } }),
+  reviewManufacturedItem: (projectKey: string, revision: number, itemId: string, state: "VERIFIED" | "REJECTED", resolution: string) =>
+    apiFetch<ManufacturedItem>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/manufactured-items/${encodeURIComponent(itemId)}/review`, { method: "PATCH", body: { state, resolution } }),
+  requestOrderReview: (projectKey: string, revision: number, note?: string) =>
+    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/review`, { method: "POST", body: { note } }),
+  approveOrderRevision: (projectKey: string, revision: number, note: string) =>
+    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/approve`, { method: "POST", body: { note } }),
   createProject: (input: { key: string; name: string; num?: string }) =>
     apiFetch<ProjectDetail>(`${BASE}/projects`, { method: "POST", body: input }),
   getProject: (key: string) => apiFetch<ProjectDetail>(`${BASE}/projects/${encodeURIComponent(key)}`),
@@ -81,6 +125,10 @@ export const productionApi = {
       method: "POST",
       body: {},
     }),
+  issueProjectStep: (key: string, stepId: string) =>
+    apiFetch<{ outcome: "issued" | "already_issued"; taskId: string }>(`${BASE}/projects/${encodeURIComponent(key)}/steps/${encodeURIComponent(stepId)}/issue`, { method: "POST" }),
+  revokeProjectStep: (key: string, stepId: string) =>
+    apiFetch<void>(`${BASE}/projects/${encodeURIComponent(key)}/steps/${encodeURIComponent(stepId)}/issue`, { method: "DELETE" }),
   getSheet: (key: string, kind: "QUANTITIES" | "CUTTING" | "HARDWARE") =>
     apiFetch<unknown>(`${BASE}/projects/${encodeURIComponent(key)}/sheets/${kind}`),
   saveSheet: (key: string, kind: "QUANTITIES" | "CUTTING" | "HARDWARE", data: unknown) =>

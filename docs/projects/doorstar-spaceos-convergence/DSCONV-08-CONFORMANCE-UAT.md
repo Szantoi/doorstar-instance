@@ -3,7 +3,7 @@
 - **Szerep:** QA/frontend reviewer/security
 - **Prioritás:** P0 release gate
 - **Státusz:** pending (dependency-blocked)
-- **Függőség:** DSCONV-07
+- **Függőség:** DSCONV-07, DSCONV-09
 - **Mutációs határ:** teszt, fixture, UAT dokumentáció és release-javaslat
 - **Tiltott scope:** feature implementáció, teszt skip, automatikus élesítés
 
@@ -23,6 +23,8 @@ fő üzleti flow-t, megfelel a SpaceOS contract/security/bundle szabályainak, �
 - ProjectSheet, capacity, comment/image/audit regresszió;
 - mobil/tablet vizuális baseline és accessibility smoke;
 - install/upgrade/rollback E2E;
+- Doorstar → partner kézfogás: offer/accept/state/proof/completion, egyező terms
+  hash és event sequence, valamint attacker/revoke/replay negatív utak;
 - performance baseline a convergence előtti értékhez képest.
 
 ## Elfogadási kritériumok
@@ -32,6 +34,7 @@ fő üzleti flow-t, megfelel a SpaceOS contract/security/bundle szabályainak, �
 - [ ] Adatreconciliation 100%, vagy minden eltérés emberileg elfogadott.
 - [ ] A fő flow vizuális és viselkedési regresszió nélkül fut.
 - [ ] Security reviewer megpróbálta megkerülni a tenant/station/module gate-et.
+- [ ] A `DSCONV-09` cross-company pilot és B2B conformance bizonyítéka PASS.
 - [ ] Doorstar stakeholder UAT döntése rögzített.
 - [ ] Go/no-go csomag tartalmaz rollbacket és ismert maradék kockázatot.
 

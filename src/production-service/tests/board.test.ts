@@ -340,4 +340,32 @@ describe("board API", () => {
     expect(kanban.body.pool.map((task: { id: string }) => task.id)).toContain(poolTask.body.id);
     expect(kanban.body).not.toHaveProperty("carriedOverCount");
   });
+
+  it("issues and revokes a single step without breaking its dependency chain", async () => {
+    const suffix = `single-step-${Date.now()}`;
+    const project = await prisma.project.create({ data: { key: suffix, name: "Egyedi kiadás teszt" } });
+    const epic = await prisma.epic.create({ data: { projectId: project.id, name: "Tok" } });
+    const [firstStep, secondStep] = await Promise.all([
+      prisma.epicStep.create({ data: { epicId: epic.id, name: "Szabás", station: "CNC", planDate: new Date("2026-08-03") } }),
+      prisma.epicStep.create({ data: { epicId: epic.id, name: "Marás", station: "CNC", planDate: new Date("2026-08-04"), position: 1 } }),
+    ]);
+
+    await request(app).post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(409);
+    const firstIssue = await request(app).post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(201);
+    expect(firstIssue.body).toMatchObject({ outcome: "issued" });
+    await request(app).post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(200);
+
+    const secondIssue = await request(app).post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(201);
+    await request(app).delete(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(409);
+    await request(app).delete(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(204);
+    await request(app).delete(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(204);
+
+    const freeTask = await prisma.task.create({ data: { projectId: project.id, title: "Epik nélküli", week, day: 2 } });
+    const detail = await request(app).get(`/api/production/projects/${project.key}`).expect(200);
+    expect(detail.body.unepicTasks.map((task: { id: string }) => task.id)).toContain(freeTask.id);
+
+    await prisma.task.deleteMany({ where: { projectId: project.id } });
+    await prisma.project.delete({ where: { id: project.id } });
+    expect(secondIssue.body).toMatchObject({ outcome: "issued" });
+  });
 });

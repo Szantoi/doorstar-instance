@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { monday, shiftWeek } from "@/lib/dates";
 
-export type Role = "vezeto" | "allomas";
+/** Temporary UI-selected role until real identity/Entra group resolution. */
+export type Role = "vezeto" | "allomas" | "sales" | "technical_preparation" | "order_approver" | "production_planner" | "shop_floor" | "installer" | "warehouse_dispatch" | "administrator" | "reader";
 
 interface UiState {
   role: Role;

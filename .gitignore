@@ -8,6 +8,7 @@ node_modules/
 dist/
 logs/
 *.log
+*.log.err
 *.tsbuildinfo
 
 # Secrets
@@ -33,3 +34,10 @@ Thumbs.db
 
 # Island runtime state (migrated DBs, caches) — never on git
 data/
+
+# Local QA and generated import artefacts
+.playwright-mcp/
+tmp/
+**/__pycache__/
+*.py[cod]
+src/production-service/IMPORT_PREVIEW_*.json

@@ -42,6 +42,156 @@ enum SheetKind {
   HARDWARE
 }
 
+enum OrderRevisionStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  SUPERSEDED
+}
+
+/// Sales/felmérés readiness is distinct from approval. A revision may be a
+/// DRAFT while its field survey is being completed.
+enum OrderIntakeStage {
+  SALES_DRAFT
+  SALES_DOCUMENTS_RECEIVED
+  SURVEY_PENDING
+  SURVEY_COMPLETED
+  SURVEY_EXCEPTION_REVIEW
+  TECHNICAL_PREPARATION
+}
+
+/// These choices affect the door's manufacturing route and therefore cannot
+/// remain free-text once a field survey is finalised.
+enum WallTreatment {
+  NONE
+  WALL_PANEL
+  BLENDE
+}
+
+enum Glazing {
+  NONE
+  GLAZED
+}
+
+/// A document starts as a reference to the controlled Sales source and can
+/// later receive a stable Microsoft Graph identity after SharePoint onboarding.
+enum OrderDocumentSource {
+  LEGACY_FOLDER
+  SHAREPOINT
+}
+
+enum OrderDocumentKind {
+  SALES_ORDER
+  SURVEY
+  DRAWING
+  OTHER
+}
+
+enum OrderRevisionAuditAction {
+  REVIEW_REQUESTED
+  APPROVED
+}
+
+/// A legacy preview is evidence, not an import. Only an explicit, recorded
+/// run may later create DRAFT records in the isolated test schema.
+enum ImportRunStatus {
+  PREVIEWED
+  APPLIED
+  REJECTED
+}
+
+/// Feedback keeps source-data problems visible during the gradual Excel to
+/// system transition without mutating the original document or revision.
+enum OrderFeedbackCategory {
+  DATA_QUALITY
+  IMPORT_MAPPING
+  DOCUMENT_REFERENCE
+  WORKFLOW
+}
+
+enum OrderFeedbackStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+enum ImportCandidateStatus {
+  READY
+  REVIEW
+  BLOCKED
+  APPLIED
+  SKIPPED
+}
+
+enum DeadlineObservationKind {
+  CONTRACTUAL
+  PLANNED_INSTALL
+  PRODUCTION_END
+  NOTE
+}
+
+enum EvidenceReviewState {
+  UNVERIFIED
+  REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum OrderPositionEvidenceField {
+  CODE
+  NAME
+  QUANTITY
+  PRODUCT_TYPE
+  OPENING_DIRECTION
+  OPENING_WIDTH_MM
+  OPENING_HEIGHT_MM
+  OPENING_DEPTH_MM
+  DOOR_WIDTH_MM
+  DOOR_HEIGHT_MM
+  DOOR_THICKNESS_MM
+  SURFACE
+  WALL_TREATMENT
+  GLAZING
+  GLAZING_SPECIFICATION
+  NOTES
+}
+
+enum ManufacturedItemKind {
+  WALL_PANEL
+  FURNITURE_FRONT
+}
+
+enum ManufacturedItemWorkKind {
+  STANDARD
+  REWORK
+  REMANUFACTURE
+  REPLACEMENT
+}
+
+enum ManufacturedItemState {
+  CANDIDATE
+  REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum ManufacturedItemEvidenceField {
+  CODE
+  NAME
+  ITEM_TYPE
+  COMPONENT_NAME
+  QUANTITY
+  WIDTH_MM
+  HEIGHT_MM
+  THICKNESS_MM
+  MATERIAL
+  SURFACE
+  COLOUR
+  PATTERN
+  WORK_KIND
+  NOTES
+}
+
 /// A customer job / megrendelés. Aggregate root, analogous to ProductionJob
 /// in the .NET module (OrderId/CustomerId/ProjectName/Deadline/Status there).
 model Project {
@@ -63,8 +213,302 @@ model Project {
   epics  Epic[]
   tasks  Task[]
   sheets ProjectSheet[]
+  order  ProductionOrder?
 
   @@index([deletedAt])
+}
+
+/// Doorstar-specific order aggregate attached to the existing Project root.
+model ProductionOrder {
+  id        String @id @default(cuid())
+  projectId String @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  revisions OrderRevision[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// A revision is immutable once it leaves DRAFT; later changes create a new one.
+model OrderRevision {
+  id               String              @id @default(cuid())
+  orderId          String
+  order            ProductionOrder     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  revision         Int
+    status           OrderRevisionStatus @default(DRAFT)
+    intakeStage      OrderIntakeStage     @default(SALES_DRAFT)
+  customerName     String
+  customerAddress  String?
+  contactName      String?
+  contactPhone     String?
+  contactEmail     String?
+  deliveryAddress  String?
+  expectedDelivery DateTime?
+  plannedStart     DateTime?
+  priority         Int                 @default(0)
+  notes            String              @default("")
+  importRunId       String?
+  importRun         ImportRun?          @relation(fields: [importRunId], references: [id], onDelete: SetNull)
+    salesDocumentsReceivedAt DateTime?
+    surveyCompletedAt       DateTime?
+  surveyExceptionReason   String?
+  positions        OrderPosition[]
+  documents        OrderDocument[]
+  audit            OrderRevisionAudit[]
+  feedback         OrderFeedback[]
+  deadlineObservations OrderDeadlineObservation[]
+  manufacturedItems ManufacturedItem[]
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  @@unique([orderId, revision])
+    @@index([status])
+    @@index([intakeStage])
+    @@index([importRunId])
+}
+
+model OrderFeedback {
+  id              String                @id @default(cuid())
+  orderRevisionId String
+  orderRevision   OrderRevision         @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  category        OrderFeedbackCategory
+  status          OrderFeedbackStatus   @default(OPEN)
+  message         String
+  createdByRole   String
+  resolution      String?
+  resolvedByRole  String?
+  resolvedAt      DateTime?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([orderRevisionId, status, createdAt])
+}
+
+/// Provenance envelope for a reviewed legacy preview. No production import is
+/// possible without one of these records plus a test-schema connection guard.
+model ImportRun {
+  id                String          @id @default(cuid())
+  profileVersion    String
+  sourceFingerprint String
+  previewArtifact   String
+  targetSchema      String
+  status            ImportRunStatus @default(PREVIEWED)
+  candidateCount    Int             @default(0)
+  createdByRole     String
+  createdAt         DateTime        @default(now())
+  appliedAt         DateTime?
+
+  revisions         OrderRevision[]
+  candidates        ImportCandidate[]
+  deadlineObservations OrderDeadlineObservation[]
+  @@index([status, createdAt])
+}
+
+/// Queryable record-level projection of the deterministic preview. It is
+/// evidence for an import decision and never an approved production fact.
+model ImportCandidate {
+  id                String                @id @default(cuid())
+  importRunId       String
+  importRun         ImportRun             @relation(fields: [importRunId], references: [id], onDelete: Cascade)
+  recordType        String
+  workNumber       String?
+  sourceRoot        String
+  relativePath      String
+  sheet             String?
+  page              Int?
+  row               Int?
+  normalizedPayload Json
+  errors            String[]              @default([])
+  status            ImportCandidateStatus @default(REVIEW)
+  createdAt         DateTime              @default(now())
+  manufacturedItem ManufacturedItem?
+
+  @@index([importRunId, status])
+  @@index([workNumber])
+}
+
+/// Multiple schedule rows may describe one order. Observations preserve all
+/// source values without silently replacing the order header deadline.
+model OrderDeadlineObservation {
+  id                String                    @id @default(cuid())
+  importRunId       String
+  importRun         ImportRun                 @relation(fields: [importRunId], references: [id], onDelete: Cascade)
+  orderRevisionId   String?
+  orderRevision     OrderRevision?            @relation(fields: [orderRevisionId], references: [id], onDelete: SetNull)
+  workNumber        String
+  sourceRoot        String
+  relativePath      String
+  sheet             String?
+  page              Int?
+  row               Int?
+  kind              DeadlineObservationKind
+  rawValue          String
+  normalizedDate    DateTime?
+  confidence        Float?
+  reviewState       EvidenceReviewState       @default(UNVERIFIED)
+  resolution        String?
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  @@index([importRunId, reviewState])
+  @@index([orderRevisionId, kind])
+  @@index([workNumber])
+}
+
+/// Immutable lifecycle evidence for a revision. The approval hash covers the
+/// exact position and document-reference snapshot used by downstream work.
+model OrderRevisionAudit {
+  id              String                   @id @default(cuid())
+  orderRevisionId String
+  orderRevision   OrderRevision            @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  action          OrderRevisionAuditAction
+  actorRole       String
+  contentHash     String
+  note            String                   @default("")
+  createdAt       DateTime                 @default(now())
+
+  @@index([orderRevisionId, createdAt])
+}
+
+/// Metadata-only document reference. The application stores no local absolute
+/// path or binary here; SharePoint/object storage remains the source of truth.
+model OrderDocument {
+  id              String              @id @default(cuid())
+  orderRevisionId String
+  orderRevision   OrderRevision       @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  source          OrderDocumentSource
+  kind            OrderDocumentKind
+  displayName     String
+  relativePath    String
+  driveId         String?
+  itemId          String?
+  versionId       String?
+  contentSha256   String?
+  createdAt       DateTime            @default(now())
+  positionEvidence OrderPositionEvidence[]
+  manufacturedItemEvidence ManufacturedItemEvidence[]
+
+  @@index([orderRevisionId])
+  @@index([source, kind])
+}
+
+/// One Doorstar door/product position captured before calculation.
+model OrderPosition {
+  id               String        @id @default(cuid())
+  orderRevisionId  String
+  orderRevision    OrderRevision @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  position         Int
+  code             String
+  name             String
+  quantity         Int
+  productType      String?
+  openingDirection String?
+  openingWidthMm   Float?
+  openingHeightMm  Float?
+  openingDepthMm   Float?
+  doorWidthMm      Float?
+  doorHeightMm     Float?
+  doorThicknessMm  Float?
+  surface          String?
+  wallTreatment    WallTreatment?
+  glazing          Glazing?
+  glazingSpecification String?
+  notes            String        @default("")
+  evidence         OrderPositionEvidence[]
+  relatedManufacturedItems ManufacturedItem[]
+
+  @@unique([orderRevisionId, position])
+}
+
+/// Field-level provenance for one position. Evidence explains a value but
+/// never mutates the position automatically.
+model OrderPositionEvidence {
+  id               String                     @id @default(cuid())
+  orderPositionId  String
+  orderPosition    OrderPosition              @relation(fields: [orderPositionId], references: [id], onDelete: Cascade)
+  orderDocumentId  String?
+  orderDocument    OrderDocument?             @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
+  sourceRoot       String
+  relativePath     String
+  sheet            String?
+  page             Int?
+  row              Int?
+  field            OrderPositionEvidenceField
+  rawValue         String
+  normalizedValue  Json
+  confidence       Float?
+  reviewState      EvidenceReviewState        @default(UNVERIFIED)
+  resolution       String?
+  createdByRole    String
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @updatedAt
+
+  @@index([orderPositionId, field, reviewState])
+  @@index([orderDocumentId])
+}
+
+/// A standalone wall panel or furniture front. It belongs to the approved
+/// order snapshot without borrowing door-only semantics.
+model ManufacturedItem {
+  id                     String                       @id @default(cuid())
+  orderRevisionId        String
+  orderRevision          OrderRevision                @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  relatedOrderPositionId String?
+  relatedOrderPosition   OrderPosition?               @relation(fields: [relatedOrderPositionId], references: [id], onDelete: SetNull)
+  importCandidateId      String?                      @unique
+  importCandidate        ImportCandidate?             @relation(fields: [importCandidateId], references: [id], onDelete: SetNull)
+  kind                   ManufacturedItemKind
+  code                   String
+  name                   String
+  itemType               String?
+  componentName          String?
+  quantity               Int
+  widthMm                Float?
+  heightMm               Float?
+  thicknessMm            Float?
+  material               String?
+  surface                String?
+  colour                 String?
+  pattern                String?
+  workKind               ManufacturedItemWorkKind     @default(STANDARD)
+  state                  ManufacturedItemState        @default(CANDIDATE)
+  notes                  String                       @default("")
+  resolution             String?
+  reviewedByRole         String?
+  reviewedAt             DateTime?
+  createdAt              DateTime                     @default(now())
+  updatedAt              DateTime                     @updatedAt
+  evidence               ManufacturedItemEvidence[]
+
+  @@unique([orderRevisionId, kind, code])
+  @@index([orderRevisionId, kind, state])
+  @@index([relatedOrderPositionId])
+}
+
+/// Field-level source evidence for a standalone panel or front. It explains
+/// candidate values and never creates production tasks by itself.
+model ManufacturedItemEvidence {
+  id                 String                         @id @default(cuid())
+  manufacturedItemId String
+  manufacturedItem   ManufacturedItem               @relation(fields: [manufacturedItemId], references: [id], onDelete: Cascade)
+  orderDocumentId    String?
+  orderDocument      OrderDocument?                 @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
+  sourceRoot         String
+  relativePath       String
+  sheet              String?
+  page               Int?
+  row                Int?
+  field              ManufacturedItemEvidenceField
+  rawValue           String
+  normalizedValue    Json
+  confidence         Float?
+  reviewState        EvidenceReviewState            @default(UNVERIFIED)
+  resolution         String?
+  createdByRole      String
+  createdAt          DateTime                       @default(now())
+  updatedAt          DateTime                       @updatedAt
+
+  @@index([manufacturedItemId, field, reviewState])
+  @@index([orderDocumentId])
 }
 
 /// One manufactured component within a project's work-order sheet

@@ -1,0 +1,19 @@
+:root {
+  /* Kézírás — minden, amit "filccel írtak" a táblára */
+  --font-hand: 'Caveat', cursive;
+  /* UI — keretrendszer, fejlécek, gombok, táblázatok */
+  --font-ui: 'Barlow Semi Condensed', sans-serif;
+
+  --hand-size-card: 19px;   /* feladatkártya a cellában */
+  --hand-size-list: 21px;   /* lista, infó sáv */
+  --hand-size-field: 24px;  /* munkalap mezők */
+  --hand-size-title: 30px;  /* projekt címek */
+
+  --ui-size-label: 12px;    /* mezőcímkék, csupa nagybetű, +1px betűköz */
+  --ui-size-body: 13px;
+  --ui-size-table: 14px;
+  --ui-size-head: 16px;
+
+  --label-tracking: 1px;
+  --head-tracking: 1.5px;
+}

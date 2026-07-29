@@ -1,0 +1,48 @@
+:root {
+  /* Filctoll (marker) színek — a tábla írásszínei */
+  --marker-blue: #1e3fbf;    /* felvett / folyamatban, kézírás alapszín */
+  --marker-red: #d1262e;     /* probléma */
+  --marker-green: #148a3d;   /* kész ✓ */
+  --marker-orange: #d97706;  /* kiosztva, még nincs felvéve */
+  --marker-black: #1c1c1e;   /* nevek, fix feliratok */
+
+  /* Szemantikus státusz-aliasok */
+  --status-assigned: var(--marker-orange);
+  --status-inprogress: var(--marker-blue);
+  --status-done: var(--marker-green);
+  --status-problem: var(--marker-red);
+
+  /* Felületek — a fehér tábla és környezete */
+  --surface-board: #fcfcf8;      /* a tábla fehérje */
+  --surface-pool: #fdf9ea;       /* "Szabad" sáv, sárgás */
+  --surface-today: #fff3c4;      /* mai nap kiemelés */
+  --surface-row-head: #f4f4ef;   /* sorfejléc */
+  --surface-sheet-head: #f0efe8; /* lap-fejlécek, táblázatfejek */
+  --surface-assigned: #fff4e8;   /* kiosztott panel háttere */
+  --surface-desk: #cfcdc6;       /* fal / asztal háttér */
+  --surface-frame-hi: #e8e8ea;   /* alu keret világos */
+  --surface-frame-lo: #a9a9ad;   /* alu keret sötét */
+
+  /* Sötét króm — fejléc, címkék */
+  --chrome-bg: #26262a;
+  --chrome-bg-2: #3a3a3e;
+  --chrome-control: #4a4a50;
+  --chrome-fg: #eeeeee;
+  --chrome-accent: #ffd35a;   /* aktív menüpont, kiemelés */
+
+  /* Vonalak, keretek */
+  --line-strong: #26262a;     /* táblarács, 2-3px */
+  --line-soft: #d8d6cc;
+  --line-softer: #eceae2;
+  --line-input: #b9b9b0;
+
+  /* Szöveg */
+  --text-ink: #1c1c1e;
+  --text-muted: #77756e;
+  --text-faint: #9a9a94;
+
+  /* Terhelés hőtérkép */
+  --load-ok: #d9e8d3;
+  --load-warn: #f7e3b5;
+  --load-over: #f3c1c1;
+}

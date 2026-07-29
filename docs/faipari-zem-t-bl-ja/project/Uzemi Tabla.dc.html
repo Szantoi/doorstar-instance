@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Barlow+Semi+Condensed:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#cfcdc6;}
+  *{box-sizing:border-box;}
+  a{color:#1e3fbf;} a:hover{color:#d1262e;}
+  input,textarea,select,button{font-family:inherit;}
+  ::placeholder{color:#9a9a92;opacity:1;}
+  @media print{ body{background:#fff;} .no-print{display:none!important;} .app-root{height:auto!important;display:block!important;} .scrollwrap{overflow:visible!important;padding:0!important;} .print-area{box-shadow:none!important;border:1px solid #fff!important;max-width:none!important;} }
+</style>
+</helmet>
+<div class="app-root" style="height:100vh;display:flex;flex-direction:column;font-family:'Barlow Semi Condensed',sans-serif;background:linear-gradient(180deg,#d6d4cd,#c9c7c0);color:#1c1c1e;position:relative;">
+  <sc-if value="{{ hasConfirm }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(20,20,24,.35);display:flex;align-items:center;justify-content:center;z-index:210;">
+      <div style="background:#fcfcf8;border:2px solid #26262a;box-shadow:0 20px 60px rgba(0,0,0,.4);padding:18px 22px;max-width:380px;font-family:'Barlow Semi Condensed',sans-serif;">
+        <div style="font-size:15px;font-weight:600;color:#1c1c1e;margin-bottom:14px;line-height:1.35;">{{ confirmMsg }}</div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;">
+          <button onClick="{{ confirmNo }}" style="border:1.5px solid #b9b9b0;background:#fff;color:#55534c;font-weight:700;font-size:13px;padding:6px 14px;cursor:pointer;border-radius:4px;">Mégse</button>
+          <button onClick="{{ confirmYes }}" style="border:none;background:#d1262e;color:#fff;font-weight:700;font-size:13px;padding:6px 14px;cursor:pointer;border-radius:4px;">Igen, folytatás</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#ffd35a;color:#26262a;font-family:'Barlow Semi Condensed',sans-serif;font-size:14px;font-weight:700;padding:8px 20px;text-align:center;flex:none;border-bottom:2px solid #26262a;">{{ toastMsg }}</div>
+  </sc-if>
+  <div class="no-print" style="display:flex;align-items:center;gap:14px;padding:10px 18px;background:linear-gradient(180deg,#3a3a3e,#26262a);color:#eee;flex-wrap:wrap;box-shadow:0 2px 6px rgba(0,0,0,.35);">
+    <div style="font-weight:700;font-size:17px;letter-spacing:2px;text-transform:uppercase;">Üzemi tábla</div>
+    <div style="display:flex;gap:6px;">
+      <sc-for list="{{ navBtns }}" as="b" hint-placeholder-count="3">
+        <button onClick="{{ b.onClick }}" style="{{ b.style }}">{{ b.label }}</button>
+      </sc-for>
+    </div>
+    <div style="flex:1;"></div>
+    <sc-if value="{{ hasWeekNav }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onClick="{{ prevWeek }}" style="background:#4a4a50;color:#eee;border:none;border-radius:4px;padding:5px 11px;cursor:pointer;font-size:15px;font-weight:600;">‹</button>
+        <div style="font-weight:600;font-size:15px;min-width:200px;text-align:center;">{{ weekLabel }}</div>
+        <button onClick="{{ nextWeek }}" style="background:#4a4a50;color:#eee;border:none;border-radius:4px;padding:5px 11px;cursor:pointer;font-size:15px;font-weight:600;">›</button>
+        <button onClick="{{ goToday }}" style="background:#4a4a50;color:#eee;border:none;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13px;font-weight:600;">Ma</button>
+      </div>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:#bbb;">Szerep:</span>
+      <select value="{{ role }}" onChange="{{ onRole }}" style="background:#4a4a50;color:#eee;border:none;border-radius:4px;padding:5px 8px;font-size:13px;font-weight:600;cursor:pointer;">
+        <option value="vezeto">Vezető</option>
+        <option value="allomas">Állomás</option>
+      </select>
+      <sc-if value="{{ isStationRole }}" hint-placeholder-val="{{ false }}">
+        <select value="{{ myStation }}" onChange="{{ onMyStation }}" style="background:#4a4a50;color:#ffd35a;border:none;border-radius:4px;padding:5px 8px;font-size:13px;font-weight:600;cursor:pointer;">
+          <sc-for list="{{ stationNames }}" as="s" hint-placeholder-count="3"><option value="{{ s }}">{{ s }}</option></sc-for>
+        </select>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{ isBoard }}" hint-placeholder-val="{{ true }}">
+  <div style="flex:1;overflow:auto;padding:16px 20px 28px;">
+    <div style="min-width:1420px;background:linear-gradient(135deg,#e8e8ea,#b9b9bd 40%,#dcdcde 60%,#a9a9ad);border-radius:8px;padding:11px;box-shadow:0 10px 30px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.7);">
+      <div style="background:#fcfcf8;border:1px solid #bdbdb6;box-shadow:inset 0 0 60px rgba(120,110,80,.08), inset 0 0 8px rgba(0,0,0,.06);display:flex;">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;border-bottom:3px solid #26262a;">
+            <div style="width:84px;flex:none;border-right:3px solid #26262a;"></div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div style="flex:1;min-width:150px;border-right:2px solid #26262a;padding:7px 10px 5px;display:flex;align-items:baseline;gap:10px;background:{{ d.headBg }};">
+                <div style="background:#26262a;color:#fff;font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 12px;">{{ d.name }}</div>
+                <div style="font-family:Caveat,cursive;font-weight:700;font-size:24px;color:#1e3fbf;">{{ d.dateNum }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;border-bottom:3px solid #26262a;background:#fdf9ea;">
+            <div style="width:84px;flex:none;border-right:3px solid #26262a;display:flex;align-items:center;justify-content:center;">
+              <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8a6d1a;padding:8px 0;">Szabad</div>
+            </div>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+              <div onDragOver="{{ allowDrop }}" onDrop="{{ d.onDropPool }}" onDoubleClick="{{ d.onAddPool }}" style="flex:1;min-width:150px;border-right:2px solid #26262a;padding:6px 8px 24px;min-height:64px;position:relative;">
+                <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ d.onAddPool }}" title="Új feladat felírása" style="position:absolute;bottom:3px;right:3px;border:none;background:none;cursor:pointer;font-size:16px;color:#c9c7ba;padding:2px 5px;line-height:1;transform:rotate(90deg);" style-hover="color:#1e3fbf;">✎</button>
+                </sc-if>
+                <sc-for list="{{ d.pool }}" as="t" hint-placeholder-count="1">
+                  <div draggable="{{ t.draggable }}" onDragStart="{{ t.onDragStart }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+                    <div>{{ t.title }} <span style="color:#148a3d;font-weight:700;">{{ t.check }}</span></div>
+                    <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:10.5px;color:#8a8a82;font-weight:600;letter-spacing:.3px;">{{ t.meta }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+          <sc-for list="{{ stationRows }}" as="r" hint-placeholder-count="6">
+            <div style="display:flex;border-bottom:2px solid #26262a;">
+              <div style="width:84px;flex:none;border-right:3px solid #26262a;display:flex;align-items:center;justify-content:center;background:#f4f4ef;">
+                <div onClick="{{ r.onOpenKanban }}" title="Állomás kanban megnyitása" style="writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;padding:10px 0;cursor:pointer;border:1px solid #9a9a94;background:#fff;box-shadow:1px 1px 2px rgba(0,0,0,.15);color:#26262a;" style-hover="background:#26262a;color:#fff;">{{ r.name }}</div>
+              </div>
+              <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="7">
+                <div onDragOver="{{ allowDrop }}" onDrop="{{ c.onDrop }}" onDoubleClick="{{ c.onAdd }}" style="flex:1;min-width:150px;border-right:2px solid #26262a;padding:6px 8px 24px;min-height:92px;position:relative;">
+                  <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ c.onAdd }}" title="Új feladat felírása" style="position:absolute;bottom:3px;right:3px;border:none;background:none;cursor:pointer;font-size:16px;color:#c9c7ba;padding:2px 5px;line-height:1;transform:rotate(90deg);" style-hover="color:#1e3fbf;">✎</button>
+                  </sc-if>
+                  <sc-if value="{{ c.multi }}" hint-placeholder-val="{{ false }}">
+                    <div title="Feladatok száma ezen a napon" style="position:absolute;top:4px;right:4px;min-width:18px;height:18px;border-radius:50%;background:#26262a;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;box-shadow:1px 1px 2px rgba(0,0,0,.3);">{{ c.count }}</div>
+                  </sc-if>
+                  <sc-for list="{{ c.tasks }}" as="t" hint-placeholder-count="1">
+                    <div draggable="{{ t.draggable }}" onDragStart="{{ t.onDragStart }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+                      <div>{{ t.title }} <span style="color:#148a3d;font-weight:700;">{{ t.check }}</span></div>
+                      <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:10.5px;color:#8a8a82;font-weight:600;letter-spacing:.3px;">{{ t.meta }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+          <div style="display:flex;">
+            <div style="width:84px;flex:none;border-right:3px solid #26262a;display:flex;align-items:center;justify-content:center;">
+              <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#666;padding:8px 0;">Infó</div>
+            </div>
+            <textarea value="{{ infoText }}" onChange="{{ onInfo }}" placeholder="Heti megjegyzések, mint a tábla alján…" style="flex:1;border:none;outline:none;resize:none;background:transparent;font-family:Caveat,cursive;font-size:21px;font-weight:600;color:#1e3fbf;padding:8px 14px;min-height:70px;line-height:1.35;"></textarea>
+          </div>
+        </div>
+        <div style="width:216px;flex:none;border-left:3px solid #26262a;background:#fcfcf8;display:flex;flex-direction:column;">
+          <div style="border-bottom:3px solid #26262a;padding:7px 10px 5px;"><div style="background:#26262a;color:#fff;font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 12px;display:inline-block;">Lista</div></div>
+          <div style="flex:1;padding:10px 12px;overflow:auto;">
+            <sc-for list="{{ orders }}" as="o" hint-placeholder-count="4">
+              <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;">
+                <div onClick="{{ o.onToggle }}" style="{{ o.style }}">{{ o.n }}. {{ o.label }} <span style="color:#148a3d;font-weight:700;">{{ o.check }}</span></div>
+                <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ o.onDelete }}" title="Törlés" style="border:none;background:none;color:#c0c0b8;cursor:pointer;font-size:12px;padding:0 2px;" style-hover="color:#d1262e;">×</button>
+                </sc-if>
+              </div>
+            </sc-for>
+            <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:4px;margin-top:10px;">
+                <input value="{{ orderDraft }}" onChange="{{ onOrderDraft }}" onKeyDown="{{ onOrderKey }}" placeholder="Új megrendelés…" style="flex:1;min-width:0;border:none;border-bottom:1px dashed #9a9a94;background:transparent;outline:none;font-family:Caveat,cursive;font-size:19px;font-weight:600;color:#1e3fbf;padding:2px 4px;">
+                <button onClick="{{ addOrder }}" style="border:1px solid #9a9a94;background:#fff;border-radius:3px;cursor:pointer;font-weight:700;padding:0 8px;">+</button>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:13px;color:#77756e;display:flex;gap:18px;flex-wrap:wrap;">
+      <span><b style="color:#d97706;">Narancs</b> = kiosztva, nincs felvéve</span>
+      <span><b style="color:#1e3fbf;">Kék</b> = felvett / folyamatban</span>
+      <span><b style="color:#148a3d;">Zöld ✓</b> = kész</span>
+      <span><b style="color:#d1262e;">Piros</b> = probléma</span>
+      <span><b>!! aláhúzva</b> = sürgős</span>
+      <span><b>VÁR AZ ELŐZŐRE</b> = a megelőző lépés még nincs kész</span>
+      <span>✎ toll a cella sarkában vagy dupla kattintás: új feladat · Húzás: áthelyezés · Kattintás a feladatra: munkalap · Kattintás az állomás címkéjére: saját kanban</span>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isKanban }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;overflow:auto;padding:16px 20px 28px;">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+      <sc-for list="{{ stationTabs }}" as="s" hint-placeholder-count="6">
+        <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.name }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;">
+      <div style="width:230px;flex:none;display:flex;flex-direction:column;gap:12px;">
+      <div style="background:#fff4e8;border:2px solid #26262a;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+        <div style="background:#d97706;color:#fff;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;padding:6px 12px;">Kiosztva — még nem kezdte el</div>
+        <div style="padding:8px;min-height:60px;">
+          <sc-for list="{{ kbAssigned }}" as="t" hint-placeholder-count="2">
+            <div onClick="{{ t.onClick }}" style="border:1px solid #e3b57a;background:#fff;margin-bottom:8px;padding:7px 9px;cursor:pointer;" style-hover="border-color:#d97706;">
+              <div style="font-family:Caveat,cursive;font-weight:700;font-size:20px;color:#d97706;line-height:1.1;">{{ t.title }}</div>
+              <div style="font-size:11px;color:#8a8a82;font-weight:600;">{{ t.dayName }}</div>
+              <sc-if value="{{ t.hasDep }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;font-weight:700;margin-top:2px;color:{{ t.depColor }};">{{ t.depLabel }}</div></sc-if>
+              <button onClick="{{ t.onPick }}" style="margin-top:5px;border:1px solid #d97706;background:#d97706;color:#fff;font-weight:600;font-size:12px;padding:3px 10px;cursor:pointer;border-radius:3px;">Felveszem</button>
+            </div>
+          </sc-for>
+          <sc-if value="{{ kbAssignedEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#a9a79e;padding:6px;">Nincs el nem kezdett kiosztott feladat.</div></sc-if>
+        </div>
+      </div>
+      <div style="background:#fdf9ea;border:2px solid #26262a;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+        <div style="background:#26262a;color:#ffd35a;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;padding:6px 12px;">Szabad feladatok a héten</div>
+        <div style="padding:8px;min-height:120px;">
+          <sc-for list="{{ kbPool }}" as="t" hint-placeholder-count="2">
+            <div style="border:1px dashed #b9a24a;background:#fff;margin-bottom:8px;padding:7px 9px;">
+              <div style="font-family:Caveat,cursive;font-weight:700;font-size:20px;color:#1e3fbf;line-height:1.1;">{{ t.title }}</div>
+              <div style="font-size:11px;color:#8a8a82;font-weight:600;">{{ t.dayName }}</div>
+              <sc-if value="{{ t.hasDep }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;font-weight:700;margin-top:2px;color:{{ t.depColor }};">{{ t.depLabel }}</div></sc-if>
+              <button onClick="{{ t.onPick }}" style="margin-top:5px;border:1px solid #26262a;background:#26262a;color:#fff;font-weight:600;font-size:12px;padding:3px 10px;cursor:pointer;border-radius:3px;">Felveszem</button>
+            </div>
+          </sc-for>
+          <sc-if value="{{ kbPoolEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#a9a79e;padding:6px;">Nincs szabad feladat ezen a héten.</div></sc-if>
+        </div>
+      </div>
+      </div>
+      <div style="flex:1;display:flex;gap:12px;align-items:flex-start;overflow-x:auto;">
+        <sc-for list="{{ kbCols }}" as="col" hint-placeholder-count="3">
+          <div onDragOver="{{ allowDrop }}" onDrop="{{ col.onDrop }}" style="flex:1;min-width:220px;background:#fcfcf8;border:2px solid #26262a;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+            <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #26262a;padding:6px 10px;">
+              <div style="font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;">{{ col.name }}</div>
+              <div style="display:flex;gap:4px;align-items:center;">
+                <div style="font-size:12px;font-weight:700;color:#fff;background:{{ col.dot }};border-radius:10px;padding:1px 8px;">{{ col.count }}</div>
+                <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ col.onRename }}" title="Átnevezés" style="border:none;background:none;cursor:pointer;color:#9a9a94;font-size:12px;" style-hover="color:#26262a;">✎</button>
+                  <sc-if value="{{ col.canDelete }}" hint-placeholder-val="{{ false }}"><button onClick="{{ col.onDelete }}" title="Oszlop törlése" style="border:none;background:none;cursor:pointer;color:#9a9a94;font-size:13px;" style-hover="color:#d1262e;">×</button></sc-if>
+                </sc-if>
+              </div>
+            </div>
+            <div style="padding:8px;min-height:160px;">
+              <sc-for list="{{ col.tasks }}" as="t" hint-placeholder-count="1">
+                <div draggable="true" onDragStart="{{ t.onDragStart }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+                  <div>{{ t.title }} <span style="color:#148a3d;font-weight:700;">{{ t.check }}</span></div>
+                  <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:10.5px;color:#8a8a82;font-weight:600;">{{ t.meta }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ addKbCol }}" style="flex:none;border:2px dashed #9a9a94;background:transparent;color:#77756e;font-weight:600;padding:10px 16px;cursor:pointer;font-size:14px;" style-hover="border-color:#26262a;color:#26262a;">+ Oszlop</button>
+        </sc-if>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:13px;color:#77756e;display:flex;gap:18px;flex-wrap:wrap;">
+      <span><b style="color:#d97706;">Narancs</b> = kiosztva, nincs felvéve</span>
+      <span><b style="color:#1e3fbf;">Kék</b> = felvett / folyamatban</span>
+      <span><b style="color:#148a3d;">Zöld ✓</b> = kész (utolsó oszlop)</span>
+      <span><b style="color:#d1262e;">Piros</b> = probléma</span>
+      <span><b>!! aláhúzva</b> = sürgős</span>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isLoad }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;overflow:auto;padding:16px 20px 28px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap;">
+      <div style="font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#3d3b36;">Részlegek terhelése</div>
+      <label style="font-size:13px;font-weight:600;color:#55534c;display:flex;align-items:center;gap:6px;">Kapacitás:
+        <input type="number" min="1" max="24" value="{{ capH }}" onChange="{{ onCapH }}" style="width:52px;border:1px solid #b9b9b0;background:#fff;padding:3px 5px;font-size:13px;font-weight:700;text-align:center;"> ó / nap / részleg
+      </label>
+      <div style="display:flex;gap:12px;font-size:12.5px;color:#77756e;flex-wrap:wrap;">
+        <span><span style="display:inline-block;width:11px;height:11px;background:#d9e8d3;border:1px solid #b8ccb0;vertical-align:-1px;"></span> rendben</span>
+        <span><span style="display:inline-block;width:11px;height:11px;background:#f7e3b5;border:1px solid #dcc084;vertical-align:-1px;"></span> 75% felett</span>
+        <span><span style="display:inline-block;width:11px;height:11px;background:#f3c1c1;border:2px solid #d1262e;vertical-align:-1px;"></span> túlterhelt — szűk keresztmetszet</span>
+      </div>
+    </div>
+    <div style="min-width:1200px;max-width:1500px;background:#fcfcf8;border:2px solid #26262a;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+      <div style="display:grid;grid-template-columns:120px repeat(7,1fr) 170px;border-bottom:2px solid #26262a;">
+        <div style="padding:6px 10px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Részleg</div>
+        <sc-for list="{{ loadDays }}" as="d" hint-placeholder-count="7">
+          <div style="padding:6px 8px;border-left:1px solid #d8d6cc;background:{{ d.headBg }};display:flex;align-items:baseline;gap:6px;"><span style="font-weight:700;font-size:12.5px;text-transform:uppercase;">{{ d.name }}</span><span style="font-family:Caveat,cursive;font-weight:700;font-size:18px;color:#1e3fbf;">{{ d.dateNum }}</span></div>
+        </sc-for>
+        <div style="padding:6px 10px;border-left:2px solid #26262a;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Heti kihasználtság</div>
+      </div>
+      <sc-for list="{{ loadRows }}" as="r" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:120px repeat(7,1fr) 170px;border-bottom:1px solid #d8d6cc;">
+          <div style="padding:8px 10px;font-weight:700;font-size:13px;">{{ r.name }}</div>
+          <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="7">
+            <div style="border-left:1px solid #d8d6cc;padding:6px 8px;background:{{ c.bg }};border:{{ c.border }};min-height:44px;">
+              <div style="font-weight:700;font-size:14px;">{{ c.label }}</div>
+              <div style="font-size:10.5px;color:#77756e;font-weight:600;">{{ c.count }}</div>
+            </div>
+          </sc-for>
+          <div style="border-left:2px solid #26262a;padding:6px 10px;display:flex;flex-direction:column;gap:3px;justify-content:center;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;"><span>{{ r.totLabel }}</span><span style="color:{{ r.utilColor }};">{{ r.utilPct }}</span></div>
+            <div style="height:8px;background:#eceade;border:1px solid #c9c7ba;"><div style="{{ r.barStyle }}"></div></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ hasBottleneck }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:14px;max-width:1500px;border:2px solid #d1262e;background:#fdf1f1;padding:10px 14px;">
+        <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#d1262e;margin-bottom:5px;">Szűk keresztmetszetek ezen a héten</div>
+        <sc-for list="{{ loadBottleneck }}" as="b" hint-placeholder-count="1">
+          <div style="font-family:Caveat,cursive;font-weight:700;font-size:21px;color:#d1262e;line-height:1.25;">{{ b }}</div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="margin-top:10px;font-size:13px;color:#77756e;max-width:1500px;">Az óraszám a task mennyiség × egység idő értékéből számolódik; ahol ez nincs megadva, 1 óra a becslés. A kész feladatok nem terhelik a részleget.</div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;overflow:auto;padding:20px 24px 30px;">
+    <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-bottom:16px;">
+        <button onClick="{{ addProject }}" style="border:none;background:#1e3fbf;color:#fff;font-weight:700;font-size:13.5px;padding:7px 16px;cursor:pointer;border-radius:4px;letter-spacing:.5px;" style-hover="background:#16309a;">+ Új projekt</button>
+      </div>
+    </sc-if>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;max-width:1500px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+        <div style="background:#fcfcf8;border:2px solid #26262a;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #26262a;padding:8px 14px;">
+            <div style="font-family:Caveat,cursive;font-weight:700;font-size:26px;color:#1c1c1e;">{{ p.name }}</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="font-size:13px;font-weight:700;color:#77756e;">{{ p.doneLabel }}</div>
+              <button onClick="{{ p.onOpen }}" style="border:1.5px solid #26262a;background:#fff;font-weight:700;font-size:12.5px;padding:3px 10px;cursor:pointer;letter-spacing:.5px;" style-hover="background:#26262a;color:#fff;">Lapok ›</button>
+            </div>
+          </div>
+          <div style="padding:12px 14px;">
+            <div style="height:10px;background:#eceade;border:1px solid #c9c7ba;margin-bottom:12px;"><div style="{{ p.barStyle }}"></div></div>
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="2">
+              <div onClick="{{ it.onClick }}" style="padding:5px 2px;cursor:pointer;border-radius:3px;border-bottom:1px solid #eceae2;" style-hover="background:#f3f2ea;">
+                <div style="display:flex;justify-content:space-between;gap:10px;">
+                  <div style="font-family:Caveat,cursive;font-weight:700;font-size:19px;color:{{ it.color }};line-height:1.15;">{{ it.name }}</div>
+                  <div style="font-size:12px;color:{{ it.color }};font-weight:700;white-space:nowrap;">{{ it.doneLabel }}</div>
+                </div>
+                <div style="font-size:11px;color:#8a8a82;font-weight:600;">{{ it.nextLabel }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noProjects }}" hint-placeholder-val="{{ false }}"><div style="color:#77756e;font-size:15px;">Még nincs projekthez rendelt feladat. A munkalapon a „Megrendelő / projekt" mező alapján csoportosítok.</div></sc-if>
+    <div style="margin-top:12px;font-size:13px;color:#77756e;display:flex;gap:18px;flex-wrap:wrap;">
+      <span><b style="color:#d97706;">Narancs</b> = kiosztva, nincs felvéve</span>
+      <span><b style="color:#1e3fbf;">Kék</b> = felvett / folyamatban</span>
+      <span><b style="color:#148a3d;">Zöld ✓</b> = kész</span>
+      <span><b style="color:#d1262e;">Piros</b> = probléma</span>
+      <span><b>!! aláhúzva</b> = sürgős</span>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+  <div class="scrollwrap" style="flex:1;overflow:auto;padding:16px 20px 30px;">
+    <div class="no-print" style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;max-width:1040px;">
+      <button onClick="{{ backToProjects }}" style="border:1.5px solid #55534c;background:transparent;color:#3d3b36;font-weight:700;font-size:13px;padding:5px 12px;cursor:pointer;border-radius:3px;white-space:nowrap;" style-hover="background:#26262a;color:#fff;">‹ Projektek</button>
+      <div style="font-family:Caveat,cursive;font-weight:700;font-size:30px;color:#1c1c1e;">{{ projTitle }}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <sc-for list="{{ sheetTabs }}" as="s" hint-placeholder-count="4">
+          <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </div>
+      <div style="flex:1;"></div>
+      <button onClick="{{ printSheet }}" style="border:none;background:#1e3fbf;color:#fff;font-weight:700;font-size:13.5px;padding:7px 16px;cursor:pointer;border-radius:4px;letter-spacing:.5px;" style-hover="background:#16308f;">Nyomtatás</button>
+    </div>
+    <div class="print-area" style="background:#fff;max-width:1040px;border:1px solid #c6c4bc;box-shadow:0 6px 20px rgba(0,0,0,.15);padding:26px 32px 34px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2.5px solid #26262a;padding-bottom:6px;margin-bottom:14px;gap:12px;flex-wrap:wrap;">
+        <div style="font-size:13px;font-weight:600;color:#55534c;">{{ todayLabel }}</div>
+        <div style="font-weight:700;font-size:16px;letter-spacing:.5px;">{{ projNum }} — {{ projTitle }}</div>
+        <div style="font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:#55534c;">{{ sheetTitle }}</div>
+      </div>
+
+      <sc-if value="{{ isShMm }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}">
+          <div class="no-print" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1.5px dashed #b9b9b0;background:#fafaf4;padding:8px 12px;margin-bottom:14px;">
+            <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Sablon a táblára:</span>
+            <select value="{{ tplSel }}" onChange="{{ onTplSel }}" style="border:1px solid #b9b9b0;background:#fff;padding:4px 6px;font-size:13px;font-weight:600;">
+              <sc-for list="{{ tplNames }}" as="tn" hint-placeholder-count="3"><option value="{{ tn }}">{{ tn }}</option></sc-for>
+            </select>
+            <button onClick="{{ loadTpl }}" style="border:1.5px solid #26262a;background:#fff;font-weight:700;font-size:12.5px;padding:4px 12px;cursor:pointer;border-radius:3px;" style-hover="background:#26262a;color:#fff;">Betölt</button>
+            <button onClick="{{ saveTpl }}" title="Elmenti a jelenlegi munkamenetet új, újrafelhasználható sablonként" style="border:1.5px solid #26262a;background:#fff;font-weight:700;font-size:12.5px;padding:4px 12px;cursor:pointer;border-radius:3px;white-space:nowrap;" style-hover="background:#26262a;color:#fff;">Munkamenet mentése sablonnak</button>
+            <span style="color:#c9c7ba;">|</span>
+            <button onClick="{{ doSchedule }}" style="border:none;background:#1e3fbf;color:#fff;font-weight:700;font-size:13px;padding:6px 14px;cursor:pointer;border-radius:4px;letter-spacing:.5px;" style-hover="background:#16308f;">Munkamenet kiadása (mai naptól)</button>
+            <details class="no-print" style="margin-left:auto;">
+              <summary style="font-size:11.5px;font-weight:700;color:#9a9a94;cursor:pointer;">Munkanap beállítás</summary>
+              <div style="display:flex;gap:3px;margin-top:6px;">
+                <sc-for list="{{ schedDayBtns }}" as="db" hint-placeholder-count="7">
+                  <button onClick="{{ db.onClick }}" style="{{ db.style }}">{{ db.label }}</button>
+                </sc-for>
+              </div>
+            </details>
+            <sc-if value="{{ hasEpikTpls }}" hint-placeholder-val="{{ false }}">
+              <select value="{{ epikTplSel }}" onChange="{{ onEpikTplSel }}" style="border:1px solid #b9b9b0;background:#fff;padding:4px 6px;font-size:13px;font-weight:600;">
+                <sc-for list="{{ epikTplNames }}" as="tn" hint-placeholder-count="2"><option value="{{ tn }}">{{ tn }}</option></sc-for>
+              </select>
+              <button onClick="{{ addEpicFromTpl }}" title="Elmentett epik sablon hozzáadása a folyamatsorhoz" style="border:1.5px solid #26262a;background:#fff;color:#26262a;font-weight:700;font-size:12.5px;padding:5px 12px;cursor:pointer;border-radius:3px;white-space:nowrap;" style-hover="background:#f0efe8;">+ Epik sablonból</button>
+            </sc-if>
+            <button onClick="{{ addEpic }}" style="border:1.5px dashed #26262a;background:transparent;color:#26262a;font-weight:700;font-size:12.5px;padding:5px 12px;cursor:pointer;border-radius:3px;" style-hover="background:#26262a;color:#fff;">+ Epik</button>
+          </div>
+        </sc-if>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+          <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Kezdés
+            <input value="{{ mmKezdes }}" onChange="{{ onMmKezdes }}" placeholder="2026…" style="display:block;width:100%;margin-top:2px;border:none;border-bottom:1.5px solid #b9b9b0;background:transparent;outline:none;font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1e3fbf;"></label>
+          <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Beépítés
+            <input value="{{ mmBeepites }}" onChange="{{ onMmBeepites }}" placeholder="2026…" style="display:block;width:100%;margin-top:2px;border:none;border-bottom:1.5px solid #b9b9b0;background:transparent;outline:none;font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1e3fbf;"></label>
+          <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Szín tok oldal
+            <input value="{{ mmSzinTok }}" onChange="{{ onMmSzinTok }}" style="display:block;width:100%;margin-top:2px;border:none;border-bottom:1.5px solid #b9b9b0;background:transparent;outline:none;font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1c1c1e;"></label>
+          <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Szín lap oldal
+            <input value="{{ mmSzinLap }}" onChange="{{ onMmSzinLap }}" style="display:block;width:100%;margin-top:2px;border:none;border-bottom:1.5px solid #b9b9b0;background:transparent;outline:none;font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1c1c1e;"></label>
+        </div>
+        <sc-for list="{{ mmRows }}" as="r" hint-placeholder-count="4">
+          <div style="border:1.5px solid #26262a;margin-bottom:10px;opacity:{{ r.headOpacity }};">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:{{ r.headBg }};border-bottom:1.5px solid #26262a;padding:5px 12px;flex-wrap:wrap;">
+              <div style="font-weight:700;font-size:14.5px;letter-spacing:.5px;">{{ r.comp }} <span style="color:#77756e;font-weight:600;white-space:nowrap;">{{ r.db }}</span></div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="font-size:12.5px;font-weight:700;color:{{ r.progColor }};">{{ r.progress }}</div>
+                <sc-if value="{{ r.showEpikActions }}" hint-placeholder-val="{{ false }}">
+                  <button class="no-print" onClick="{{ r.onToggleRow }}" style="{{ r.toggleStyle }}">{{ r.toggleLabel }}</button>
+                  <button class="no-print" onClick="{{ r.onAddStep }}" title="Új lépés/task hozzáadása" style="border:1px solid #26262a;background:#fff;font-weight:700;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:3px;" style-hover="background:#26262a;color:#fff;">+ Task</button>
+                  <button class="no-print" onClick="{{ r.onSaveEpikTpl }}" title="Epik mentése önálló sablonként" style="border:1px solid #26262a;background:#fff;font-weight:700;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:3px;font-family:inherit;" style-hover="background:#f0efe8;">Sablonként ment</button>
+                  <button class="no-print" onClick="{{ r.onDeleteRow }}" title="Epik törlése" style="border:none;background:none;color:#c0c0b8;cursor:pointer;font-size:15px;padding:0 3px;" style-hover="color:#d1262e;">×</button>
+                </sc-if>
+              </div>
+            </div>
+            <sc-if value="{{ isStationRole }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;padding:9px 12px;align-items:flex-start;">
+                <sc-for list="{{ r.steps }}" as="st" hint-placeholder-count="6">
+                  <button onClick="{{ st.onOpen }}" style="{{ st.chipStyle }}">{{ st.label }}<span style="display:block;font-size:9.5px;font-weight:600;opacity:.7;letter-spacing:.3px;">{{ st.stLabel }}</span></button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ canManage }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:30px 1.5fr 1.1fr 62px 74px 124px 104px 150px;font-size:13px;align-items:center;">
+              <div style="padding:3px 0 3px 10px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;"></div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Lépés</div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Állomás</div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Menny.</div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Egys. idő (ó)</div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Tervezett nap</div>
+              <div style="padding:3px 8px;font-size:10px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Státusz</div>
+              <div></div>
+              <sc-for list="{{ r.steps }}" as="st" hint-placeholder-count="6">
+                <div style="border-bottom:1px solid #eceae2;padding:4px 0 4px 10px;color:#9a9a94;font-weight:700;">{{ st.i }}.</div>
+                <div style="border-bottom:1px solid #eceae2;padding:4px 8px;font-weight:600;display:flex;align-items:center;gap:7px;"><span style="width:9px;height:9px;border-radius:50%;background:{{ st.dotColor }};flex:none;"></span>{{ st.label }}</div>
+                <div style="border-bottom:1px solid #eceae2;padding:2px 8px;">
+                  <select value="{{ st.st }}" onChange="{{ st.onStation }}" style="width:100%;font-size:12px;border:1px solid #e0ded4;background:#fff;color:#26262a;padding:2px 3px;font-weight:600;">
+                    <option value="">— állomás —</option>
+                    <sc-for list="{{ stationNames }}" as="s" hint-placeholder-count="6"><option value="{{ s }}">{{ s }}</option></sc-for>
+                  </select>
+                </div>
+                <div style="border-bottom:1px solid #eceae2;padding:2px 8px;">
+                  <input type="number" min="0" value="{{ st.vol }}" onChange="{{ st.onVol }}" style="width:100%;font-size:12px;border:1px solid #e0ded4;background:#fff;padding:2px 3px;font-weight:600;color:#26262a;">
+                </div>
+                <div style="border-bottom:1px solid #eceae2;padding:2px 8px;">
+                  <input type="number" min="0" step="0.01" value="{{ st.ut }}" onChange="{{ st.onUt }}" style="width:100%;font-size:12px;border:1px solid #e0ded4;background:#fff;padding:2px 3px;font-weight:600;color:#26262a;">
+                </div>
+                <div style="border-bottom:1px solid #eceae2;padding:2px 8px;">
+                  <input type="date" value="{{ st.planDate }}" onChange="{{ st.onPlan }}" disabled="{{ st.planLocked }}" style="width:100%;font-size:12px;border:1px solid #e0ded4;background:#fff;padding:2px 3px;font-weight:600;color:#26262a;">
+                </div>
+                <div style="border-bottom:1px solid #eceae2;padding:4px 8px;font-size:11.5px;font-weight:700;color:{{ st.statusColor }};text-transform:uppercase;letter-spacing:.5px;">{{ st.statusLabel }}</div>
+                <div style="border-bottom:1px solid #eceae2;padding:2px 8px;display:flex;gap:3px;flex-wrap:wrap;align-items:center;">
+                  <sc-if value="{{ st.canIssue }}" hint-placeholder-val="{{ false }}">
+                    <button class="no-print" onClick="{{ st.onIssue }}" style="border:none;background:#1e3fbf;color:#fff;font-weight:700;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:3px;" style-hover="background:#16308f;">Kiadás</button>
+                  </sc-if>
+                  <sc-if value="{{ st.hasSheet }}" hint-placeholder-val="{{ false }}">
+                    <button class="no-print" onClick="{{ st.onOpen }}" style="border:1px solid #26262a;background:#fff;font-weight:700;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:3px;" style-hover="background:#26262a;color:#fff;">Munkalap</button>
+                  </sc-if>
+                  <sc-if value="{{ st.canRevoke }}" hint-placeholder-val="{{ false }}">
+                    <button class="no-print" onClick="{{ st.onRevoke }}" title="Kiadás visszavonása" style="border:1px solid #b9b9b0;background:#fff;color:#77756e;font-weight:700;font-size:11px;padding:2px 8px;cursor:pointer;border-radius:3px;" style-hover="border-color:#d1262e;color:#d1262e;">Visszavon</button>
+                  </sc-if>
+                  <sc-if value="{{ st.showReorder }}" hint-placeholder-val="{{ false }}">
+                    <button class="no-print" onClick="{{ st.onUp }}" title="Feljebb" style="border:none;background:none;color:#9a9a94;cursor:pointer;font-size:13px;padding:0 3px;" style-hover="color:#26262a;">▲</button>
+                    <button class="no-print" onClick="{{ st.onDown }}" title="Lejjebb" style="border:none;background:none;color:#9a9a94;cursor:pointer;font-size:13px;padding:0 3px;" style-hover="color:#26262a;">▼</button>
+                    <button class="no-print" onClick="{{ st.onDelete }}" title="Törlés" style="border:none;background:none;color:#c0c0b8;cursor:pointer;font-size:13px;padding:0 3px;" style-hover="color:#d1262e;">×</button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="font-size:12px;color:#8a8a82;margin-top:6px;" class="no-print">Kiadás előtt itt ellenőrizhető és átírható minden lépés állomása és tervezett napja (a dátumok a kezdő dátumból és a munkanapokból töltődnek ki, soronként egymás után). A „Kimarad" kapcsolóval egy egész folyamatsor kihagyható. A „Munkamenet kiadása" felteszi a lépéseket a táblára függőség-láncolva — ami már táblán van, nem duplázódik. A státusz a kanbanon változik.</div>
+        <div style="margin-top:8px;font-size:12.5px;color:#77756e;display:flex;gap:16px;flex-wrap:wrap;">
+          <span><b style="color:#9a9a94;">Szürke keret</b> = nincs elkezdve</span>
+          <span><b style="color:#148a3d;">Zöld</b> = kész lépés</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isShMenny }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;font-size:14px;">
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 10px;">Megnevezés</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 10px;">Felület</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;padding:5px 10px;">Darab</div>
+          <sc-for list="{{ mennyRows }}" as="m" hint-placeholder-count="6">
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 10px;font-weight:600;">{{ m.name }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 10px;color:#55534c;">{{ m.felulet }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;padding:5px 10px;font-family:Caveat,cursive;font-size:19px;font-weight:700;color:#1e3fbf;line-height:1;">{{ m.db }}</div>
+          </sc-for>
+        </div>
+        <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#55534c;margin:18px 0 6px;">Bontás (Vsz. / Függ.)</div>
+        <div style="display:grid;grid-template-columns:2.4fr 1fr 1fr;font-size:14px;">
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 10px;">Tétel</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 10px;">Vízszintes</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;padding:5px 10px;">Függőleges</div>
+          <sc-for list="{{ mennyBreak }}" as="m" hint-placeholder-count="4">
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 10px;font-weight:600;">{{ m.label }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 10px;font-family:Caveat,cursive;font-size:19px;font-weight:700;color:#1e3fbf;line-height:1;">{{ m.vsz }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;padding:5px 10px;font-family:Caveat,cursive;font-size:19px;font-weight:700;color:#1e3fbf;line-height:1;">{{ m.fugg }}</div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isShSzab }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:44px 1fr 1fr 64px 1.4fr 1fr;font-size:14px;">
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 8px;">#</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 8px;">Szélesség</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 8px;">Hosszúság</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 8px;">db</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;border-right:none;padding:5px 8px;">Anyag</div>
+          <div style="font-weight:700;background:#f0efe8;border:1px solid #26262a;padding:5px 8px;">Megjegyzés</div>
+          <sc-for list="{{ szabRows }}" as="s" hint-placeholder-count="7">
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 8px;color:#77756e;font-weight:700;">{{ s.i }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 8px;font-weight:600;">{{ s.sz }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 8px;font-weight:600;">{{ s.h }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 8px;font-family:Caveat,cursive;font-size:19px;font-weight:700;color:#1e3fbf;line-height:1;">{{ s.db }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;border-right:none;padding:5px 8px;">{{ s.anyag }}</div>
+            <div style="border:1px solid #b9b9b0;border-top:none;padding:5px 8px;color:#55534c;">{{ s.megj }}</div>
+          </sc-for>
+        </div>
+        <div style="font-size:12.5px;color:#8a8a82;margin-top:10px;">Méretek cm-ben, a kiíró Excelből átvéve. Tok mag + borító lap tételek a teljes szabásjegyzékben.</div>
+      </sc-if>
+
+      <sc-if value="{{ isShGy }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <sc-for list="{{ doors }}" as="d" hint-placeholder-count="6">
+            <div style="border:1.5px solid #26262a;">
+              <div style="display:flex;justify-content:space-between;background:#f0efe8;border-bottom:1.5px solid #26262a;padding:4px 10px;font-weight:700;font-size:13.5px;">
+                <div>Ajtó {{ d.i }} — {{ d.nyitas }}</div><div style="color:#55534c;">{{ d.pant }}</div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px 10px;padding:8px 10px;font-size:13px;">
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Lap</div><div style="font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1e3fbf;line-height:1;">{{ d.lap }}</div></div>
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Tok</div><div style="font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1e3fbf;line-height:1;">{{ d.tok }}</div></div>
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Üveg</div><div style="font-family:Caveat,cursive;font-size:20px;font-weight:700;color:#1c1c1e;line-height:1;">{{ d.uveg }}</div></div>
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Zár</div><div style="font-weight:600;">{{ d.zar }}</div></div>
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">Kilincs</div><div style="font-weight:600;">{{ d.kilincs }}</div></div>
+                <div><div style="font-size:10.5px;font-weight:700;color:#9a9a94;text-transform:uppercase;">CNC</div><div style="font-weight:600;">{{ d.cnc }}</div></div>
+              </div>
+              <sc-if value="{{ d.hasMegj }}" hint-placeholder-val="{{ false }}">
+                <div style="border-top:1px dashed #b9b9b0;padding:4px 10px;font-family:Caveat,cursive;font-size:18px;font-weight:600;color:#d1262e;">{{ d.megj }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasEpikModal }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeEpikModal }}" style="position:fixed;inset:0;background:rgba(20,20,24,.5);display:flex;align-items:flex-start;justify-content:center;padding:30px 16px;overflow:auto;z-index:50;">
+    <div onClick="{{ stopProp }}" style="width:520px;max-width:100%;background:#fcfcf8;border:2px solid #26262a;box-shadow:0 20px 60px rgba(0,0,0,.45);">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#26262a;color:#fff;padding:8px 14px;">
+        <div style="font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;">Epik áttekintés</div>
+        <button onClick="{{ closeEpikModal }}" style="border:none;background:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;">×</button>
+      </div>
+      <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;">
+          <div style="font-family:Caveat,cursive;font-weight:700;font-size:26px;color:#1c1c1e;">{{ epikModal.name }}</div>
+          <div style="font-size:13px;font-weight:700;color:#77756e;">{{ epikModal.doneLabel }}</div>
+        </div>
+        <div style="height:10px;background:#eceade;border:1px solid #c9c7ba;"><div style="{{ epikModal.barStyle }}"></div></div>
+        <div>
+          <sc-for list="{{ epikModal.steps }}" as="st" hint-placeholder-count="3">
+            <div onClick="{{ st.onClick }}" style="display:flex;align-items:center;gap:8px;padding:5px 2px;cursor:pointer;border-bottom:1px solid #eceae2;" style-hover="background:#f3f2ea;">
+              <span style="width:9px;height:9px;border-radius:50%;background:{{ st.dotColor }};flex:none;"></span>
+              <div style="flex:1;font-family:Caveat,cursive;font-weight:700;font-size:19px;color:#1c1c1e;line-height:1.2;">{{ st.label }}</div>
+              <div style="font-size:11.5px;color:#8a8a82;font-weight:600;white-space:nowrap;">{{ st.place }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeSel }}" style="position:fixed;inset:0;background:rgba(20,20,24,.5);display:flex;align-items:flex-start;justify-content:center;padding:30px 16px;overflow:auto;z-index:50;">
+    <div onClick="{{ stopProp }}" style="width:640px;max-width:100%;background:#fcfcf8;border:2px solid #26262a;box-shadow:0 20px 60px rgba(0,0,0,.45);">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#26262a;color:#fff;padding:8px 14px;">
+        <div style="font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;">Munkalap</div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <sc-if value="{{ canManage }}" hint-placeholder-val="{{ false }}"><button onClick="{{ deleteSel }}" style="border:1px solid #666;background:none;color:#f2b8b8;font-size:12px;font-weight:600;padding:3px 10px;cursor:pointer;border-radius:3px;" style-hover="background:#d1262e;color:#fff;">Törlés</button></sc-if>
+          <button onClick="{{ closeSel }}" style="border:none;background:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;">×</button>
+        </div>
+      </div>
+      <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Megrendelő / projekt
+            <input value="{{ sel.project }}" onChange="{{ sel.onProject }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:none;border-bottom:2px solid #26262a;background:transparent;outline:none;font-family:Caveat,cursive;font-size:24px;font-weight:700;color:#1c1c1e;padding:1px 2px;">
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Munkaszám
+            <input value="{{ sel.num }}" onChange="{{ sel.onNum }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:none;border-bottom:2px solid #26262a;background:transparent;outline:none;font-family:Caveat,cursive;font-size:24px;font-weight:700;color:#1c1c1e;padding:1px 2px;">
+          </label>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:10px;">
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Epik (folyamatsor)
+            <select value="{{ sel.epik }}" onChange="{{ sel.onEpik }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:8px;border:1px solid #b9b9b0;background:#fff;padding:6px 5px;font-size:14px;font-weight:600;">
+              <option value="">— nincs epik —</option>
+              <sc-for list="{{ sel.epikOpts }}" as="ep" hint-placeholder-count="3"><option value="{{ ep }}">{{ ep }}</option></sc-for>
+            </select>
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Feladat
+            <input value="{{ sel.title }}" onChange="{{ sel.onTitle }}" disabled="{{ selLocked }}" placeholder="pl. Tok + lap pántolás" style="display:block;width:100%;margin-top:3px;border:none;border-bottom:2px solid #26262a;background:transparent;outline:none;font-family:Caveat,cursive;font-size:24px;font-weight:700;color:#1e3fbf;padding:1px 2px;">
+          </label>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Mennyiség (db)
+            <input type="number" min="0" value="{{ sel.vol }}" onChange="{{ sel.onVol }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:4px;font-size:14px;font-weight:600;">
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Egység idő (ó/db)
+            <input type="number" min="0" step="0.01" value="{{ sel.ut }}" onChange="{{ sel.onUt }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:4px;font-size:14px;font-weight:600;">
+          </label>
+          <div style="grid-column:span 2;align-self:end;font-size:13px;font-weight:700;color:#55534c;padding-bottom:6px;">Össz. idő: {{ sel.totalH }}</div>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Nap
+            <select value="{{ sel.day }}" onChange="{{ sel.onDay }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:5px;font-size:14px;font-weight:600;">
+              <sc-for list="{{ dayOpts }}" as="d" hint-placeholder-count="7"><option value="{{ d.v }}">{{ d.l }}</option></sc-for>
+            </select>
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Állomás
+            <select value="{{ sel.station }}" onChange="{{ sel.onStation }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:5px;font-size:14px;font-weight:600;">
+              <option value="">— szabad —</option>
+              <sc-for list="{{ stationNames }}" as="s" hint-placeholder-count="6"><option value="{{ s }}">{{ s }}</option></sc-for>
+            </select>
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Prioritás
+            <select value="{{ sel.prio }}" onChange="{{ sel.onPrio }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:5px;font-size:14px;font-weight:600;">
+              <option value="normal">Normál</option>
+              <option value="surgos">Sürgős !</option>
+            </select>
+          </label>
+          <label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;">Határidő
+            <input type="date" value="{{ sel.due }}" onChange="{{ sel.onDue }}" disabled="{{ selLocked }}" style="display:block;width:100%;margin-top:3px;border:1px solid #b9b9b0;background:#fff;padding:4px;font-size:13px;font-weight:600;">
+          </label>
+        </div>
+        <sc-if value="{{ sel.canPickup }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ sel.onPickup }}" style="border:2px solid #26262a;background:#26262a;color:#fff;font-weight:700;font-size:14px;padding:8px;cursor:pointer;letter-spacing:1px;">FELVESZEM — {{ myStation }}</button>
+        </sc-if>
+        <sc-if value="{{ sel.hasDepTask }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1.5px solid {{ sel.depTask.color }};background:#fff;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div style="font-size:12.5px;font-weight:600;color:#55534c;">Előfeltétel: <span style="font-weight:700;color:#1c1c1e;">{{ sel.depTask.title }}</span></div>
+            <div style="font-size:12px;font-weight:700;color:{{ sel.depTask.color }};text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;">{{ sel.depTask.label }}</div>
+          </div>
+        </sc-if>
+        <div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;margin-bottom:5px;">Állapot ({{ sel.flowName }})</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <sc-for list="{{ sel.steps }}" as="st" hint-placeholder-count="3">
+              <button onClick="{{ st.onClick }}" style="{{ st.style }}">{{ st.label }}</button>
+            </sc-for>
+            <button onClick="{{ sel.onProblem }}" style="{{ sel.problemStyle }}">Probléma !</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;margin-bottom:5px;">Képek</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;">
+            <sc-for list="{{ sel.images }}" as="im" hint-placeholder-count="0">
+              <div style="position:relative;">
+                <div style="width:110px;height:82px;background-image:url('{{ im.src }}');background-size:cover;background-position:center;border:1px solid #9a9a94;box-shadow:2px 2px 5px rgba(0,0,0,.2);"></div>
+                <button onClick="{{ im.onDelete }}" style="position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;border:1px solid #9a9a94;background:#fff;cursor:pointer;font-size:11px;line-height:1;" style-hover="background:#d1262e;color:#fff;">×</button>
+              </div>
+            </sc-for>
+            <label style="width:110px;height:82px;border:2px dashed #b9b9b0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9a9a94;font-size:13px;font-weight:600;" style-hover="border-color:#26262a;color:#26262a;">+ Kép
+              <input type="file" accept="image/*" onChange="{{ sel.onFile }}" style="display:none;">
+            </label>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;margin-bottom:5px;">Megjegyzések</div>
+          <sc-for list="{{ sel.comments }}" as="cm" hint-placeholder-count="0">
+            <div style="display:flex;gap:8px;align-items:baseline;padding:2px 0;">
+              <div style="font-size:11px;color:#9a9a94;font-weight:600;white-space:nowrap;">{{ cm.when }}</div>
+              <div style="font-family:Caveat,cursive;font-size:20px;font-weight:600;color:#1c1c1e;line-height:1.2;">{{ cm.text }}</div>
+            </div>
+          </sc-for>
+          <div style="display:flex;gap:6px;margin-top:6px;">
+            <input value="{{ commentDraft }}" onChange="{{ onCommentDraft }}" onKeyDown="{{ onCommentKey }}" placeholder="Új megjegyzés…" style="flex:1;border:none;border-bottom:1px dashed #9a9a94;background:transparent;outline:none;font-family:Caveat,cursive;font-size:20px;font-weight:600;color:#1c1c1e;padding:2px 4px;">
+            <button onClick="{{ addComment }}" style="border:1px solid #26262a;background:#fff;font-weight:700;padding:2px 12px;cursor:pointer;" style-hover="background:#26262a;color:#fff;">Hozzáad</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#77756e;margin-bottom:5px;">Előzmények (audit)</div>
+          <sc-if value="{{ hasAudit }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ sel.auditLog }}" as="au" hint-placeholder-count="2">
+              <div style="display:flex;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px solid #eceae2;font-size:12.5px;">
+                <div style="font-weight:600;color:#1c1c1e;">{{ au.label }}</div>
+                <div style="color:#9a9a94;font-weight:600;white-space:nowrap;">{{ au.when }} · {{ au.durLabel }}</div>
+              </div>
+            </sc-for>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    view: 'board', role: 'vezeto', myStation: 'CNC', kbStation: 'CNC',
+    weekStart: null, tasks: [], orders: [], infoNotes: {}, workflows: {}, projectDetails: {}, projKey: null, sheet: 'mm', selectedEpik: null,
+    toast: null, confirmReq: null,
+    templates: {}, epikTemplates: {}, tplSel: '', epikTplSel: '', schedStart: (d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))(new Date()), schedDays: [true,true,true,true,true,false,false],
+    selectedId: null, commentDraft: '', orderDraft: '', dragId: null, loaded: false
+  };
+  LS = 'uzemi-tabla-v1';
+  STATIONS = ['Körfűrész','Asztalos','CNC','Csiszoló','Fújó','Bürkle','Egyéb','Száll./Kész'];
+  DAYS = ['Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat','Vasárnap'];
+
+  iso(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  monday(d) { const x = new Date(d); const wd = (x.getDay()+6)%7; x.setDate(x.getDate()-wd); return this.iso(x); }
+  addDays(iso, n) { const x = new Date(iso+'T00:00:00'); x.setDate(x.getDate()+n); return x; }
+
+  componentDidMount() {
+    let data = null;
+    try { data = JSON.parse(localStorage.getItem(this.LS)); } catch(e) {}
+    const wk = this.monday(new Date());
+    if (!data) data = this.seed(wk);
+    if (!data.projectDetails) data.projectDetails = {};
+    if (!data.templates || !Object.keys(data.templates).length) data.templates = this.defaultTemplates();
+    if (!data.epikTemplates) data.epikTemplates = {};
+    this.setState({ ...data, weekStart: wk, loaded: true });
+  }
+  seed(wk) {
+    const mk = (day, station, project, num, title, step, prio) => ({
+      id: 't'+Math.random().toString(36).slice(2), week: wk, day, station, project, num: num||'', title, step: step||0, prio: prio||'normal', due:'', desc:'', comments: [], images: []
+    });
+    const tasks = [
+      mk(0,'Körfűrész','Tormay','','Szabás + méretre vágás',1),
+      mk(0,'Asztalos','Koroknai','25168','Tok összerakás',1),
+      mk(0,'CNC','Derby','26112','Ajtólap kontúr + minta',0),
+      mk(1,'CNC','Koroknai','25168','Tok pántolás',1,'surgos'),
+      mk(1,'Csiszoló','LFA','26117','Szegőragasztás',0),
+      mk(2,'Bürkle','LFA','26119','Tok + borítás',2),
+      mk(2,'Asztalos','Derby','','Pakolás + csomagolás',0),
+      mk(3,'Fújó','LFA','26117','Tok + szegő fújás',1),
+      mk(3,'Egyéb','Derby','','Ellenőrzés, DU.',0),
+      mk(4,'Asztalos','Koroknai','25168','Összeszerelés + csomi',0),
+      mk(1,null,'Matyi','','Szabás, egyedi élragasztás',0),
+      mk(4,null,'Derby','','Gérvágás + prés',0,'surgos'),
+    ];
+    const orders = ['Smart Cube','Koroknai 25168','Derby 26112','LFA 26117','Tormay','Szabadi','Maboros'].map((label,i)=>({id:'o'+i, label, done: i===1}));
+    return { tasks, orders, infoNotes: { [wk]: 'Körfűrész csütörtök: Derby gérvágás\nAsztalos 13–8: Koroknai' }, workflows: { 'Bürkle': ['Felvett','Élzárás','Lécezés','Kész'] } };
+  }
+  save(patch) {
+    this.setState(patch, () => {
+      const { tasks, orders, infoNotes, workflows, projectDetails, templates, epikTemplates } = this.state;
+      try { localStorage.setItem(this.LS, JSON.stringify({ tasks, orders, infoNotes, workflows, projectDetails, templates, epikTemplates })); } catch(e) {}
+    });
+  }
+  mmSteps(a) { return a.map(p => ({ n: p[0], st: p[1] || '', d: false })); }
+  doorMM() {
+    return [
+      { comp: 'Lap 5-ös', db: '7 db', steps: this.mmSteps([['HDF','Körfűrész'],['Keret + betét','Asztalos'],['Összerak','Asztalos'],['Préselés','Asztalos'],['CNC kontúr','CNC'],['CNC minta/betét','CNC'],['Ragasztás','Asztalos'],['Ker. csiszol','Csiszoló'],['Fújás','Fújó'],['Él-lécezés','Bürkle'],['CNC pánt-zár','CNC']]) },
+      { comp: 'Borítás', db: '36 db', steps: this.mmSteps([['Kiválogat','Egyéb'],['Megírás','Egyéb'],['Gérvágás','Körfűrész'],['Gér összehúzó fúrás','Asztalos'],['Ker. csiszol','Csiszoló'],['Fújás','Fújó'],['Paknizás','Egyéb'],['CNC zár','CNC'],['Gumizás','Egyéb']]) },
+      { comp: 'Tok 22-es', db: '6 db', steps: this.mmSteps([['Szab','Körfűrész'],['Marás','CNC'],['Gérvágás','Körfűrész'],['Tok kapocs','Asztalos'],['Ker. csiszol','Csiszoló'],['Fújás','Fújó'],['Paknizás','Egyéb'],['CNC zár','CNC'],['Gumizás','Egyéb'],['Tok összerak','Asztalos']]) },
+      { comp: 'Falpanel / Blende', db: '', steps: this.mmSteps([['18-as szab','Körfűrész'],['CNC kontúr','CNC'],['CNC minta','CNC'],['Csap ragasztás','Asztalos'],['Ker. csiszol','Csiszoló'],['Paknizás','Egyéb'],['Pánt','Asztalos']]) },
+      { comp: 'Kész termék', db: '', steps: this.mmSteps([['Raszter','Egyéb'],['Csomagolás','Egyéb'],['Raktár','Száll./Kész'],['Beépítés','Száll./Kész']]) }
+    ];
+  }
+  defaultTemplates() {
+    const door = this.doorMM();
+    return {
+      'Ajtó (alap)': door,
+      'Falpanel': [ door[3], door[4] ],
+      'Bútor (alap)': [
+        { comp: 'Bútorfront', db: '', steps: this.mmSteps([['Szabás','Körfűrész'],['CNC megmunkálás','CNC'],['Élzárás','Bürkle'],['Csiszolás','Csiszoló'],['Fújás','Fújó'],['Összeszerelés','Asztalos']]) },
+        { comp: 'Korpusz', db: '', steps: this.mmSteps([['Szabás','Körfűrész'],['Élzárás','Bürkle'],['Fúrás','CNC'],['Összeszerelés','Asztalos']]) },
+        door[4]
+      ]
+    };
+  }
+  detailSample(num) {
+    return {
+      num: num || '', kezdes: '', beepites: '', szinTok: 'SILK ARCTIC WHITE', szinLap: 'SILK ARCTIC WHITE',
+      mm: this.doorMM(),
+      menny: [
+        { name:'Ajtólap', felulet:'Festett', db:'6 db' }, { name:'Tokmag', felulet:'Festett', db:'18 db' },
+        { name:'Borítás', felulet:'Festett', db:'36 db' }, { name:'Blende', felulet:'—', db:'Nincs' },
+        { name:'Bútorfront', felulet:'—', db:'Nincs' }, { name:'Falpanel', felulet:'—', db:'Nincs' }
+      ],
+      mennyBreak: [
+        { label:'Tokmag · Síkban · Fix oldali · 48 mm', vsz:'6 db', fugg:'12 db' },
+        { label:'Tokmag · Tokba · Mozgó oldali · 68 mm', vsz:'6 db', fugg:'12 db' },
+        { label:'Borítás · Síkban · 22 mm', vsz:'6 db', fugg:'12 db' },
+        { label:'Borítás · Tokba · 22 mm', vsz:'6 db', fugg:'12 db' }
+      ],
+      szab: [
+        { i:1, sz:'62,2', h:'199,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:2, sz:'66,2', h:'196,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:3, sz:'64,2', h:'196,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:4, sz:'84,2', h:'196,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:5, sz:'83,2', h:'196,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:6, sz:'75,2', h:'201,8', db:2, anyag:'Mély MDF', megj:'Síkban' },
+        { i:7, sz:'64,2', h:'201,8', db:2, anyag:'Mély MDF', megj:'Síkban' }
+      ],
+      doors: [
+        { i:1, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'68 × 203', tok:'76 × 207', uveg:'13,5', zar:'BB 50', kilincs:'1040', megj:'' },
+        { i:2, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'72 × 200', tok:'80 × 204', uveg:'13,5', zar:'BB 50', kilincs:'1040', megj:'' },
+        { i:3, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'70 × 200', tok:'78 × 204', uveg:'13,5', zar:'BB 50', kilincs:'1040', megj:'' },
+        { i:4, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'90 × 200', tok:'98 × 204', uveg:'14,5', zar:'BB 50', kilincs:'1040', megj:'' },
+        { i:5, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'89 × 200', tok:'97 × 204', uveg:'15,5', zar:'BB 50', kilincs:'1040', megj:'Ajtólap -6,5 mm rövidebb' },
+        { i:6, nyitas:'FNY · Bal', pant:'AGB 2.0', lap:'81 × 205', tok:'89 × 209', uveg:'8,5', zar:'BB 50', kilincs:'1040', megj:'Fix borítás -8 mm rövidebb' }
+      ]
+    };
+  }
+  depDone(t) {
+    if (!t || !t.dep) return true;
+    const p = this.state.tasks.find(x => x.id === t.dep);
+    return !p || this.isDone(p);
+  }
+  planDates(det) {
+    const S = this.state;
+    const dates = []; let d = new Date(this.iso(new Date()) + 'T00:00:00');
+    const anyDay = S.schedDays.some(Boolean);
+    while (dates.length < 120) { if (!anyDay || S.schedDays[(d.getDay()+6)%7]) dates.push(new Date(d)); d.setDate(d.getDate()+1); }
+    const plan = {};
+    det.mm.forEach((row, ri) => {
+      let k = 0;
+      row.steps.forEach((s, si) => {
+        if (s.d) return;
+        const auto = dates[Math.min(k, dates.length-1)];
+        const iso = s.pd || this.iso(auto);
+        plan[ri+':'+si] = iso;
+        const used = new Date(iso+'T00:00:00');
+        k = Math.max(k+1, dates.findIndex(x=>x.getTime()>used.getTime()));
+        if (k < 0) k = dates.length-1;
+      });
+    });
+    return plan;
+  }
+  onBoard(row, s) {
+    return this.state.tasks.find(x => x.project===this.state.projKey && x.epik===row.comp && x.title===row.comp+' · '+s.n);
+  }
+  schedule() {
+    const S = this.state, det = this.getDetail(S.projKey);
+    const plan = this.planDates(det);
+    const newTasks = [];
+    det.mm.forEach((row, ri) => {
+      if (row.off) return;
+      let prev = null;
+      row.steps.forEach((s, si) => {
+        const existing = this.onBoard(row, s);
+        if (existing) { prev = existing.id; return; }
+        if (s.d) return;
+        const dt = new Date(plan[ri+':'+si] + 'T00:00:00');
+        const t = { id:'t'+Math.random().toString(36).slice(2), week:this.monday(dt), day:(dt.getDay()+6)%7, station:s.st||null, project:S.projKey, num:det.num, title:row.comp+' · '+s.n, epik:row.comp, dep:prev, step:0, ack:false, prio:'normal', due:'', desc:'', comments:[], images:[], vol: s.vol||'', ut: s.ut||'', audit: [{ at: new Date().toISOString(), label: 'Kiadva a táblára' }] };
+        prev = t.id; newTasks.push(t);
+      });
+    });
+    if (!newTasks.length) { this.toast('Nincs kiadható lépés — minden kész, már a táblán van, vagy minden folyamatsor ki van kapcsolva.'); return; }
+    this.save({ tasks: [...this.state.tasks, ...newTasks] });
+    this.toast(newTasks.length + ' feladat kiadva a táblára.');
+  }
+  getDetail(name) {
+    const d0 = this.state.projectDetails[name];
+    if (d0) {
+      const def = this.doorMM();
+      return { ...d0, mm: (d0.mm||[]).map(r => {
+        const dr = def.find(x => x.comp === r.comp);
+        return { ...r, steps: r.steps.map(s => {
+          const ds = dr && dr.steps.find(x => x.n === s.n);
+          return { n:s.n, d:!!s.d, st: s.st || (ds ? ds.st : '') };
+        }) };
+      }) };
+    }
+    const t = this.state.tasks.find(x => x.project === name && x.num);
+    return this.detailSample(t ? t.num : '');
+  }
+  setDetail(name, patch) {
+    const det = { ...this.getDetail(name), ...patch };
+    this.save({ projectDetails: { ...this.state.projectDetails, [name]: det } });
+  }
+  flow(station) { return (station && this.state.workflows[station]) || ['Felvett','Folyamatban','Kész']; }
+  colorOf(t) {
+    if (t.problem && !this.isDone(t)) return '#d1262e';
+    if (!t.station) return '#d97706';
+    const f = this.flow(t.station), s = Math.min(t.step||0, f.length-1);
+    return s === f.length-1 ? '#148a3d' : (s === 0 && !t.ack ? '#d97706' : '#1e3fbf');
+  }
+  isDone(t) { return t.station && (t.step||0) >= this.flow(t.station).length-1; }
+  upTask(id, patch) { this.save({ tasks: this.state.tasks.map(t => t.id===id ? {...t, ...patch} : t) }); }
+  toast(msg) {
+    clearTimeout(this._toastT);
+    this.setState({ toast: { msg, id: Math.random() } });
+    this._toastT = setTimeout(() => this.setState({ toast: null }), 3200);
+  }
+  confirmAction(msg, fn) { this.setState({ confirmReq: { msg, fn } }); }
+  upTaskLog(id, patch, label) {
+    const t = this.state.tasks.find(x => x.id === id); if (!t) return;
+    const audit = [...(t.audit||[]), { at: new Date().toISOString(), label }];
+    this.upTask(id, { ...patch, audit });
+  }
+  rot(id) { let h=0; for (const c of id) h=(h*31+c.charCodeAt(0))|0; return ((h%100)/100*1.6-0.8).toFixed(2); }
+
+  cardVM(t, idx, withDay) {
+    const canDrag = this.state.role==='vezeto' || (t.station===null) || t.station===this.state.myStation;
+    const color = this.colorOf(t);
+    const parts = [];
+    if (withDay) {
+      const dt = this.addDays(t.week, t.day);
+      parts.push(this.DAYS[t.day].toUpperCase() + ' ' + (dt.getMonth()+1) + '.' + dt.getDate() + '.');
+    }
+    if (t.vol) parts.push(t.vol + ' db' + (t.ut ? ' · ' + t.ut + ' ó/db' : ''));
+    if (t.comments.length) parts.push(t.comments.length + ' megj.');
+    if (t.images.length) parts.push(t.images.length + ' kép');
+    if (t.due) parts.push('hi: ' + t.due.slice(5).replace('-','.'));
+    if (t.problem && !this.isDone(t)) parts.push('PROBLÉMA');
+    if (t.station && t.ack && (t.step||0)===0) parts.push('felvéve, előkészítés');
+    if (!this.isDone(t) && !this.depDone(t)) parts.unshift('VÁR AZ ELŐZŐRE');
+    const f = this.flow(t.station); const stepName = t.station && (t.step||0)>0 && !this.isDone(t) ? f[Math.min(t.step,f.length-1)] : '';
+    if (stepName) parts.push(stepName);
+    return {
+      id: t.id, draggable: canDrag,
+      title: (t.project||t.num||t.title) ? (t.prio==='surgos' ? '!! ' : '') + [t.project, t.num].filter(Boolean).join(' ') + (t.project||t.num ? ' — ' : '') + t.title : '(üres feladat — kattints a kitöltéshez)',
+      check: this.isDone(t) ? '✓' : '',
+      meta: parts.join(' · '),
+      style: `${idx>0?'border-top:1.5px dashed #c9c7ba;margin-top:5px;padding-top:6px;':''}font-family:Caveat,cursive;font-weight:700;font-size:19px;line-height:1.12;color:${color};cursor:pointer;padding:3px 4px 4px;margin-bottom:3px;border-radius:3px;transform:rotate(${this.rot(t.id)}deg);${t.prio==='surgos'?'text-decoration:underline;text-decoration-thickness:2px;':''}${this.isDone(t)?'opacity:.75;':''}`,
+      onClick: () => this.setState({ selectedId: t.id, commentDraft: '' }),
+      onDragStart: (e) => { this.setState({ dragId: t.id }); e.dataTransfer.effectAllowed='move'; }
+    };
+  }
+  dropTo(day, station) {
+    const id = this.state.dragId; if (!id) return;
+    const t = this.state.tasks.find(x=>x.id===id); if (!t) return;
+    const r = this.state.role;
+    if (r!=='vezeto') {
+      const ok = (t.station===null && station===this.state.myStation) || (t.station===this.state.myStation && station===this.state.myStation);
+      if (!ok) return;
+    }
+    this.upTask(id, { day, station, week: this.state.weekStart, step: station===t.station ? t.step : 0, ack: station===t.station ? t.ack : false });
+    this.setState({ dragId: null });
+  }
+  addTask(day, station) {
+    if (this.state.role!=='vezeto') return;
+    const t = { id:'t'+Math.random().toString(36).slice(2), week:this.state.weekStart, day, station, project:'', num:'', title:'', step:0, prio:'normal', due:'', desc:'', comments:[], images:[], audit: [{ at: new Date().toISOString(), label: 'Létrehozva a táblán' }] };
+    this.save({ tasks:[...this.state.tasks, t], selectedId: t.id, commentDraft:'' });
+  }
+
+  renderVals() {
+    const S = this.state;
+    const wk = S.weekStart || this.monday(new Date());
+    const weekTasks = S.tasks.filter(t => t.week===wk);
+    const btn = (act) => `border:none;border-radius:4px;padding:6px 14px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.5px;${act?'background:#ffd35a;color:#26262a;':'background:#4a4a50;color:#ddd;'}`;
+    const todayIso = this.iso(new Date());
+    const canManage = S.role==='vezeto';
+    const end = this.addDays(wk,6);
+    const mo = this.addDays(wk,0);
+    const fmt = d => d.toLocaleDateString('hu-HU',{month:'long',day:'numeric'});
+    const sel = weekTasks.find(t=>t.id===S.selectedId) || S.tasks.find(t=>t.id===S.selectedId);
+
+    const days = this.DAYS.map((name,i) => {
+      const dt = this.addDays(wk,i);
+      const iso = this.iso(dt);
+      return {
+        name, dateNum: dt.getDate() + '.',
+        headBg: iso===todayIso ? '#fff3c4' : (i>=5 ? '#f2f1ea' : 'transparent'),
+        pool: weekTasks.filter(t=>t.day===i && !t.station).map((t,ix)=>this.cardVM(t,ix)),
+        onDropPool: () => canManage && this.dropTo(i, null),
+        onAddPool: () => this.addTask(i, null)
+      };
+    });
+    const stationRows = this.STATIONS.map(name => ({
+      name,
+      onOpenKanban: () => this.setState({ view:'kanban', kbStation:name }),
+      cells: this.DAYS.map((_,i) => {
+        const list = weekTasks.filter(t=>t.day===i && t.station===name);
+        return {
+          tasks: list.map((t,ix)=>this.cardVM(t,ix)),
+          multi: list.length>1, count: list.length,
+          onDrop: () => this.dropTo(i, name),
+          onAdd: () => this.addTask(i, name)
+        };
+      })
+    }));
+
+    const kbSt = S.kbStation;
+    const kbFlow = this.flow(kbSt);
+    const kbTasks = weekTasks.filter(t=>t.station===kbSt);
+    const inCol = (t, ci) => Math.min(t.step||0, kbFlow.length-1)===ci && (ci>0 || t.ack);
+    const kbCols = kbFlow.map((name,ci) => ({
+      name, count: kbTasks.filter(t=>inCol(t,ci)).length,
+      dot: ci===kbFlow.length-1 ? '#148a3d' : (ci===0 ? '#d97706' : '#1e3fbf'),
+      canDelete: kbFlow.length>2 && ci>0 && ci<kbFlow.length-1,
+      tasks: kbTasks.filter(t=>inCol(t,ci)).sort((a,b)=>a.day-b.day).map((t,ix)=>this.cardVM(t,ix,true)),
+      onDrop: () => { const id=S.dragId; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!t||t.station!==kbSt) return; if(S.role!=='vezeto'&&S.myStation!==kbSt) return; if(ci>0 && !this.depDone(t)) { alert('Ez a feladat még várakozik: a megelőző lépés nincs kész.'); return; } this.upTask(id,{step:ci, ack:true}); this.setState({dragId:null}); },
+      onRename: () => { const n=prompt('Oszlop új neve:',name); if(n&&n.trim()) { const f=[...kbFlow]; f[ci]=n.trim(); this.save({workflows:{...S.workflows,[kbSt]:f}}); } },
+      onDelete: () => { const f=kbFlow.filter((_,j)=>j!==ci); this.save({workflows:{...S.workflows,[kbSt]:f}, tasks:S.tasks.map(t=>t.station===kbSt&&t.step>=ci?{...t,step:Math.max(0,t.step-1)}:t)}); }
+    }));
+
+    const projMap = {};
+    S.tasks.filter(t=>t.project).forEach(t => { (projMap[t.project]=projMap[t.project]||[]).push(t); });
+    const projects = Object.keys(projMap).sort().map(name => {
+      const items = projMap[name];
+      const done = items.filter(t=>this.isDone(t)).length;
+      const pct = Math.round(done/items.length*100);
+      const epikMap = {};
+      items.forEach(t => { const k = t.epik || '(epik nélkül)'; (epikMap[k]=epikMap[k]||[]).push(t); });
+      const epikRows = Object.keys(epikMap).map(ek => {
+        const ts = epikMap[ek];
+        const edone = ts.filter(t=>this.isDone(t)).length;
+        const next = ts.find(t=>!this.isDone(t));
+        return {
+          name: ek, doneLabel: edone + ' / ' + ts.length,
+          color: edone===ts.length ? '#148a3d' : '#1e3fbf',
+          nextLabel: next ? ('Következő: ' + next.title + ' · ' + (this.DAYS[next.day]||'') + ' · ' + (next.station||'szabad')) : 'Minden lépés kész',
+          onClick: () => this.setState({ selectedEpik: { project: name, epik: ek } })
+        };
+      });
+      return {
+        name, doneLabel: done + ' / ' + items.length + ' kész',
+        onOpen: () => this.setState({ view: 'project', projKey: name, sheet: 'mm' }),
+        barStyle: `height:100%;width:${pct}%;background:${pct===100?'#148a3d':'#1e3fbf'};`,
+        items: epikRows
+      };
+    });
+
+    const selLocked = sel ? (!canManage && sel.station!==S.myStation && sel.station!==null ? true : !canManage) : false;
+    const selFlow = sel ? this.flow(sel.station) : [];
+    const canTouchSel = sel && (canManage || sel.station===S.myStation);
+    const selVM = sel ? {
+      project: sel.project, num: sel.num, title: sel.title, day: String(sel.day), station: sel.station||'', prio: sel.prio, due: sel.due,
+      flowName: sel.station ? sel.station + ' munkafolyamat' : 'alap',
+      canPickup: S.role==='allomas' && ((sel.station===null) || (sel.station===S.myStation && !sel.ack && (sel.step||0)===0)),
+      problem: !!sel.problem,
+      problemStyle: `border:2px solid #d1262e;border-radius:4px;padding:6px 14px;font-size:13.5px;font-weight:700;cursor:${canTouchSel?'pointer':'default'};letter-spacing:.5px;${sel.problem?'background:#d1262e;color:#fff;':'background:#fff;color:#d1262e;'}${!canTouchSel?'opacity:.55;':''}`,
+      onProblem: () => canTouchSel && this.upTask(sel.id, { problem: !sel.problem }),
+      onPickup: () => {
+        const st = sel.station || S.myStation;
+        sel.station ? this.upTaskLog(sel.id, { ack: true }, 'Felvéve — előkészítés (' + st + ')') : this.upTaskLog(sel.id, { station: S.myStation, step: 0, ack: true }, 'Felvéve — előkészítés (' + st + ')');
+      },
+      onProject: e => this.upTask(sel.id,{project:e.target.value}),
+      onNum: e => this.upTask(sel.id,{num:e.target.value}),
+      depTask: (() => {
+        if (!sel.dep) return null;
+        const p = S.tasks.find(x => x.id === sel.dep);
+        if (!p) return null;
+        const pdone = this.isDone(p);
+        return { title: p.title || '(névtelen)', done: pdone, label: pdone ? 'Kész — elkezdhető' : 'Még nincs kész — nem kezdhető el', color: pdone ? '#148a3d' : '#d97706' };
+      })(),
+      hasDepTask: !!sel.dep && !!S.tasks.find(x=>x.id===sel.dep),
+      epik: sel.epik || '',
+      epikOpts: (() => {
+        const opts = new Set();
+        if (sel.project && S.projectDetails[sel.project]) S.projectDetails[sel.project].mm.forEach(r => opts.add(r.comp));
+        else this.doorMM().forEach(r => opts.add(r.comp));
+        S.tasks.filter(t => t.project===sel.project && t.epik).forEach(t => opts.add(t.epik));
+        if (sel.epik) opts.add(sel.epik);
+        return [...opts];
+      })(),
+      onEpik: e => this.upTask(sel.id, { epik: e.target.value || undefined }),
+      vol: sel.vol ?? '', ut: sel.ut ?? '',
+      totalH: (sel.vol && sel.ut) ? (Math.round((+sel.vol)*(+sel.ut)*100)/100) + ' óra' : '—',
+      onVol: e => this.upTask(sel.id,{vol:e.target.value}),
+      onUt: e => this.upTask(sel.id,{ut:e.target.value}),
+      onTitle: e => this.upTask(sel.id,{title:e.target.value}),
+      onDay: e => this.upTask(sel.id,{day:+e.target.value}),
+      onStation: e => this.upTask(sel.id,{station:e.target.value||null, step:0}),
+      onPrio: e => this.upTask(sel.id,{prio:e.target.value}),
+      onDue: e => this.upTask(sel.id,{due:e.target.value}),
+      steps: selFlow.map((label,i) => ({
+        label,
+        style: `border:2px solid #26262a;border-radius:4px;padding:6px 14px;font-size:13.5px;font-weight:700;cursor:${canTouchSel?'pointer':'default'};letter-spacing:.5px;${Math.min(sel.step||0,selFlow.length-1)===i ? `background:${i===selFlow.length-1?'#148a3d':(i===0?'#d97706':'#1e3fbf')};color:#fff;border-color:transparent;` : 'background:#fff;color:#26262a;'}${!canTouchSel?'opacity:.55;':''}`,
+        onClick: () => {
+          if (!canTouchSel) return;
+          if (i>0 && !this.depDone(sel)) { this.toast('Ez a feladat még várakozik: a megelőző lépés nincs kész.'); return; }
+          this.upTaskLog(sel.id,{step:i, ack: i>0 ? true : sel.ack}, 'Állapot: ' + label);
+        }
+      })),
+      images: sel.images.map((src,i)=>({ src, onDelete: () => this.upTask(sel.id,{images: sel.images.filter((_,j)=>j!==i)}) })),
+      onFile: e => {
+        const f = e.target.files && e.target.files[0]; if(!f) return;
+        const img = new Image();
+        img.onload = () => {
+          const sc = Math.min(1, 900/Math.max(img.width,img.height));
+          const c = document.createElement('canvas'); c.width = img.width*sc; c.height = img.height*sc;
+          c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+          this.upTask(sel.id, { images: [...sel.images, c.toDataURL('image/jpeg',0.7)] });
+        };
+        img.src = URL.createObjectURL(f);
+        e.target.value = '';
+      },
+      comments: sel.comments.map(c => ({ text: c.text, when: c.when })),
+      auditLog: (sel.audit||[]).map((a,i,arr) => {
+        const start = new Date(a.at);
+        const end = arr[i+1] ? new Date(arr[i+1].at) : new Date();
+        const ms = end - start, hrs = ms/3600000;
+        const durLabel = hrs < 1 ? Math.max(1,Math.round(ms/60000)) + ' perc' : (Math.round(hrs*10)/10) + ' óra';
+        return {
+          label: a.label,
+          when: start.toLocaleString('hu-HU', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }),
+          durLabel: (i===arr.length-1 ? 'eddig: ' : '') + durLabel
+        };
+      }).reverse()
+    } : { steps:[], images:[], comments:[], auditLog:[], hasDepTask:false, depTask:null };
+
+    const det = S.projKey ? this.getDetail(S.projKey) : null;
+    const sheetDefs = [ {k:'mm',label:'Munkamenet'}, {k:'menny',label:'Mennyiségek'}, {k:'szab',label:'Szabászati tételek'}, {k:'gy',label:'Gyártólap'} ];
+    const sheetTitle = (sheetDefs.find(s=>s.k===S.sheet)||sheetDefs[0]).label;
+    const projVals = det ? {
+      projTitle: S.projKey, projNum: det.num || '—',
+      todayLabel: new Date().toLocaleDateString('hu-HU'),
+      sheetTitle,
+      sheetTabs: sheetDefs.map(s => ({
+        label: s.label, onClick: () => this.setState({ sheet: s.k }),
+        style: `border:1.5px solid #26262a;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.5px;font-family:inherit;${S.sheet===s.k?'background:#26262a;color:#fff;':'background:#fcfcf8;color:#26262a;'}`
+      })),
+      backToProjects: () => this.setState({ view: 'projects', projKey: null }),
+      printSheet: () => window.print(),
+      isShMm: S.sheet==='mm', isShMenny: S.sheet==='menny', isShSzab: S.sheet==='szab', isShGy: S.sheet==='gy',
+      mmKezdes: det.kezdes, mmBeepites: det.beepites, mmSzinTok: det.szinTok, mmSzinLap: det.szinLap,
+      onMmKezdes: e => this.setDetail(S.projKey, { kezdes: e.target.value }),
+      onMmBeepites: e => this.setDetail(S.projKey, { beepites: e.target.value }),
+      onMmSzinTok: e => this.setDetail(S.projKey, { szinTok: e.target.value }),
+      onMmSzinLap: e => this.setDetail(S.projKey, { szinLap: e.target.value }),
+      mmRows: (() => {
+        const plan = det ? this.planDates(det) : {};
+        const noEpik = S.tasks.filter(t => t.project===S.projKey && !t.epik);
+        const rowsSrc = noEpik.length ? [{ comp:'(epik nélkül)', db:'', virtual:true, steps: noEpik.map(t => ({ n:t.title||'(névtelen)', st:t.station||'', d:this.isDone(t), vol:t.vol, ut:t.ut, taskId:t.id })) }, ...det.mm] : det.mm;
+        return rowsSrc.map((row, ri) => {
+          const stepDone = s => s.d || S.tasks.some(t => t.project===S.projKey && t.epik===row.comp && t.title===row.comp+' · '+s.n && this.isDone(t));
+          const done = row.steps.filter(stepDone).length;
+          const realRi = row.virtual ? -1 : det.mm.indexOf(row);
+          return {
+            comp: row.comp, db: row.db, off: !!row.off, virtual: !!row.virtual, showEpikActions: canManage && !row.virtual,
+            headBg: row.off ? '#eceae2' : '#f0efe8',
+            headOpacity: row.off ? '.5' : '1',
+            onToggleRow: () => this.setDetail(S.projKey, { mm: det.mm.map((r,i) => i!==realRi ? r : { ...r, off: !r.off }) }),
+            toggleLabel: row.off ? 'Kimarad' : 'Kiadásra kerül',
+            toggleStyle: `border:1.5px solid ${row.off?'#9a9a94':'#148a3d'};background:${row.off?'#fff':'#148a3d'};color:${row.off?'#77756e':'#fff'};font-weight:700;font-size:11.5px;padding:2px 10px;cursor:pointer;border-radius:3px;font-family:inherit;`,
+            onAddStep: () => { const n = prompt('Új lépés/task neve:'); if (!n||!n.trim()) return; this.setDetail(S.projKey, { mm: det.mm.map((r,i)=>i!==realRi?r:{...r,steps:[...r.steps,{n:n.trim(),d:false,st:''}]}) }); },
+            onDeleteRow: () => { const hasBoard = row.steps.some(s => this.onBoard(row, s)); if (hasBoard) { this.toast('Ez az epik tartalmaz kiadott feladatot a táblán — előbb vond vissza azokat.'); return; } this.confirmAction('Törlöd a(z) „'+row.comp+'" epiket a folyamatsorból?', () => this.setDetail(S.projKey, { mm: det.mm.filter((_,i)=>i!==realRi) })); },
+            onSaveEpikTpl: () => { const n = prompt('Epik sablon neve:', row.comp); if (!n||!n.trim()) return; const tpl = { comp: row.comp, db: row.db, steps: row.steps.map(s => ({ n:s.n, st:s.st||'' })) }; this.save({ epikTemplates: { ...S.epikTemplates, [n.trim()]: tpl } }); this.toast('„'+n.trim()+'" epik elmentve sablonként.'); },
+            progress: done + ' / ' + row.steps.length,
+            progColor: done===row.steps.length ? '#148a3d' : (done>0 ? '#1e3fbf' : '#9a9a94'),
+            steps: row.steps.map((sRaw, si) => {
+              const s = { ...sRaw, d: stepDone(sRaw) };
+              const bt = row.virtual ? S.tasks.find(t=>t.id===sRaw.taskId) : this.onBoard(row, sRaw);
+              const ri = realRi;
+              const planIso = plan[ri+':'+si] || '';
+              if (row.virtual) {
+                return {
+                  i: si+1, label: s.n, st: s.st, stLabel: s.st || '—',
+                  vol: s.vol ?? '', ut: s.ut ?? '',
+                  onVol: e => bt && this.upTask(bt.id, { vol: e.target.value }),
+                  onUt: e => bt && this.upTask(bt.id, { ut: e.target.value }),
+                  chipStyle: `border:1.5px solid ${s.d?'#148a3d':'#9a9a94'};background:${s.d?'#148a3d':'#fff'};color:${s.d?'#fff':'#26262a'};padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer;border-radius:3px;font-family:inherit;text-align:center;`,
+                  dotColor: s.d ? '#148a3d' : (bt ? this.colorOf(bt) : '#c9c7ba'),
+                  statusLabel: s.d ? 'kész' : (bt && (bt.ack||bt.step>0) ? 'folyamatban' : 'táblán'),
+                  statusColor: s.d ? '#148a3d' : '#1e3fbf',
+                  planDate: bt ? this.iso(this.addDays(bt.week, bt.day)) : '',
+                  planLocked: true,
+                  onPlan: () => {},
+                  hasSheet: !!bt, canIssue: false,
+                  onIssue: () => {},
+                  canRevoke: !!bt && !this.isDone(bt),
+                  onRevoke: () => {
+                    const msg = (bt.ack || (bt.step||0) > 0) ? 'Ezt a feladatot az állomás már felvette / elkezdte. Biztosan törlöd?' : 'Törlöd ezt a feladatot?';
+                    this.confirmAction(msg, () => this.save({ tasks: this.state.tasks.filter(x => x.id !== bt.id) }));
+                  },
+                  onOpen: () => { if (bt) this.setState({ selectedId: bt.id, commentDraft: '' }); },
+                  onStation: e => bt && this.upTask(bt.id, { station: e.target.value || null }),
+                  showReorder: false, onUp: () => {}, onDown: () => {}, onDelete: () => {}
+                };
+              }
+              return {
+                i: si+1,
+                label: s.n,
+                st: s.st,
+                stLabel: s.st || '—',
+                vol: s.vol ?? '',
+                ut: s.ut ?? '',
+                onVol: e => this.setDetail(S.projKey, { mm: det.mm.map((r,i) => i!==ri ? r : { ...r, steps: r.steps.map((x,j) => j!==si ? x : { ...x, vol: e.target.value }) }) }),
+                onUt: e => this.setDetail(S.projKey, { mm: det.mm.map((r,i) => i!==ri ? r : { ...r, steps: r.steps.map((x,j) => j!==si ? x : { ...x, ut: e.target.value }) }) }),
+                chipStyle: `border:1.5px solid ${s.d?'#148a3d':'#9a9a94'};background:${s.d?'#148a3d':'#fff'};color:${s.d?'#fff':'#26262a'};padding:3px 10px;font-size:12.5px;font-weight:600;cursor:${bt?'pointer':'default'};border-radius:3px;font-family:inherit;text-align:center;`,
+                dotColor: s.d ? '#148a3d' : (bt ? this.colorOf(bt) : '#c9c7ba'),
+                statusLabel: s.d ? 'kész' : (bt ? (bt.ack||bt.step>0 ? 'folyamatban' : 'táblán') : (row.off ? '—' : 'kiadásra vár')),
+                statusColor: s.d ? '#148a3d' : (bt ? '#1e3fbf' : '#9a9a94'),
+                planDate: bt ? this.iso(this.addDays(bt.week, bt.day)) : planIso,
+                planLocked: !!bt || s.d,
+                onPlan: e => this.setDetail(S.projKey, { mm: det.mm.map((r,i) => i!==ri ? r : { ...r, steps: r.steps.map((x,j) => j!==si ? x : { ...x, pd: e.target.value }) }) }),
+                hasSheet: !!bt,
+                canIssue: !bt && !s.d,
+                onIssue: () => {
+                  const prevStep = si>0 ? this.onBoard(row, row.steps[si-1]) : null;
+                  const dt = new Date(planIso + 'T00:00:00');
+                  const nt = { id:'t'+Math.random().toString(36).slice(2), week:this.monday(dt), day:(dt.getDay()+6)%7, station:s.st||null, project:S.projKey, num:det.num, title:row.comp+' · '+s.n, epik:row.comp, dep: prevStep ? prevStep.id : null, step:0, ack:false, prio:'normal', due:'', desc:'', comments:[], images:[], vol:s.vol||'', ut:s.ut||'', audit: [{ at: new Date().toISOString(), label: 'Kiadva a táblára' }] };
+                  this.save({ tasks: [...S.tasks, nt] });
+                },
+                canRevoke: !!bt && !this.isDone(bt),
+                onRevoke: () => {
+                  if (bt.ack || (bt.step||0) > 0) { this.confirmAction('Ezt a feladatot az állomás már felvette / elkezdte. Biztosan visszavonod a tábláról?', () => this.save({ tasks: this.state.tasks.filter(x => x.id !== bt.id) })); return; }
+                  this.save({ tasks: this.state.tasks.filter(x => x.id !== bt.id) });
+                },
+                onOpen: () => { if (bt) this.setState({ selectedId: bt.id, commentDraft: '' }); },
+                onStation: e => this.setDetail(S.projKey, { mm: det.mm.map((r,i) => i!==ri ? r : { ...r, steps: r.steps.map((x,j) => j!==si ? x : { ...x, st: e.target.value }) }) }),
+                showReorder: canManage,
+                onUp: () => { if (si===0) return; const steps=[...row.steps]; [steps[si-1],steps[si]]=[steps[si],steps[si-1]]; this.setDetail(S.projKey, { mm: det.mm.map((r,i)=>i!==ri?r:{...r,steps}) }); },
+                onDown: () => { if (si===row.steps.length-1) return; const steps=[...row.steps]; [steps[si+1],steps[si]]=[steps[si],steps[si+1]]; this.setDetail(S.projKey, { mm: det.mm.map((r,i)=>i!==ri?r:{...r,steps}) }); },
+                onDelete: () => { if (bt) { this.toast('Ez a lépés már ki van adva a táblára — előbb vond vissza.'); return; } this.confirmAction('Törlöd ezt a lépést a folyamatsorból?', () => this.setDetail(S.projKey, { mm: det.mm.map((r,i)=>i!==ri?r:{...r,steps:r.steps.filter((_,j)=>j!==si)}) })); }
+              };
+            })
+          };
+        });
+      })(),
+      tplNames: Object.keys(S.templates),
+      tplSel: S.tplSel || Object.keys(S.templates)[0] || '',
+      onTplSel: e => this.setState({ tplSel: e.target.value }),
+      loadTpl: () => {
+        const key = S.tplSel || Object.keys(S.templates)[0];
+        const tpl = S.templates[key]; if (!tpl) return;
+        this.confirmAction('Betöltöd a(z) „' + key + '" sablont? A mostani munkamenet lecserélődik.', () => this.setDetail(S.projKey, { mm: tpl.map(r => ({ comp:r.comp, db:r.db, steps:r.steps.map(s => ({ n:s.n, st:s.st||'', d:false })) })) }));
+      },
+      saveTpl: () => {
+        const name = prompt('Sablon neve:'); if (!name || !name.trim()) return;
+        const tpl = det.mm.map(r => ({ comp:r.comp, db:r.db, steps:r.steps.map(s => ({ n:s.n, st:s.st||'' })) }));
+        this.save({ templates: { ...S.templates, [name.trim()]: tpl } });
+      },
+      schedStart: S.schedStart,
+      onSchedStart: e => this.setState({ schedStart: e.target.value }),
+      schedDayBtns: this.DAYS.map((d,i) => ({
+        label: ['H','K','Sze','Cs','P','Szo','V'][i],
+        style: `border:1.5px solid #26262a;padding:3px 8px;font-size:12px;font-weight:700;cursor:pointer;border-radius:3px;font-family:inherit;${S.schedDays[i]?'background:#26262a;color:#fff;':'background:#fff;color:#9a9a94;'}`,
+        onClick: () => this.setState({ schedDays: S.schedDays.map((v,j) => j===i ? !v : v) })
+      })),
+      doSchedule: () => this.schedule(),
+      addEpic: () => { const n = prompt('Új epik neve:'); if (!n||!n.trim()) return; this.setDetail(S.projKey, { mm: [...det.mm, { comp:n.trim(), db:'', steps:[] }] }); },
+      epikTplNames: Object.keys(S.epikTemplates),
+      hasEpikTpls: Object.keys(S.epikTemplates).length>0,
+      epikTplSel: S.epikTplSel || Object.keys(S.epikTemplates)[0] || '',
+      onEpikTplSel: e => this.setState({ epikTplSel: e.target.value }),
+      addEpicFromTpl: () => {
+        const key = S.epikTplSel || Object.keys(S.epikTemplates)[0];
+        const tpl = S.epikTemplates[key]; if (!tpl) return;
+        this.setDetail(S.projKey, { mm: [...det.mm, { comp: tpl.comp, db: tpl.db, steps: tpl.steps.map(s => ({ n:s.n, st:s.st||'', d:false })) }] });
+      },
+      mennyRows: det.menny, mennyBreak: det.mennyBreak, szabRows: det.szab,
+      doors: det.doors.map(d => ({ ...d, hasMegj: !!d.megj }))
+    } : { sheetTabs: [], mmRows: [], mennyRows: [], mennyBreak: [], szabRows: [], doors: [] };
+    return {
+      ...projVals,
+      toastMsg: S.toast ? S.toast.msg : '',
+      hasToast: !!S.toast,
+      confirmMsg: S.confirmReq ? S.confirmReq.msg : '',
+      hasConfirm: !!S.confirmReq,
+      confirmYes: () => { const fn = S.confirmReq && S.confirmReq.fn; this.setState({ confirmReq: null }); if (fn) fn(); },
+      confirmNo: () => this.setState({ confirmReq: null }),
+      isProject: S.view==='project' && !!det,
+      isBoard: S.view==='board', isLoad: S.view==='load', hasWeekNav: S.view==='board' || S.view==='load', isKanban: S.view==='kanban', isProjects: S.view==='projects',
+      hasSel: !!sel, sel: selVM, selLocked, canManage, hasAudit: !!(sel && sel.audit && sel.audit.length),
+      role: S.role, isStationRole: S.role==='allomas', myStation: S.myStation,
+      stationNames: this.STATIONS,
+      dayOpts: this.DAYS.map((l,v)=>({l, v:String(v)})),
+      navBtns: [
+        { label:'Heti tábla', onClick:()=>this.setState({view:'board'}), style: btn(S.view==='board') },
+        { label:'Állomás kanban', onClick:()=>this.setState({view:'kanban'}), style: btn(S.view==='kanban') },
+        { label:'Projektek', onClick:()=>this.setState({view:'projects'}), style: btn(S.view==='projects') },
+        { label:'Terhelés', onClick:()=>this.setState({view:'load'}), style: btn(S.view==='load') }
+      ],
+      weekLabel: fmt(mo) + ' – ' + fmt(end) + '.',
+      prevWeek: () => this.setState({weekStart: this.monday(this.addDays(wk,-7))}),
+      nextWeek: () => this.setState({weekStart: this.monday(this.addDays(wk,7))}),
+      goToday: () => this.setState({weekStart: this.monday(new Date())}),
+      onRole: e => this.setState({role: e.target.value}),
+      onMyStation: e => this.setState({myStation: e.target.value}),
+      allowDrop: e => e.preventDefault(),
+      days, stationRows,
+      infoText: S.infoNotes[wk] || '',
+      onInfo: e => this.save({infoNotes: {...S.infoNotes, [wk]: e.target.value}}),
+      orders: S.orders.map((o,i) => ({
+        n: i+1, label: o.label, check: o.done ? '✓' : '',
+        style: `font-family:Caveat,cursive;font-weight:700;font-size:21px;line-height:1.1;color:${o.done?'#148a3d':'#1e3fbf'};cursor:pointer;${o.done?'text-decoration:line-through;opacity:.7;':''}`,
+        onToggle: () => canManage && this.save({orders: S.orders.map(x=>x.id===o.id?{...x,done:!x.done}:x)}),
+        onDelete: () => this.save({orders: S.orders.filter(x=>x.id!==o.id)})
+      })),
+      orderDraft: S.orderDraft,
+      onOrderDraft: e => this.setState({orderDraft: e.target.value}),
+      onOrderKey: e => { if(e.key==='Enter') this.addOrderFn(); },
+      addOrder: () => this.addOrderFn(),
+      stationTabs: this.STATIONS.map(name => ({
+        name, onClick: () => this.setState({kbStation:name}),
+        style: `border:2px solid #26262a;padding:6px 14px;font-size:13.5px;font-weight:700;cursor:pointer;letter-spacing:.8px;text-transform:uppercase;font-family:inherit;${S.kbStation===name?'background:#26262a;color:#fff;':'background:#fcfcf8;color:#26262a;'}`
+      })),
+      kbCols,
+      kbPool: weekTasks.filter(t=>!t.station).map(t => ({
+        title: (t.prio==='surgos'?'!! ':'') + [t.project,t.num].filter(Boolean).join(' ') + (t.project||t.num?' — ':'') + t.title,
+        dayName: this.DAYS[t.day] + ' ' + (this.addDays(t.week, t.day).getMonth()+1) + '.' + this.addDays(t.week, t.day).getDate() + '.',
+        hasDep: !!t.dep,
+        depLabel: this.depDone(t) ? 'Előfeltétel kész' : 'Előfeltétel még nincs kész',
+        depColor: this.depDone(t) ? '#148a3d' : '#d97706',
+        onPick: () => { if (S.role!=='vezeto' && S.myStation!==kbSt) { this.toast('Ez nem a te állomásod kanbanja — csak a sajátodon vehetsz fel feladatot.'); return; } this.upTaskLog(t.id, {station: kbSt, step: 0, ack: true}, 'Felvéve — előkészítés (' + kbSt + ')'); }
+      })),
+      kbPoolEmpty: weekTasks.filter(t=>!t.station).length===0,
+      kbAssigned: kbTasks.filter(t=>(t.step||0)===0 && !t.ack).sort((a,b)=>a.day-b.day).map(t => ({
+        title: (t.prio==='surgos'?'!! ':'') + [t.project,t.num].filter(Boolean).join(' ') + (t.project||t.num?' — ':'') + t.title,
+        dayName: this.DAYS[t.day] + ' ' + (this.addDays(t.week, t.day).getMonth()+1) + '.' + this.addDays(t.week, t.day).getDate() + '.',
+        hasDep: !!t.dep,
+        depLabel: this.depDone(t) ? 'Előfeltétel kész' : 'Előfeltétel még nincs kész',
+        depColor: this.depDone(t) ? '#148a3d' : '#d97706',
+        onClick: () => this.setState({ selectedId: t.id, commentDraft: '' }),
+        onPick: e => { e.stopPropagation(); if (S.role!=='vezeto' && S.myStation!==kbSt) { this.toast('Ez nem a te állomásod kanbanja — csak a sajátodon (' + S.myStation + ') vehetsz fel feladatot.'); return; } this.upTaskLog(t.id, { ack: true }, 'Felvéve — előkészítés (' + kbSt + ')'); }
+      })),
+      kbAssignedEmpty: kbTasks.filter(t=>(t.step||0)===0 && !t.ack).length===0,
+      addKbCol: () => { const n=prompt('Új oszlop neve:'); if(n&&n.trim()){ const f=[...kbFlow]; f.splice(f.length-1,0,n.trim()); this.save({workflows:{...S.workflows,[kbSt]:f}}); } },
+      projects, noProjects: projects.length===0,
+      addProject: () => { const n = prompt('Új projekt neve (megrendelő):'); if (!n||!n.trim()) return; if (S.tasks.some(t=>t.project===n.trim()) || S.projectDetails[n.trim()]) { this.toast('Már létezik ilyen nevű projekt.'); return; } this.setDetail(n.trim(), this.detailSample('')); this.setState({ view:'project', projKey:n.trim(), sheet:'mm' }); },
+      capH: S.capH ?? 8,
+      onCapH: e => this.setState({ capH: Math.max(1, +e.target.value || 8) }),
+      loadRows: (() => {
+        const cap = S.capH ?? 8;
+        const estH = t => (t.vol && t.ut) ? (+t.vol) * (+t.ut) : 1;
+        const open = t => !this.isDone(t);
+        const rows = this.STATIONS.map(name => {
+          const cells = this.DAYS.map((_,i) => {
+            const ts = weekTasks.filter(t => t.station===name && t.day===i && open(t));
+            const h = ts.reduce((a,t)=>a+estH(t),0);
+            const pct = h/cap;
+            return {
+              label: h ? (Math.round(h*10)/10) + ' ó' : '',
+              count: ts.length ? ts.length + ' feladat' : '',
+              bg: !h ? '#fcfcf8' : pct>1 ? '#f3c1c1' : pct>0.75 ? '#f7e3b5' : '#d9e8d3',
+              border: pct>1 ? '2px solid #d1262e' : '1px solid #d8d6cc'
+            };
+          });
+          const tot = this.DAYS.reduce((a,_,i)=> a + weekTasks.filter(t=>t.station===name&&t.day===i&&open(t)).reduce((x,t)=>x+estH(t),0), 0);
+          const weekCap = cap * 7;
+          const util = tot/weekCap;
+          return { name, cells,
+            totLabel: (Math.round(tot*10)/10) + ' ó',
+            utilPct: Math.min(100, Math.round(util*100)) + '%',
+            utilColor: util>1 ? '#d1262e' : util>0.75 ? '#d97706' : '#148a3d',
+            barStyle: `height:100%;width:${Math.min(100,Math.round(util*100))}%;background:${util>1?'#d1262e':util>0.75?'#d97706':'#148a3d'};` };
+        });
+        return rows;
+      })(),
+      loadBottleneck: (() => {
+        const cap = S.capH ?? 8;
+        const estH = t => (t.vol && t.ut) ? (+t.vol) * (+t.ut) : 1;
+        const over = [];
+        this.STATIONS.forEach(name => this.DAYS.forEach((dn,i) => {
+          const h = weekTasks.filter(t=>t.station===name&&t.day===i&&!this.isDone(t)).reduce((a,t)=>a+estH(t),0);
+          if (h > cap) over.push(name + ' — ' + dn + ' (' + (Math.round(h*10)/10) + ' ó / ' + cap + ' ó)');
+        }));
+        return over;
+      })(),
+      hasBottleneck: (() => {
+        const cap = S.capH ?? 8;
+        const estH = t => (t.vol && t.ut) ? (+t.vol) * (+t.ut) : 1;
+        return this.STATIONS.some(name => this.DAYS.some((_,i) => weekTasks.filter(t=>t.station===name&&t.day===i&&!this.isDone(t)).reduce((a,t)=>a+estH(t),0) > cap));
+      })(),
+      loadDays: this.DAYS.map((name,i) => {
+        const dt = this.addDays(wk,i);
+        return { name, dateNum: dt.getDate() + '.', headBg: this.iso(dt)===todayIso ? '#fff3c4' : 'transparent' };
+      }),
+      hasEpikModal: !!S.selectedEpik,
+      epikModal: (() => {
+        if (!S.selectedEpik) return { steps: [] };
+        const { project, epik } = S.selectedEpik;
+        const ts = S.tasks.filter(t => t.project===project && (t.epik||'(epik nélkül)')===epik).sort((a,b)=>a.day-b.day);
+        const done = ts.filter(t=>this.isDone(t)).length;
+        const pct = ts.length ? Math.round(done/ts.length*100) : 0;
+        return {
+          name: epik, project,
+          doneLabel: done + ' / ' + ts.length + ' kész',
+          barStyle: `height:100%;width:${pct}%;background:${pct===100?'#148a3d':'#1e3fbf'};`,
+          steps: ts.map(t => ({
+            label: t.title || '(névtelen)',
+            place: (this.DAYS[t.day]||'') + ' ' + this.iso(this.addDays(t.week,t.day)).slice(5).replace('-','.') + '. · ' + (t.station||'szabad'),
+            dotColor: this.colorOf(t),
+            onClick: () => this.setState({ selectedEpik: null, selectedId: t.id, commentDraft: '' })
+          }))
+        };
+      })(),
+      closeEpikModal: () => this.setState({ selectedEpik: null }),
+      closeSel: () => {
+        const t = S.tasks.find(x=>x.id===S.selectedId);
+        if (t && !t.title && !t.project && !t.num && !t.comments.length && !t.images.length) this.save({ tasks: S.tasks.filter(x=>x.id!==t.id), selectedId:null });
+        else this.setState({selectedId:null});
+      },
+      stopProp: e => e.stopPropagation(),
+      deleteSel: () => this.confirmAction('Törlöd ezt a feladatot?', () => this.save({tasks: this.state.tasks.filter(t=>t.id!==S.selectedId), selectedId:null})),
+      commentDraft: S.commentDraft,
+      onCommentDraft: e => this.setState({commentDraft: e.target.value}),
+      onCommentKey: e => { if(e.key==='Enter') this.addCommentFn(); },
+      addComment: () => this.addCommentFn()
+    };
+  }
+  addOrderFn() {
+    const v = this.state.orderDraft.trim(); if(!v) return;
+    this.save({orders:[...this.state.orders,{id:'o'+Math.random().toString(36).slice(2),label:v,done:false}], orderDraft:''});
+  }
+  addCommentFn() {
+    const v = this.state.commentDraft.trim(); const sel = this.state.tasks.find(t=>t.id===this.state.selectedId);
+    if(!v||!sel) return;
+    const when = new Date().toLocaleDateString('hu-HU',{month:'2-digit',day:'2-digit'}) + ' ' + new Date().toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'});
+    this.upTask(sel.id, {comments:[...sel.comments,{text:v,when}]});
+    this.setState({commentDraft:''});
+  }
+}
+</script>
+</body>
+</html>

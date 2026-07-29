@@ -46,6 +46,7 @@ npm install
 npm run prisma:migrate        # creates tables
 npm run prisma:seed           # demo data (matches the original mock)
 npm run dev                   # http://localhost:4610
+npm run dev:test              # same service, forced to doorstar_test
 ```
 
 Health check: `GET /healthz`.

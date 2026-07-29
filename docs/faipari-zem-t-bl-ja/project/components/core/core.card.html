@@ -1,0 +1,74 @@
+<!-- @dsCard group="Components" viewport="700x560" subtitle="Button, StatusChip, TaskCard, Panel + élő adatkötés" name="Core komponensek" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>body{margin:0;padding:14px;font-family:var(--font-ui);background:#fff;}</style></head><body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+function Button({ variant = 'outline', children, style, ...rest }) {
+  const base = { fontFamily: 'var(--font-ui)', fontWeight: 700, cursor: 'pointer', letterSpacing: '.5px' };
+  const variants = {
+    outline: { border: '1.5px solid var(--line-strong)', background: '#fff', color: 'var(--text-ink)', fontSize: '12.5px', padding: '4px 12px', borderRadius: 'var(--radius-chip)' },
+    primary: { border: 'none', background: 'var(--marker-blue)', color: '#fff', fontSize: '13px', padding: '6px 14px', borderRadius: 'var(--radius-btn)' },
+    chrome:  { border: 'none', background: 'var(--chrome-control)', color: '#ddd', fontSize: '14px', fontWeight: 600, padding: '6px 14px', borderRadius: 'var(--radius-btn)' },
+    active:  { border: 'none', background: 'var(--chrome-accent)', color: 'var(--chrome-bg)', fontSize: '14px', fontWeight: 600, padding: '6px 14px', borderRadius: 'var(--radius-btn)' },
+    danger:  { border: '1px solid var(--line-input)', background: '#fff', color: 'var(--text-muted)', fontSize: '11px', padding: '2px 8px', borderRadius: 'var(--radius-chip)' }
+  };
+  return <button style={{ ...base, ...variants[variant], ...style }} {...rest}>{children}</button>;
+}
+const C = { assigned: 'var(--status-assigned)', inprogress: 'var(--status-inprogress)', done: 'var(--status-done)', problem: 'var(--status-problem)' };
+const L = { assigned: 'kiosztva', inprogress: 'folyamatban', done: 'kész', problem: 'probléma' };
+function StatusChip({ status = 'assigned', label, count }) {
+  return <span style={{ display:'inline-flex', alignItems:'center', gap:6, fontSize:'11.5px', fontWeight:700, textTransform:'uppercase', letterSpacing:'.5px', color:C[status] }}>
+    {count != null ? <span style={{ background:C[status], color:'#fff', borderRadius:10, padding:'1px 8px', fontSize:12 }}>{count}</span> : <span style={{ width:9, height:9, borderRadius:'50%', background:C[status] }}></span>}
+    {label != null ? label : L[status]}</span>;
+}
+function TaskCard({ title, status = 'assigned', meta, urgent, seed = 0, onClick }) {
+  const rot = ((seed * 37) % 100) / 100 * 1.6 - 0.8;
+  return <div onClick={onClick} style={{ fontFamily:'var(--font-hand)', fontWeight:700, fontSize:'var(--hand-size-card)', lineHeight:1.12, color:C[status], padding:'3px 4px 4px', transform:'rotate(' + rot.toFixed(2) + 'deg)', textDecoration:urgent?'underline':'none', textDecorationThickness:2, opacity:status==='done'?0.75:1 }}>
+    <div>{(urgent ? '!! ' : '') + title}{status==='done' ? <span style={{color:'var(--marker-green)'}}> ✓</span> : null}</div>
+    {meta ? <div style={{ fontFamily:'var(--font-ui)', fontSize:'10.5px', color:'var(--text-faint)', fontWeight:600, letterSpacing:'.3px' }}>{meta}</div> : null}
+  </div>;
+}
+function Panel({ title, accent, children, style }) {
+  return <div style={{ background:'var(--surface-board)', border:'var(--border-panel)', boxShadow:'var(--shadow-panel)', ...style }}>
+    {title ? <div style={{ background:accent?'var(--status-assigned)':'var(--chrome-bg)', color:accent?'#fff':'var(--chrome-accent)', fontWeight:700, fontSize:13, letterSpacing:'1.2px', textTransform:'uppercase', padding:'6px 12px' }}>{title}</div> : null}
+    <div style={{ padding:8 }}>{children}</div>
+  </div>;
+}
+// Élő adatkötés: a tábla localStorage-adatából olvasunk (uzemi-tabla-v1)
+let live = [];
+try {
+  const data = JSON.parse(localStorage.getItem('uzemi-tabla-v1'));
+  const flow = st => (st && data.workflows && data.workflows[st]) || ['Felvett','Folyamatban','Kész'];
+  live = (data && data.tasks || []).slice(0, 4).map((t, i) => ({
+    title: [t.project, t.num].filter(Boolean).join(' ') + ((t.project||t.num) ? ' — ' : '') + t.title,
+    status: (t.station && (t.step||0) >= flow(t.station).length - 1) ? 'done' : t.problem ? 'problem' : (t.ack || (t.step||0) > 0) ? 'inprogress' : 'assigned',
+    meta: (t.vol ? t.vol + ' db' : '') + (t.ut ? ' · ' + t.ut + ' ó/db' : ''),
+    urgent: t.prio === 'surgos', seed: i + 1
+  }));
+} catch (e) {}
+ReactDOM.createRoot(document.getElementById('root')).render(<div style={{display:'flex',flexDirection:'column',gap:14}}>
+  {live.length > 0 && <Panel title="Élő adat a tábláról (localStorage)" style={{maxWidth:576}}>
+    {live.map((t, i) => <TaskCard key={i} {...t} />)}
+  </Panel>}
+  <div style={{display:'flex',gap:8,flexWrap:'wrap',alignItems:'center'}}>
+    <Button>Betölt</Button><Button variant="primary">Munkamenet kiadása</Button><Button variant="chrome">Menüpont</Button><Button variant="active">Aktív</Button><Button variant="danger">Visszavon</Button>
+  </div>
+  <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
+    <StatusChip status="assigned"/><StatusChip status="inprogress"/><StatusChip status="done"/><StatusChip status="problem"/><StatusChip status="done" count={4} label="Kész"/>
+  </div>
+  <div style={{display:'flex',gap:14,alignItems:'flex-start'}}>
+    <Panel title="Szabad feladatok a héten" style={{width:280}}>
+      <TaskCard title="Matyi — Szabás, egyedi élragasztás" status="inprogress" meta="KEDD 7.14." seed={1}/>
+      <TaskCard title="Derby — Gérvágás + prés" status="assigned" urgent seed={2}/>
+    </Panel>
+    <Panel title="Kiosztva — még nem kezdte el" accent style={{width:280}}>
+      <TaskCard title="Derby 26112 — Lap 5-ös · HDF" status="assigned" meta="70 db · 0.003 ó/db" seed={3}/>
+      <TaskCard title="LFA 26119 — Tok + borítás" status="done" meta="SZERDA 7.15." seed={4}/>
+    </Panel>
+  </div>
+</div>);
+</script>
+</body></html>

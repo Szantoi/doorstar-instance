@@ -6,10 +6,9 @@ import { Toast } from "@/components/ui/Toast";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 
 const NAV_ITEMS = [
-  { to: "/", label: "Tábla", end: true },
+  { to: "/board", label: "Tábla", end: true },
   { to: "/kanban", label: "Kanban" },
   { to: "/load", label: "Terhelés" },
-  { to: "/projects", label: "Projektek" },
 ];
 
 function navButtonStyle(active: boolean): React.CSSProperties {

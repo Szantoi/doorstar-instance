@@ -1,7 +1,36 @@
 version: "1.0.0"
-updated: "2026-07-18"
+updated: "2026-07-29"
 
 epics:
+  - id: EPIC-DOORSTAR-ORDER-DATA-CHAIN
+    name: Doorstar megrendeléstől gyártásig adatút
+    project: doorstar-order-data-chain
+    depends_on: []
+    parallel_with: [EPIC-DOORSTAR-PRODUCTION-PLANNING]
+    status: active
+    target_date: "2026-09-30"
+    tasks_yaml: docs/projects/doorstar-order-data-chain/TASKS.yaml
+    description: >
+      A megrendelés rögzítésétől a verziózott termék-, alkatrész-, szabászati,
+      műveleti és kiadott üzemi adatokig tartó Doorstar adatút. A közös
+      kapacitás- és naptártervezés kizárólag a publikált SpaceOS szerződésen
+      keresztül kapcsolódik hozzá.
+
+  - id: EPIC-DOORSTAR-PRODUCTION-PLANNING
+    name: Doorstar Production Planning Adoption
+    project: doorstar-production-planning
+    depends_on: []
+    parallel_with: [EPIC-DOORSTAR-SPACEOS-CONVERGENCE]
+    status: active
+    target_date: "2026-09-30"
+    tasks_yaml: docs/projects/doorstar-production-planning/TASKS.yaml
+    description: >
+      A Doorstar normaidő-, legacy munkafolyamat- és naptártervezési tudásának
+      tenant-specifikus, kontrollált átvezetése a SpaceOS C# Production
+      Planning modulba. A Doorstar adapter, import, shadow összehasonlítás és
+      UAT itt készül; a közös C# platformkód kizárólag a JoineryTech
+      repositoryban.
+
   - id: EPIC-DOORSTAR-SOFTLAUNCH
     name: Doorstar Soft Launch
     project: doorstar-softlaunch
@@ -27,5 +56,6 @@ epics:
     description: >
       A Doorstar saját UX-ének, műhelyfolyamatának és adatainak megőrzése mellett
       platform auth, contract, instance pack, composition app és bundle
-      fogyasztás kialakítása. Platform- és ERP-kód kizárólag a JoineryTech
-      repositoryban készülhet.
+      fogyasztás kialakítása, valamint a közös B2B Collaboration protokoll
+      kétvállalatos pilotja. Platform-, ERP- és Collaboration-kód kizárólag a
+      JoineryTech repositoryban készülhet.

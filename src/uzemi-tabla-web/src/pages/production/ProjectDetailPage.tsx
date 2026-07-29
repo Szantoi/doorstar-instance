@@ -14,12 +14,16 @@ import {
   useSaveEpics,
   useSaveEpikTemplate,
   useScheduleProject,
+  useIssueProjectStep,
+  useRevokeProjectStep,
+  useKanban,
   useStations,
   useTemplates,
   useUpdateProject,
 } from "@/services/production/hooks";
-import type { Epic, EpicStep } from "@/services/production/types";
+import type { Epic, EpicStep, Task } from "@/services/production/types";
 import { ProjectSubSheets } from "./ProjectSubSheets";
+import { TaskDetailModal } from "./TaskDetailModal";
 
 let localIdSeq = 0;
 function localId() {
@@ -46,6 +50,8 @@ export function ProjectDetailPage() {
   const { data: epikTemplates = [] } = useEpikTemplates();
   const saveEpics = useSaveEpics(key);
   const scheduleProject = useScheduleProject(key);
+  const issueProjectStep = useIssueProjectStep(key);
+  const revokeProjectStep = useRevokeProjectStep(key);
   const applyEpikTemplate = useApplyEpikTemplate(key);
   const saveEpikTemplate = useSaveEpikTemplate();
   const updateProject = useUpdateProject(key);
@@ -62,6 +68,8 @@ export function ProjectDetailPage() {
   const [szinLap, setSzinLap] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectNum, setProjectNum] = useState("");
+  const [openTask, setOpenTask] = useState<Task | null>(null);
+  const { data: taskKanban } = useKanban(openTask?.station ?? "");
 
   useEffect(() => {
     if (project) {
@@ -123,6 +131,44 @@ export function ProjectDetailPage() {
   function addStep(epicIndex: number) {
     setEpics((prev) => prev.map((e, i) => (i === epicIndex ? { ...e, steps: [...e.steps, emptyStep()] } : e)));
     setDirty(true);
+  }
+
+  function moveStep(epicIndex: number, stepIndex: number, direction: -1 | 1) {
+    const targetIndex = stepIndex + direction;
+    if (targetIndex < 0 || targetIndex >= epics[epicIndex].steps.length || epics[epicIndex].steps.some((step) => step.tasks?.length)) return;
+    setEpics((previous) => previous.map((epic, index) => {
+      if (index !== epicIndex) return epic;
+      const steps = [...epic.steps];
+      [steps[stepIndex], steps[targetIndex]] = [steps[targetIndex], steps[stepIndex]];
+      return { ...epic, steps };
+    }));
+    setDirty(true);
+  }
+
+  async function issueSingleStep(step: EpicStep) {
+    if (dirty) {
+      await saveEpics.mutateAsync(epics);
+      setDirty(false);
+    }
+    try {
+      await issueProjectStep.mutateAsync(step.id);
+    } catch {
+      showToast("A lépés nem adható ki: kell tervezett nap és kiadott előző lépés.");
+    }
+  }
+
+  async function revokeSingleStep(step: EpicStep) {
+    const task = step.tasks?.[0];
+    if (!task) return;
+    const message = task.acknowledged || task.stepIndex > 0
+      ? `A(z) „${step.name}” feladatot már felvették vagy elkezdték. Biztosan visszavonod?`
+      : `Visszavonod a(z) „${step.name}” feladatot a tábláról?`;
+    if (!(await useConfirmStore.getState().ask(message))) return;
+    try {
+      await revokeProjectStep.mutateAsync(step.id);
+    } catch {
+      showToast("A lépés nem vonható vissza: kész vagy későbbi kiadott lépés függ tőle.");
+    }
   }
 
   async function removeStep(epicIndex: number, stepIndex: number) {
@@ -399,8 +445,8 @@ export function ProjectDetailPage() {
 
             {canManage && (
             <div className="h-scroll">
-            <div style={{ display: "grid", gridTemplateColumns: "30px minmax(160px,1.5fr) minmax(120px,1.1fr) 62px 90px 140px 90px 40px", fontSize: "13px", alignItems: "center", minWidth: "700px" }}>
-              <div />
+            <div style={{ display: "grid", gridTemplateColumns: "56px minmax(160px,1.5fr) minmax(120px,1.1fr) 62px 90px 140px 90px 158px", fontSize: "13px", alignItems: "center", minWidth: "860px" }}>
+              <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Művelet</div>
               <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Lépés</div>
               <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Állomás</div>
               <div style={{ padding: "3px 8px", fontSize: "10px", fontWeight: 700, color: "var(--text-faint)", textTransform: "uppercase" }}>Menny.</div>
@@ -410,7 +456,13 @@ export function ProjectDetailPage() {
               <div />
               {epic.steps.map((step, stepIndex) => (
                 <div key={step.id} style={{ display: "contents" }}>
-                  <div style={{ borderBottom: "1px solid var(--line-softer)", padding: "4px 0 4px 10px", color: "var(--text-faint)", fontWeight: 700 }}>{stepIndex + 1}.</div>
+                  <div style={{ borderBottom: "1px solid var(--line-softer)", padding: "4px 0 4px 10px", color: "var(--text-faint)", fontWeight: 700, display: "flex", alignItems: "center", gap: "3px" }}>
+                    {stepIndex + 1}.
+                    <span className="no-print" style={{ display: "inline-flex", flexDirection: "column" }}>
+                      <button disabled={stepIndex === 0 || epic.steps.some((item) => item.tasks?.length)} onClick={() => moveStep(epicIndex, stepIndex, -1)} title="Előrébb" style={{ border: "none", background: "transparent", padding: 0, cursor: "pointer", fontSize: "10px" }}>▲</button>
+                      <button disabled={stepIndex === epic.steps.length - 1 || epic.steps.some((item) => item.tasks?.length)} onClick={() => moveStep(epicIndex, stepIndex, 1)} title="Hátrébb" style={{ border: "none", background: "transparent", padding: 0, cursor: "pointer", fontSize: "10px" }}>▼</button>
+                    </span>
+                  </div>
                   <div style={{ borderBottom: "1px solid var(--line-softer)", padding: "2px 8px" }}>
                     <input
                       value={step.name}
@@ -467,7 +519,15 @@ export function ProjectDetailPage() {
                   <div style={{ borderBottom: "1px solid var(--line-softer)", padding: "4px 8px", fontSize: "11.5px", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", color: step.tasks?.length ? "var(--marker-blue)" : "var(--text-faint)" }}>
                     {step.tasks?.length ? "kiadva" : "—"}
                   </div>
-                  <div style={{ borderBottom: "1px solid var(--line-softer)", padding: "2px 8px" }}>
+                  <div className="no-print" style={{ borderBottom: "1px solid var(--line-softer)", padding: "2px 5px", display: "flex", gap: "4px", alignItems: "center", flexWrap: "wrap" }}>
+                    {step.tasks?.[0] ? (
+                      <>
+                        <button onClick={() => setOpenTask(step.tasks![0])} style={{ border: "1px solid var(--marker-blue)", background: "#fff", color: "var(--marker-blue)", fontWeight: 700, fontSize: "10px", padding: "2px 5px", cursor: "pointer", borderRadius: "3px" }}>Munkalap</button>
+                        <button onClick={() => revokeSingleStep(step)} disabled={revokeProjectStep.isPending} style={{ border: "1px solid #a3483d", background: "#fff", color: "#8f3329", fontWeight: 700, fontSize: "10px", padding: "2px 5px", cursor: "pointer", borderRadius: "3px" }}>Visszavon</button>
+                      </>
+                    ) : (
+                      <button onClick={() => issueSingleStep(step)} disabled={issueProjectStep.isPending || saveEpics.isPending || !step.planDate} title={!step.planDate ? "Előbb adj meg tervezett napot." : undefined} style={{ border: "1px solid var(--marker-blue)", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "10px", padding: "2px 5px", cursor: "pointer", borderRadius: "3px" }}>Kiadás</button>
+                    )}
                     {canManage && (
                       <button onClick={() => removeStep(epicIndex, stepIndex)} title="Törlés" style={{ border: "none", background: "none", color: "#c0c0b8", cursor: "pointer", fontSize: "13px" }}>
                         ×
@@ -482,6 +542,21 @@ export function ProjectDetailPage() {
           </div>
         ))}
 
+        {(project.unepicTasks?.length ?? 0) > 0 && (
+          <div style={{ border: "1.5px dashed var(--line-strong)", marginBottom: "10px", background: "#fafaf4" }}>
+            <div style={{ padding: "5px 12px", fontWeight: 700, fontSize: "14px", background: "var(--surface-sheet-head)", borderBottom: "1px dashed var(--line-strong)" }}>
+              (epik nélkül)
+            </div>
+            <div className="no-print" style={{ padding: "8px 12px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
+              {project.unepicTasks.map((task) => (
+                <button key={task.id} onClick={() => setOpenTask(task)} style={{ border: "1px solid var(--marker-blue)", background: "#fff", color: "var(--text-ink)", padding: "4px 8px", cursor: "pointer", borderRadius: "3px", fontWeight: 600, fontSize: "12px" }}>
+                  {task.title} <span style={{ color: "var(--text-muted)" }}>· {task.station ?? "szabad"}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {epics.length === 0 && <div style={{ color: "var(--text-muted)", fontSize: "14px" }}>Nincs még epik felvéve ehhez a projekthez.</div>}
         </div>
 
@@ -489,6 +564,7 @@ export function ProjectDetailPage() {
           <ProjectSubSheets projectKey={key} canManage={canManage} />
         </div>
       </div>
+      {openTask && <TaskDetailModal task={openTask} flow={taskKanban?.flow ?? ["Felvett", "Folyamatban", "Kész"]} onClose={() => setOpenTask(null)} />}
     </div>
   );
 }

@@ -80,6 +80,16 @@
 - A `/readyz` HTTP-teszt seam-je explicit `runDatabaseProbe` app-dependency;
   csak tesztelhetőségi határ. Productionben a Prisma `SELECT 1` fut. Hiba
   esetén a kliens mindig csak `{ status: "not_ready" }` választ kap.
+- A legacy import karaktermegőrzése adatminőségi kapu. A `DSMR-26148`
+  forrás-preview helyes UTF-8 (`Séfer`, `Offenbächer`), miközben a korábbi
+  egyszeri feltöltés literal `?` karaktereket írt a `doorstar_test`
+  adatbázisba. Ez nem frontend-renderelési hiba; a helyreállítás forrásból
+  újratöltést, az import kliens pedig explicit UTF-8 JSON-tesztet igényel.
+- A böngészhető fejlesztői adat és az automatikus tesztadat nem keverhető.
+  A Vitest suite jelenleg ugyanabban a tartós `doorstar_test` sémában hagyja
+  meg a `DSMR-*-TEST` fixture-öket, ezért a rendelésregiszter több külön
+  projektet is `Minta Kft.` főcímmel mutat. Rövid távon kötelező afterAll
+  takarítás, hosszú távon külön, futásonként izolált tesztséma szükséges.
 - A Scheduling M3 read-only kontraktus 2026-07-28-án publikálva érkezett a
   federation inboxba. Forrás: `Szantoi/spaceos-modules-scheduling` `main`,
   `docs/openapi.yaml`; OpenAPI 3.1, `/api/scheduling/v1`, SHA-256:

@@ -9,6 +9,11 @@ const keys = {
   kanban: (station: string) => ["production", "kanban", station] as const,
   load: (week: string) => ["production", "load", week] as const,
   projects: ["production", "projects"] as const,
+  productionOrders: ["production", "production-orders"] as const,
+  importRuns: ["production", "import-runs"] as const,
+  importRunEvidence: (importRunId: string) => ["production", "import-runs", importRunId, "evidence"] as const,
+  productionOrder: (projectKey: string) => ["production", "production-order", projectKey] as const,
+  orderFeedback: (projectKey: string, revision: number) => ["production", "order-feedback", projectKey, revision] as const,
   project: (key: string) => ["production", "project", key] as const,
   epikRollup: (key: string) => ["production", "epikRollup", key] as const,
   templates: ["production", "templates"] as const,
@@ -186,6 +191,123 @@ export function useProjects() {
   return useQuery({ queryKey: keys.projects, queryFn: productionApi.getProjects });
 }
 
+export function useProductionOrders() {
+  return useQuery({ queryKey: keys.productionOrders, queryFn: productionApi.getProductionOrders });
+}
+
+export function useImportRuns() {
+  return useQuery({ queryKey: keys.importRuns, queryFn: productionApi.getImportRuns });
+}
+
+export function useImportRunEvidence(importRunId: string) {
+  return useQuery({
+    queryKey: keys.importRunEvidence(importRunId),
+    queryFn: () => productionApi.getImportRunEvidence(importRunId),
+    enabled: !!importRunId,
+  });
+}
+
+export function useApplyManufacturedItemCandidates(importRunId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: { orderRevisionId: string; sourceFingerprint: string; candidateIds: string[] }) =>
+      productionApi.applyManufacturedItemCandidates(importRunId, {
+        ...input,
+        confirmation: "APPLY_READY_MANUFACTURED_ITEMS",
+      }),
+    onSuccess: (result) => {
+      qc.invalidateQueries({ queryKey: keys.importRunEvidence(importRunId) });
+      qc.invalidateQueries({ queryKey: keys.importRuns });
+      qc.invalidateQueries({ queryKey: keys.productionOrder(result.projectKey) });
+    },
+  });
+}
+
+export function useProductionOrder(projectKey: string) {
+  return useQuery({ queryKey: keys.productionOrder(projectKey), queryFn: () => productionApi.getProductionOrder(projectKey), enabled: !!projectKey });
+}
+
+export function useOrderFeedback(projectKey: string, revision: number | undefined) {
+  return useQuery({ queryKey: keys.orderFeedback(projectKey, revision ?? 0), queryFn: () => productionApi.getOrderFeedback(projectKey, revision!), enabled: !!projectKey && revision != null });
+}
+
+export function useCreateOrderFeedback(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: ({ category, message }: { category: import("./types").OrderFeedbackCategory; message: string }) => productionApi.createOrderFeedback(projectKey, revision!, category, message), onSuccess: () => qc.invalidateQueries({ queryKey: keys.orderFeedback(projectKey, revision ?? 0) }) });
+}
+
+export function useResolveOrderFeedback(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({ mutationFn: ({ feedbackId, status, resolution }: { feedbackId: string; status: "ACKNOWLEDGED" | "RESOLVED"; resolution: string }) => productionApi.resolveOrderFeedback(projectKey, revision!, feedbackId, status, resolution), onSuccess: () => qc.invalidateQueries({ queryKey: keys.orderFeedback(projectKey, revision ?? 0) }) });
+}
+
+export function useResolveOrderPositionEvidence(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ positionId, evidenceId, reviewState, resolution }: { positionId: string; evidenceId: string; reviewState: "RESOLVED" | "REJECTED"; resolution: string }) =>
+      productionApi.resolveOrderPositionEvidence(projectKey, revision!, positionId, evidenceId, reviewState, resolution),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useReviewManufacturedItem(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ itemId, state, resolution }: { itemId: string; state: "VERIFIED" | "REJECTED"; resolution: string }) =>
+      productionApi.reviewManufacturedItem(projectKey, revision!, itemId, state, resolution),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useAdvanceOrderIntakeStage(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, stage, exceptionReason }: { revision: number; stage: import("./types").OrderIntakeStage; exceptionReason?: string }) =>
+      productionApi.advanceOrderIntakeStage(projectKey, revision, stage, exceptionReason),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.productionOrders });
+      qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) });
+    },
+  });
+}
+
+export function useUpdateOrderRevision(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, input }: { revision: number; input: import("./types").OrderRevisionInput }) =>
+      productionApi.updateOrderRevision(projectKey, revision, input),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.productionOrders });
+      qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) });
+    },
+  });
+}
+
+export function useAddOrderDocument(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, input }: { revision: number; input: import("./types").OrderDocumentInput }) =>
+      productionApi.addOrderDocument(projectKey, revision, input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useRequestOrderReview(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, note }: { revision: number; note?: string }) => productionApi.requestOrderReview(projectKey, revision, note),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: keys.productionOrders }); qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }); },
+  });
+}
+
+export function useApproveOrderRevision(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, note }: { revision: number; note: string }) => productionApi.approveOrderRevision(projectKey, revision, note),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: keys.productionOrders }); qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }); },
+  });
+}
+
 export function useProject(key: string) {
   return useQuery({ queryKey: keys.project(key), queryFn: () => productionApi.getProject(key), enabled: !!key });
 }
@@ -256,6 +378,33 @@ export function useScheduleProject(key: string) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: keys.project(key) });
       qc.invalidateQueries({ queryKey: ["production", "board"] });
+      qc.invalidateQueries({ queryKey: keys.projects });
+    },
+  });
+}
+
+/** Per-step issue/revoke invalidates every view that derives board task state. */
+export function useIssueProjectStep(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (stepId: string) => productionApi.issueProjectStep(key, stepId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+      qc.invalidateQueries({ queryKey: ["production", "kanban"] });
+      qc.invalidateQueries({ queryKey: keys.projects });
+    },
+  });
+}
+
+export function useRevokeProjectStep(key: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (stepId: string) => productionApi.revokeProjectStep(key, stepId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: ["production", "board"] });
+      qc.invalidateQueries({ queryKey: ["production", "kanban"] });
       qc.invalidateQueries({ queryKey: keys.projects });
     },
   });

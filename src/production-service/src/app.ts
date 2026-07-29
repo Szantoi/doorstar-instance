@@ -9,6 +9,10 @@ import { loadRouter } from "./routes/load.js";
 import { projectsRouter } from "./routes/projects.js";
 import { templatesRouter } from "./routes/templates.js";
 import { overviewRouter } from "./routes/overview.js";
+import { productionOrdersRouter } from "./routes/productionOrders.js";
+import { importRunsRouter } from "./routes/importRuns.js";
+import { orderPositionEvidenceRouter } from "./routes/orderPositionEvidence.js";
+import { manufacturedItemsRouter } from "./routes/manufacturedItems.js";
 import { productionServiceOpenApi } from "./openapi.js";
 import { prisma } from "./db/client.js";
 import { isServiceReady } from "./services/readiness.js";
@@ -51,6 +55,10 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
   api.use(projectsRouter);
   api.use(templatesRouter);
   api.use(overviewRouter);
+  api.use(productionOrdersRouter);
+  api.use(orderPositionEvidenceRouter);
+  api.use(manufacturedItemsRouter);
+  api.use(importRunsRouter);
   app.use("/api/production", api);
 
   app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {

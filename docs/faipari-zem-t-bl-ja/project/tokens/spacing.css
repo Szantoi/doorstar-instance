@@ -1,0 +1,19 @@
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+
+  --radius-btn: 4px;   /* gombok, chipek */
+  --radius-chip: 3px;  /* kis gombok, táblázat-gombok */
+  --radius-none: 0;    /* tábla, panelek, munkalap: szögletes! */
+
+  --border-grid: 2px solid var(--line-strong);
+  --border-grid-strong: 3px solid var(--line-strong);
+  --border-panel: 2px solid var(--line-strong);
+
+  --shadow-panel: 0 4px 14px rgba(0,0,0,.15);
+  --shadow-modal: 0 20px 60px rgba(0,0,0,.45);
+  --shadow-frame: 0 10px 30px rgba(0,0,0,.3);
+}

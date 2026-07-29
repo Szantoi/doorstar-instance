@@ -24,7 +24,9 @@ async function declaredOperations(): Promise<Set<string>> {
   const operations = new Set<string>(["get /healthz", "get /readyz", "get /openapi.json"]);
   for (const file of files.filter((entry) => entry.endsWith(".ts"))) {
     const content = await readFile(join(routesDirectory, file), "utf8");
-    const expression = /\w+Router\.(get|post|put|patch|delete)\("([^"\n]+)"/g;
+    // Route declarations may wrap after the method call for readable
+    // middleware lists; whitespace must not make them invisible to the guard.
+    const expression = /\w+Router\.(get|post|put|patch|delete)\(\s*"([^"\n]+)"/g;
     for (const match of content.matchAll(expression)) operations.add(`${match[1]} ${toOpenApiPath(match[2])}`);
   }
   return operations;

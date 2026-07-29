@@ -9,10 +9,11 @@ import {
   projectSheetKindSchema,
 } from "../domain/schemas.js";
 import { resolveFlow, isDone, markerStatus } from "../domain/taskStatus.js";
-import { issueSession } from "../services/scheduler.js";
+import { issueSession, issueStep, revokeStep } from "../services/scheduler.js";
 import { logger } from "../logger.js";
 import { requireManager } from "../middleware/requester.js";
 import { findActiveProject } from "../services/projects.js";
+import { taskVM } from "./board.js";
 
 export const projectsRouter = Router();
 
@@ -121,7 +122,18 @@ projectsRouter.get("/projects/:key", async (req, res) => {
     res.status(404).json({ error: "not_found" });
     return;
   }
-  res.json(project);
+  const workflows = new Map((await prisma.stationWorkflow.findMany()).map((row) => [row.station, row.steps as string[]]));
+  const withTaskViews = await Promise.all(project.epics.map(async (epic) => ({
+    ...epic,
+    steps: await Promise.all(epic.steps.map(async (step) => ({
+      ...step,
+      tasks: await Promise.all(step.tasks.map((task) => taskVM(task, workflows))),
+    }))),
+  })));
+  const unepicTasks = await Promise.all((await prisma.task.findMany({
+    where: { projectId: project.id, epicId: null }, orderBy: [{ week: "asc" }, { day: "asc" }], include: { project: { select: { num: true } } },
+  })).map((task) => taskVM(task, workflows)));
+  res.json({ ...project, epics: withTaskViews, unepicTasks });
 });
 
 projectsRouter.put("/projects/:key", validateBody(updateProjectSchema), async (req, res) => {
@@ -301,6 +313,34 @@ projectsRouter.post("/projects/:key/schedule", validateBody(scheduleSchema), asy
   }
   logger.info({ key: project.key, ...result }, "session issued to board");
   res.json(result);
+});
+
+/** Issue one planned step while preserving the active epic's predecessor chain. */
+projectsRouter.post("/projects/:key/steps/:stepId/issue", async (req, res) => {
+  if (!requireManager(req, res)) return;
+  const project = await findActiveProject(req.params.key);
+  if (!project) return void res.status(404).json({ error: "not_found" });
+  try {
+    const result = await issueStep(project.id, req.params.stepId);
+    if (result.outcome === "missing_plan_date") return void res.status(409).json({ error: result.outcome });
+    if (result.outcome === "predecessor_not_issued") return void res.status(409).json({ error: result.outcome, predecessorStepId: result.predecessorStepId });
+    res.status(result.outcome === "issued" ? 201 : 200).json(result);
+  } catch (error) {
+    if (error instanceof Error && error.message === "step_not_found") return void res.status(404).json({ error: "not_found" });
+    throw error;
+  }
+});
+
+/** Revoke only a non-completed issued step that no later task depends on. */
+projectsRouter.delete("/projects/:key/steps/:stepId/issue", async (req, res) => {
+  if (!requireManager(req, res)) return;
+  const project = await findActiveProject(req.params.key);
+  if (!project) return void res.status(404).json({ error: "not_found" });
+  const result = await revokeStep(project.id, req.params.stepId);
+  if (result.outcome === "not_issued") return void res.status(404).json({ error: result.outcome });
+  if (result.outcome === "completed") return void res.status(409).json({ error: result.outcome });
+  if (result.outcome === "dependent_exists") return void res.status(409).json({ error: result.outcome, dependentTaskId: result.dependentTaskId });
+  res.status(204).end();
 });
 
 /** GET/PUT /api/production/projects/:key/sheets/:kind — quantities / cutting-list /
