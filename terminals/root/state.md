@@ -1,10 +1,22 @@
 # Doorstar Root állapot
 
-**Frissítve:** 2026-07-29
+**Frissítve:** 2026-07-31
 **Szerep:** Doorstar ügyfél-specifikus root
 
 ## Aktív állapot
 
+- 2026-07-31: elkészült a Doorstar kontrollált Nexus RAG dry-run csomag a
+  `docs/projects/doorstar-nexus-rag/` könyvtárban. A korlátozott forrásleltár
+  45 tételt kezel közvetlen indexelés nélkül; a kereshető réteg 6 kanonikus,
+  PII-/rendelésadat-mentes dokumentum, 98 forrásolt claim, 41 determinisztikus
+  chunk és 35 eval kérdés. A dry-run 0 hibával és 0 warninggal zöld,
+  Nexus/ChromaDB/network/database write nem történt. Állapot:
+  `HUMAN_APPROVAL_REQUIRED — STOP`.
+- Végső RAG-bizonyíték: package
+  `34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116`,
+  inventory 45/45 hash- és méretegyezés, validator unit 12/12, független QA
+  PASS P0/P1=0. Backend build PASS; OpenAPI 3.1, 83 művelet, teljes
+  route-lefedettség; teljes backend suite 39 fájl / 127 teszt PASS.
 - 2026-07-29: elkészült az első Doorstar Import Inbox (`/imports`). A fejlécből
   és a kezdőlapról elérhető; listázza az ImportRun állapotát, preview
   artefaktját, mapping-verzióját, forrás-hashét, jelöltszámát és a tesztsémás
@@ -387,3 +399,237 @@
 - Javítási sorrend: teszt-fixture afterAll takarítás; külön futásonkénti
   Vitest-séma; UTF-8 import round-trip kapu; végül a `26148` célzott,
   bizonyítékvezérelt helyreállítása.
+
+## 2026-07-31 — Codex/Nexus agent identity cutover: kész
+
+- A hat terminálszerep Codex custom agentje és közvetlen `AGENTS.md` fájlja
+  elkészült; a monitor read-only, a specialisták scope-ja explicit.
+- Hat külön Nexus identity él, mind a `doorstar` szigeten, knowledge-only
+  szerveroldali RBAC-kal. A régi közös identity vissza lett vonva.
+- QA: Doorstar MCP 19/19 teszt + build; agent-contract validator zöld; Nexus
+  policy 8/8 + first-load 5/5 + legacy auth 36/36, admin-szkriptek 7/7,
+  typecheck/build zöld.
+- Live: 6/6 identity `tools/list=search_knowledge`, 18/18 tiltott próba 403,
+  6/6 forrásos Doorstar-keresés, no-token 401, invalid/retired 403.
+- Nexus service restart nélkül, PID `1733284` mellett hot-reloadolt.
+- Új Codex CLI task a `doorstar_monitor` custom agentet sikeresen felfedezte,
+  és a helyes name/principal/configured-sandbox hármast adta vissza. A Windows
+  read-only sandbox helper külön gépi `os error 5` hibán áll; bypassos,
+  kizárólag olvasó discovery smoke PASS, a TOML `read-only` értékét a
+  determinisztikus validator ellenőrzi.
+- A kliensverzió child-MCP override driftjét egyedi, alapszinten regisztrált
+  role-serverek zárták le. `doorstar_frontend` E2E: saját role-tool, Doorstar
+  island, forrás jelen, Nexus caller-log delta pontosan +1.
+- A független záróaudit által talált restartkori P1 lezárult: a Nexus forrás
+  első policy-betöltése `none` alapértékű és malformed permissiont is tilt;
+  az élő systemd `ExecStartPre` validátora hibás/hiányzó/túl tág policyvel nem
+  engedi elindulni a szolgáltatást. A guard felrakása restart nélkül történt,
+  a Nexus PID továbbra is `1733284`.
+- Független utóreview: PASS, P0/P1 nincs. A tracked és élő preflight-validátor
+  byte-azonos; service aktív, `NRestarts=0`. P2 követés marad a Nexusnak: a
+  szigorú customer contractot a jövőben a hot-reload csere előtt is futtatni.
+
+## 2026-07-31 — Faipari terminológiai baseline
+
+- Elkészült a Doorstar működésének repo-, séma-, UI-, import- és read-only
+  faipari MCP-alapú szakzsargon-auditja. Kanonikus emberi szótár:
+  `docs/knowledge/domain/DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md`;
+  gépi párja: `doorstar-faipari-terminology.v1.json`.
+- P0 automatikus félremappelést az audit nem igazolt; a jelenlegi evidence- és
+  review-kapuk fail-closed működnek. A valós adatra váltás előtt P1 marad a
+  dátumszemantika, felmérési teljesség, kétoldali ajtószerkezet backendmodell,
+  falpanel/blende kapcsolat, Sales átadás kontra gyártási kiadás, valamint a
+  stage–állomás–művelet határ egységesítése.
+- A régi domainleírás terminológiai hibái javítva: fúrás = megmunkálás;
+  csiszolás = jellemzően felület-előkészítés; kiszállításra kész = állapot,
+  nem tényleges logisztikai/beépítési esemény.
+- Forrásdokumentum, adatbázis, éles/public séma és deploy nem érintett.
+
+## 2026-07-31 — Irodai kezdőoldali következőteendő-munkasor
+
+- A HomePage a meglévő projekt- és rendelésprojekcióból legfeljebb négy,
+  prioritásos és kattintható következő teendőt mutat. Nem tárol új workflow-
+  állapotot, és minden link a meglévő adatgazda-munkatérre vezet.
+- Projekt- vagy rendelésquery loading, refetch vagy error állapotában a sor
+  fail-closed: nincs hamis rendelésnélküli tény vagy célakció.
+- QA: 30 tesztfájl / 114 teszt, lint és production build zöld; 1440/390 px
+  light/dark böngészős ellenőrzés overflow és konzolhiba nélkül. A light muted
+  kontraszt legalább 4,86:1. Független monitor re-review PASS, P0-P3 nincs.
+- Új backend- vagy import-contract nem keletkezett; deploy és adatbázisírás
+  nem történt.
+
+## 2026-07-31 — Ajtó–blende–falpanel termékirány és handoff
+
+- A faipari irodai UI elsődleges terméke az utólag beépíthető beltéri ajtó;
+  a falpanel külön projektpozíció/falzóna, a blende pedig az ajtó opcionális
+  felső takarás-hosszabbítása fix magasságig vagy plafonig.
+- A frontend saját Nexus-keresése forrás- és score-megőrzéssel készült.
+  Blendére nem volt releváns találat; a definíció ezért elsődleges
+  `DOORSTAR_LOCAL`, a RAG mindenhol advisory-only.
+- Backend inbox `015`: exact product-spec/readiness, profilfüggő casing,
+  `UNRESOLVED` blende, lifecycle, concurrency és OIDC-ig read-only kapu.
+  Import-discovery inbox `010`: explicit entitásmapping, teljes provenance és
+  unit-conversion lineage, preview-only, emberi review és fail-closed replay.
+- Független monitor végső re-review: PASS, P0–P3 nincs. Alkalmazáskód,
+  adatbázis, Nexus-adat és deploy nem változott.
+
+## 2026-07-31 — DSMR-26148 fail-closed felméréslezárás
+
+- DSORD-16 lezárva. A Salesből származó pozícióértékek a rendelési oldalon
+  `Rögzített forrásadatok`; igazolt felmérésnek nem nevezhetők.
+- A szerver `SURVEY_COMPLETED` kapuja kész falvastagságot, három kötelező
+  katalógusdrivert, legalább egy `SURVEY` dokumentumot és pozíciónként exact
+  dokumentumverzió-linket követel. Nulla evidence megengedett a kézi flow-ban;
+  meglévő evidence kizárólag teljes auditált `RESOLVED` döntéssel fogadható el.
+- DSMR-26148 változatlanul `DRAFT / SURVEY_PENDING`, 2 hiányos pozícióval,
+  1 Sales PDF-fel, 0 felmérési dokumentummal/linkkel/evidence-szel. Az UI a
+  véglegesítést blokkolja; adat- vagy forrásmódosítás nem történt.
+- QA: frontend 33/130 + lint/build; backend 41/131 + build + OpenAPI 3.1,
+  83/83 route coverage. Helyi böngésző desktop, 390×844 mobil és sötét mobil
+  PASS; dokumentumszintű overflow nincs. Deploy nem történt.
+- Design és bizonyíték:
+  `docs/decisions/ADR-2026-07-31-survey-source-verification-gate.md`,
+  `docs/projects/doorstar-order-data-chain/DSORD-16-SURVEY-SOURCE-VERIFICATION.md`.
+
+## 2026-07-31 — Kontrollált Nexus RAG apply-előkészítés
+
+- A felhasználó a változatlan
+  `34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116`
+  csomagot betöltésre jóváhagyta. A hat kanonikus fájl és a csomag hash-lánca
+  változatlan; egy inventory-only, manifest-forrásként nem használt OpenAPI-pin
+  a jóváhagyás után driftelt.
+- Élő, csak olvasható baseline: `doorstar-knowledge`, 1998 rekord. Négy korábbi
+  Doorstar-forrás 23 rekordja elavult/superseded; egyikük titokszerű stale
+  szöveget tartalmaz. Titokérték nem került naplóba vagy repositoryba.
+- Elkészült a read-only, hash-pinnelt ingest planner és az apply ADR. A planner
+  11/11, a package-validator 12/12 teszten zöld; minden write-proof hamis.
+- Chroma/Nexus írás nem történt. Az apply külön exact-ID backup + 41 upsert +
+  verifikáció + 23 legacy delete + rollback szerződésre, valamint e célzott
+  romboló lépés explicit emberi jóváhagyására vár.
+
+## 2026-07-31 — Szerver-authoritatív exact-revíziós projektlánc
+
+- Elkészült a read-only exact-revíziós readiness és projekt-workflow authority:
+  `GET /api/production/production-orders/:projectKey/revisions/:revision/readiness`
+  és `GET /api/production/projects/:projectKey/workflow`. A rendelés, alkatrész-
+  snapshot és műveletterv valós authority; a tervezés, immutable munkacsomag,
+  6-stage runtime és handover továbbra is explicit `CONTRACT_REQUIRED` vagy
+  `NOT_AVAILABLE`, művelet nélkül.
+- A backend minden hozzájáruló olvasást egy PostgreSQL `REPEATABLE READ`
+  snapshotban értékel, stale revízión és superseded dokumentumlinken lezár,
+  a `PRODUCTION_RELEASE` pedig PlanningProposal és IssuedWorkPackage nélkül
+  mindig `NOT_AVAILABLE`. Két valós konkurenciateszt fedi az új revízió és az
+  alkatrészsnapshot közbeni olvasást.
+- A projektcockpit a hét üzleti kaput és a kilenc exact adatkaput mutatja,
+  felelős szerepkörrel, hiánnyal és csak létező adatgazda-linkkel. API-mutation
+  href sosem válik UI-akcióvá. A két külön HTTP-projekció ORDER/COMPONENTS/
+  OPERATIONS kapui exact tükörvalidációt kapnak; eltérő snapshot, lineage,
+  blocker/action flatten vagy refetch esetén a teljes panel fail-closed.
+- QA: backend 42 tesztfájl / 138 teszt, build és OpenAPI 85/85; frontend
+  36 tesztfájl / 154 teszt, lint és build. A 1440×1000 és 390×844 light/dark
+  böngészős mátrix, billentyűfókusz, konzol és dokumentum-overflow zöld. A
+  végső független monitor review PASS, P0–P3 finding nincs.
+- A végső browser smoke-hoz kizárólag a localhost:5462 helyi PostgreSQL
+  fejlesztői és `doorstar_test` sémája kapta meg a repository migrációit/séma-
+  szinkronját; távoli vagy éles adatbázis nem változott. A
+  `QA-READINESS-20260731` tesztprojekt a próba után soft-archiválva lett, az
+  ideiglenes 4610-es backendfolyamatokat leállítottuk. Deploy nem történt.
+- Freeze-incidens: a pinelt production OpenAPI két leíró mezőjét egy backend
+  agent közvetlen patch-e 21:54:57-kor átírta. Az agentet leállítottuk, az okot
+  azonosítottuk, visszavonás nem történt. A felhasználó describe-only overlayben
+  re-pinel; a fájl azóta változatlan, 162108 byte és SHA-256
+  `555d90a095ee757e75d78f294e68584bfc878ac82218397ad437f9ea626c204d`.
+- Következő önálló P0 szelet: read-only exact-revíziós Product Position
+  Register. A `DOOR` és `WALL_PANEL` külön pozíció; a blende ajtóhoz kötött
+  `FIXED_HEIGHT | TO_CEILING` design intent, nem automatikus gyártási méret.
+  Minden product-spec mutation validált OIDC/RBAC-ig zárva marad.
+
+## 2026-08-01 — Adatgazdag fejlesztési tesztprojekt és folyamat-UX
+
+- A helyi fejlesztési adatbázisban reprodukálható referencia készült
+  `UX-REFERENCE-RETROFIT-001` kulccsal. R01 `SUPERSEDED`, R02 `APPROVED`; az
+  aktuális revízió 3 pozíciót, 3 exact dokumentumot, 1 ellenőrzött falpanelt,
+  1 ellenőrzött kiegészítőt, 7 `VERIFIED` alkatrészsort és 4 `VERIFIED`
+  műveletet tartalmaz. Nem valós ügyféladat és nincs éles adatbázis.
+- A seed csak PostgreSQL, loopback host, exact `doorstar_production` DB és
+  engedélyezett explicit séma mellett indul. `public` esetén két külön CLI-
+  megerősítés kell; más DB-n Prisma-kapcsolat előtt fail-closed. Csak a stabil
+  projektkulcsot építi újra, meglévő HTTP/API authorityn keresztül.
+- A rendelési adatlap egyszerre egy revíziót mutat. A történeti deep link
+  read-only; hibás revízió queryje explicit helyreállításig lezár minden író
+  utat. Az irodai navigátor a munkatereket köti össze, de nem readiness-
+  authority. A projekt breadcrumb stabil kulcsot mutat.
+- A műveletterv-oldal már az exact backend snapshotot fogyasztja: a 4 explicit
+  sor `10 → 20 → 30 → 40` sorrendben látszik. Nincs kliensoldali generálás,
+  create/review/release akció; `PRODUCTION_RELEASE` továbbra `NOT_AVAILABLE`.
+- A mobil office header flex-zsugorodási átfedése megszűnt; 44 px-es működő
+  témakapcsoló és vizuális scrollbar nélküli, továbbra görgethető nav készült.
+- QA: backend 44/44 tesztfájl, 144/144 teszt, build, OpenAPI 85/85; frontend
+  38/38 tesztfájl, 168/168 teszt, lint és build. A 1440×1000 és 390×844
+  light/dark browser-mátrix, történeti/hibás revízió, header-overlap,
+  dokumentum-overflow és konzolhiba ellenőrzése zöld. Deploy nem történt.
+- Új backend- vagy import-contract nem keletkezett. A következő P0 továbbra is
+  a Product Position Register; a teljes projektlánc planning/work package/
+  6-stage runtime/handover szakasza meglévő authority nélkül zárva marad.
+
+## 2026-08-01 — Kompakt Sales-átadás és RAG v1.0 live állapot
+
+- A rendelési adatlap alapnézete a DSMR 24181 Sales-gyártásmegrendelés
+  vizuális hierarchiáját követő, tömör átadólap lett. A projekt, ügyfél,
+  vállalt idő, revízió/állapot, konkrét következő teendő, kritikus hiány és a
+  három nyitható pozíciósor marad elöl; a műszaki, dokumentum-, evidence- és
+  auditanyag alapból zárt részletben él.
+- A nézet explicit Sales-forrás, nem gyártási kiadás vagy jóváhagyási
+  bizonylat. Refetch, történeti és invalid revízió alatt fail-closed; a valódi
+  REVIEW jóváhagyási CTA csak a meglévő kaput nyitja, új API/mutation nincs.
+- QA: célzott 2 fájl / 10 teszt, teljes frontend 38/38 fájl és 170/170 teszt,
+  lint/build; 1440/1280/735/390 light/dark böngészős bizonyíték, nulla
+  dokumentum-overflow és warning/error konzol. Független review PASS, P0–P3
+  megállapítás nincs. Backend/import contract és deploy nem keletkezett.
+- A koordinációs handoff szerint a Doorstar RAG v1.0 live apply elkészült:
+  exact 41 új / 23 legacy csere, végső count 2016, idempotens
+  `SKIP_IDENTICAL`, Knowledge Service health és mind a hat principal smoke
+  PASS. Alkalmazás-DB, production/public séma és frontend/backend deploy nem
+  változott; a korábbi freeze megszűnt, az OpenAPI-pin változatlan.
+- A post-live 35 kérdéses retrieval eval minőségi rést mutatott: 13/35
+  dokumentumtalálat és 1/35 teljes claim. A v1.0 immutable marad; a claim-szintű
+  chunkolású v1.1 új dry-run és külön emberi jóváhagyás tárgya. Audit:
+  `docs/projects/doorstar-nexus-rag-execution/LIVE_APPLY_2026-08-01.json` és
+  `LIVE_EVAL_2026-08-01.json`. A mostani UI nem támaszkodott új RAG-claimre.
+
+## 2026-08-01 — RAG v1.1 offline csomag lezárva, live csere HOLD
+
+- Elkészült a külön `doorstar-controlled-knowledge-rag@1.1.0` csomag:
+  6 dokumentum, 98 claim, 98 claim chunk + 6 overview chunk, 35 eval-kérdés.
+  Package hash:
+  `237dcdf5be94131ae9d5be0dc9062d757896b7b11693c37198323db43db68e16`.
+- Az exact live-v1.0 baseline 6 dokumentum / 41 chunk; a content-free planner
+  exact `41 → 104` cserét jelez. Payload, delete action, broad delete,
+  hálózati és írási művelet nincs; státusz `HUMAN_APPROVAL_REQUIRED`.
+- Lineage: claim→chunk 98/98, claim→citation 98/98, kérdés→elvárt forrás 35/35.
+  Offline claim recall @5/@10/@20: 25/61, 30/61, 34/61; szigorú teljes
+  claim-match: 14/35, 17/35, 18/35.
+- Döntés: `HOLD_FOR_RETRIEVAL_TUNING`. A v1.0 marad élő; v1.1 Nexus-/Chroma-
+  írás csak új, explicit jóváhagyással történhet a retrieval-stratégia
+  javítása és külön review után.
+- QA: RAG Python 68/68, Nexus evaluator 9/9 + typecheck/Biome, backend build,
+  OpenAPI 3.1 / 85 / complete és teljes backend 44 fájl / 144 teszt zöld.
+  Független re-audit PASS, P0–P2 eltérés nincs.
+- Sem alkalmazásadatbázis, sem production/public séma, sem deploy nem
+  változott. A backend suite kizárólag izolált `doorstar_test_vitest_*`
+  sémában futott.
+- Read-only live check: health `ok`, 2016 rekord, port 3460, PID `492075`.
+  A Doorstar Knowledge Service-hez nincs systemd unit (`LoadState=not-found`),
+  a process user-session scope-ban fut. Ez külön availability-follow-up;
+  restart vagy deploy nem történt.
+
+## 2026-08-01 — Lezáró root checkpoint
+
+- `memory.md`, `state.md` és `todo.md` szinkronizálva a RAG v1.1 review
+  eredményével.
+- Aktuális stabil állapot: v1.0 live/healthy/2016; v1.1 offline/104 chunk/
+  `HOLD_FOR_RETRIEVAL_TUNING`; új live írás nincs.
+- Következő végrehajtható P0: offline kétlépcsős retrieval-kísérlet. Külön P1
+  üzemeltetési döntés: systemd-felügyelet a jelenlegi 3460-as processhez.
+- Utolsó teljes kapu: RAG Python 68/68, Nexus evaluator 9/9, backend build,
+  OpenAPI 85/85 és backend 44 fájl / 144 teszt PASS.
