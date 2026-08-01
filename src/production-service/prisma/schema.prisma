@@ -87,9 +87,44 @@ enum OrderDocumentKind {
   OTHER
 }
 
+enum SupplementaryItemEntryMode {
+  MANUAL
+  SOURCE_REVIEW
+}
+
+enum SupplementaryItemState {
+  REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum ComponentRequirementKind {
+  CUT_PART
+  PURCHASED_PART
+}
+
+enum ComponentRequirementSourceKind {
+  ORDER_POSITION
+  MANUFACTURED_ITEM
+  SUPPLEMENTARY_ITEM
+}
+
+enum ComponentSnapshotState {
+  REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum OperationPlanSnapshotState {
+  REVIEW
+  VERIFIED
+  REJECTED
+}
+
 enum OrderRevisionAuditAction {
   REVIEW_REQUESTED
   APPROVED
+  SUPERSEDED
 }
 
 /// A legacy preview is evidence, not an import. Only an explicit, recorded
@@ -220,50 +255,54 @@ model Project {
 
 /// Doorstar-specific order aggregate attached to the existing Project root.
 model ProductionOrder {
-  id        String @id @default(cuid())
-  projectId String @unique
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id        String          @id @default(cuid())
+  projectId String          @unique
+  project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
   revisions OrderRevision[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
 
 /// A revision is immutable once it leaves DRAFT; later changes create a new one.
 model OrderRevision {
-  id               String              @id @default(cuid())
-  orderId          String
-  order            ProductionOrder     @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  revision         Int
-    status           OrderRevisionStatus @default(DRAFT)
-    intakeStage      OrderIntakeStage     @default(SALES_DRAFT)
-  customerName     String
-  customerAddress  String?
-  contactName      String?
-  contactPhone     String?
-  contactEmail     String?
-  deliveryAddress  String?
-  expectedDelivery DateTime?
-  plannedStart     DateTime?
-  priority         Int                 @default(0)
-  notes            String              @default("")
-  importRunId       String?
-  importRun         ImportRun?          @relation(fields: [importRunId], references: [id], onDelete: SetNull)
-    salesDocumentsReceivedAt DateTime?
-    surveyCompletedAt       DateTime?
-  surveyExceptionReason   String?
-  positions        OrderPosition[]
-  documents        OrderDocument[]
-  audit            OrderRevisionAudit[]
-  feedback         OrderFeedback[]
-  deadlineObservations OrderDeadlineObservation[]
-  manufacturedItems ManufacturedItem[]
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
+  id                        String                          @id @default(cuid())
+  orderId                   String
+  order                     ProductionOrder                 @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  revision                  Int
+  status                    OrderRevisionStatus             @default(DRAFT)
+  intakeStage               OrderIntakeStage                @default(SALES_DRAFT)
+  customerName              String
+  customerAddress           String?
+  contactName               String?
+  contactPhone              String?
+  contactEmail              String?
+  deliveryAddress           String?
+  expectedDelivery          DateTime?
+  plannedStart              DateTime?
+  priority                  Int                             @default(0)
+  notes                     String                          @default("")
+  importRunId               String?
+  importRun                 ImportRun?                      @relation(fields: [importRunId], references: [id], onDelete: SetNull)
+  salesDocumentsReceivedAt  DateTime?
+  surveyCompletedAt         DateTime?
+  surveyExceptionReason     String?
+  positions                 OrderPosition[]
+  documents                 OrderDocument[]
+  documentReleaseReferences OrderDocumentReleaseReference[]
+  audit                     OrderRevisionAudit[]
+  feedback                  OrderFeedback[]
+  deadlineObservations      OrderDeadlineObservation[]
+  manufacturedItems         ManufacturedItem[]
+  supplementaryItems        OrderSupplementaryItem[]
+  componentSnapshots        ComponentSnapshot[]
+  operationPlanSnapshots    OperationPlanSnapshot[]
+  createdAt                 DateTime                        @default(now())
+  updatedAt                 DateTime                        @updatedAt
 
   @@unique([orderId, revision])
-    @@index([status])
-    @@index([intakeStage])
-    @@index([importRunId])
+  @@index([status])
+  @@index([intakeStage])
+  @@index([importRunId])
 }
 
 model OrderFeedback {
@@ -286,20 +325,27 @@ model OrderFeedback {
 /// Provenance envelope for a reviewed legacy preview. No production import is
 /// possible without one of these records plus a test-schema connection guard.
 model ImportRun {
-  id                String          @id @default(cuid())
-  profileVersion    String
-  sourceFingerprint String
-  previewArtifact   String
-  targetSchema      String
-  status            ImportRunStatus @default(PREVIEWED)
-  candidateCount    Int             @default(0)
-  createdByRole     String
-  createdAt         DateTime        @default(now())
-  appliedAt         DateTime?
+  id                  String          @id @default(cuid())
+  /// Stable key for a reviewed bulk preview manifest. Null preserves legacy
+  /// one-off runs; non-null is unique so a resumed registration cannot fork.
+  registrationKey     String?         @unique
+  registrationVersion String?
+  artifactFingerprint String?
+  reviewNote          String?
+  profileVersion      String
+  sourceFingerprint   String
+  previewArtifact     String
+  targetSchema        String
+  status              ImportRunStatus @default(PREVIEWED)
+  candidateCount      Int             @default(0)
+  createdByRole       String
+  createdAt           DateTime        @default(now())
+  appliedAt           DateTime?
 
-  revisions         OrderRevision[]
-  candidates        ImportCandidate[]
+  revisions            OrderRevision[]
+  candidates           ImportCandidate[]
   deadlineObservations OrderDeadlineObservation[]
+
   @@index([status, createdAt])
 }
 
@@ -309,8 +355,10 @@ model ImportCandidate {
   id                String                @id @default(cuid())
   importRunId       String
   importRun         ImportRun             @relation(fields: [importRunId], references: [id], onDelete: Cascade)
+  /// Deterministic artifact-hash + row key used by the resumable bulk writer.
+  sourceRecordKey   String?
   recordType        String
-  workNumber       String?
+  workNumber        String?
   sourceRoot        String
   relativePath      String
   sheet             String?
@@ -320,8 +368,9 @@ model ImportCandidate {
   errors            String[]              @default([])
   status            ImportCandidateStatus @default(REVIEW)
   createdAt         DateTime              @default(now())
-  manufacturedItem ManufacturedItem?
+  manufacturedItem  ManufacturedItem?
 
+  @@unique([importRunId, sourceRecordKey])
   @@index([importRunId, status])
   @@index([workNumber])
 }
@@ -329,25 +378,25 @@ model ImportCandidate {
 /// Multiple schedule rows may describe one order. Observations preserve all
 /// source values without silently replacing the order header deadline.
 model OrderDeadlineObservation {
-  id                String                    @id @default(cuid())
-  importRunId       String
-  importRun         ImportRun                 @relation(fields: [importRunId], references: [id], onDelete: Cascade)
-  orderRevisionId   String?
-  orderRevision     OrderRevision?            @relation(fields: [orderRevisionId], references: [id], onDelete: SetNull)
-  workNumber        String
-  sourceRoot        String
-  relativePath      String
-  sheet             String?
-  page              Int?
-  row               Int?
-  kind              DeadlineObservationKind
-  rawValue          String
-  normalizedDate    DateTime?
-  confidence        Float?
-  reviewState       EvidenceReviewState       @default(UNVERIFIED)
-  resolution        String?
-  createdAt         DateTime                  @default(now())
-  updatedAt         DateTime                  @updatedAt
+  id              String                  @id @default(cuid())
+  importRunId     String
+  importRun       ImportRun               @relation(fields: [importRunId], references: [id], onDelete: Cascade)
+  orderRevisionId String?
+  orderRevision   OrderRevision?          @relation(fields: [orderRevisionId], references: [id], onDelete: SetNull)
+  workNumber      String
+  sourceRoot      String
+  relativePath    String
+  sheet           String?
+  page            Int?
+  row             Int?
+  kind            DeadlineObservationKind
+  rawValue        String
+  normalizedDate  DateTime?
+  confidence      Float?
+  reviewState     EvidenceReviewState     @default(UNVERIFIED)
+  resolution      String?
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
 
   @@index([importRunId, reviewState])
   @@index([orderRevisionId, kind])
@@ -357,14 +406,16 @@ model OrderDeadlineObservation {
 /// Immutable lifecycle evidence for a revision. The approval hash covers the
 /// exact position and document-reference snapshot used by downstream work.
 model OrderRevisionAudit {
-  id              String                   @id @default(cuid())
-  orderRevisionId String
-  orderRevision   OrderRevision            @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
-  action          OrderRevisionAuditAction
-  actorRole       String
-  contentHash     String
-  note            String                   @default("")
-  createdAt       DateTime                 @default(now())
+  id                       String                   @id @default(cuid())
+  orderRevisionId          String
+  orderRevision            OrderRevision            @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  action                   OrderRevisionAuditAction
+  actorRole                String
+  contentHash              String
+  contentHashSchemaVersion Int                      @default(1)
+  note                     String                   @default("")
+  componentSnapshots       ComponentSnapshot[]
+  createdAt                DateTime                 @default(now())
 
   @@index([orderRevisionId, createdAt])
 }
@@ -372,48 +423,99 @@ model OrderRevisionAudit {
 /// Metadata-only document reference. The application stores no local absolute
 /// path or binary here; SharePoint/object storage remains the source of truth.
 model OrderDocument {
-  id              String              @id @default(cuid())
-  orderRevisionId String
-  orderRevision   OrderRevision       @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
-  source          OrderDocumentSource
-  kind            OrderDocumentKind
-  displayName     String
-  relativePath    String
-  driveId         String?
-  itemId          String?
-  versionId       String?
-  contentSha256   String?
-  createdAt       DateTime            @default(now())
-  positionEvidence OrderPositionEvidence[]
-  manufacturedItemEvidence ManufacturedItemEvidence[]
+  id                        String                           @id @default(cuid())
+  orderRevisionId           String
+  orderRevision             OrderRevision                    @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  /// Stable identity shared by all replacements of one logical document.
+  documentFamilyKey         String                           @default(cuid())
+  supersedesDocumentId      String?                          @unique
+  supersedesDocument        OrderDocument?                   @relation("OrderDocumentVersions", fields: [supersedesDocumentId], references: [id])
+  nextVersion               OrderDocument?                   @relation("OrderDocumentVersions")
+  source                    OrderDocumentSource
+  kind                      OrderDocumentKind
+  displayName               String
+  relativePath              String
+  driveId                   String?
+  itemId                    String?
+  versionId                 String?
+  contentSha256             String?
+  createdAt                 DateTime                         @default(now())
+  positionEvidence          OrderPositionEvidence[]
+  manufacturedItemEvidence  ManufacturedItemEvidence[]
+  supplementaryItemEvidence OrderSupplementaryItemEvidence[]
+  positionLinks             OrderDocumentPositionLink[]
+  releaseReferences         OrderDocumentReleaseReference[]
 
   @@index([orderRevisionId])
+  @@index([orderRevisionId, documentFamilyKey])
   @@index([source, kind])
+}
+
+/// Direct technical-document membership of an order position, separate from
+/// field-level evidence which explains a single captured value.
+model OrderDocumentPositionLink {
+  id              String        @id @default(cuid())
+  orderDocumentId String
+  orderDocument   OrderDocument @relation(fields: [orderDocumentId], references: [id], onDelete: Cascade)
+  orderPositionId String
+  orderPosition   OrderPosition @relation(fields: [orderPositionId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+
+  @@unique([orderDocumentId, orderPositionId])
+  @@index([orderPositionId])
+}
+
+/// Immutable document-version snapshot issued to a future or external work
+/// package. The work-package aggregate will later own `issuedWorkPackageKey`.
+model OrderDocumentReleaseReference {
+  id                    String        @id @default(cuid())
+  orderRevisionId       String
+  orderRevision         OrderRevision @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  orderDocumentId       String
+  orderDocument         OrderDocument @relation(fields: [orderDocumentId], references: [id], onDelete: Restrict)
+  issuedWorkPackageKey  String
+  documentVersionId     String?
+  documentContentSha256 String
+  releasedByRole        String
+  releaseNote           String
+  createdAt             DateTime      @default(now())
+
+  @@unique([issuedWorkPackageKey, orderDocumentId])
+  @@index([orderRevisionId, issuedWorkPackageKey])
 }
 
 /// One Doorstar door/product position captured before calculation.
 model OrderPosition {
-  id               String        @id @default(cuid())
-  orderRevisionId  String
-  orderRevision    OrderRevision @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
-  position         Int
-  code             String
-  name             String
-  quantity         Int
-  productType      String?
-  openingDirection String?
-  openingWidthMm   Float?
-  openingHeightMm  Float?
-  openingDepthMm   Float?
-  doorWidthMm      Float?
-  doorHeightMm     Float?
-  doorThicknessMm  Float?
-  surface          String?
-  wallTreatment    WallTreatment?
-  glazing          Glazing?
-  glazingSpecification String?
-  notes            String        @default("")
-  evidence         OrderPositionEvidence[]
+  id                       String                      @id @default(cuid())
+  orderRevisionId          String
+  orderRevision            OrderRevision               @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  position                 Int
+  code                     String
+  name                     String
+  quantity                 Int
+  productType              String?
+  openingDirection         String?
+  openingWidthMm           Float?
+  openingHeightMm          Float?
+  openingDepthMm           Float?
+  doorWidthMm              Float?
+  doorHeightMm             Float?
+  doorThicknessMm          Float?
+  surface                  String?
+  wallTreatment            WallTreatment?
+  glazing                  Glazing?
+  glazingSpecification     String?
+  doorTypeKey              String?
+  finishKey                String?
+  glassKey                 String?
+  hardwareKeys             String[]                    @default([])
+  wallSolutionKey          String?
+  materialKey              String?
+  machiningKeys            String[]                    @default([])
+  technicalNotes           String                      @default("")
+  notes                    String                      @default("")
+  evidence                 OrderPositionEvidence[]
+  documentLinks            OrderDocumentPositionLink[]
   relatedManufacturedItems ManufacturedItem[]
 
   @@unique([orderRevisionId, position])
@@ -422,40 +524,98 @@ model OrderPosition {
 /// Field-level provenance for one position. Evidence explains a value but
 /// never mutates the position automatically.
 model OrderPositionEvidence {
-  id               String                     @id @default(cuid())
-  orderPositionId  String
-  orderPosition    OrderPosition              @relation(fields: [orderPositionId], references: [id], onDelete: Cascade)
-  orderDocumentId  String?
-  orderDocument    OrderDocument?             @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
-  sourceRoot       String
-  relativePath     String
-  sheet            String?
-  page             Int?
-  row              Int?
-  field            OrderPositionEvidenceField
-  rawValue         String
-  normalizedValue  Json
-  confidence       Float?
-  reviewState      EvidenceReviewState        @default(UNVERIFIED)
-  resolution       String?
-  createdByRole    String
-  createdAt        DateTime                   @default(now())
-  updatedAt        DateTime                   @updatedAt
+  id                  String                     @id @default(cuid())
+  orderPositionId     String
+  orderPosition       OrderPosition              @relation(fields: [orderPositionId], references: [id], onDelete: Cascade)
+  orderDocumentId     String?
+  orderDocument       OrderDocument?             @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
+  sourceRoot          String
+  relativePath        String
+  sheet               String?
+  page                Int?
+  row                 Int?
+  field               OrderPositionEvidenceField
+  rawValue            String
+  normalizedValue     Json
+  confidence          Float?
+  reviewState         EvidenceReviewState        @default(UNVERIFIED)
+  resolution          String?
+  createdByRole       String
+  /// Declared request principal captured by the final review command. This is
+  /// audit data; authentication of the principal remains a separate boundary.
+  reviewedByPrincipal String?
+  reviewedByRole      String?
+  reviewedAt          DateTime?
+  createdAt           DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
 
   @@index([orderPositionId, field, reviewState])
+  @@index([orderDocumentId])
+}
+
+/// Sales extras are neither door positions nor standalone manufactured items.
+/// Manual entries and source-reviewed import entries share this one lane.
+model OrderSupplementaryItem {
+  id                 String                           @id @default(cuid())
+  orderRevisionId    String
+  orderRevision      OrderRevision                    @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  entryMode          SupplementaryItemEntryMode
+  state              SupplementaryItemState           @default(REVIEW)
+  category           String
+  code               String?
+  name               String
+  quantity           Float?
+  unit               String?
+  calculatedQuantity Float?
+  calculatedUnit     String?
+  notes              String                           @default("")
+  manualReason       String?
+  createdByRole      String
+  reviewedByRole     String?
+  reviewedAt         DateTime?
+  reviewResolution   String?
+  evidence           OrderSupplementaryItemEvidence[]
+  createdAt          DateTime                         @default(now())
+  updatedAt          DateTime                         @updatedAt
+
+  @@index([orderRevisionId, state])
+}
+
+model OrderSupplementaryItemEvidence {
+  id                  String                 @id @default(cuid())
+  supplementaryItemId String
+  supplementaryItem   OrderSupplementaryItem @relation(fields: [supplementaryItemId], references: [id], onDelete: Cascade)
+  orderDocumentId     String?
+  orderDocument       OrderDocument?         @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
+  sourceRoot          String
+  relativePath        String
+  page                Int?
+  row                 Int?
+  field               String
+  rawValue            String
+  normalizedValue     Json
+  confidence          Float?
+  reviewState         EvidenceReviewState    @default(UNVERIFIED)
+  resolution          String?
+  createdByRole       String
+  reviewedByRole      String?
+  reviewedAt          DateTime?
+  createdAt           DateTime               @default(now())
+
+  @@index([supplementaryItemId, field, reviewState])
   @@index([orderDocumentId])
 }
 
 /// A standalone wall panel or furniture front. It belongs to the approved
 /// order snapshot without borrowing door-only semantics.
 model ManufacturedItem {
-  id                     String                       @id @default(cuid())
+  id                     String                     @id @default(cuid())
   orderRevisionId        String
-  orderRevision          OrderRevision                @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  orderRevision          OrderRevision              @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
   relatedOrderPositionId String?
-  relatedOrderPosition   OrderPosition?               @relation(fields: [relatedOrderPositionId], references: [id], onDelete: SetNull)
-  importCandidateId      String?                      @unique
-  importCandidate        ImportCandidate?             @relation(fields: [importCandidateId], references: [id], onDelete: SetNull)
+  relatedOrderPosition   OrderPosition?             @relation(fields: [relatedOrderPositionId], references: [id], onDelete: SetNull)
+  importCandidateId      String?                    @unique
+  importCandidate        ImportCandidate?           @relation(fields: [importCandidateId], references: [id], onDelete: SetNull)
   kind                   ManufacturedItemKind
   code                   String
   name                   String
@@ -469,14 +629,14 @@ model ManufacturedItem {
   surface                String?
   colour                 String?
   pattern                String?
-  workKind               ManufacturedItemWorkKind     @default(STANDARD)
-  state                  ManufacturedItemState        @default(CANDIDATE)
-  notes                  String                       @default("")
+  workKind               ManufacturedItemWorkKind   @default(STANDARD)
+  state                  ManufacturedItemState      @default(CANDIDATE)
+  notes                  String                     @default("")
   resolution             String?
   reviewedByRole         String?
   reviewedAt             DateTime?
-  createdAt              DateTime                     @default(now())
-  updatedAt              DateTime                     @updatedAt
+  createdAt              DateTime                   @default(now())
+  updatedAt              DateTime                   @updatedAt
   evidence               ManufacturedItemEvidence[]
 
   @@unique([orderRevisionId, kind, code])
@@ -487,11 +647,11 @@ model ManufacturedItem {
 /// Field-level source evidence for a standalone panel or front. It explains
 /// candidate values and never creates production tasks by itself.
 model ManufacturedItemEvidence {
-  id                 String                         @id @default(cuid())
+  id                 String                        @id @default(cuid())
   manufacturedItemId String
-  manufacturedItem   ManufacturedItem               @relation(fields: [manufacturedItemId], references: [id], onDelete: Cascade)
+  manufacturedItem   ManufacturedItem              @relation(fields: [manufacturedItemId], references: [id], onDelete: Cascade)
   orderDocumentId    String?
-  orderDocument      OrderDocument?                 @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
+  orderDocument      OrderDocument?                @relation(fields: [orderDocumentId], references: [id], onDelete: SetNull)
   sourceRoot         String
   relativePath       String
   sheet              String?
@@ -501,14 +661,117 @@ model ManufacturedItemEvidence {
   rawValue           String
   normalizedValue    Json
   confidence         Float?
-  reviewState        EvidenceReviewState            @default(UNVERIFIED)
+  reviewState        EvidenceReviewState           @default(UNVERIFIED)
   resolution         String?
   createdByRole      String
-  createdAt          DateTime                       @default(now())
-  updatedAt          DateTime                       @updatedAt
+  reviewedByRole     String?
+  reviewedAt         DateTime?
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
 
   @@index([manufacturedItemId, field, reviewState])
   @@index([orderDocumentId])
+}
+
+/// Immutable output of one configured calculator adapter for one approved
+/// order revision. A profile version may produce exactly one payload.
+model ComponentSnapshot {
+  id                           String                  @id @default(cuid())
+  orderRevisionId              String
+  orderRevision                OrderRevision           @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  approvalAuditId              String
+  approvalAudit                OrderRevisionAudit      @relation(fields: [approvalAuditId], references: [id], onDelete: Restrict)
+  state                        ComponentSnapshotState  @default(REVIEW)
+  snapshotSchemaVersion        String
+  calculatorProfileVersion     String
+  calculatorProfileFingerprint String
+  technicalCatalogVersion      String
+  technicalCatalogFingerprint  String
+  sourceWorkOrderKey           String
+  sourceOrderRevision          String
+  sourceCalculatorRevision     String
+  orderContentHash             String
+  inputHash                    String
+  outputHash                   String
+  materializationKey           String                  @unique
+  reviewNote                   String
+  createdByRole                String
+  reviewResolution             String?
+  reviewedByRole               String?
+  reviewedAt                   DateTime?
+  requirements                 ComponentRequirement[]
+  operationPlanSnapshots       OperationPlanSnapshot[]
+  createdAt                    DateTime                @default(now())
+
+  @@unique([orderRevisionId, calculatorProfileVersion])
+  @@index([orderRevisionId, createdAt])
+}
+
+/// A single calculator-produced requirement with explicit source lineage.
+/// CUT_PART dimensions are adapter output; this model never derives them.
+model ComponentRequirement {
+  id                  String                         @id @default(cuid())
+  componentSnapshotId String
+  componentSnapshot   ComponentSnapshot              @relation(fields: [componentSnapshotId], references: [id], onDelete: Cascade)
+  sourceKind          ComponentRequirementSourceKind
+  sourceRecordId      String
+  requirementKind     ComponentRequirementKind
+  sourceComponentKey  String
+  componentKey        String
+  name                String
+  quantity            Float
+  quantityUnit        String
+  materialKey         String?
+  finishKey           String?
+  finishedWidthMm     Float?
+  finishedHeightMm    Float?
+  finishedThicknessMm Float?
+  cuttingWidthMm      Float?
+  cuttingHeightMm     Float?
+  cuttingThicknessMm  Float?
+  grainDirection      String?
+  lineHash            String
+  notes               String                         @default("")
+  createdAt           DateTime                       @default(now())
+
+  @@unique([componentSnapshotId, sourceComponentKey])
+  @@index([sourceKind, sourceRecordId])
+}
+
+/// Immutable, exact-revision plan candidate set. It is a reviewed planning
+/// input only: it cannot issue work packages or mutate runtime production.
+model OperationPlanSnapshot {
+  id                          String                     @id @default(cuid())
+  orderRevisionId             String
+  orderRevision               OrderRevision              @relation(fields: [orderRevisionId], references: [id], onDelete: Cascade)
+  componentSnapshotId         String
+  componentSnapshot           ComponentSnapshot          @relation(fields: [componentSnapshotId], references: [id], onDelete: Restrict)
+  state                       OperationPlanSnapshotState @default(REVIEW)
+  schemaVersion               String
+  generatorProfileVersion     String
+  generatorProfileFingerprint String
+  standardCatalogVersion      String
+  standardCatalogFingerprint  String
+  resourceMappingVersion      String
+  resourceMappingFingerprint  String
+  orderContentHash            String
+  componentOutputHash         String
+  inputHash                   String
+  outputHash                  String
+  materializationKey          String                     @unique
+  reviewNote                  String
+  createdByRole               String
+  createdByPrincipal          String
+  reviewResolution            String?
+  reviewedByRole              String?
+  reviewedByPrincipal         String?
+  reviewedAt                  DateTime?
+  operations                  Json
+  createdAt                   DateTime                   @default(now())
+
+  @@unique([componentSnapshotId, generatorProfileVersion])
+  @@index([orderRevisionId, createdAt])
+  @@index([componentSnapshotId, createdAt])
 }
 
 /// One manufactured component within a project's work-order sheet
@@ -556,33 +819,33 @@ model EpicStep {
 /// (placed on a specific week/day, dependency-ordered) or a free-standing
 /// task typed straight onto the board / kanban ("Szabad feladat").
 model Task {
-  id            String   @id @default(cuid())
-  projectId     String?
-  project       Project? @relation(fields: [projectId], references: [id])
-  epicId        String?
-  epic          Epic?    @relation(fields: [epicId], references: [id], onDelete: SetNull)
-  epicStepId    String?
-  epicStep      EpicStep? @relation(fields: [epicStepId], references: [id])
-  epicName      String?
-  title         String
-  station       String?
-  week          String
-  day           Int
-  stepIndex     Int      @default(0)
-  acknowledged  Boolean  @default(false)
-  urgent        Boolean  @default(false)
-  problem       Boolean  @default(false)
-  dueDate       String?
-  description   String   @default("")
+  id           String    @id @default(cuid())
+  projectId    String?
+  project      Project?  @relation(fields: [projectId], references: [id])
+  epicId       String?
+  epic         Epic?     @relation(fields: [epicId], references: [id], onDelete: SetNull)
+  epicStepId   String?
+  epicStep     EpicStep? @relation(fields: [epicStepId], references: [id])
+  epicName     String?
+  title        String
+  station      String?
+  week         String
+  day          Int
+  stepIndex    Int       @default(0)
+  acknowledged Boolean   @default(false)
+  urgent       Boolean   @default(false)
+  problem      Boolean   @default(false)
+  dueDate      String?
+  description  String    @default("")
   /// Task-level snapshot/override used for board-created work and capacity.
   /// Issued cards start from their EpicStep values but may be adjusted later.
-  quantity      Float?
-  unitHours     Float?
-  dependsOnId   String?  @unique
-  dependsOn     Task?    @relation("TaskDependency", fields: [dependsOnId], references: [id])
-  dependent     Task?    @relation("TaskDependency")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  quantity     Float?
+  unitHours    Float?
+  dependsOnId  String?   @unique
+  dependsOn    Task?     @relation("TaskDependency", fields: [dependsOnId], references: [id])
+  dependent    Task?     @relation("TaskDependency")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   comments TaskComment[]
   images   TaskImage[]

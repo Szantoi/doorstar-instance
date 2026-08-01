@@ -1,184 +1,121 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUiStore } from "@/store/uiStore";
-import { useCreateProject, useEpikRollup, useProjects } from "@/services/production/hooks";
-import type { EpikRollupRow } from "@/services/production/types";
+import { useCreateProject, useEpikRollup, useProductionOrders, useProjects } from "@/services/production/hooks";
+import {
+  buildProjectWorkspaceRows,
+  canManageProjectWorkspace,
+  filterProjectWorkspaceRows,
+  type ProjectWorkspaceRow,
+  type ProjectWorkspaceState,
+} from "@/lib/projectWorkspace";
 
-const SHORT_DAY_NAMES = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
+const shortDayNames = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
+const stateFilters: Array<{ value: ProjectWorkspaceState | "ALL"; label: string }> = [
+  { value: "ALL", label: "Minden" }, { value: "ATTENTION", label: "Figyelmet kér" },
+  { value: "PLANNING", label: "Tervezésre vár" }, { value: "IN_PRODUCTION", label: "Gyártás alatt" },
+  { value: "READY", label: "Kiszállítható" },
+];
 
-function ProjectEpikRows({ projectKey, onOpenEpik }: { projectKey: string; onOpenEpik: (row: EpikRollupRow) => void }) {
+function ProjectEpikSummary({ projectKey }: { projectKey: string }) {
   const { data } = useEpikRollup(projectKey);
   const rows = data?.epikRows ?? [];
-  if (rows.length === 0) return null;
+  if (!rows.length) return null;
 
-  return (
-    <div style={{ marginTop: "4px" }}>
-      {rows.map((row) => {
-        const color = row.done === row.total ? "var(--marker-green)" : "var(--marker-blue)";
-        return (
-          <div
-            key={row.name}
-            onClick={() => onOpenEpik(row)}
-            style={{ padding: "5px 2px", cursor: "pointer", borderRadius: "3px", borderBottom: "1px solid var(--line-softer)" }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-              <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "19px", color, lineHeight: 1.15 }}>{row.name}</div>
-              <div style={{ fontSize: "12px", color, fontWeight: 700, whiteSpace: "nowrap" }}>
-                {row.done} / {row.total}
-              </div>
-            </div>
-            <div style={{ fontSize: "11px", color: "var(--text-faint)", fontWeight: 600 }}>
-              {row.next
-                ? `Következő: ${row.next.title} · ${SHORT_DAY_NAMES[row.next.day] ?? ""} · ${row.next.station ?? "szabad"}`
-                : "Minden lépés kész"}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+  return <ul className="project-epic-list" aria-label="Epikek állapota">
+    {rows.slice(0, 3).map((row) => <li key={row.name}>
+      <span>{row.name}</span><b>{row.done}/{row.total}</b>
+      <small>{row.next ? `Következő: ${row.next.title} · ${shortDayNames[row.next.day] ?? ""}` : "Minden lépés kész"}</small>
+    </li>)}
+    {rows.length > 3 && <li className="project-epic-more">+ {rows.length - 3} további epik a munkalapon</li>}
+  </ul>;
 }
 
-function EpikOverviewModal({ row, onClose }: { row: EpikRollupRow; onClose: () => void }) {
+function ProjectCreateForm({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate();
-  const setWeek = useUiStore((s) => s.setWeek);
-  const pct = row.total ? Math.round((row.done / row.total) * 100) : 0;
+  const createProject = useCreateProject();
+  const [name, setName] = useState("");
+  const [num, setNum] = useState("");
+  const [error, setError] = useState("");
 
-  function openStep(week: string) {
-    setWeek(week);
-    navigate("/board");
-    onClose();
+  function createKey() {
+    const source = num.trim() || name.trim();
+    return source.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
 
-  return (
-    <div
-      onClick={onClose}
-      style={{ position: "fixed", inset: 0, background: "rgba(20,20,24,.5)", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "30px 16px", overflow: "auto", zIndex: 220 }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{ background: "#fcfcf8", border: "2px solid var(--line-strong)", boxShadow: "var(--shadow-modal)", width: "440px", maxWidth: "94vw", fontFamily: "var(--font-ui)" }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--chrome-bg)", padding: "8px 14px" }}>
-          <span style={{ color: "#fff", fontWeight: 700, fontSize: "13px", letterSpacing: "0.5px" }}>Epik áttekintés</span>
-          <button onClick={onClose} style={{ border: "none", background: "none", color: "#fff", fontSize: "20px", cursor: "pointer", lineHeight: 1 }}>
-            ×
-          </button>
-        </div>
-        <div style={{ padding: "14px 16px" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "8px" }}>
-            <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "26px" }}>{row.name}</div>
-            <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-muted)" }}>
-              {row.done} / {row.total} kész
-            </div>
-          </div>
-          <div style={{ height: "10px", background: "#eceade", border: "1px solid #c9c7ba", marginBottom: "14px" }}>
-            <div style={{ height: "100%", width: `${pct}%`, background: pct === 100 ? "var(--marker-green)" : "var(--marker-blue)" }} />
-          </div>
-          <div style={{ maxHeight: "50vh", overflow: "auto" }}>
-            {row.steps.map((step) => (
-              <div
-                key={step.id}
-                onClick={() => openStep(step.week)}
-                style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 2px", cursor: "pointer", borderBottom: "1px solid var(--line-softer)" }}
-              >
-                <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: `var(--status-${step.status})`, flex: "none" }} />
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: "13.5px", fontWeight: 600 }}>{step.title || "(névtelen)"}</div>
-                  <div style={{ fontSize: "11px", color: "var(--text-faint)" }}>
-                    {SHORT_DAY_NAMES[step.day] ?? ""} · {step.station ?? "szabad"}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+  function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!name.trim()) { setError("Adj meg projektnevet."); return; }
+    const key = createKey();
+    if (!key) { setError("A projektazonosító nem képezhető; adj meg munkaszámot."); return; }
+    setError("");
+    createProject.mutate({ key, name: name.trim(), num: num.trim() || undefined }, {
+      onSuccess: () => navigate(`/projects/${encodeURIComponent(key)}/work-session`),
+      onError: () => setError("A projekt létrehozása nem sikerült. Ellenőrizd, hogy nincs-e már ilyen munkaszám vagy projektazonosító."),
+    });
+  }
+
+  return <form className="project-create-form" onSubmit={submit}>
+    <div><label htmlFor="project-name">Projekt neve</label><input id="project-name" autoFocus value={name} onChange={(event) => setName(event.target.value)} placeholder="Például: Koroknai Richárd" /></div>
+    <div><label htmlFor="project-number">Munkaszám</label><input id="project-number" value={num} onChange={(event) => setNum(event.target.value)} placeholder="Például: 26148" /></div>
+    <p>Az üres projekt csak munkamenet-előkészítéshez való. Új ügyfélmegrendelést a Sales felületen rögzíts.</p>
+    {error && <div className="project-form-error" role="alert">{error}</div>}
+    <div className="project-create-actions"><button className="project-button project-button-secondary" type="button" onClick={onClose}>Mégse</button><button className="project-button project-button-primary" disabled={createProject.isPending} type="submit">{createProject.isPending ? "Létrehozás…" : "Üres projekt létrehozása"}</button></div>
+  </form>;
+}
+
+function ProjectCard({ row }: { row: ProjectWorkspaceRow }) {
+  const progress = Math.max(0, Math.min(100, row.progressPct));
+  return <article className="project-workspace-card">
+    <header className="project-card-header">
+      <div><span className="project-card-number">{row.num ?? row.key}</span><h2>{row.name}</h2></div>
+      <span className={`project-state project-state-${row.state.toLowerCase()}`}>{row.stateLabel}</span>
+    </header>
+    <div className="project-card-body">
+      <p className="project-state-hint">{row.stateHint}</p>
+      <div className="project-progress" aria-label={`${progress}% kész`}><span style={{ width: `${progress}%` }} /></div>
+      <div className="project-progress-data"><span>{row.totalTasks ? `${row.doneTasks} / ${row.totalTasks} lépés kész` : "Még nincs gyártási lépés"}</span><b>{row.totalTasks ? `${progress}%` : "—"}</b></div>
+      {row.order && <div className="project-order-reference"><span>Rendelés</span><Link to={`/orders/${encodeURIComponent(row.key)}`}>R{String(row.order.revision).padStart(2, "0")} · {row.order.customerName} · {row.order.positionCount} pozíció</Link></div>}
+      <ProjectEpikSummary projectKey={row.key} />
     </div>
-  );
+    <footer className="project-card-footer"><Link className="project-card-action" to={row.primaryHref}>{row.primaryLabel} <span>→</span></Link><Link className="project-card-detail" to={`/projects/${encodeURIComponent(row.key)}`}>Részletek</Link></footer>
+  </article>;
 }
 
 export function ProjectsPage() {
   const { role } = useUiStore();
-  const canManage = role === "vezeto";
-  const { data: projects = [] } = useProjects();
-  const createProject = useCreateProject();
-  const navigate = useNavigate();
+  const { data: projects = [], isLoading: projectsLoading, isError: projectsError } = useProjects();
+  const { data: orders = [], isLoading: ordersLoading, isError: ordersError } = useProductionOrders();
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<ProjectWorkspaceState | "ALL">("ALL");
   const [adding, setAdding] = useState(false);
-  const [name, setName] = useState("");
-  const [num, setNum] = useState("");
-  const [selectedEpik, setSelectedEpik] = useState<EpikRollupRow | null>(null);
+  const rows = useMemo(() => buildProjectWorkspaceRows(projects, orders), [projects, orders]);
+  const visibleRows = useMemo(() => filterProjectWorkspaceRows(rows, query, filter), [rows, query, filter]);
+  const attentionCount = rows.filter((row) => row.state === "ATTENTION").length;
+  const planningCount = rows.filter((row) => row.state === "PLANNING" || row.state === "UNSTRUCTURED").length;
+  const canManage = canManageProjectWorkspace(role);
+  const registryLoading = projectsLoading || ordersLoading;
+  const registryError = projectsError || ordersError;
 
-  function submit() {
-    if (!name.trim()) return;
-    const key = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    createProject.mutate(
-      { key, name: name.trim(), num: num.trim() || undefined },
-      { onSuccess: () => navigate(`/projects/${key}`) }
-    );
-    setAdding(false);
-    setName("");
-    setNum("");
-  }
+  return <main className="projects-page"><div className="projects-content">
+    <header className="projects-hero">
+      <div><p>Projektek</p><h1>Projektmunkatér</h1><span>A következő szükséges lépés szerint rendezett, rendeléshez és munkamenethez kapcsolt projektlista.</span></div>
+      <div className="projects-hero-actions"><Link className="project-button project-button-secondary" to="/orders/new">Új sales rendelés</Link>{canManage && <button className="project-button project-button-primary" type="button" onClick={() => setAdding((value) => !value)}>{adding ? "Bezárás" : "Üres projekt"}</button>}</div>
+    </header>
 
-  return (
-    <div style={{ flex: 1, overflow: "auto", padding: "20px 24px 30px" }}>
-      {canManage && (
-        <div style={{ marginBottom: "16px" }}>
-          {adding ? (
-            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-              <input autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Megrendelő / projekt neve" style={{ border: "1px solid var(--line-input)", padding: "5px 8px", fontSize: "13px" }} />
-              <input value={num} onChange={(e) => setNum(e.target.value)} placeholder="Munkaszám" style={{ border: "1px solid var(--line-input)", padding: "5px 8px", fontSize: "13px", width: "110px" }} />
-              <button onClick={submit} style={{ border: "none", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "13px", padding: "6px 14px", cursor: "pointer", borderRadius: "4px" }}>
-                Létrehoz
-              </button>
-              <button onClick={() => setAdding(false)} style={{ border: "1px solid var(--line-input)", background: "#fff", fontSize: "13px", padding: "6px 12px", cursor: "pointer", borderRadius: "4px" }}>
-                Mégse
-              </button>
-            </div>
-          ) : (
-            <button onClick={() => setAdding(true)} style={{ border: "none", background: "var(--marker-blue)", color: "#fff", fontWeight: 700, fontSize: "13.5px", padding: "7px 16px", cursor: "pointer", borderRadius: "4px", letterSpacing: ".5px" }}>
-              + Új projekt
-            </button>
-          )}
-        </div>
-      )}
+    {adding && <ProjectCreateForm onClose={() => setAdding(false)} />}
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: "16px", maxWidth: "1500px" }}>
-        {projects.map((p) => (
-          <div key={p.key} style={{ background: "var(--surface-board)", border: "2px solid var(--line-strong)", boxShadow: "var(--shadow-panel)" }}>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "2px solid var(--line-strong)", padding: "8px 14px" }}>
-              <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: "26px" }}>{p.name}</div>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-muted)" }}>
-                  {p.doneTasks}/{p.totalTasks} kész
-                </div>
-                <button
-                  onClick={() => navigate(`/projects/${p.key}`)}
-                  style={{ border: "1.5px solid var(--line-strong)", background: "#fff", fontWeight: 700, fontSize: "12.5px", padding: "3px 10px", cursor: "pointer" }}
-                >
-                  Munkalap ›
-                </button>
-              </div>
-            </div>
-            <div style={{ padding: "12px 14px" }}>
-              <div style={{ height: "10px", background: "#eceade", border: "1px solid #c9c7ba" }}>
-                <div style={{ height: "100%", width: `${p.progressPct}%`, background: "var(--marker-blue)" }} />
-              </div>
-              {p.num && <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "8px" }}>Munkaszám: {p.num}</div>}
-              <ProjectEpikRows projectKey={p.key} onOpenEpik={setSelectedEpik} />
-            </div>
-          </div>
-        ))}
-      </div>
+    {!registryLoading && !registryError && <section className="project-work-queue" aria-label="Projekt összefoglaló">
+      <div><strong>{rows.length}</strong><span>aktív projekt</span></div><div><strong>{attentionCount}</strong><span>figyelmet kér</span></div><div><strong>{planningCount}</strong><span>tervezésre vár</span></div>
+    </section>}
 
-      {projects.length === 0 && (
-        <div style={{ color: "var(--text-muted)", fontSize: "15px" }}>
-          Még nincs projekthez rendelt feladat.
-        </div>
-      )}
-
-      {selectedEpik && <EpikOverviewModal row={selectedEpik} onClose={() => setSelectedEpik(null)} />}
-    </div>
-  );
+    <section className="project-register" aria-labelledby="project-register-title">
+      <div className="project-register-head"><div><p>Projektregiszter</p><h2 id="project-register-title">Aktív munkák</h2></div><label className="project-search"><span>Keresés</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Munkaszám, projekt vagy megrendelő" /></label></div>
+      <div className="project-filter-row" aria-label="Projektállapot szűrő">{stateFilters.map((entry) => <button type="button" className={filter === entry.value ? "is-active" : ""} key={entry.value} onClick={() => setFilter(entry.value)}>{entry.label}</button>)}</div>
+      {registryLoading && <div className="projects-state">Projekt- és rendelési kapcsolatok betöltése…</div>}
+      {registryError && <div className="projects-state">A rendelési kapcsolatok nem ellenőrizhetők. A rendszer nem sorolja a projekteket tévesen rendelés nélküli munkamenethez.</div>}
+      {!registryLoading && !registryError && visibleRows.length === 0 && <div className="projects-state">Nincs a keresésnek vagy a kiválasztott állapotnak megfelelő aktív projekt.</div>}
+      {!registryLoading && !registryError && visibleRows.length > 0 && <div className="project-workspace-grid">{visibleRows.map((row) => <ProjectCard key={row.key} row={row} />)}</div>}
+    </section>
+  </div></main>;
 }

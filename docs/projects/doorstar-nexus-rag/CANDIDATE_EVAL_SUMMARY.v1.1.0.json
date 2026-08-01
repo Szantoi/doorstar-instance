@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-candidate-eval-summary.v1",
+  "evaluatedOn": "2026-08-01",
+  "targetIsland": "doorstar",
+  "targetCollection": "doorstar-knowledge",
+  "mode": "OFFLINE_PACKAGE_ONLY",
+  "package": {
+    "id": "doorstar-controlled-knowledge-rag",
+    "version": "1.1.0",
+    "packageHash": "237dcdf5be94131ae9d5be0dc9062d757896b7b11693c37198323db43db68e16",
+    "documentCount": 6,
+    "chunkCount": 104,
+    "claimChunkCount": 98,
+    "overviewChunkCount": 6,
+    "claimCount": 98,
+    "questionCount": 35
+  },
+  "transientInput": {
+    "sha256": "34e0458fdce460bb6bf6ef76a746ef44dec798e547f932514121de60d7d73483",
+    "persisted": false,
+    "rawCanonicalContentPersisted": false,
+    "chunkSetSha256": "ea6ba4e81bb4c327dc3b13023eab1121f7964bdbc6f32a8d71aa117524fa0a61",
+    "claimCitationSetSha256": "1a2b19d52d041abb92228eb8db27e0cc0db57b373c70b823016cae4df9aeff55",
+    "questionSetSha256": "231b58bf3bde9b228b5b9e1c0819e4a5ca12413bc4c823ccc62cefdc7bff24b0"
+  },
+  "contentFreeReceipt": {
+    "status": "COMPLETED",
+    "sha256": "2480d024a9dc1d6ed0d44ca95d4d0799b556499b5d7acdb2c9b54e0aab35fa56",
+    "deterministicRepeatMatch": true,
+    "persisted": false,
+    "rawQuestionTextIncluded": false,
+    "rawChunkContentIncluded": false
+  },
+  "mappingIntegrity": {
+    "mappedClaimCount": 98,
+    "citedClaimCount": 98,
+    "uniqueClaimToChunkMapping": true
+  },
+  "provenanceIntegrity": {
+    "questionCount": 35,
+    "questionMatchCount": 35,
+    "complete": true
+  },
+  "retrieval": {
+    "rankingScope": "PACKAGE_ONLY",
+    "rankingMetric": "COSINE_DOT",
+    "expectedDocumentTotal": 36,
+    "expectedClaimTotal": 61,
+    "cutoffs": [
+      {
+        "k": 5,
+        "documentMatchCount": 28,
+        "expectedDocumentHitCount": 29,
+        "documentRecall": 0.805555555556,
+        "claimMatchCount": 14,
+        "expectedClaimHitCount": 25,
+        "claimRecall": 0.409836065574,
+        "retrievalMatchCount": 14
+      },
+      {
+        "k": 10,
+        "documentMatchCount": 31,
+        "expectedDocumentHitCount": 32,
+        "documentRecall": 0.888888888889,
+        "claimMatchCount": 17,
+        "expectedClaimHitCount": 30,
+        "claimRecall": 0.491803278689,
+        "retrievalMatchCount": 17
+      },
+      {
+        "k": 20,
+        "documentMatchCount": 33,
+        "expectedDocumentHitCount": 34,
+        "documentRecall": 0.944444444444,
+        "claimMatchCount": 18,
+        "expectedClaimHitCount": 34,
+        "claimRecall": 0.55737704918,
+        "retrievalMatchCount": 18
+      }
+    ]
+  },
+  "runtime": {
+    "embeddingDimension": 384,
+    "embeddingModel": "Xenova/all-MiniLM-L6-v2",
+    "modelArtifactSetSha256": "4f429104fcaa08f366e27ab44917d046d455ead6526d6e074b9633c465ae9a14",
+    "candidateEmbeddingSetSha256": "3b8d25476ca5c57d0577f861772c06c08032907186a9c49e3a083fe98a521428",
+    "questionEmbeddingSetSha256": "b8b90b864f5bca3db93b2880a47ed717d085d034cc677c6cf5280cca0b2d1098"
+  },
+  "writeProof": {
+    "candidateFileWritten": false,
+    "receiptFileWritten": false,
+    "networkCallPerformed": false,
+    "nexusWritePerformed": false,
+    "chromaWritePerformed": false,
+    "databaseWritePerformed": false,
+    "applicationDeployPerformed": false
+  },
+  "disposition": {
+    "liveApplyAuthorized": false,
+    "newHumanApprovalRequired": true,
+    "recommendation": "HOLD_FOR_RETRIEVAL_TUNING",
+    "reason": "The exact claim lineage is complete and flat retrieval improved at strict top-10 claim matching, but top-20 strict full-claim coverage remains 18 of 35 questions. The v1.1 package must not be applied without a separate retrieval-quality decision and explicit human authorization."
+  }
+}

@@ -1,0 +1,748 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "profile": "sales-pdf-draft-preflight-v1",
+  "source": {
+    "previewArtifact": "docs/projects/doorstar-order-data-chain/IMPORT_PREVIEW_SALES_PDF_BATCH.json",
+    "previewSha256": "8204212f6b49cbd4303ddabfbfcecb4a8780348c2e784caf83895fa78368cfe5",
+    "workNumber": "26135",
+    "documentRelativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+    "documentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+    "sameContentReferenceCount": 2
+  },
+  "contractValid": true,
+  "contractIssues": [],
+  "evidenceContractValid": true,
+  "evidenceContractIssues": [],
+  "databaseApplyAllowed": false,
+  "reviewReasons": [
+    "Sales technical fields remain unverified until survey/technical review.",
+    "Sales document reference requires review.",
+    "Expected delivery is free text, not an importable ISO date.",
+    "Position 1: requires_survey_or_technical_review",
+    "Position 2: requires_survey_or_technical_review",
+    "Position 3: requires_survey_or_technical_review",
+    "Position 4: requires_survey_or_technical_review",
+    "Position 5: requires_survey_or_technical_review"
+  ],
+  "draftPayload": {
+    "projectKey": "DSMR-26135",
+    "projectName": "DSMR-26135 — Tormay Zsolt és Tormay Tímea",
+    "projectNum": "26135",
+    "customerName": "Tormay Zsolt és Tormay Tímea",
+    "contactName": "Berta Judit lakberendező",
+    "contactPhone": "+36 20 222 2654",
+    "deliveryAddress": "Gödöllő, Fűzfa u. 49.",
+    "expectedDelivery": null,
+    "notes": "Sales-PDF preflight only. Source expected-delivery text: 2026. július-augusztus",
+    "positions": [
+      {
+        "code": "1",
+        "name": "Szauna",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Bal be",
+        "openingWidthMm": 920,
+        "openingHeightMm": 2090,
+        "openingDepthMm": 125,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": "BLENDE",
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Tokoldali blendével"
+      },
+      {
+        "code": "2",
+        "name": "Fürdő",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Jobb be",
+        "openingWidthMm": 880,
+        "openingHeightMm": 2090,
+        "openingDepthMm": 290,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": "BLENDE",
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Tokoldali blendével"
+      },
+      {
+        "code": "3",
+        "name": "Mosókonyha",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Jobb be",
+        "openingWidthMm": 1000,
+        "openingHeightMm": 2090,
+        "openingDepthMm": 275,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": "BLENDE",
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Tokoldali blendével, plusz pánttal"
+      },
+      {
+        "code": "4",
+        "name": "Szoba (dühöngő)",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Jobb be",
+        "openingWidthMm": 880,
+        "openingHeightMm": 2090,
+        "openingDepthMm": 125,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": "BLENDE",
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Tokoldali blendével"
+      },
+      {
+        "code": "5",
+        "name": "Szoba",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Jobb be",
+        "openingWidthMm": 880,
+        "openingHeightMm": 2090,
+        "openingDepthMm": 125,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": "BLENDE",
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Tokoldali blendével"
+      }
+    ],
+    "documents": [
+      {
+        "source": "LEGACY_FOLDER",
+        "kind": "SALES_ORDER",
+        "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad"
+      }
+    ]
+  },
+  "positionEvidence": [
+    {
+      "positionIndex": 1,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 3,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Szauna",
+          "page": 1,
+          "rawValue": "Szauna",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Bal be",
+          "page": 1,
+          "rawValue": "Bal be",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 920,
+          "page": 1,
+          "rawValue": "92",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2090,
+          "page": 1,
+          "rawValue": "209",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 125,
+          "page": 1,
+          "rawValue": "12,5",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "WALL_TREATMENT",
+          "normalizedValue": "BLENDE",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Tokoldali blendével",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 2,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 4,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "2",
+          "page": 1,
+          "rawValue": "2",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Fürdő",
+          "page": 1,
+          "rawValue": "Fürdő",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb be",
+          "page": 1,
+          "rawValue": "Jobb be",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 880,
+          "page": 1,
+          "rawValue": "88",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2090,
+          "page": 1,
+          "rawValue": "209",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 290,
+          "page": 1,
+          "rawValue": "29",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "WALL_TREATMENT",
+          "normalizedValue": "BLENDE",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Tokoldali blendével",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 3,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 5,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "3",
+          "page": 1,
+          "rawValue": "3",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Mosókonyha",
+          "page": 1,
+          "rawValue": "Mosókonyha",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb be",
+          "page": 1,
+          "rawValue": "Jobb be",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 1000,
+          "page": 1,
+          "rawValue": "100",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2090,
+          "page": 1,
+          "rawValue": "209",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 275,
+          "page": 1,
+          "rawValue": "27,5",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "WALL_TREATMENT",
+          "normalizedValue": "BLENDE",
+          "page": 1,
+          "rawValue": "Tokoldali blendével, plusz pánttal",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Tokoldali blendével, plusz pánttal",
+          "page": 1,
+          "rawValue": "Tokoldali blendével, plusz pánttal",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 4,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 6,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "4",
+          "page": 1,
+          "rawValue": "4",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Szoba (dühöngő)",
+          "page": 1,
+          "rawValue": "Szoba (dühöngő)",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb be",
+          "page": 1,
+          "rawValue": "Jobb be",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 880,
+          "page": 1,
+          "rawValue": "88",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2090,
+          "page": 1,
+          "rawValue": "209",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 125,
+          "page": 1,
+          "rawValue": "12,5",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "WALL_TREATMENT",
+          "normalizedValue": "BLENDE",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Tokoldali blendével",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 6,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 5,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 7,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "5",
+          "page": 1,
+          "rawValue": "5",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Szoba",
+          "page": 1,
+          "rawValue": "Szoba",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb be",
+          "page": 1,
+          "rawValue": "Jobb be",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 880,
+          "page": 1,
+          "rawValue": "88",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2090,
+          "page": 1,
+          "rawValue": "209",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 125,
+          "page": 1,
+          "rawValue": "12,5",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "WALL_TREATMENT",
+          "normalizedValue": "BLENDE",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Tokoldali blendével",
+          "page": 1,
+          "rawValue": "Tokoldali blendével",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 7,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "version": "doorstar-technical-catalog/v1",
+  "doorTypes": [
+    { "key": "interior-rebated", "label": "Beltéri, falcolt" },
+    { "key": "interior-flush", "label": "Beltéri, falsíkban záródó" },
+    { "key": "tapeta-tut", "label": "Tapéta (Falsíkban záródó) TUT" }
+  ],
+  "finishes": [
+    { "key": "painted-ral", "label": "Festett RAL/NCS" },
+    { "key": "foil-supermatt", "label": "Fóliás Supermatt (általános)" },
+    { "key": "foil-renolit-magnolia-supermatt-classic", "label": "Fóliás · Renolit Magnolia Supermatt Classic" },
+    { "key": "foil-stone-grey-suedette-matt", "label": "Fóliás · Stone Grey Suedette Matt" },
+    { "key": "foil-supermatt-kashmir", "label": "Fóliás · Supermatt Kashmir" },
+    { "key": "veneer-oak", "label": "Furnér tölgy" }
+  ],
+  "glass": [
+    { "key": "none", "label": "Nem üveges", "glazing": "NONE" },
+    { "key": "clear-4mm", "label": "Átlátszó 4 mm", "glazing": "GLAZED" },
+    { "key": "frosted-4mm", "label": "Savmart 4 mm", "glazing": "GLAZED" }
+  ],
+  "hardware": [
+    { "key": "hinge-3d", "label": "3D pánt" },
+    { "key": "lock-magnetic", "label": "Mágneszár" },
+    { "key": "handle-standard", "label": "Standard kilincs" }
+  ],
+  "wallSolutions": [
+    { "key": "none", "label": "Nincs falkezelés", "wallTreatment": "NONE" },
+    { "key": "wall-panel", "label": "Falpaneles", "wallTreatment": "WALL_PANEL" },
+    { "key": "blende", "label": "Blendés", "wallTreatment": "BLENDE" }
+  ],
+  "materials": [
+    { "key": "mdf-deep", "label": "EOL Mély MDF" },
+    { "key": "mdf-standard", "label": "MDF" },
+    { "key": "solid-pine", "label": "Borovi fenyő" }
+  ],
+  "machinings": [
+    { "key": "none", "label": "Nincs külön megmunkálás" },
+    { "key": "cnc-groove", "label": "CNC horonymarás" },
+    { "key": "ventilation-grid", "label": "Szellőzőrács kivágás" }
+  ]
+}

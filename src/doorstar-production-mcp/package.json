@@ -2,12 +2,14 @@
   "name": "@doorstar/production-mcp",
   "version": "0.1.0",
   "private": true,
-  "description": "Read-only stdio MCP adapter for the Doorstar Production Service REST API.",
+  "description": "Read-only stdio MCP adapters for Doorstar production data and the scoped Nexus knowledge island.",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
+    "start:nexus": "node dist/nexusBridge.js",
+    "verify:nexus-identities": "node scripts/verifyNexusAgentAccess.mjs",
     "dev": "tsx src/index.ts",
     "test": "tsx --test tests/**/*.test.ts"
   },

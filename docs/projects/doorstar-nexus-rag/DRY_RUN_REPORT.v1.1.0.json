@@ -1,0 +1,1541 @@
+{
+  "chunks": [
+    {
+      "charCount": 473,
+      "chunkIndex": 0,
+      "chunkKey": "decfc9a0f3ab2049589c3d7674c25bdad490429505ddc7fc11dde4dcdfd898ea",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-001"
+      ],
+      "contentSha256": "e06e78a4fdae6c7df73d1c382eedaad55d4c7647accc5efd1d9618936e71acaa",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 393,
+      "chunkIndex": 1,
+      "chunkKey": "6d403c809c9f4ec23dc1645bd790dbbf824234873d2c3df337e710a6bf4e6af4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-002"
+      ],
+      "contentSha256": "c20094c83bbd2d389b4f010648322775e7da6b9cd79118bd083a8a928ec3dbeb",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 393,
+      "chunkIndex": 2,
+      "chunkKey": "624bb937654cc3fe626a76c2d7ef77d5d2483cf2d01ef022154c7a12f827aa0c",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-003"
+      ],
+      "contentSha256": "16f73abda583c774fd6394cd96001f0c541efb1ba97fa726fcf66dfbc94f9ec3",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 466,
+      "chunkIndex": 3,
+      "chunkKey": "89cf000bff228877231761b6bf478265929393fc4cebdbe419ea602d160f980a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-004"
+      ],
+      "contentSha256": "f80fc2423ec516923bc370fba0513b792829cedf68f7e1c7c002f8e574e95257",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 466,
+      "chunkIndex": 4,
+      "chunkKey": "002cedc653de1c3cdda35f6b0985b499090eef5eb93791a72a7e4017aaa5a8bf",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-005"
+      ],
+      "contentSha256": "c166975c25b59d76f3d43c43d4892fcf1d40092ba8fffbcf2ce2cac2f7ae8eea",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 427,
+      "chunkIndex": 5,
+      "chunkKey": "3e841bdb429f57d330e5b4616d65a2fb3bcffd1a92b4108a0087d2f3108ce33a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-006"
+      ],
+      "contentSha256": "33401a647c06f372c733db956d62f582c753ab638acf287769c8eedb7f0745e2",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 403,
+      "chunkIndex": 6,
+      "chunkKey": "b9b9d75750f51621489e8014733b73d00ac3e07ddd916de3f88a9f41a1ec0527",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-007"
+      ],
+      "contentSha256": "6a292ec139b1d93ba3fa1baad4c13b14d710485648944357e7fedda72a7904de",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 426,
+      "chunkIndex": 7,
+      "chunkKey": "1b492bf1655bce2274e4e4906ad5e688b642670091c69af6600d4b872416a6fb",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-008"
+      ],
+      "contentSha256": "a24d81411dacbb240095916d41aeb21268e1c82c653ed442c9815e731fff5788",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 354,
+      "chunkIndex": 8,
+      "chunkKey": "8cfe1a3983bf9ec000a7f5884407ac4404a514fa3c8cb3e5f1e20a4e3ae56710",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-009"
+      ],
+      "contentSha256": "fb9ef739e5c5cb325d1558e0cca91d2b12406b49e71bf52bc6efb01014b40b15",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 404,
+      "chunkIndex": 9,
+      "chunkKey": "83a0025e0296eaa70aa95e2b2a4562ff52e89214bc5db86cb28a236fff3f227f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-010"
+      ],
+      "contentSha256": "2e3715bd11d28cb41e29ca6151080208cb81f7ae40cff8037183bde7073ea586",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 418,
+      "chunkIndex": 10,
+      "chunkKey": "8e469cc899a499d7b1120058765877b48a8d6c45ca28abb2ed94984d20a5ff32",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-011"
+      ],
+      "contentSha256": "4ee60d27e1295724e67720b8b7f691da373e8389f1942832813483969ff3a418",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 432,
+      "chunkIndex": 11,
+      "chunkKey": "943dbd2996871ad130b9fa1df6ae590dce8dabe74e54a33ed18ed12add312499",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-012"
+      ],
+      "contentSha256": "e53b6b9c7c68515c793f8be949896e55d54b5b3d4525d9fed8e834d5546dffaf",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 441,
+      "chunkIndex": 12,
+      "chunkKey": "4aea71431dc7efeef52788e6bcb6bfac03cc9a7fdcf7a46ada36e3c4bbdc758f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-013"
+      ],
+      "contentSha256": "abdb7dac2c129a03a151c33ed4b0fa7c256b5a27265f03f4cb1c69665f3e5bd9",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 448,
+      "chunkIndex": 13,
+      "chunkKey": "c5cd274ec42ff58fc3defd65778a3b3ecc74c92f2e7f6c6ca00ce7ba6b1766c9",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-014"
+      ],
+      "contentSha256": "a825daab9b638fd7710bb1e4fe11f01a1c101b2c2f4e3954940e8f1408b3f869",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 426,
+      "chunkIndex": 14,
+      "chunkKey": "e3247e280b33206c7b27f0851931abcc082dbd9f51a6d219bd5a5b0a3c021dc4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-015"
+      ],
+      "contentSha256": "c31057a56dfb9b73a2a2db0a0efdccd75414571e38ef361f24eab4a9576b7d0a",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 452,
+      "chunkIndex": 15,
+      "chunkKey": "520b555b99a341ecb54f4766c3068d401ec6de66971e3fd0477ec58795b387c2",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-016"
+      ],
+      "contentSha256": "7f394a4b1a962f06a718633900efa3aea0c4c48ceaee5aaa2c805fc7cba16478",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 436,
+      "chunkIndex": 16,
+      "chunkKey": "084fd13eb07349bf29798af52c9d3a601e1d447cae5e2f1127bf4906f3df9637",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-017"
+      ],
+      "contentSha256": "f52e48679c9cda307d95fe48fa4668537e2816e541dd05e2f681324018566fdb",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 450,
+      "chunkIndex": 17,
+      "chunkKey": "c07cd99b2e4acba467c6aaaa55f81d213a56123d4507649402ab24e88f695ef2",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-018"
+      ],
+      "contentSha256": "64f4cab959ce3baf8e53560f28bda8e0557804cee2e2fb070a773a097c6ae2da",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 422,
+      "chunkIndex": 18,
+      "chunkKey": "2d3240c7261c5774c1a85919ab45f55702c6ccfdf78361b47535e6cdf6f0e957",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "DOC-019"
+      ],
+      "contentSha256": "3faa0d9d8054b650adea1f500341851f55d17bb59c676d19f04b9d9744f63dc2",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c0c5821f572b298ef7534a0ebf2f5791c9af5330bd4f0d5ffa33ef5f63bbe9ef"
+    },
+    {
+      "charCount": 642,
+      "chunkIndex": 0,
+      "chunkKey": "ae4ade4267520dd9f56d49e27b2b6b0611643cc52bc32964538bd40242bcf206",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "ca3cda2e14ab8c4e99fb01cdcaf4541cf75833ee9215036d75cc5cb83a157a39",
+      "documentId": "doorstar.documents-source-fields",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 396,
+      "chunkIndex": 0,
+      "chunkKey": "b15daf61f477e29b8455abf371da2cbcd8e93cc291f113e67faefbdc0363ff73",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-001"
+      ],
+      "contentSha256": "b4be87b05c6fd7cde8e710da6c67098b6a5fb35ab4e0157f812cfc99f65d64b3",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 446,
+      "chunkIndex": 1,
+      "chunkKey": "e0685b0dfd6b592d98d2ad23cce8385aa74f90cd0b0b9e86eb330ed1d999b430",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-002"
+      ],
+      "contentSha256": "f0e6cbbb9af9c62ab9354aa36e2e27395ee6c5c31e547330c8613cb6314c157a",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 450,
+      "chunkIndex": 2,
+      "chunkKey": "186fb6ee3b530e265049349a06feeca11e0eed276adaf1a2ca15ef1252a9481a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-003"
+      ],
+      "contentSha256": "00dedc7565f599a153ec6fde0626f31f79ecee91e0c6bb0b3d7a555b553d25f0",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 404,
+      "chunkIndex": 3,
+      "chunkKey": "d946fa028effe252fda842532e52063ad66500a8a1fa74faeba9f840d27f5074",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-004"
+      ],
+      "contentSha256": "025e8d34b702711f138d9b9c1a41eedcba64e04930dbbafdaaa10e8e4b5e52da",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 442,
+      "chunkIndex": 4,
+      "chunkKey": "99d2e65ee00b1e01aacc659a02ead86ee2b60bc126ff43ea1780277fe9ebac26",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-005"
+      ],
+      "contentSha256": "a2d5bb8cc2fdd9bf3c38a309b976cf8707252b2a083659e2da6a766e80ae9947",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 458,
+      "chunkIndex": 5,
+      "chunkKey": "fa03ff2e0be5d58e4e32baba5a7486c552097840842e6b9e4a5f2dd56d80da57",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-006"
+      ],
+      "contentSha256": "e2e23d84f2fa31c5e74cea745f2070e811bce944cc53d96a69d0481de9d97d2d",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 452,
+      "chunkIndex": 6,
+      "chunkKey": "cc22513c2a9faf4fee6faf6f56d5d490849c6a3e1465d0b2927d7b3d5b56fb9f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-007"
+      ],
+      "contentSha256": "84019a5afb57d6268ef17ede6133ca046033be5b4c4b2b13345a33cb45096f63",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 449,
+      "chunkIndex": 7,
+      "chunkKey": "060426d07240faa67b3cc81fcc6ffc8e84b3be6cf4392969a208570ead60e23f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-008"
+      ],
+      "contentSha256": "bc02bc3416bae8f299203342e9702e9fd9c4f9466cb59f01c1f711c327ad2712",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 595,
+      "chunkIndex": 8,
+      "chunkKey": "b6909cf17215942c3c68cd8d2847086f139c89f593c32b7ab6f85c96b58affc4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-009"
+      ],
+      "contentSha256": "169ecb6dbe7ed47f2f2476de58fd4f91966be2a7f322ed3e1d5fb4a2dcf3be0f",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 598,
+      "chunkIndex": 9,
+      "chunkKey": "e795289237bf4ea248063838abe4790bb5c2d70f53249ecf6a131a9da4b000f4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-010"
+      ],
+      "contentSha256": "808433255c871583eff2d03f7754d54f761d2c0027f4f632240e219ab388f27e",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 439,
+      "chunkIndex": 10,
+      "chunkKey": "c2f1746f29ec2ab4c7298ccf28b0a89ff8e89c806125c2c749e43afc04c6523c",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-011"
+      ],
+      "contentSha256": "662c250d13459bee31be09d70bdae4600641ad84cfb4cb83d1dc1870bf49e8da",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 488,
+      "chunkIndex": 11,
+      "chunkKey": "bc21118c8f314f807b8e88250ad48ecd4e7fa790a3f0904fef8aec7f9a3f39c7",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-012"
+      ],
+      "contentSha256": "3ff335d58b1881112a5f38251cec962083c314ecb308e72ee34839014c6de994",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 474,
+      "chunkIndex": 12,
+      "chunkKey": "9ba95a371501f2e414922e8816f0411fca4e2e91bbec927a8b3517b13854445a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-013"
+      ],
+      "contentSha256": "05bf34ea9f3f23e1f70514cfc0b361888d894ae7ca75f14427b9c180b0a2df21",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 496,
+      "chunkIndex": 13,
+      "chunkKey": "e2cde20ed2b8ec3eef327e0c0fca6f003faba5e8640fe2e8dd7de34ef9574571",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-014"
+      ],
+      "contentSha256": "43430cf21b8b5495368648d1f92a18da62539d73f889e65ed43a7e9747ad17ee",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 414,
+      "chunkIndex": 14,
+      "chunkKey": "56d0827003c48a894cf94803d56abfdac41d104f072e4c5d84f96b298c69a6b6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-015"
+      ],
+      "contentSha256": "699754da2b6252605222d3c47dd610843f84f5778a356bb245966eec967143b1",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 441,
+      "chunkIndex": 15,
+      "chunkKey": "eeb111ee28951cec87f79c4ea844712cddd2c1b47dcaefd193a2708c6a9a0fd4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-016"
+      ],
+      "contentSha256": "656be2f574993c58e666cc0ac6a4c96f259bf5a1a7b5dae43e2038771d78ff42",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 460,
+      "chunkIndex": 16,
+      "chunkKey": "e87e8a4fd2c1b95a24b24462e292cde9e52ae667a6b860bb2314db00afd55d5b",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-017"
+      ],
+      "contentSha256": "beca5abdf22f87902f349ba31334953c3a52260fad3c3189a3029ce6e6c81028",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 506,
+      "chunkIndex": 17,
+      "chunkKey": "229f00d1c07ebf3b7bec36d8a22cc373c55c9715b5931c9c8f6022818ddc6967",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-018"
+      ],
+      "contentSha256": "a54c54c63b8e0ac26d56649c90d04d9908a626a6f8beb0babb94778bbaadf438",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 467,
+      "chunkIndex": 18,
+      "chunkKey": "71f2e3e6b0b6f8993a33f2da0e57ea7dcf21025adbbe06f604aa11800cd6bb50",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "IMPORT-019"
+      ],
+      "contentSha256": "650ad617d16c885941895833a2eed4f277fa085478ce6942a1b56806eab307c8",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "ac622f2053c00533f60dd879b44f8ea27b5cdd5065611a924a33792556b32dfd"
+    },
+    {
+      "charCount": 705,
+      "chunkIndex": 0,
+      "chunkKey": "98241d735c5ff4fad128eab80d57aa449e12898877a19fd80434cc4c5ec57393",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "ce8836a13036a7c20f09041ba1ce7fef7d7d7ce8ddbdca07e8f1e15f3ed38c45",
+      "documentId": "doorstar.import-evidence-review",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 644,
+      "chunkIndex": 0,
+      "chunkKey": "fa02cdd955ed8656ff6031c3ee38f9c19ad640ad890b62d0aefb1354a5b497c2",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "c9277077fd1f03d1916a429346ca8bf477c5ccfd6b64af66fc5bf241344cfaa2",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 422,
+      "chunkIndex": 0,
+      "chunkKey": "f7f483facc29b8bee5313504281f24885e04a592b2b31a07f13fd64a1ebd3c3b",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-001"
+      ],
+      "contentSha256": "1e116b9d2f77512142ac16d0ca7eb0de6ab1cbe668b8de25744e93fbf62e4970",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 419,
+      "chunkIndex": 1,
+      "chunkKey": "543a8e8f6b4b27fdcdb9906ba6f93ac3c02687e44c4d035b707e26fa7e44639e",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-002"
+      ],
+      "contentSha256": "f3e98b9cb626b3aeddf867ddceb7622d5767cfebe817b93e37440d8a8c8ce692",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 388,
+      "chunkIndex": 2,
+      "chunkKey": "87526eb7436baa2d78d75837fa7a0df3e4d95a1be3d5d8a43174e088ac2aa546",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-003"
+      ],
+      "contentSha256": "20a5d401e1e8b95021d58b34832439a28b3d4b2012cdada44382d980e89a308c",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 504,
+      "chunkIndex": 3,
+      "chunkKey": "6e8c88925ee6f8a6b41b8da1a5b60f80505f6251dd1de709fcd34b8ac628bd71",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-004"
+      ],
+      "contentSha256": "5e5bc1d2e407be0b2df733c0e9d172e63cfec42623c47ee7b759442289198606",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 417,
+      "chunkIndex": 4,
+      "chunkKey": "9392f0d57022e3e0aa74b651a28e2d45b9d176637d6c62a4f972545f0a384c6f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-005"
+      ],
+      "contentSha256": "4fd6c8338fa41d3c5ea20308e7ad7a995f2bb7b6f08bb4f48c2d03be001e0ae2",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 421,
+      "chunkIndex": 5,
+      "chunkKey": "fa9d8ea2b0309fc2db5dea7a93ec9d9d842cc740660cd8d3e8961129a99f8191",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-006"
+      ],
+      "contentSha256": "61df793364f90a8d6d7a898093af376caeaec0b233905a2ef17437fda36ada88",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 354,
+      "chunkIndex": 6,
+      "chunkKey": "557c2b4cc1c222c4664eaa60d56968e854be1d7c03a3b4d3815c9f08d26a1420",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-007"
+      ],
+      "contentSha256": "82686693cef739beb2bbf8a9e6a6161eef6b41b7ebaf87086e44fd7a71b82c4a",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 455,
+      "chunkIndex": 7,
+      "chunkKey": "4db3643ff5b908ca3b445b6241cbff666bf3ff8c0b17e6c82105768c4a26ac56",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-008"
+      ],
+      "contentSha256": "78a30f8c113b9e68f50e6ff933cecf2f32265634f0fd5881e0ed196e247cdecd",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 445,
+      "chunkIndex": 8,
+      "chunkKey": "494edfc06db2f4e5c0b9cbd7c8e09a771b83add23e78b39bdac74e53db94f462",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-009"
+      ],
+      "contentSha256": "75fa380e5b7d8a5e7602bf4835e24bf6cfbfd579480b9fe99453c0c008844030",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 412,
+      "chunkIndex": 9,
+      "chunkKey": "1e3a5f340d4b6b64f55ca1507c34972ed34ec13c8a6aff8be89beb5c601d2926",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-010"
+      ],
+      "contentSha256": "d819d9428082b4027ebb556703601a52c2bd25080c3efbc23475d414bcc7e957",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 451,
+      "chunkIndex": 10,
+      "chunkKey": "894609a4ac71b06258b4151cd820a5f1c8e34ef290f9ec1c527ff1f531bec9c6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-011"
+      ],
+      "contentSha256": "fe52c52d84b3693ec988f46730d6dcd084a9ceb8aac2f371befb0d8f7364097c",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 356,
+      "chunkIndex": 11,
+      "chunkKey": "aa1f3c0c0dbdba2b3595f043f7f84ce355d70387577c9ba8e07ff1754e87f8f9",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-012"
+      ],
+      "contentSha256": "3cdb3b0c03a7ab1efb3bfe4604bf0e892e8afc3fb1ceff77b8c9a4132a5e1af4",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 463,
+      "chunkIndex": 12,
+      "chunkKey": "563d73b0c6c1af9c6fef618cccf60d75f99340379fc6fd3831a06d63c7d4b99e",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-013"
+      ],
+      "contentSha256": "dc3e6e3f2cfa35218cb83eee21e5e738acca307aab8e00357734b25fcfddf16b",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 429,
+      "chunkIndex": 13,
+      "chunkKey": "a1f68bf1b693591ae09da05a28d83ec92858e476a08f2223950a7529c737f0e6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "FLOW-014"
+      ],
+      "contentSha256": "84bd33bacb66653daaffb418fd43086190a4c144df90f5bbd982111a687f0a44",
+      "documentId": "doorstar.order-production-process",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e646c414d43c6e14077d69aee99fe4059e2c85c4daa60e102f6529b6a7d0a0d5"
+    },
+    {
+      "charCount": 457,
+      "chunkIndex": 0,
+      "chunkKey": "62f052506b4dd460ea217521a9b8ec21e0f42b6111a090ffb89ba6a694a55584",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-001"
+      ],
+      "contentSha256": "ea3b2a65407e99b6493f0d8cc81f87fca5e2d34c3a995f402e8436ca13fdde89",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 455,
+      "chunkIndex": 1,
+      "chunkKey": "6b5317da0c134fdba74c6d5c76ce411cea2c48197cecbc5213256339b196f90a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-002"
+      ],
+      "contentSha256": "56499c1d4a0d5103b67196ccd71c8560fa39d181c5fcc92725e11a8cc0bf8e89",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 502,
+      "chunkIndex": 2,
+      "chunkKey": "e70567e3139cf85299e1f678a7a9ce0b4ff11f523e3320c6aa3be4fae1d6cf25",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-003"
+      ],
+      "contentSha256": "7a08499c5cc7c4de803fb66aeb93fbca4413290dbd74ff1b92441a85ab6c5ea3",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 439,
+      "chunkIndex": 3,
+      "chunkKey": "b459082db385b910ca3d6c2dd1a18bd44f972972438621680fceae61976639be",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-004"
+      ],
+      "contentSha256": "4166babbd98a40457bd3796b0b8f8dda52dfdc528c6228481a39bb2a4397ae06",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 463,
+      "chunkIndex": 4,
+      "chunkKey": "5560e859ec1ed1b16b3e06d07b604a203d00ab3970efe7205b19527d53dc29e2",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-005"
+      ],
+      "contentSha256": "0aea40efed519f7a9960d68f8f558d187e9ea479a4712a68dabf30591242b02c",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 525,
+      "chunkIndex": 5,
+      "chunkKey": "0f1d2d9c40c85fd6672479db179c35326163e71c9b296be758ed7c497bf10622",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-006"
+      ],
+      "contentSha256": "47859caeaa14b34ea3248d02df9ac7b412ae715e339b31883875864e24908422",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 442,
+      "chunkIndex": 6,
+      "chunkKey": "92da825bd5e127a49a8dd029cddbdf51cd009c049e4d2cd421b846edb7664268",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-007"
+      ],
+      "contentSha256": "636a56b3a6863e3321facfb86bb714c80f294d80e84c55ed2a41976b4b604317",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 457,
+      "chunkIndex": 7,
+      "chunkKey": "05e5705632ff62f96c466cd5a77ed0a8875959192b3990f8303115005525f7f2",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-008"
+      ],
+      "contentSha256": "9360f023845d91917e9b9eaec5e5779a8d9e5ad3fe0aa2c0dfcb0690e492cc0c",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 594,
+      "chunkIndex": 8,
+      "chunkKey": "6814f651ad87007038e53aa52f729cc1950330471850995c6e8c6f6bf3e1ae5a",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-009"
+      ],
+      "contentSha256": "6e3e6588b4004826db2934c3f88e2eb3296d84c18685084820d4d0f889750c2a",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 428,
+      "chunkIndex": 9,
+      "chunkKey": "503e187d79f4ffbbf749cb9ea4ab2471f92cd79c2594afa8bf64d0d3a1f0d250",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-010"
+      ],
+      "contentSha256": "93dc56d644fb8cef4f82e62d431ed6b99c445cca2cb8794112254f9788c7fe78",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 447,
+      "chunkIndex": 10,
+      "chunkKey": "92de7a8a430b44102bd2bf32be46cf6db0233dbcc963b8ac7415c2431a408910",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-011"
+      ],
+      "contentSha256": "4346878d75276e639f64b1603bd8749cf3d8f6966c2392006c7fd8f0c5978ec3",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 522,
+      "chunkIndex": 11,
+      "chunkKey": "0d86c964d9a0b003498c5c9752381702fbf18142526f63223b84f0756914372c",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-012"
+      ],
+      "contentSha256": "0e059108b8c83f1428771a5c9807fd5b39d55837faa52c6f6d7fa96c6ee0782f",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 430,
+      "chunkIndex": 12,
+      "chunkKey": "0dff9be13a48e199f64a7f841b09382440010c99e7cea2c630f8c9917b667aef",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-013"
+      ],
+      "contentSha256": "d2578932d2f2bc03d60682eaf30c9011c889f1c936e2a4c95af0ff314d7dea22",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 393,
+      "chunkIndex": 13,
+      "chunkKey": "eb71fe973a70e6f845fc70cfb82c11fdfa184634a3153185440154d2f5f66e17",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-014"
+      ],
+      "contentSha256": "ccad36bc771e467da2a9e51054ef6e9c4ada47dbbcb5609a19a0fdcd1d4e489a",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 438,
+      "chunkIndex": 14,
+      "chunkKey": "f36be5491506066b56896ab9a04e17c7be5a8264f605081a5696bdca52904965",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-015"
+      ],
+      "contentSha256": "bd868c1fd64c8d8b22dd9b10df1f1d567ed1608c398f9624d4af4463d5b48d57",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 446,
+      "chunkIndex": 15,
+      "chunkKey": "a49539632d2b3baf3b1cbcc646e89ef94363862b5ba0502daf777bd3b3118c52",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "PROD-016"
+      ],
+      "contentSha256": "dcb0f8fb2a7984372878553b8278bc021c5dd14b47bc221947811f3567311611",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "492306b7f3ce93f2cee7bacc6f09aa6c22f6c184cc61d7ddfeb030ab562708bc"
+    },
+    {
+      "charCount": 710,
+      "chunkIndex": 0,
+      "chunkKey": "17d9b292c1b2c66051d151105b0b3c8da710a3b9043b4a78d6c0dfbfcfca7292",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "2105db27c8fd79daff67313d085e425db0690a0e470290cd96f3dfc712a154a7",
+      "documentId": "doorstar.production-stages-status-dates",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 658,
+      "chunkIndex": 0,
+      "chunkKey": "9afb757a9c38195072811f559c25b054d2df83c296490786ae9eff94c052fb7a",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "88b15955a14bef4209b5d46a255fa80bf5174e9b15c56e6d45c095e205c1a49e",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 427,
+      "chunkIndex": 0,
+      "chunkKey": "e830f98e99093db525f55b4ef4d3f063565cbc5b00de0341440ef1b655cf3a29",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-001"
+      ],
+      "contentSha256": "958014294837c881c98148ef3e54f293fd1d5938d5933e018b499ac16407623f",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 413,
+      "chunkIndex": 1,
+      "chunkKey": "c24e86d968c6dc68872dbf933f5ef1775f4ee4f65e14f89e9fe837c4ca6a293d",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-002"
+      ],
+      "contentSha256": "0a689a890d3f07a9553a6e1ee947279349ffc3b115d314aaf4a3ee36e609cd17",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 405,
+      "chunkIndex": 2,
+      "chunkKey": "6e256ea41f29bad4378fd681fe132f8453599bb6ddafabf11adea35ec5540cd0",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-003"
+      ],
+      "contentSha256": "de6a9ff8486535162f5eab76e67b2d8b19752086a4c81bc31298d178894ea33c",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 436,
+      "chunkIndex": 3,
+      "chunkKey": "4bd4b2db49cb0dc186b90c334d3199f0376f76a94454b79c4895f34155a59973",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-004"
+      ],
+      "contentSha256": "24def56b6964c55da34a149f5d6a558b28ed0b35b56c121bf3cbd2b86b085c91",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 361,
+      "chunkIndex": 4,
+      "chunkKey": "bcf1bd671b599dd2dc64b8607ec2db876a7c226549e35c830747c11a76aae1f6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-005"
+      ],
+      "contentSha256": "4a6a179f6339143091c8631a5af404a3b06ba402a6543dacd62f8da59d34dd2b",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 366,
+      "chunkIndex": 5,
+      "chunkKey": "0c159056ccec95478e49cc5b61da261c1527272effcf5a793053b97138497d8c",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-006"
+      ],
+      "contentSha256": "dad34aec4256a29f92c4320d175e5fedb2e28f8b5f890437bf372e6a184b3b0a",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 481,
+      "chunkIndex": 6,
+      "chunkKey": "2be451a4875723b6d88076ba635e7e3db30fd4d7f29967c03a365554fb6b6075",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-007"
+      ],
+      "contentSha256": "afac8075ce8bd21438f98e0f8df64164946f715c4a98015352cc19fc868399b7",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 398,
+      "chunkIndex": 7,
+      "chunkKey": "beaa4ea45c4fae48a58e6ffe8d76877d57e1a455112c2f456b32f672265feff4",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-008"
+      ],
+      "contentSha256": "bf417822eaf770e9cf5b1d6afb73ba893262347d3741a565928255090e4ba08c",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 395,
+      "chunkIndex": 8,
+      "chunkKey": "e156a37014018399fcfe9fde1a4d1b1cb156063d1cbe1c382dd9aaaf73537d4e",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-009"
+      ],
+      "contentSha256": "47c939db41e339a14255bfa01f04f1ab1145fd09a39ea633070c8bc614e61b56",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 347,
+      "chunkIndex": 9,
+      "chunkKey": "57c965f32c19d7c7764430c257bf87053225e878fbd94229dbdf890df0c5a910",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-010"
+      ],
+      "contentSha256": "cb754f8fefacc549cd086d9367d2189ddb49e35428fd4fe1c315e7bbadc82c5b",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 349,
+      "chunkIndex": 10,
+      "chunkKey": "def0d0d1b0636fde6c003b463961d0cdc0cd47c0526ae89e9c44496acaa3e48f",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-011"
+      ],
+      "contentSha256": "4323ab36a5b616943476d31e200dcca740f621c08d38f5484e41322f3dd494cf",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 466,
+      "chunkIndex": 11,
+      "chunkKey": "ee713e5251ad151984387583af8365432300380b58c74f3a496c1618c6991740",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-012"
+      ],
+      "contentSha256": "7f2a0bbeb23899469148366e36ce97716c00f545388f39499a9522842a14f572",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 454,
+      "chunkIndex": 12,
+      "chunkKey": "2b1d568af99294af18126385594b80c64a0cbb2d011c562684de80c8a90b6311",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "ROLE-013"
+      ],
+      "contentSha256": "897fc3248f160f82dd7547ebafb1e3c0556e08a44f1431204ba004d06ef6e6da",
+      "documentId": "doorstar.roles-authority",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "e97a2493858b319289a87fb1c1bfb1d0fa3cd7291e5930a7fbf27a999ba161a5"
+    },
+    {
+      "charCount": 681,
+      "chunkIndex": 0,
+      "chunkKey": "0f9d9724261336f5f69408f90e4e7d2d6534491adeca0ff6662d98c784287e71",
+      "chunkKind": "OVERVIEW",
+      "claimIds": [],
+      "contentSha256": "9e0ecb1f506f2120b35d67090352e904f6492524ee28cf622dc4cde293a317e6",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c145b5b4bc64032be1c411a134815b583fa23d5ad26b587812c075df2bacd7f9"
+    },
+    {
+      "charCount": 500,
+      "chunkIndex": 0,
+      "chunkKey": "a1c3c4eee81e227004524b503e3ca6bef8cb8860743e77f0e5e968903ee98063",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-001"
+      ],
+      "contentSha256": "4b37a584071ccc4a92a691506474c2b2bf0864bc30a69bde39d53f30ac055329",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 463,
+      "chunkIndex": 1,
+      "chunkKey": "6e269a6e8372da4734b0da32dd9271fab38da813e8c2ad74b839b280a740fdac",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-002"
+      ],
+      "contentSha256": "aae9cf6434a72d1371b7aca4d5cace300e7acb296d57a54b8c4d98c926cd0441",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 430,
+      "chunkIndex": 2,
+      "chunkKey": "12d472448977da6594308dd7825b1584b8218cda774da0041cc0e18a3cd86e1e",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-003"
+      ],
+      "contentSha256": "7b262fffc9d78d2b644e2116964b646a20ba96cb427c964598df93d7364125e1",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 430,
+      "chunkIndex": 3,
+      "chunkKey": "25a44671caada3e9e8f20b6ef603eeddff048223367a49d308fbf1de36b20907",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-004"
+      ],
+      "contentSha256": "3b67a287fb99288a5e6babd91fc563ea059d47f8c4f191790b865b17c6ddcc1c",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 398,
+      "chunkIndex": 4,
+      "chunkKey": "93aadc17a13007847c27a342aafbe31fe48074811b078c16b493b51e0863f9c6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-005"
+      ],
+      "contentSha256": "8e8a01dec4bbd8ab665f394b6206b3d5e1d0cf0d2d15616bc793b7b4710b5f4c",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 432,
+      "chunkIndex": 5,
+      "chunkKey": "fe4544737dc1f269e648a5cf79ee5c7ed69639b114465bb80692f576cfb86f84",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-006"
+      ],
+      "contentSha256": "766f2901ef12294f73889b8f3fb5b7bc086636afaa674d86489e41c77664a440",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 494,
+      "chunkIndex": 6,
+      "chunkKey": "d2dc5e2e3f73c08b163ac95f69f66eecc491f58600fa83de2526027f4d4f32a7",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-007"
+      ],
+      "contentSha256": "60854522129a0b5f8ea88ab12a0468c2e889fa4f662f9ceec674254259f4d0a4",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 434,
+      "chunkIndex": 7,
+      "chunkKey": "4c50f91f1b8350d9ba6f489ffd0f55eaaadfdd0d35da69f2ab73bc213b4a8361",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-008"
+      ],
+      "contentSha256": "a12357d7866ec67d167f129fef4f4d413de721a71a6ed5c571077c9308f6f045",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 442,
+      "chunkIndex": 8,
+      "chunkKey": "a13e8eb478849456ef29f0f6791e727c7de0c5d878de6a5a04a40aa598731eb6",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-009"
+      ],
+      "contentSha256": "f297c7e7ce33d203a9be2d84da54675643d645c31491d6b1a2e864f22728230b",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 432,
+      "chunkIndex": 9,
+      "chunkKey": "f49384a189fb31b586d30937926f8d6a617fae669b7b264e6ad251b1be5a61d2",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-010"
+      ],
+      "contentSha256": "34abeb19eda0bb95209fa214a90fda7029858396d750ec2c81b2aea3c0b17df3",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 463,
+      "chunkIndex": 10,
+      "chunkKey": "123c143a77471f4102c837fb2e61d269c227e3889406204a8d0a708f175c4575",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-011"
+      ],
+      "contentSha256": "e932ab9291a3419cfdf8fa1c77f3e9b1edd5855b07870039698fedc9323d51c8",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 483,
+      "chunkIndex": 11,
+      "chunkKey": "8e8801912e0a26aeb595668ce2e8222a2bda1b216fe5a169f0d3bb69dfc62512",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-012"
+      ],
+      "contentSha256": "d958600c404e31c1fabd05ce1bb4646b1cb089a0d9ddadbba278834b486227e2",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 473,
+      "chunkIndex": 12,
+      "chunkKey": "191ccafb48e929785ab33f498deb16eace6b02ba7f198e98b9762bb51020db79",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-013"
+      ],
+      "contentSha256": "d4997662be3cd24ff01b3b4eae053457dd056e7359b8c5ee32cad9f6cb1c10bb",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 417,
+      "chunkIndex": 13,
+      "chunkKey": "d331f716bbbe91a308a40ffb2cd93696abb1a9156d7d23cd97f43ee1a5ef317b",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-014"
+      ],
+      "contentSha256": "a55a0e9d5f26dd806818ad1a14132742e64acdd7bea1b0ae83ed637112053a30",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 475,
+      "chunkIndex": 14,
+      "chunkKey": "f05ecce5430734a4f9f1f26a0bb71518627c319c52c0e254083c04d62fa15d79",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-015"
+      ],
+      "contentSha256": "5e135e694e27dd27415d269d8aa94d9129e8353661a600297908b26c84cc0a32",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 488,
+      "chunkIndex": 15,
+      "chunkKey": "dc73ab536ca9591ff5b04d81c9b363dbbdcae01ffafb88fa6cebc42740ee80ed",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-016"
+      ],
+      "contentSha256": "6d76b64a967360e2a2dbc7e07bd99221d8e61f92fe584d4dd5c78f97c2894f00",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    },
+    {
+      "charCount": 411,
+      "chunkIndex": 16,
+      "chunkKey": "917d41cede719f666948ffbeb2119a2aeecbc5161a7c25c126ab6e619286214d",
+      "chunkKind": "CLAIM",
+      "claimIds": [
+        "TERM-017"
+      ],
+      "contentSha256": "6464d3b1710b298515600efcc146b666b37068ef2825de84a538a92470ed325b",
+      "documentId": "doorstar.terminology-aliases",
+      "documentVersion": "1.1.0",
+      "policyVersion": "v2",
+      "sectionKey": "c7d672a1eb6329f9220766baee0383da846b246fb6ba7bf32616b97c98144cf6"
+    }
+  ],
+  "documents": [
+    {
+      "canonicalSha256": "fc62706e7b7206a9689a0785e0db95bb0b7e2329d537afcca124c1f94097c8e5",
+      "chunkCount": 20,
+      "claimCount": 19,
+      "documentKey": "c6d1f8672f1c5699eb1d900d98c1f93ee81defd9cc39f4de748dd5defcb6c26c",
+      "id": "doorstar.documents-source-fields",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    },
+    {
+      "canonicalSha256": "86bb9be421f4cc7a1b57e8f9e2a77a61375b79c989246d31e71eeef812dff063",
+      "chunkCount": 20,
+      "claimCount": 19,
+      "documentKey": "4fdf321980e7db0a2c6c08df0db496c656d555575117373076d9d0b20fe076a3",
+      "id": "doorstar.import-evidence-review",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    },
+    {
+      "canonicalSha256": "0f5b05f25b85731ccff6ac1e9b69a8bf9959e5c07b94967c095c4868bfb27171",
+      "chunkCount": 15,
+      "claimCount": 14,
+      "documentKey": "70dae8337357ac288c308ab7fb7ac0279ba3dd55f17e236933d0e17a05f8284d",
+      "id": "doorstar.order-production-process",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    },
+    {
+      "canonicalSha256": "a2aa1412a59010787df9ce9de554f073fd6d55b5483411018a986e75d32fe48c",
+      "chunkCount": 17,
+      "claimCount": 16,
+      "documentKey": "b19dd9f16cc9b924a8993ff4c4a55d3588ae3e37f2bee89c36fec671e39fa8b7",
+      "id": "doorstar.production-stages-status-dates",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    },
+    {
+      "canonicalSha256": "e05a7cfba0bf503b0130380c2f005b5f862350df74579485f2bbe831ccba3382",
+      "chunkCount": 14,
+      "claimCount": 13,
+      "documentKey": "207b8d92d4bacb22396cbb24f15025e5ba5a84fc9802a0dd433067553594c093",
+      "id": "doorstar.roles-authority",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    },
+    {
+      "canonicalSha256": "8bc4a776bf30f7031eb48424f0cea5044438db5f78feb48e3f0d4691b9aad533",
+      "chunkCount": 18,
+      "claimCount": 17,
+      "documentKey": "e5124d1fca99ba6eb7621c3068e2c1130cd4b20b4d330a4c48b2a6d9e1ba0ab9",
+      "id": "doorstar.terminology-aliases",
+      "plannedAction": "CREATE",
+      "version": "1.1.0"
+    }
+  ],
+  "dryRunProof": {
+    "chromaWriteConfigured": false,
+    "chromaWritePerformed": false,
+    "mode": "dry-run",
+    "networkCallsPerformed": false,
+    "nexusWriteConfigured": false,
+    "nexusWritePerformed": false,
+    "optionalLocalReportWrite": true,
+    "sourceContentIncludedInReport": false,
+    "targetIsland": "doorstar"
+  },
+  "errors": [],
+  "inputPins": {
+    "evalFile": "RAG_EVAL_QUESTIONS.v1.1.json",
+    "evalSha256": "8e8366112dc67b36fd5c90b2105e83ee3ffa8937a03f065bee93507fc4ff6f91",
+    "inventoryFile": "SOURCE_INVENTORY.v1.1.json",
+    "inventorySha256": "ded623dce943bec9ebff3dbeb2fb96c1ea9d3a166e89ff87f343b267f2dd9c57",
+    "manifestFile": "doorstar-rag-manifest.v1.1.json",
+    "manifestSha256": "91969afbc5db633ec726c2558d94340f8053c32527d475a682cb837accde8444"
+  },
+  "ok": true,
+  "packageHash": "237dcdf5be94131ae9d5be0dc9062d757896b7b11693c37198323db43db68e16",
+  "packageId": "doorstar-controlled-knowledge-rag",
+  "packageVersion": "1.1.0",
+  "schemaVersion": "doorstar-nexus-rag-dry-run-report.v1",
+  "summary": {
+    "blockVersionDriftCount": 0,
+    "chunkCount": 104,
+    "claimCount": 98,
+    "createCount": 6,
+    "documentCount": 6,
+    "errorCount": 0,
+    "evalQuestionCount": 35,
+    "skipIdenticalCount": 0,
+    "warningCount": 0
+  },
+  "warnings": []
+}

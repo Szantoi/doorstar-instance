@@ -2,6 +2,7 @@ import { prisma } from "../db/client.js";
 import { monday } from "../domain/dates.js";
 import { isDone, resolveFlow } from "../domain/taskStatus.js";
 import { loadWorkflows } from "../routes/board.js";
+import { rejectLegacyProductionMutation } from "./legacyProductionGuard.js";
 
 export interface IssueSessionResult {
   createdCount: number;
@@ -35,6 +36,7 @@ export async function issueStep(projectId: string, stepId: string): Promise<Issu
   const predecessorTask = predecessor?.tasks[0];
   if (predecessor && !predecessorTask) return { outcome: "predecessor_not_issued", predecessorStepId: predecessor.id };
 
+  await rejectLegacyProductionMutation(projectId, "issue_project_step");
   const task = await prisma.task.create({
     data: {
       projectId,
@@ -91,6 +93,16 @@ export async function issueSession(projectId: string): Promise<IssueSessionResul
   if (missingPlanDates.length) {
     return { createdCount: 0, skippedExisting, missingPlanDates };
   }
+
+  const unissuedCount = epics.reduce(
+    (count, epic) => count + epic.steps.filter((step) => !step.tasks.length).length,
+    0,
+  );
+  if (unissuedCount === 0) {
+    return { createdCount: 0, skippedExisting, missingPlanDates: [] };
+  }
+
+  await rejectLegacyProductionMutation(projectId, "issue_project_session");
 
   let createdCount = 0;
   for (const epic of epics) {

@@ -342,3 +342,55 @@
 - A részletes bizonyíték a v1.1 review-ban, az élő v1 receiptekben és az import
   handoff naplóban van; nyers üzleti dokumentumot vagy retrieval-tartalmat nem
   kell a memory/state fájlokba másolni.
+
+## 2026-08-01 — Eszközmódok és egykezes irodai használat
+
+- Az office UI három stabil tartománya: telefon `<=620 px`, tablet
+  `621–1023 px`, PC `>=1024 px`. Ez nem három adatmodell: a pozíciórészlet egy
+  markupból és egy exact-revíziós authorityból készül.
+- Telefonon az alsó, ötelemű navigáció és a fix Vissza gomb az egykezes
+  használat alapja. A ritkább Import/üzemi/téma/szerep funkciók a Továbbiak
+  panelbe kerülnek. Útvonalváltás, Escape és visszalépés után a fókusz
+  determinisztikusan helyreáll, az aktív route jelölése egyértelmű.
+- Mobilon egyszerre kevés adat látszik, de kritikus, pending, invalid és
+  authority-hiányos tartalom soha nem rejthető el. Tableten kétpaneles
+  áttekintés, PC-n dokumentumszerű átadás az alap; a fizikai `SIDE_A/B` és a
+  profilszerep `FIXED/ADJUSTABLE` tengelyei minden méreten külön maradnak.
+- A rendelési pozíció szerkesztőlinkje nem puszta szerepkör-affordance:
+  latest + valid + nem-refetching + megfelelő szerep + `DRAFT` + pontos stage
+  együttesen kell. Minden más állapot DOM-szinten zárt.
+- A referencia-handoff feldolgozott: `UX-REFERENCE-RETROFIT-001` helyi fejlesztői
+  fixture. Alkatrész- és műveletsorai explicit snapshotok, ezért nem szabad
+  automatikus rendszerkalkulációként vagy RAG-authorityként kommunikálni.
+
+- Telefonos kiválasztott-detail esetén nem elég a listát elrejteni: a desktop/
+  tablet grid-template-et is egy oszlopra kell felülírni. Done-kapu, hogy a
+  detail és a használható workspace bounding widthje 320–620 px között azonos;
+  621 px-től a tablet kétpaneles mód marad.
+
+- A React DevTools dev-konzolsora információ, nem alkalmazáshiba. Valódi
+  konzolkapu a warning/error és a hibás hálózati erőforrás; a favicon explicit,
+  verziózott public asset, friss böngészőlapon 200-as helyes MIME-mal.
+
+## 2026-08-01 — 26133 lánc- és authority-döntések
+
+- A Sales-lap a rendelési szándék forrása, és a gyártás is megkaphatja, de nem
+  gyártási kiadás. Gyártólap/Szabászati/Mennyiségek/Munkamenet generált legacy
+  artifact; package preview/review után is csak immutable IssuedWorkPackage
+  adhat production authorityt.
+- A 26133 stabil pozíciókulcsa `01–06`; lábazat és accessory külön entitáság,
+  aggregatescope nem osztható szét ajtónként heuristikával.
+- A production Sales PII írás nem nyitható meg a login nélküli `X-Role` modellre.
+  DSORD-18 szükséges OIDC principal/RBAC, idempotency, serializable create,
+  stable 409 és teljes rollback szerződéssel.
+- Forráshű Sales v2-ben a hónap-pontosság, raw cm+unit+conversion lineage és a
+  külön leaf face/frame/FIXED/ADJUSTABLE/blende surface targetek az approval
+  hash részei. A backend normalizál; a kliens nem talál ki napot vagy oldalt.
+- A DEV intake használható a jelenlegi szűk, nyíltan veszteséges v1 piszkozat
+  kipróbálására. Production bundle-ben a submit handler csak `preventDefault`,
+  az űrlap disabled és az auth blocker látható.
+- A 26133 parsercandidate az exact dokumentumverziót, hasht, lokátort és rule-
+  verziót is a kulcsába veszi. Text-layer nélküli vizuális adat csak auditált
+  determinisztikus OCR/render vagy kétlépcsős emberi evidence lehet.
+- A mostani slice közvetlen PDF evidence-re épült; Nexus/RAG nem volt szükséges,
+  és nem adott gyártási vagy jóváhagyási authorityt.

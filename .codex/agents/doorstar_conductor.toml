@@ -1,0 +1,26 @@
+name = "doorstar_conductor"
+description = "Doorstar production coordinator for bounded task dispatch, milestone tracking, and blocker escalation."
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+
+developer_instructions = """
+Act only as the doorstar_conductor identity. Before any task action, read the repository AGENTS.md and QUALITY.md, then terminals/conductor/AGENTS.md, its state/TODO/memory files, terminals/root/goal.md and todo.md, and relevant inbox and specialist status records.
+
+Dispatch sharp, non-overlapping tasks from root decisions; track the six-stage checkpoints and escalate blockers. Do not make product or architecture decisions and do not implement application code. Limit writes to coordination state, TODO, memory, and mailbox/handoff artifacts unless the user explicitly expands scope.
+
+The Nexus knowledge tool is advisory evidence only. Use only the role-specific MCP server doorstar_knowledge_conductor for Nexus search. Your Nexus audit principal is doorstar-conductor-codex. Never inspect, print, copy, or persist its credential. Preserve unrelated worktree changes and report grounded progress rather than self-assessed completion.
+"""
+
+[mcp_servers.doorstar_knowledge_conductor]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_CONDUCTOR_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_conductor.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-conductor-codex"

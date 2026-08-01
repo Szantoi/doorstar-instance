@@ -78,7 +78,8 @@ normal product feature.
 | `ImportCandidate` | `importRunId`, record type, work number, source root/relative path, sheet/page/row, normalised payload JSON, errors, status (`READY`, `REVIEW`, `BLOCKED`, `APPLIED`, `SKIPPED`) | Keeps the preview's individual records queryable; a JSON file path alone is insufficient for a web queue |
 | `OrderDeadlineObservation` | optional revision, work number, source locator, kind (`CONTRACTUAL`, `PLANNED_INSTALL`, `PRODUCTION_END`, `NOTE`), raw value, normalised date, confidence, resolution | Retains all `Ütemterv` views and makes conflicting dates visible without overwriting `expectedDelivery` |
 | `OrderPositionEvidence` | revision/position, optional document, source locator, field name, raw value, normalised value, confidence, resolution | Shows whether a dimension/type came from a Sales PDF, XLSM or survey and supports field-level review |
-| `PositionFaceFinish` | position, side (`FIXED`, `MOVING`), finish type, colour/code, pattern, notes | Prevents the existing one-string `surface` field from losing separate fixed/moving-side data |
+| `PositionFaceAppearance` | position, stable physical side (`SIDE_A`, `SIDE_B`), finish type, colour/code, pattern, notes, source evidence | Prevents the existing one-string `surface` field from losing two physically distinct leaf faces without confusing them with casing roles |
+| `PositionCasingSpecification` | position, physical side, presence (`UNRESOLVED`, `NOT_APPLICABLE`, `PRESENT`), optional role (`FIXED`, `ADJUSTABLE`, `OTHER`, `UNRESOLVED`), appearance and profile reference | Keeps casing presence, physical side and profile-specific casing role on separate axes; `FIXED/ADJUSTABLE` never identifies `SIDE_A/SIDE_B` |
 | `ManufacturedItem` | revision, kind (`WALL_PANEL`, `FURNITURE_FRONT` initially), optional related door position, code/name, quantity, width/height/thickness, material, finish, work kind, state | Gives panels and fronts their own schedulable/searchable identity without misusing `OrderPosition` |
 | `ManufacturedItemEvidence` | item, optional document, source locator, field, raw/normalised value, confidence, resolution | Keeps panel/front dimensions, material and drawing/survey provenance independently reviewable |
 | `FurnitureFrontFinish` / `FurnitureFrontEdge` / `FurnitureFrontMachining` | front item, face/edge/machining side, material or operation, colour/code/pattern/geometry | Retains the detail required by cutting, machining and surface treatment |
@@ -186,6 +187,25 @@ Only the approved revision snapshot may feed the calculator/component
 generator, operation candidates and the existing planning preflight. The
 legacy `Folyamatok` or deadline workbook remains supporting evidence; it does
 not create board tasks, capacity reservations or delivery-ready state.
+
+The exact-revision calculator workspace adds a stricter boundary: an
+`ORDER_POSITION`; a verified `MANUFACTURED_ITEM` with at least one, entirely
+`RESOLVED` evidence set; or a verified `SUPPLEMENTARY_ITEM` may be referenced
+as lineage. A `SOURCE_REVIEW` supplementary item additionally requires at
+least one, entirely `RESOLVED` evidence set. None of their quantity,
+door/opening dimensions, material, finish or legacy formula result is copied
+into a component requirement. Every new component row starts with empty
+business fields. Only explicit reviewed adapter output can materialize an
+immutable `ComponentSnapshot`.
+
+Future RAG or profile-drawing proposals must retain the exact document version
+and relative path, page/sheet/row/drawing locator, raw and normalized values,
+candidate component key, calculator/BOM rule key and version, product-profile
+fingerprint, human review state and resolution. Physical `SIDE_A/SIDE_B` and
+profile-specific `FIXED/ADJUSTABLE` casing roles remain separate fields.
+Import/RAG may persist only an open evidence state with empty reviewer/time
+audit; final state, resolution, reviewer and timestamp are written solely by
+the authorized backend review endpoint.
 
 ## Delivery sequence
 

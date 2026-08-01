@@ -1,0 +1,401 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "profile": "sales-pdf-draft-preflight-v1",
+  "source": {
+    "previewArtifact": "docs/projects/doorstar-order-data-chain/IMPORT_PREVIEW_SALES_PDF_BATCH.json",
+    "previewSha256": "6618ee4e3bc75d30ce2e5757af360b40e455da260c0dcddf1fe26380365afae1",
+    "workNumber": "26107",
+    "documentRelativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+    "documentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039",
+    "sameContentReferenceCount": 2
+  },
+  "contractValid": true,
+  "contractIssues": [],
+  "evidenceContractValid": true,
+  "evidenceContractIssues": [],
+  "databaseApplyAllowed": false,
+  "reviewReasons": [
+    "Sales technical fields remain unverified until survey/technical review.",
+    "Sales document reference requires review.",
+    "Position 1: requires_survey_or_technical_review",
+    "Position 2: requires_survey_or_technical_review",
+    "Position 3: requires_survey_or_technical_review"
+  ],
+  "draftPayload": {
+    "projectKey": "DSMR-26107",
+    "projectName": "DSMR-26107 — Pintér Mónika",
+    "projectNum": "26107",
+    "customerName": "Pintér Mónika",
+    "contactName": "06 (30)998-02-52",
+    "contactPhone": null,
+    "deliveryAddress": "Balatonlelle, Köztársaság u. 36-38. R. ép. II./5.",
+    "expectedDelivery": null,
+    "notes": "Sales-PDF preflight only. Source expected-delivery text: (missing)",
+    "positions": [
+      {
+        "code": "1",
+        "name": "WC",
+        "quantity": 1,
+        "productType": "Síkban záródó",
+        "openingDirection": "Jobb ki",
+        "openingWidthMm": 750,
+        "openingHeightMm": 2080,
+        "openingDepthMm": 160,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": ""
+      },
+      {
+        "code": "2",
+        "name": "Háló",
+        "quantity": 1,
+        "productType": "Tokbanyíló",
+        "openingDirection": "Bal be",
+        "openingWidthMm": 860,
+        "openingHeightMm": 2100,
+        "openingDepthMm": 130,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": ""
+      },
+      {
+        "code": "3",
+        "name": "Fürdő",
+        "quantity": 1,
+        "productType": "Tokbanyíló",
+        "openingDirection": "Jobb be",
+        "openingWidthMm": 860,
+        "openingHeightMm": 2100,
+        "openingDepthMm": 160,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": ""
+      }
+    ],
+    "documents": [
+      {
+        "source": "LEGACY_FOLDER",
+        "kind": "SALES_ORDER",
+        "displayName": "DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "contentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039"
+      }
+    ]
+  },
+  "positionEvidence": [
+    {
+      "positionIndex": 1,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 3,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "WC",
+          "page": 1,
+          "rawValue": "WC",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb ki",
+          "page": 1,
+          "rawValue": "Jobb ki",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 750,
+          "page": 1,
+          "rawValue": "75",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2080,
+          "page": 1,
+          "rawValue": "208",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 160,
+          "page": 1,
+          "rawValue": "16",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 2,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 4,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "2",
+          "page": 1,
+          "rawValue": "2",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Háló",
+          "page": 1,
+          "rawValue": "Háló",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Tokbanyíló",
+          "page": 1,
+          "rawValue": "Tokbanyíló",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Bal be",
+          "page": 1,
+          "rawValue": "Bal be",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 860,
+          "page": 1,
+          "rawValue": "86",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2100,
+          "page": 1,
+          "rawValue": "210",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 130,
+          "page": 1,
+          "rawValue": "13",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    },
+    {
+      "positionIndex": 3,
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 5,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "3",
+          "page": 1,
+          "rawValue": "3",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Fürdő",
+          "page": 1,
+          "rawValue": "Fürdő",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Tokbanyíló",
+          "page": 1,
+          "rawValue": "Tokbanyíló",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb be",
+          "page": 1,
+          "rawValue": "Jobb be",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 860,
+          "page": 1,
+          "rawValue": "86",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2100,
+          "page": 1,
+          "rawValue": "210",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 160,
+          "page": 1,
+          "rawValue": "16",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 5,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    }
+  ]
+}

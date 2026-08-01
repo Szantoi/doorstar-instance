@@ -1,11 +1,20 @@
-import { Router } from "express";
-import { Prisma } from "@prisma/client";
+import { Router, type Response } from "express";
 import { prisma } from "../db/client.js";
-import { createManufacturedItemSchema, reviewManufacturedItemSchema } from "../domain/schemas.js";
+import {
+  createManufacturedItemSchema,
+  reviewManufacturedItemEvidenceSchema,
+  reviewManufacturedItemSchema,
+} from "../domain/schemas.js";
 import { logger } from "../logger.js";
 import { getRequester, requireRole } from "../middleware/requester.js";
 import { validateBody } from "../middleware/validate.js";
 import { findActiveProject } from "../services/projects.js";
+import {
+  createManufacturedItem,
+  ManufacturedItemReviewError,
+  reviewManufacturedItem,
+  reviewManufacturedItemEvidence,
+} from "../services/manufacturedItemReview.js";
 
 export const manufacturedItemsRouter = Router();
 
@@ -20,6 +29,15 @@ async function findRevision(projectKey: string, revisionValue: string) {
   });
 }
 
+function sendManufacturedItemError(error: unknown, res: Response) {
+  if (!(error instanceof ManufacturedItemReviewError)) {
+    logger.error({ err: error }, "manufactured item request failed");
+    res.status(500).json({ error: "internal_error" });
+    return;
+  }
+  res.status(error.status).json({ error: error.code, ...error.responseFields });
+}
+
 /** Create a review-only standalone wall panel or furniture front together
  * with at least one field-level source record. */
 manufacturedItemsRouter.post(
@@ -29,58 +47,52 @@ manufacturedItemsRouter.post(
     if (!requireRole(req, res, technicalRoles)) return;
     const revision = await findRevision(req.params.projectKey, req.params.revision);
     if (!revision) return void res.status(404).json({ error: "order_revision_not_found" });
-    if (revision.status !== "DRAFT") return void res.status(409).json({ error: "manufactured_item_requires_draft" });
-
     const body = req.body as ReturnType<typeof createManufacturedItemSchema.parse>;
-    if (body.relatedOrderPositionId) {
-      const relatedPosition = await prisma.orderPosition.findFirst({
-        where: { id: body.relatedOrderPositionId, orderRevisionId: revision.id },
-      });
-      if (!relatedPosition) return void res.status(409).json({ error: "related_position_not_from_revision" });
-    }
-    if (body.importCandidateId) {
-      if (!revision.importRunId) return void res.status(409).json({ error: "revision_has_no_import_run" });
-      const candidate = await prisma.importCandidate.findFirst({
-        where: { id: body.importCandidateId, importRunId: revision.importRunId },
-      });
-      if (!candidate) return void res.status(409).json({ error: "manufactured_item_candidate_not_from_import_run" });
-    }
-    const documentIds = [...new Set(body.evidence.flatMap((item) => item.orderDocumentId ? [item.orderDocumentId] : []))];
-    if (documentIds.length) {
-      const documentCount = await prisma.orderDocument.count({
-        where: { id: { in: documentIds }, orderRevisionId: revision.id },
-      });
-      if (documentCount !== documentIds.length) {
-        return void res.status(409).json({ error: "manufactured_item_document_not_from_revision" });
-      }
-    }
-
-    const { evidence, ...item } = body;
     const actorRole = getRequester(req).role;
-    const created = await prisma.manufacturedItem.create({
-      data: {
-        ...item,
-        orderRevisionId: revision.id,
-        notes: item.notes ?? "",
-        evidence: {
-          create: evidence.map((source) => ({
-            ...source,
-            normalizedValue: source.normalizedValue === null ? Prisma.JsonNull : source.normalizedValue,
-            createdByRole: actorRole,
-          })),
-        },
-      },
-      include: { evidence: { orderBy: { createdAt: "asc" } } },
-    });
-    logger.info({
-      projectKey: req.params.projectKey,
-      revision: revision.revision,
-      manufacturedItemId: created.id,
-      kind: created.kind,
-      code: created.code,
-      evidenceCount: created.evidence.length,
-    }, "manufactured item candidate recorded");
-    res.status(201).json(created);
+    try {
+      const created = await createManufacturedItem(revision.id, body, actorRole);
+      logger.info({
+        projectKey: req.params.projectKey,
+        revision: revision.revision,
+        manufacturedItemId: created.id,
+        kind: created.kind,
+        code: created.code,
+        evidenceCount: created.evidence.length,
+      }, "manufactured item candidate recorded");
+      res.status(201).json(created);
+    } catch (error) {
+      sendManufacturedItemError(error, res);
+    }
+  },
+);
+
+manufacturedItemsRouter.patch(
+  "/production-orders/:projectKey/revisions/:revision/manufactured-items/:itemId/evidence/:evidenceId/review",
+  validateBody(reviewManufacturedItemEvidenceSchema),
+  async (req, res) => {
+    if (!requireRole(req, res, technicalRoles)) return;
+    const revision = await findRevision(req.params.projectKey, req.params.revision);
+    if (!revision) return void res.status(404).json({ error: "order_revision_not_found" });
+    const decision = req.body as ReturnType<typeof reviewManufacturedItemEvidenceSchema.parse>;
+    try {
+      const evidence = await reviewManufacturedItemEvidence(
+        revision.id,
+        req.params.itemId,
+        req.params.evidenceId,
+        decision,
+        getRequester(req).role,
+      );
+      logger.info({
+        projectKey: req.params.projectKey,
+        revision: revision.revision,
+        manufacturedItemId: req.params.itemId,
+        evidenceId: evidence.id,
+        reviewState: evidence.reviewState,
+      }, "manufactured item evidence reviewed");
+      res.json(evidence);
+    } catch (error) {
+      sendManufacturedItemError(error, res);
+    }
   },
 );
 
@@ -93,32 +105,23 @@ manufacturedItemsRouter.patch(
     if (!requireRole(req, res, technicalRoles)) return;
     const revision = await findRevision(req.params.projectKey, req.params.revision);
     if (!revision) return void res.status(404).json({ error: "order_revision_not_found" });
-    if (revision.status !== "DRAFT") return void res.status(409).json({ error: "manufactured_item_review_requires_draft" });
-    const item = await prisma.manufacturedItem.findFirst({
-      where: { id: req.params.itemId, orderRevisionId: revision.id },
-    });
-    if (!item) return void res.status(404).json({ error: "manufactured_item_not_found" });
-    if (item.state === "VERIFIED" || item.state === "REJECTED") {
-      return void res.status(409).json({ error: "manufactured_item_review_final", state: item.state });
-    }
-
     const body = req.body as ReturnType<typeof reviewManufacturedItemSchema.parse>;
-    const updated = await prisma.manufacturedItem.update({
-      where: { id: item.id },
-      data: {
-        state: body.state,
-        resolution: body.resolution,
-        reviewedByRole: getRequester(req).role,
-        reviewedAt: new Date(),
-      },
-      include: { evidence: { orderBy: { createdAt: "asc" } } },
-    });
-    logger.info({
-      projectKey: req.params.projectKey,
-      revision: revision.revision,
-      manufacturedItemId: updated.id,
-      state: updated.state,
-    }, "manufactured item review finalized");
-    res.json(updated);
+    try {
+      const updated = await reviewManufacturedItem(
+        revision.id,
+        req.params.itemId,
+        body,
+        getRequester(req).role,
+      );
+      logger.info({
+        projectKey: req.params.projectKey,
+        revision: revision.revision,
+        manufacturedItemId: updated.id,
+        state: updated.state,
+      }, "manufactured item review finalized");
+      res.json(updated);
+    } catch (error) {
+      sendManufacturedItemError(error, res);
+    }
   },
 );

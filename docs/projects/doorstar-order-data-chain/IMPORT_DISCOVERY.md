@@ -118,8 +118,17 @@ The `.iqy` export `Fájlok_Módositás_dátuma.xlsx` contains one `query` sheet
 with `Név`, `Módosítva`, `Módosította`, `Elemtípus` and `Elérési út` columns.
 It contains 9,297 source rows: 2,974 folder rows and 468 excluded technical
 rows are not document candidates, leaving 5,855 document metadata rows. Of
-those, 3,977 are potential PDF/DWG/XLSX/XLSM import-document references and
-292 have a work-number candidate.
+those, 3,977 are potential PDF/DWG/XLSX/XLSM import-document references.
+After quarantining ambiguous and weak five-digit matches, 271 strong
+DSMR/project-folder package candidates remain. The folder simulation
+preserves the 2,974 exported nodes and derives 14 missing ancestors, for 2,988
+searchable folder nodes.
+
+The detector finds 105 single filename/path conflicts plus 4 records with
+multiple distinct number candidates. Together 109 rows need identity review,
+76 among potential import-document types. It finds 1,512 single path-only links
+in all metadata, 515 among potential import-document types. Neither class is an
+automatic project association.
 
 This establishes a reliable **last modified** time from SharePoint, independent
 of the local resynchronisation. It does not establish creation time, actual

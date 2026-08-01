@@ -1,0 +1,15 @@
+{
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "cad-reference-metadata-v1",
+  "records": [],
+  "sameContentDuplicates": [],
+  "summary": {
+    "byExtension": {},
+    "drawingCount": 0,
+    "knownDwgVersionCount": 0,
+    "sameContentDuplicateGroupCount": 0,
+    "workNumberCandidateCount": 0
+  }
+}

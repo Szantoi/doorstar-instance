@@ -23,16 +23,26 @@ from typing import Any
 
 try:
     import pdfplumber
-except ImportError as error:  # pragma: no cover - environment guard
-    raise SystemExit(
-        "pdfplumber is required. Use the bundled workspace Python supplied by "
-        "codex_app__load_workspace_dependencies; no package installation is performed."
-    ) from error
+except ImportError:  # pragma: no cover - environment guard
+    pdfplumber = None
+
+
+def require_pdfplumber() -> None:
+    if pdfplumber is None:
+        raise RuntimeError(
+            "pdfplumber is required. Use the bundled workspace Python supplied by "
+            "codex_app__load_workspace_dependencies; no package installation is performed."
+        )
 
 
 POSITION = re.compile(r"^\s*(\d{1,3})\s*[.)]\s*$")
-PHONE = re.compile(r"(?:\+36|06)[\s.-]*\d{1,2}[\s.-]*\d{3}[\s.-]*\d{3,4}")
+PHONE = re.compile(r"(?:\+36|06)[\s.-]*\(?\d{1,2}\)?[\s.-]*\d{3}[\s.-]*\d{3,4}")
 NUMBER = re.compile(r"-?\d+(?:[,.]\d+)?")
+TEXT_WORK_NUMBER = re.compile(r"\bDSMR\s*([12]\d{4})\b", re.IGNORECASE)
+TEXT_CUSTOMER = re.compile(r"(?:Név|Nev)\s*:\s*(.+?)(?=\s+DSMR\b|\s+(?:Cím|Cim)\b|\n|$)", re.IGNORECASE)
+TEXT_DELIVERY_ADDRESS = re.compile(r"(?:Szállítási cím|Szallitasi cim)\s*:\s*(.+?)(?=\s+DSMR\b|\n|$)", re.IGNORECASE)
+TEXT_EXPECTED_DELIVERY = re.compile(r"Várható szállítási idő\s*:\s*(.+?)(?=\s+Pontos méretfelvételtől|\n|$)", re.IGNORECASE)
+TEXT_ORDER_DATE = re.compile(r"Kelte\s*:\s*(\d{4}\.\d{2}\.\d{2})", re.IGNORECASE)
 LINEAR_METRES_PER_PIECE = re.compile(r"(\d+(?:[,.]\d+)?)\s*fm\s*/\s*sz[áa]l", re.IGNORECASE)
 
 
@@ -46,6 +56,20 @@ def clean(value: object) -> str:
     return " ".join(str(value or "").replace("\n", " ").split())
 
 
+def plausible_delivery_address(value: str | None) -> str | None:
+    if not value:
+        return None
+    forbidden = ("kell szamolni", "varhato szallitasi", "meretfelvetel", "ervenyessege")
+    return value if not any(token in normalise(value) for token in forbidden) else None
+
+
+def plausible_delivery_text(value: str | None) -> str | None:
+    if not value:
+        return None
+    forbidden = ("kelte", "ervenyessege", "meretfelvetel", "kell szamolni")
+    return value if not any(token in normalise(value) for token in forbidden) else None
+
+
 def source_hash(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -55,7 +79,14 @@ def source_hash(path: Path) -> str:
 
 
 def as_number(value: object) -> float | None:
-    match = NUMBER.search(clean(value))
+    cleaned = clean(value)
+    # pdfplumber can split a compact numeric cell into spaced glyphs (for
+    # example ``71`` becomes ``7 1``).  Rejoin only a cell made exclusively of
+    # single digits separated by whitespace; prose and decimal values stay
+    # unchanged.
+    if re.fullmatch(r"\d(?:\s+\d)+", cleaned):
+        cleaned = re.sub(r"\s+", "", cleaned)
+    match = NUMBER.search(cleaned)
     if not match:
         return None
     return float(match.group(0).replace(",", "."))
@@ -84,6 +115,14 @@ def label_value(tables: list[list[list[object]]], label: str) -> str | None:
     return None
 
 
+def label_value_any(tables: list[list[list[object]]], labels: list[str]) -> str | None:
+    for label in labels:
+        value = label_value(tables, label)
+        if value:
+            return value
+    return None
+
+
 def value_below(tables: list[list[list[object]]], label: str) -> str | None:
     wanted = normalise(label).rstrip(":")
     for table in tables:
@@ -93,6 +132,14 @@ def value_below(tables: list[list[list[object]]], label: str) -> str | None:
                     values = [clean(value) for value in candidate if clean(value)]
                     if values:
                         return values[-1]
+    return None
+
+
+def value_below_any(tables: list[list[list[object]]], labels: list[str]) -> str | None:
+    for label in labels:
+        value = value_below(tables, label)
+        if value:
+            return value
     return None
 
 
@@ -141,13 +188,15 @@ def evidence(field: str, raw: str, normalised: object, page: int, row: int, sour
 def candidate_from_row(page: int, row_index: int, row: list[object], source_root: str, relative_path: str) -> dict[str, Any]:
     code = POSITION.match(cell(row, 0)).group(1)  # validated by position_rows
     name = cell(row, 1)
-    width_raw, height_raw, depth_raw = cell(row, 2), cell(row, 3), cell(row, 4)
-    direction, product_type, lock = cell(row, 5), cell(row, 6), cell(row, 7)
-    keyhole_and_hinge, hinge_supplement = cell(row, 8), cell(row, 9)
-    lap_blende, tok_blende = cell(row, 10), cell(row, 11)
-    lap_colour, tok_colour = cell(row, 12), cell(row, 13)
-    lap_pattern, tok_pattern = cell(row, 14), cell(row, 15)
-    casing_type, notes, quantity_raw = cell(row, 16), cell(row, 17), cell(row, 18)
+    shifted_after_name = not cell(row, 2) and all(as_number(cell(row, index)) is not None for index in (3, 4, 5))
+    index_offset = 1 if shifted_after_name else 0
+    width_raw, height_raw, depth_raw = cell(row, 2 + index_offset), cell(row, 3 + index_offset), cell(row, 4 + index_offset)
+    direction, product_type, lock = cell(row, 5 + index_offset), cell(row, 6 + index_offset), cell(row, 7 + index_offset)
+    keyhole_and_hinge, hinge_supplement = cell(row, 8 + index_offset), cell(row, 9 + index_offset)
+    lap_blende, tok_blende = cell(row, 10 + index_offset), cell(row, 11 + index_offset)
+    lap_colour, tok_colour = cell(row, 12 + index_offset), cell(row, 13 + index_offset)
+    lap_pattern, tok_pattern = cell(row, 14 + index_offset), cell(row, 15 + index_offset)
+    casing_type, notes, quantity_raw = cell(row, 16 + index_offset), cell(row, 17 + index_offset), cell(row, 18 + index_offset)
     quantity = as_number(quantity_raw)
     if quantity is None or int(quantity) != quantity or quantity <= 0:
         errors = ["quantity_not_extracted_from_sales_pdf"]
@@ -212,6 +261,7 @@ def candidate_from_row(page: int, row_index: int, row: list[object], source_root
         "recordType": "SalesOrderPositionCandidate",
         "action": "REVIEW",
         "extractionState": "SALES_SOURCE_UNVERIFIED",
+        "parserLayout": "SHIFTED_AFTER_NAME" if shifted_after_name else "STANDARD",
         "source": {"page": page, "row": row_index, "relativePath": relative_path, "sourceRoot": source_root},
         "target": target,
         "rawManufacturingAttributes": raw_attributes,
@@ -258,27 +308,48 @@ def supplementary_candidate_from_row(page: int, row_index: int, row: list[object
         "errors": errors + ["requires_human_review", "supplementary_product_storage_not_implemented"],
     }
 def parse_pdf(input_pdf: Path, source_root: Path, source_root_label: str) -> dict[str, Any]:
+    require_pdfplumber()
+    assert pdfplumber is not None
     relative_path = input_pdf.resolve().relative_to(source_root.resolve()).as_posix()
     pages: list[dict[str, Any]] = []
     all_tables: list[list[list[object]]] = []
     candidates: list[dict[str, Any]] = []
     supplementary_candidates: list[dict[str, Any]] = []
+    page_text: list[str] = []
     with pdfplumber.open(input_pdf) as document:
         for page_number, page in enumerate(document.pages, start=1):
             tables = page.extract_tables() or []
             all_tables.extend(tables)
-            pages.append({"page": page_number, "tableCount": len(tables), "textExtracted": bool(clean(page.extract_text() or ""))})
+            extracted_text = page.extract_text() or ""
+            page_text.append(extracted_text)
+            pages.append({"page": page_number, "tableCount": len(tables), "textExtracted": bool(clean(extracted_text))})
             candidates.extend(candidate_from_row(page_number, row_index, row, source_root_label, relative_path) for row_index, row in position_rows(page_number, tables))
             supplementary_candidates.extend(supplementary_candidate_from_row(page_number, row_index, row, source_root_label, relative_path) for row_index, row in supplementary_product_rows(tables))
 
-    customer_name = label_value(all_tables, "Név")
-    phone_and_contact = label_value(all_tables, "Telefon")
-    phone_match = PHONE.search(phone_and_contact or "")
+    all_page_text = "\n".join(page_text)
+    customer_name = label_value_any(all_tables, ["Név"])
+    if not customer_name:
+        customer_match = TEXT_CUSTOMER.search(all_page_text)
+        customer_name = clean(customer_match.group(1)) if customer_match else None
+    phone_and_contact = label_value_any(all_tables, ["Telefon"])
+    phone_match = PHONE.search(phone_and_contact or "") or PHONE.search(all_page_text)
     contact_phone = phone_match.group(0) if phone_match else None
     contact_name = clean((phone_and_contact or "").replace(contact_phone or "", "")) or None
-    work_number = label_value(all_tables, "DSMR")
-    order_date = label_value(all_tables, "Kelte")
-    delivery_text = value_below(all_tables, "Várható szállítási idő")
+    work_number = label_value_any(all_tables, ["DSMR"])
+    if not work_number:
+        work_match = TEXT_WORK_NUMBER.search(all_page_text)
+        work_number = work_match.group(1) if work_match else None
+    order_date = label_value_any(all_tables, ["Kelte"])
+    if not order_date:
+        order_date_match = TEXT_ORDER_DATE.search(all_page_text)
+        order_date = order_date_match.group(1) if order_date_match else None
+    delivery_match = TEXT_EXPECTED_DELIVERY.search(all_page_text)
+    delivery_text = plausible_delivery_text(clean(delivery_match.group(1)) if delivery_match else None)
+    delivery_address = label_value_any(all_tables, ["Szállítási cím"])
+    if not delivery_address:
+        address_match = TEXT_DELIVERY_ADDRESS.search(all_page_text)
+        delivery_address = clean(address_match.group(1)) if address_match else None
+    delivery_address = plausible_delivery_address(delivery_address)
     document_record = {
         "recordType": "OrderDocument",
         "action": "CREATE_REFERENCE",
@@ -298,7 +369,7 @@ def parse_pdf(input_pdf: Path, source_root: Path, source_root_label: str) -> dic
         "salesOrder": {
             "workNumber": work_number,
             "customerName": customer_name,
-            "deliveryAddress": label_value(all_tables, "Szállítási cím"),
+            "deliveryAddress": delivery_address,
             "contactPhone": contact_phone,
             "contactName": contact_name,
             "orderDate": order_date,

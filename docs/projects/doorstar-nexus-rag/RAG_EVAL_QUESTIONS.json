@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "doorstar-rag-eval.v1",
+  "packageId": "doorstar-controlled-knowledge-rag",
+  "targetIsland": "doorstar",
+  "questions": [
+    {
+      "id": "RAG-EVAL-001",
+      "question": "Ha ugyanaz a megrendelő új munkát rendel, új projektet kell létrehozni?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-ORDER-SALES-SURVEY-WORKFLOW"],
+      "expectedClaimIds": ["FLOW-001"]
+    },
+    {
+      "id": "RAG-EVAL-002",
+      "question": "Miben különbözik a Sales dokumentumcsomag és a felmérés műszaki authority-je?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-ORDER-SALES-SURVEY-WORKFLOW"],
+      "expectedClaimIds": ["FLOW-003", "FLOW-004"]
+    },
+    {
+      "id": "RAG-EVAL-003",
+      "question": "Milyen feltétellel lehet felmérés nélkül továbbhaladni?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-ORDER-SALES-SURVEY-WORKFLOW"],
+      "expectedClaimIds": ["FLOW-005"]
+    },
+    {
+      "id": "RAG-EVAL-004",
+      "question": "Mi a rendelésrevízió életciklusa, és mikor szerkeszthető?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-ORDER-PROJECT"],
+      "expectedClaimIds": ["FLOW-006", "FLOW-007"]
+    },
+    {
+      "id": "RAG-EVAL-005",
+      "question": "Mi a Kalkulátor feladata, és miben különbözik a Folyamatok rétegtől?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-DOMAIN-PRODUCTION-DATA-CHAIN"],
+      "expectedClaimIds": ["FLOW-009", "FLOW-010"]
+    },
+    {
+      "id": "RAG-EVAL-006",
+      "question": "A Kiíró újratervezi a gyártást, vagy jóváhagyott verziókat ad ki?",
+      "expectedDocumentIds": ["doorstar.order-production-process"],
+      "expectedSourceIds": ["SRC-DOMAIN-PRODUCTION-DATA-CHAIN", "SRC-ORDER-PROJECT"],
+      "expectedClaimIds": ["FLOW-011", "FLOW-012"]
+    },
+    {
+      "id": "RAG-EVAL-007",
+      "question": "Miből áll össze egy Doorstar jogosultsági döntés?",
+      "expectedDocumentIds": ["doorstar.roles-authority"],
+      "expectedSourceIds": ["SRC-ORDER-ROLE-MATRIX"],
+      "expectedClaimIds": ["ROLE-001"]
+    },
+    {
+      "id": "RAG-EVAL-008",
+      "question": "Mit rögzíthet a Sales, és mit nem véglegesíthet?",
+      "expectedDocumentIds": ["doorstar.roles-authority"],
+      "expectedSourceIds": ["SRC-ORDER-SALES-SURVEY-WORKFLOW"],
+      "expectedClaimIds": ["ROLE-002"]
+    },
+    {
+      "id": "RAG-EVAL-009",
+      "question": "Jóváhagyhatja-e a műszaki előkészítő a saját revízióját?",
+      "expectedDocumentIds": ["doorstar.roles-authority"],
+      "expectedSourceIds": ["SRC-ORDER-ROLE-MATRIX"],
+      "expectedClaimIds": ["ROLE-003", "ROLE-004"]
+    },
+    {
+      "id": "RAG-EVAL-010",
+      "question": "Milyen adatot rögzíthet a beépítő, és mit nem írhat át?",
+      "expectedDocumentIds": ["doorstar.roles-authority"],
+      "expectedSourceIds": ["SRC-ORDER-ROLE-MATRIX"],
+      "expectedClaimIds": ["ROLE-007", "ROLE-008"]
+    },
+    {
+      "id": "RAG-EVAL-011",
+      "question": "Bizonyít-e a jelenlegi X-Role fejléc valódi hitelesítést és dokumentum-ACL-t?",
+      "expectedDocumentIds": ["doorstar.roles-authority"],
+      "expectedSourceIds": ["SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG"],
+      "expectedClaimIds": ["ROLE-013"]
+    },
+    {
+      "id": "RAG-EVAL-012",
+      "question": "Mit jelentenek a CANONICAL, DOORSTAR_LOCAL, SYSTEM_TERM, REVIEW és DEPRECATED minősítések?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-001", "TERM-002"]
+    },
+    {
+      "id": "RAG-EVAL-013",
+      "question": "Mi a Doorstar kötelező többdimenziós méretsorrendje és mértékegysége?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-003"]
+    },
+    {
+      "id": "RAG-EVAL-014",
+      "question": "Mi a különbség az FNY és a LAP méretjelölés között?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-004", "TERM-005"]
+    },
+    {
+      "id": "RAG-EVAL-015",
+      "question": "Mit jelent a Doorstarban a Gyártásmegrendelés, és mit nem bizonyít?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-006"]
+    },
+    {
+      "id": "RAG-EVAL-016",
+      "question": "A falpanel és a bútorfront kezelhető-e egyszerű ajtópozícióként?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-008"]
+    },
+    {
+      "id": "RAG-EVAL-017",
+      "question": "Azonos-e a SIDE_A vagy SIDE_B a FIXED vagy ADJUSTABLE tokborítási szereppel?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-ADR-TWO-SIDED-DOOR-APPEARANCE"],
+      "expectedClaimIds": ["TERM-010"]
+    },
+    {
+      "id": "RAG-EVAL-018",
+      "question": "Mi a legacy mozgó oldal ajánlott kanonikus felirata?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-011"]
+    },
+    {
+      "id": "RAG-EVAL-019",
+      "question": "Szétteríthető-e egy általános felület érték az ajtólapra, tokra és tokborításokra?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-012"]
+    },
+    {
+      "id": "RAG-EVAL-020",
+      "question": "Bizonyítja-e a Kiszállításra kész állapot a tényleges kiszállítást vagy beépítést?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases", "doorstar.production-stages-status-dates"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-014", "PROD-010"]
+    },
+    {
+      "id": "RAG-EVAL-021",
+      "question": "Automatikusan feloldható-e a BKM_FIX, BKM_MOVING vagy TOK méretkód?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-015"]
+    },
+    {
+      "id": "RAG-EVAL-022",
+      "question": "A blende automatikusan falpanelnek vagy tokborításnak minősíthető-e?",
+      "expectedDocumentIds": ["doorstar.terminology-aliases"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["TERM-016"]
+    },
+    {
+      "id": "RAG-EVAL-023",
+      "question": "Hol maradnak a dokumentumbinárisok, és milyen hivatkozást tárol a rendszer?",
+      "expectedDocumentIds": ["doorstar.documents-source-fields"],
+      "expectedSourceIds": ["SRC-ORDER-PROJECT", "SRC-ORDER-IMPORT-MAPPING"],
+      "expectedClaimIds": ["DOC-001", "DOC-011"]
+    },
+    {
+      "id": "RAG-EVAL-024",
+      "question": "Mely ideiglenes fájlokat kell kizárni, és futtatható-e XLSM makró?",
+      "expectedDocumentIds": ["doorstar.documents-source-fields"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-PROCESS"],
+      "expectedClaimIds": ["DOC-009", "DOC-010"]
+    },
+    {
+      "id": "RAG-EVAL-025",
+      "question": "Milyen feltételekkel használható CAD vagy DWG műszaki adat feloldására?",
+      "expectedDocumentIds": ["doorstar.documents-source-fields"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-METHODS"],
+      "expectedClaimIds": ["DOC-004", "DOC-019"]
+    },
+    {
+      "id": "RAG-EVAL-026",
+      "question": "Mire használható az Ütemterv, és mit jelent a SharePoint Módosítva érték?",
+      "expectedDocumentIds": ["doorstar.documents-source-fields"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-PROCESS", "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG"],
+      "expectedClaimIds": ["DOC-006", "DOC-007"]
+    },
+    {
+      "id": "RAG-EVAL-027",
+      "question": "Mi történik hiányzó vagy egymásnak ellentmondó Sales és felmérési adattal?",
+      "expectedDocumentIds": ["doorstar.import-evidence-review"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-PROCESS"],
+      "expectedClaimIds": ["IMPORT-003", "IMPORT-004", "IMPORT-006"]
+    },
+    {
+      "id": "RAG-EVAL-028",
+      "question": "Mikor válhat VERIFIED állapotúvá egy forrásból származó tétel?",
+      "expectedDocumentIds": ["doorstar.import-evidence-review"],
+      "expectedSourceIds": ["SRC-ADR-SUPPLEMENTARY-EVIDENCE-REVIEW-GATE"],
+      "expectedClaimIds": ["IMPORT-009", "IMPORT-010"]
+    },
+    {
+      "id": "RAG-EVAL-029",
+      "question": "Másolhat-e a RAG forráslinkből mennyiséget, méretet, anyagot, felületet vagy képletet egy komponensbe?",
+      "expectedDocumentIds": ["doorstar.import-evidence-review"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-METHODS", "SRC-ORDER-PROJECT"],
+      "expectedClaimIds": ["IMPORT-011", "IMPORT-012", "IMPORT-019"]
+    },
+    {
+      "id": "RAG-EVAL-030",
+      "question": "Milyen kapukkal és milyen adatbáziscélra alkalmazható kontrollált importjelölt?",
+      "expectedDocumentIds": ["doorstar.import-evidence-review"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-PROCESS", "SRC-ADR-CONTROLLED-MANUFACTURED-IMPORT-APPLY"],
+      "expectedClaimIds": ["IMPORT-013", "IMPORT-014", "IMPORT-015"]
+    },
+    {
+      "id": "RAG-EVAL-031",
+      "question": "Mi a Doorstar hat gyártási makroszakasza?",
+      "expectedDocumentIds": ["doorstar.production-stages-status-dates"],
+      "expectedSourceIds": ["SRC-BACKEND-PRISMA-SCHEMA", "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"],
+      "expectedClaimIds": ["PROD-001", "PROD-002", "PROD-003", "PROD-004"]
+    },
+    {
+      "id": "RAG-EVAL-032",
+      "question": "Mi a különbség a makroszakasz, a művelet, a munkaállomás és a készültségi állapot között?",
+      "expectedDocumentIds": ["doorstar.production-stages-status-dates"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD", "SRC-BACKEND-STATIONS-CONFIG"],
+      "expectedClaimIds": ["PROD-005", "PROD-007"]
+    },
+    {
+      "id": "RAG-EVAL-033",
+      "question": "Milyen külön dátumjelentéseket kell megkülönböztetni a Doorstarban?",
+      "expectedDocumentIds": ["doorstar.production-stages-status-dates"],
+      "expectedSourceIds": ["SRC-DOMAIN-DOORSTAR-TERMINOLOGY-JSON", "SRC-ORDER-IMPORT-PROCESS"],
+      "expectedClaimIds": ["PROD-012", "PROD-013"]
+    },
+    {
+      "id": "RAG-EVAL-034",
+      "question": "Lezárható-e a teljes projekt részleges kiszállításból vagy beépítésből?",
+      "expectedDocumentIds": ["doorstar.production-stages-status-dates"],
+      "expectedSourceIds": ["SRC-ORDER-IMPORT-PROCESS"],
+      "expectedClaimIds": ["PROD-014"]
+    },
+    {
+      "id": "RAG-EVAL-035",
+      "question": "Létrehozhat-e a Source Catalog projektet, és mi kell az élő SharePoint connectorhoz?",
+      "expectedDocumentIds": ["doorstar.import-evidence-review"],
+      "expectedSourceIds": ["SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG"],
+      "expectedClaimIds": ["IMPORT-016", "IMPORT-018"]
+    }
+  ]
+}

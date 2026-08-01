@@ -1,7 +1,7 @@
 version: "1.0"
 project: doorstar-order-data-chain
 created: "2026-07-29"
-updated: "2026-07-29"
+updated: "2026-07-31"
 
 config:
   auto_dispatch: false
@@ -25,7 +25,7 @@ milestones:
 
   - id: DO1-ORDER-INTAKE
     name: SharePoint-aware, versioned order intake
-    status: pending
+    status: completed
     tasks:
       - id: DSORD-01
         name: SharePoint and GraphRAG security foundation
@@ -54,12 +54,22 @@ milestones:
         name: Technical specification and catalog configuration
         terminal: frontend
         priority: high
-        status: pending
+        status: completed
         blocked_by: [DSORD-02]
         task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
         description: >
           Add typed surfaces, glass, hardware, material, machining and note
           sections with configuration-backed choices.
+        result: >
+          2026-07-30: Versioned Doorstar technical catalog configuration is
+          served by the production API and consumed by the survey UI. Door
+          type, finish, glass, hardware, wall solution, material, machining
+          and technical-note keys are persisted per revision position. Every
+          writer validates keys against the catalog and derives compatible
+          product/surface/glazing/wall fields without overwriting legacy
+          free-text drafts. Docker-backed integration tests cover the public
+          catalog, UTF-8 labels, durable selections, derived fields and bad
+          key rejection; backend suite is green (26 files, 91 tests).
       - id: DSORD-04
         name: Revision approval and audit gate
         terminal: backend
@@ -70,31 +80,82 @@ milestones:
         description: >
           Implement draft, review, approval and supersession states with a
           content hash and immutable snapshots.
+        result: >
+          2026-07-30: review and approval now lock the revision, rerun the
+          source-derived-item readiness invariant and reject any content change
+          between the two decisions. Historical v1 hashes remain verifiable;
+          new audits use contentHashSchemaVersion 2 and cryptographically bind
+          supplementary/manufactured evidence resolution, reviewer and review
+          time. Mutable source-item commands use the same revision/item locks,
+          so a stale write cannot land after review or finalization.
 
   - id: DO2-GENERATION
     name: Controlled manufacturing-data generation
-    status: pending
+    status: in_progress
     tasks:
       - id: DSORD-05
         name: Component and cutting-requirement generator
         terminal: backend
         priority: critical
-        status: pending
+        status: in_progress
         blocked_by: [DSORD-04]
         task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
         description: >
           Generate revisioned component and cutting snapshots using tested,
           versioned Doorstar calculation rules.
+        result: >
+          2026-07-30: the safe materialization boundary is implemented.
+          Approved, latest and content-hash-matching order revisions can create
+          immutable, versioned and idempotent ComponentSnapshot records from
+          explicit component requirements. Profile, catalog, approval, input,
+          output, materialization and per-line hashes preserve complete
+          lineage. New snapshots remain REVIEW-only until a reasoned human
+          VERIFIED or REJECTED decision; verification rechecks hashes and
+          source state. MANUFACTURED_ITEM and source-reviewed supplementary
+          inputs are accepted only when at least one evidence row exists and
+          every row has a complete audited RESOLVED decision; this invariant is
+          checked independently even against a forged VERIFIED parent state.
+          The aggregate gate inspects every source-derived item on the
+          revision, including a quarantined source omitted from the explicit
+          component payload, so legacy-v1 approval hashes cannot bypass it.
+          Opening a new order revision atomically supersedes the
+          previous approved revision and makes its snapshots historical.
+          The active doorstar-explicit-component-adapter/v1 deliberately runs
+          no formulas and supplies no implicit defaults. Approved, tested
+          Doorstar calculation profiles and the automatic calculator remain
+          open; no operation candidates or production tasks are generated.
       - id: DSORD-06
         name: Operation-candidate generator and planning preflight
         terminal: backend
         priority: critical
-        status: pending
+        status: in_progress
         blocked_by: [DSORD-05]
         task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
         description: >
           Convert approved component requirements into provenance-complete
           operations compatible with the existing planning preflight.
+        result: >
+          2026-07-31: the exact-revision OperationPlanSnapshot authority and
+          OpenAPI are implemented. GET returns dynamic readiness and structured
+          blockers; POST is confirmation-gated, hash-bound, serializable and
+          idempotent for an explicit current VERIFIED ComponentSnapshot; PATCH
+          finalizes REVIEW exactly once as VERIFIED or REJECTED with mandatory
+          reason, output-hash concurrency token and creator/reviewer principal
+          separation. The snapshot freezes generator-profile, standard-catalog
+          and resource-mapping fingerprints, validates multiple dependencies
+          and cycles, technological/non-technological/natural time fields,
+          exact document hashes, work instructions, required QC and resolved
+          source evidence. Component calculator profiles now publish their
+          canonical fingerprint plus the current technical-catalog version and
+          fingerprint. Build and OpenAPI coverage (83 operations) pass; the
+          DSORD-06 integration slice is green, including real PostgreSQL
+          create/review races. With the concurrent legacy production guard and
+          its updated board/authority expectations, the full backend suite is
+          green (40 files, 129 tests). A two-pass isolated migration deploy applied all
+          22 migrations and left no temporary schema. DSORD-06 remains formally
+          in progress behind DSORD-05 because approved automatic Doorstar
+          calculation/operation rules are still open. PlanningProposal and
+          IssuedWorkPackage remain excluded for DSORD-09.
       - id: DSORD-07
         name: Controlled legacy Excel import
         terminal: backend
@@ -115,19 +176,58 @@ milestones:
           field evidence; every import run has an evidence drill-down. Selected
           READY panel/front candidates can be applied idempotently to the same
           run's test DRAFT through a fingerprint-checked human gate. Bulk
-          preview registration, production import approval and broader workbook
-          profile coverage remain intentionally open.
+          preview registration is now implemented as
+          doorstar-bulk-preview-registration/v1: a reviewed manifest produces
+          one resumable, idempotent ImportRun and stable queryable candidate
+          keys in doorstar_test only. It reports every row's status/errors and
+          requires an administrator review note plus an explicit CLI
+          confirmation. Production import approval and broader workbook profile
+          coverage remain intentionally open. The review inbox now aggregates
+          run/work-number readiness states and exposes a provenance packet for
+          human verification. Rare imported extras use an evidence-required,
+          non-deletable SOURCE_REVIEW supplementary-item lane; ordinary extras
+          can be entered explicitly in MANUAL mode. Both must reach a reasoned
+          VERIFIED or REJECTED state before order review, and finalized items
+          are covered by the revision approval hash. SOURCE_REVIEW and
+          manufactured evidence now have dedicated one-way review commands
+          with actor, time and resolution audit. VERIFIED requires at least one
+          and exclusively complete RESOLVED evidence rows; legacy unaudited
+          final states are reopened to REVIEW by the test-schema migration,
+          while affected REVIEW revisions reopen to DRAFT for legal
+          remediation. Normative technical/approver and temporary
+          administrator/vezeto reviewer identities are explicit; unrelated
+          roles fail closed. Real PostgreSQL lock races cover evidence-parent,
+          parent-mutation and parent-revision-freeze serialization.
+          The technical-preparation UI now exposes each one-way evidence
+          decision with its source locator and immutable audit, and applies
+          the same complete-audit invariant to parent verification, order
+          readiness and component-source selection. Frontend verification:
+          23 unit files / 69 tests, TypeScript lint, production build and
+          diff-check pass. A dedicated ComponentWorkspacePage DOM/mutation
+          regression proves that an open evidence row removes both editor and
+          create action from the DOM and issues zero snapshot mutations. The
+          workspace pre-blocks even position-only payloads and renders
+          aggregate parent-item readiness counts.
       - id: DSORD-08
         name: Revisioned document repository and work-package links
         terminal: backend
         priority: high
-        status: pending
+        status: completed
         blocked_by: [DSORD-04]
         task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
         description: >
           Store document metadata and revisioned object-storage references for
           orders, positions and issued work packages with immutable release
           links.
+        result: >
+          2026-07-30: OrderDocument now has an immutable family/version chain;
+          a replacement is a separate record linked to its superseded version.
+          Exact document versions can be directly linked to order positions,
+          independently of field evidence. Approved revisions alone can issue
+          idempotent work-package document-reference snapshots containing the
+          document record, SharePoint version ID and SHA-256. Docker-backed
+          integration tests cover the chain, position relation, hash snapshot
+          and release guards; OpenAPI coverage is complete.
       - id: DSORD-09
         name: Planned and issued work-package lineage
         terminal: frontend
@@ -142,7 +242,7 @@ milestones:
         name: UTF-8 import hardening and test-data isolation
         terminal: backend
         priority: high
-        status: pending
+        status: completed
         blocked_by: []
         task_file: docs/projects/doorstar-order-data-chain/PROJECT.md
         description: >
@@ -154,3 +254,150 @@ milestones:
           DSMR-26148 has correct UTF-8 source-preview values but literal
           question marks in doorstar_test. Four distinct DSMR-*-TEST projects
           remain visible as Minta Kft. after the current suite.
+        result: >
+          2026-07-30: a normal Vitest run now provisions a unique
+          doorstar_test_vitest_* schema and global teardown drops it. The
+          import schema guard accepts only the review schema or this generated
+          test prefix; an accented UTF-8 JSON HTTP round-trip integration test
+          covers Séfer/Offenbächer/Gardrób values. Explicit, schema-guarded,
+          confirmation-required scripts prepare cleanup of the four historical
+          fixtures and a source-preview-based DSMR-26148 recovery. The four
+          historical fixtures were removed from doorstar_test and recovery run
+          cms76t0oc0000j0bgh13y674p recreated DSMR-26148 as a SURVEY_PENDING
+          DRAFT with correct Séfer/Offenbächer source values, two positions,
+          one document and four open feedback records. Docker/Postgres proof:
+          24 test files / 86 tests pass; after the suite zero generated Vitest
+          schemas and zero historical fixtures remain in doorstar_test.
+
+  - id: DO3-DOMAIN-CONFORMANCE
+    name: Woodworking-domain conformance and production authority
+    status: in_progress
+    tasks:
+      - id: DSORD-11
+        name: Woodworking-domain conformance audit and remediation baseline
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: []
+        task_file: docs/projects/doorstar-order-data-chain/DSORD-11-WOODWORKING-DOMAIN-AUDIT.md
+        description: >
+          Audit the implemented order, evidence, component, planning and
+          six-stage backend logic against source-backed woodworking-domain
+          requirements. Separate safe migration and preparation foundations
+          from the invariants still required for authoritative production use.
+        result: >
+          2026-07-31: a read-only code, schema, test and Doorstar MCP knowledge
+          audit established the remediation baseline. Docker/Postgres proof is
+          green with 36 Vitest files and 119 tests in an isolated per-run
+          schema. Revision, import provenance, source-derived evidence gates,
+          exact document release references and component snapshot integrity
+          are strong. Order and survey semantics are only medium-depth, while
+          runtime production authority is not yet sufficient. P0 findings are
+          the legacy schedule path bypassing approved lineage, the six-stage
+          workflow not being a server-side state machine, order-position
+          evidence missing from final audit/readiness/hash, temporary X-Role
+          identity without attributable principals, and DRAFT writers not
+          sharing one revision concurrency protocol. Detailed evidence,
+          severity and ordered acceptance criteria are in the task file; the
+          implementation backlog is mirrored in terminals/backend/TODO.md.
+      - id: DSORD-12
+        name: Two-sided door appearance summary UX refinement
+        terminal: frontend
+        priority: high
+        status: completed
+        blocked_by: [DSORD-03]
+        task_file: docs/projects/doorstar-order-data-chain/DSORD-12-TWO-SIDED-APPEARANCE-UX.md
+        description: >
+          Make the order detail's two-sided door surface-treatment summary
+          understandable at a glance while preserving the fail-closed boundary
+          between physical SIDE_A/SIDE_B and legacy FIX/ADJUSTABLE role labels.
+        result: >
+          Delivered a compact read-only A/B-side summary, visibly separate
+          unassigned legacy source candidates, collapsed technical/raw details,
+          and an accessible mobile table scroll region. Focused and full DOM
+          tests, TypeScript lint, production build, light desktop and dark 390 px
+          browser QA passed without document overflow or console errors. Nexus
+          evidence and its inability to confirm the exact role/side distinction
+          independently are retained in the task file.
+      - id: DSORD-13
+        name: Order-position evidence audit and approval hash-v3
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-04, DSORD-11]
+        task_file: docs/projects/doorstar-order-data-chain/DSORD-11-WOODWORKING-DOMAIN-AUDIT.md
+        description: >
+          Close the DSORD-11 P0 position-evidence gap with a one-way,
+          attributable review lifecycle, revision-first PostgreSQL locking,
+          order/downstream readiness gates, legacy quarantine and a new
+          backward-compatible approval hash projection.
+        result: >
+          2026-07-31: OrderPositionEvidence creation now accepts only
+          UNVERIFIED/REVIEW, while the existing PATCH is a one-way
+          RESOLVED/REJECTED command with mandatory reason, reviewer role,
+          declared principal and timestamp. Revision and evidence writers use
+          a consistent revision-first lock order; stale DRAFT writes return
+          revision_version_conflict, and an evidence-bearing position cannot
+          be cascade-deleted. Open, rejected or incomplete position evidence
+          blocks order review/approval, component materialization and document
+          release. Hash-v3 binds position evidence plus exact
+          document-position lineage, while unit tests prove v1/v2 projections
+          remain unchanged when the new nested relations are loaded. The data
+          migration quarantines unaudited legacy final rows without changing
+          APPROVED revision status or losing captured source/resolution data.
+          Real PostgreSQL review/approval races and a pre-migration truth table
+          are green. Verification: targeted 5 files/14 tests, complete backend
+          38 files/126 tests, TypeScript build, OpenAPI 3.1 JSON and 80/80 route
+          coverage all pass. No public/production migration or deployment was
+          performed.
+      - id: DSORD-15
+        name: Legacy production Task materialization fail-closed guard
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-11]
+        task_file: docs/projects/doorstar-order-data-chain/DSORD-11-WOODWORKING-DOMAIN-AUDIT.md
+        description: >
+          Close the immediate DSORD-11 P0 lineage bypass while the immutable
+          PlanningProposal and IssuedWorkPackage production-release model is
+          still absent.
+        result: >
+          2026-07-31: every legacy Task creation/materialization path now fails
+          closed with a stable enumerated 409 contract: direct Task creation,
+          free-task project/epic attachment, bulk schedule and single-step
+          issue. Existing validation, authorization, not-found, planning,
+          predecessor and already-issued no-op precedence remains compatible;
+          mixed bulk requests write no partial Tasks. A serializable authority
+          read locks order/revision/component/operation lineage, diagnoses the
+          current immutable gates and maps supersession races to an exact
+          concurrency blocker. There is intentionally no success path until a
+          real PlanningProposal, IssuedWorkPackage and exact document lineage
+          exist. Verification: targeted 3 files/16 tests, complete backend 40
+          files/129 tests, TypeScript build and OpenAPI 83/83 route coverage all
+          pass. Read-only audit found zero temporary test schemas; no migration,
+          public/production write or deployment was performed.
+      - id: DSORD-16
+        name: Fail-closed survey completion and SURVEY document lineage
+        terminal: backend
+        priority: critical
+        status: completed
+        blocked_by: [DSORD-03, DSORD-08, DSORD-11, DSORD-13]
+        task_file: docs/projects/doorstar-order-data-chain/DSORD-16-SURVEY-SOURCE-VERIFICATION.md
+        description: >
+          Prevent SURVEY_COMPLETED from being reached through Sales-derived
+          position values alone, while preserving an executable manual survey
+          workflow and exposing machine-readable blockers to the frontend.
+        result: >
+          2026-07-31: the server-authoritative gate now requires every legacy
+          survey field, finished wall depth, door/wall/glass catalog drivers,
+          at least one SURVEY document and an exact SURVEY document-version
+          link for every position. Zero field evidence remains valid for the
+          manual workflow; if evidence exists, every row needs a complete,
+          attributable RESOLVED decision. The same invariant is rechecked by
+          order-review readiness. survey_data_incomplete now returns structured
+          missing-field, missing-document, missing-position-link and evidence
+          blocker details covered by OpenAPI. Prisma and migrations did not
+          change. Verification: targeted 10 files/24 tests and complete backend
+          41 files/131 tests pass in isolated PostgreSQL schemas; TypeScript
+          build and OpenAPI 3.1 with 83/83 route coverage pass. No public or
+          production data write and no deployment occurred.

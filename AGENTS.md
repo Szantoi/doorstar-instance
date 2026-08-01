@@ -35,6 +35,28 @@
 | **monitor** | Health-monitoring, eszkaláció-figyelés |
 | **backend** | 6-STAGE workflow implementáció |
 | **frontend** | Doorstar UI testreszabás |
+| **import-discovery** | Legacy dokumentumok bizonyíték-alapú feltárása és import-preview |
+
+### Codex-agent és Nexus-identitás
+
+A hat terminálnak projekt-szintű Codex custom agentje van a
+`.codex/agents/*.toml` fájlokban. A Codex `name` és a Nexus principal külön
+auditált réteg:
+
+| Terminál | Codex agent | Nexus principal |
+|----------|-------------|-----------------|
+| root | `doorstar_root` | `doorstar-root-codex` |
+| conductor | `doorstar_conductor` | `doorstar-conductor-codex` |
+| monitor | `doorstar_monitor` | `doorstar-monitor-codex` |
+| backend | `doorstar_backend` | `doorstar-backend-codex` |
+| frontend | `doorstar_frontend` | `doorstar-frontend-codex` |
+| import-discovery | `doorstar_import_discovery` | `doorstar-import-discovery-codex` |
+
+Mind a hat Nexus principal a `doorstar` szigetre van kötve, szerveroldalon csak
+a `search_knowledge` toolt látja. A tokenek külön Windows user environment
+változóban élnek, nem a repóban. A régi közös `doorstar-codex` identitás
+vissza lett vonva. Részletek:
+`docs/decisions/ADR-2026-07-31-codex-agent-identities.md`.
 
 ---
 

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "doorstar-bulk-preview-registration/v1",
+  "profileVersion": "legacy-evidence/v1",
+  "previewArtifacts": [
+    "docs/projects/doorstar-order-data-chain/IMPORT_PREVIEW_DSMR_26148.json"
+  ]
+}

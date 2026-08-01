@@ -105,6 +105,8 @@ export const projectSheetKindSchema = z.enum(["QUANTITIES", "CUTTING", "HARDWARE
 const nullableText = z.string().trim().min(1).nullable().optional();
 const nullableMillimetres = z.number().positive().nullable().optional();
 const nullableSurface = z.string().trim().min(1).max(240).nullable().optional();
+const catalogKey = z.string().trim().regex(/^[a-z0-9][a-z0-9-]{0,79}$/).nullable().optional();
+const catalogKeys = z.array(z.string().trim().regex(/^[a-z0-9][a-z0-9-]{0,79}$/)).max(30).optional();
 
 export const orderPositionSchema = z.object({
   code: z.string().trim().min(1).max(80),
@@ -122,6 +124,14 @@ export const orderPositionSchema = z.object({
   wallTreatment: z.enum(["NONE", "WALL_PANEL", "BLENDE"]).nullable().optional(),
   glazing: z.enum(["NONE", "GLAZED"]).nullable().optional(),
   glazingSpecification: nullableSurface,
+  doorTypeKey: catalogKey,
+  finishKey: catalogKey,
+  glassKey: catalogKey,
+  hardwareKeys: catalogKeys,
+  wallSolutionKey: catalogKey,
+  materialKey: catalogKey,
+  machiningKeys: catalogKeys,
+  technicalNotes: z.string().max(10_000).optional(),
   notes: z.string().max(10_000).optional(),
 });
 
@@ -181,10 +191,122 @@ export const addOrderDocumentSchema = z.object({
   itemId: z.string().trim().min(1).max(240).optional(),
   versionId: z.string().trim().min(1).max(240).optional(),
   contentSha256: z.string().regex(/^[a-f0-9]{64}$/i).optional(),
+  supersedesDocumentId: z.string().trim().min(1).max(80).optional(),
 }).superRefine((value, ctx) => {
   if (value.source === "SHAREPOINT" && (!value.driveId || !value.itemId || !value.versionId)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["driveId"], message: "stable SharePoint identity is required" });
   }
+});
+
+export const linkOrderDocumentToPositionSchema = z.object({
+  orderPositionId: z.string().trim().min(1).max(80),
+});
+
+/** A release links exact immutable document records; future work-package
+ * ownership uses the same external key without permitting a moving "latest". */
+export const issueOrderDocumentReferencesSchema = z.object({
+  issuedWorkPackageKey: z.string().trim().min(1).max(160),
+  documentIds: z.array(z.string().trim().min(1).max(80)).min(1).max(100)
+    .refine((ids) => new Set(ids).size === ids.length, "document ids must be unique"),
+  releaseNote: z.string().trim().min(3).max(2_000),
+  confirmation: z.literal("ISSUE_DOCUMENT_VERSIONS"),
+});
+
+const supplementaryEvidenceSchema = z.object({
+  orderDocumentId: z.string().trim().min(1).max(80).optional(),
+  sourceRoot: z.string().trim().min(1).max(80),
+  relativePath: z.string().trim().min(1).max(2_000).refine((path) => !/^(?:[A-Za-z]:[\\/]|[\\/])/.test(path) && !path.split(/[\\/]/).includes(".."), "relative source path required"),
+  page: z.number().int().positive().optional(), row: z.number().int().positive().optional(),
+  field: z.string().trim().min(1).max(80), rawValue: z.string().max(10_000),
+  normalizedValue: z.union([z.string(), z.number(), z.boolean(), z.null()]),
+  confidence: z.number().min(0).max(1).optional(),
+  // Final evidence decisions belong to the dedicated review command so their
+  // actor, reason and timestamp cannot be bypassed during item creation.
+  reviewState: z.enum(["UNVERIFIED", "REVIEW"]).optional(),
+});
+
+export const createOrderSupplementaryItemSchema = z.object({
+  entryMode: z.enum(["MANUAL", "SOURCE_REVIEW"]), category: z.string().trim().min(1).max(80),
+  code: z.string().trim().min(1).max(80).optional(), name: z.string().trim().min(1).max(240),
+  quantity: z.number().positive().optional(), unit: z.string().trim().min(1).max(32).optional(),
+  calculatedQuantity: z.number().positive().optional(), calculatedUnit: z.string().trim().min(1).max(32).optional(),
+  notes: z.string().max(10_000).optional(), manualReason: z.string().trim().min(3).max(2_000).optional(),
+  evidence: z.array(supplementaryEvidenceSchema).max(100).optional(),
+}).superRefine((value, ctx) => {
+  if (value.entryMode === "MANUAL" && (!value.quantity || !value.unit || !value.manualReason)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "manual item needs quantity, unit and reason" });
+  if (value.entryMode === "SOURCE_REVIEW" && !value.evidence?.length) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["evidence"], message: "source-reviewed item needs evidence" });
+});
+
+export const updateOrderSupplementaryItemSchema = z.object({
+  category: z.string().trim().min(1).max(80).optional(),
+  code: z.string().trim().min(1).max(80).nullable().optional(),
+  name: z.string().trim().min(1).max(240).optional(),
+  quantity: z.number().positive().nullable().optional(),
+  unit: z.string().trim().min(1).max(32).nullable().optional(),
+  calculatedQuantity: z.number().positive().nullable().optional(),
+  calculatedUnit: z.string().trim().min(1).max(32).nullable().optional(),
+  notes: z.string().max(10_000).optional(),
+  manualReason: z.string().trim().min(3).max(2_000).nullable().optional(),
+}).refine((value) => Object.keys(value).length > 0, "at least one field is required");
+
+export const reviewOrderSupplementaryItemSchema = z.object({
+  state: z.enum(["VERIFIED", "REJECTED"]),
+  resolution: z.string().trim().min(3).max(2_000),
+});
+
+export const reviewOrderSupplementaryItemEvidenceSchema = z.object({
+  reviewState: z.enum(["RESOLVED", "REJECTED"]),
+  resolution: z.string().trim().min(3).max(2_000),
+});
+
+const componentDimensionSetSchema = z.object({
+  width: z.number().positive(),
+  height: z.number().positive(),
+  thickness: z.number().positive(),
+});
+const stableComponentKeySchema = z.string().trim().min(1).max(160)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]*$/, "stable ASCII component key required");
+const componentCatalogKeySchema = z.string().trim().min(1).max(80)
+  .regex(/^[a-z0-9][a-z0-9-]*$/);
+
+export const createComponentSnapshotSchema = z.object({
+  calculatorProfileVersion: z.string().trim().min(1).max(160),
+  expectedOrderContentHash: z.string().regex(/^[a-f0-9]{64}$/i),
+  reviewNote: z.string().trim().min(3).max(2_000),
+  confirmation: z.literal("CREATE_COMPONENT_SNAPSHOT"),
+  requirements: z.array(z.object({
+    source: z.object({
+      kind: z.enum(["ORDER_POSITION", "MANUFACTURED_ITEM", "SUPPLEMENTARY_ITEM"]),
+      id: z.string().trim().min(1).max(80),
+    }),
+    requirementKind: z.enum(["CUT_PART", "PURCHASED_PART"]),
+    sourceComponentKey: stableComponentKeySchema,
+    componentKey: stableComponentKeySchema,
+    name: z.string().trim().min(1).max(240),
+    quantity: z.number().positive(),
+    quantityUnit: z.string().trim().min(1).max(32),
+    materialKey: componentCatalogKeySchema.optional(),
+    finishKey: componentCatalogKeySchema.optional(),
+    finishedDimensionsMm: componentDimensionSetSchema.optional(),
+    cuttingDimensionsMm: componentDimensionSetSchema.optional(),
+    grainDirection: z.string().trim().min(1).max(80).optional(),
+    notes: z.string().max(10_000).optional(),
+  }).superRefine((requirement, ctx) => {
+    if (requirement.requirementKind !== "CUT_PART") return;
+    if (!requirement.materialKey) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["materialKey"], message: "cut part material key is required" });
+    if (!requirement.finishedDimensionsMm) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["finishedDimensionsMm"], message: "cut part finished dimensions are required" });
+    if (!requirement.cuttingDimensionsMm) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["cuttingDimensionsMm"], message: "cut part cutting dimensions are required" });
+  })).min(1).max(10_000),
+}).superRefine((value, ctx) => {
+  const keys = value.requirements.map((requirement) => requirement.sourceComponentKey);
+  if (new Set(keys).size !== keys.length) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["requirements"], message: "source component keys must be unique" });
+  }
+});
+
+export const reviewComponentSnapshotSchema = z.object({
+  state: z.enum(["VERIFIED", "REJECTED"]),
+  resolution: z.string().trim().min(3).max(2_000),
 });
 
 export const requestOrderReviewSchema = z.object({
@@ -270,21 +392,13 @@ export const createOrderPositionEvidenceSchema = importSourceLocatorSchema.exten
   rawValue: z.string().trim().min(1).max(2_000),
   normalizedValue: evidenceNormalizedValueSchema,
   confidence: z.number().min(0).max(1).optional(),
-  reviewState: z.enum(["UNVERIFIED", "REVIEW", "RESOLVED", "REJECTED"]).optional(),
-  resolution: z.string().trim().min(3).max(2_000).optional(),
-}).superRefine((value, ctx) => {
-  if ((value.reviewState === "RESOLVED" || value.reviewState === "REJECTED") && !value.resolution) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["resolution"], message: "resolution is required for a final evidence state" });
-  }
+  // Final states are accepted only by the one-way review command below.
+  reviewState: z.enum(["UNVERIFIED", "REVIEW"]).optional(),
 });
 
 export const resolveOrderPositionEvidenceSchema = z.object({
-  reviewState: z.enum(["REVIEW", "RESOLVED", "REJECTED"]),
-  resolution: z.string().trim().min(3).max(2_000).optional(),
-}).superRefine((value, ctx) => {
-  if ((value.reviewState === "RESOLVED" || value.reviewState === "REJECTED") && !value.resolution) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["resolution"], message: "resolution is required for a final evidence state" });
-  }
+  reviewState: z.enum(["RESOLVED", "REJECTED"]),
+  resolution: z.string().trim().min(3).max(2_000),
 });
 
 export const manufacturedItemEvidenceFields = [
@@ -299,12 +413,9 @@ const manufacturedItemEvidenceSchema = importSourceLocatorSchema.extend({
   rawValue: z.string().trim().min(1).max(2_000),
   normalizedValue: evidenceNormalizedValueSchema,
   confidence: z.number().min(0).max(1).optional(),
-  reviewState: z.enum(["UNVERIFIED", "REVIEW", "RESOLVED", "REJECTED"]).optional(),
-  resolution: z.string().trim().min(3).max(2_000).optional(),
-}).superRefine((value, ctx) => {
-  if ((value.reviewState === "RESOLVED" || value.reviewState === "REJECTED") && !value.resolution) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["resolution"], message: "resolution is required for a final evidence state" });
-  }
+  // Final decisions are accepted only by the evidence review command, which
+  // records the reviewer and timestamp atomically.
+  reviewState: z.enum(["UNVERIFIED", "REVIEW"]).optional(),
 });
 
 const nullableManufacturedItemText = z.string().trim().min(1).max(500).nullable().optional();
@@ -335,5 +446,10 @@ export const createManufacturedItemSchema = z.object({
 
 export const reviewManufacturedItemSchema = z.object({
   state: z.enum(["VERIFIED", "REJECTED"]),
+  resolution: z.string().trim().min(3).max(2_000),
+});
+
+export const reviewManufacturedItemEvidenceSchema = z.object({
+  reviewState: z.enum(["RESOLVED", "REJECTED"]),
   resolution: z.string().trim().min(3).max(2_000),
 });

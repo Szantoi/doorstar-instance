@@ -1,14 +1,226 @@
-import { Link } from "react-router-dom";
-import { useImportRuns } from "@/services/production/hooks";
+import { useEffect, useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import {
+  displayImportWorkNumber,
+  importInboxCardTone,
+  importInboxPageCount,
+  IMPORT_INBOX_STATE_META,
+  parseImportInboxPage,
+  summarizeImportInbox,
+} from "@/lib/importInbox";
+import { useImportInbox } from "@/services/production/hooks";
 
-const statusLabel = { PREVIEWED: "Előnézet", APPLIED: "DRAFT betöltve", REJECTED: "Elutasítva" } as const;
+const PAGE_SIZE = 25;
 
-/** Domain-specific import audit view. A platform DataTable can replace its
- * presentation later without changing this Doorstar workflow or API. */
+/** Work-number-oriented entry point for the deterministic import evidence.
+ * Counts and states come from the backend projection; this page never infers
+ * approval, completion, or delivery from file metadata. */
 export function ImportInboxPage() {
-  const { data: runs = [], isLoading, isError } = useImportRuns();
-  return <main className="orders-page"><div className="orders-content">
-    <header className="orders-hero"><div><p>Adatátállás</p><h1>Import Inbox</h1><span>Excel/PDF előnézetek és tesztsémás DRAFT-betöltések. A forrásfájlok változatlanul megmaradnak.</span></div><Link className="doorstar-home-primary-action" to="/orders">Rendelések</Link></header>
-    {isLoading ? <div className="orders-state">Importok betöltése…</div> : isError ? <div className="orders-state">Az Import Inbox nem érhető el. Ellenőrizd a termelési szolgáltatást.</div> : runs.length === 0 ? <section className="order-document-card"><div className="order-document-heading"><div><span>Üres inbox</span><h2>Még nincs regisztrált importfutás</h2><p>Az adatgyűjtő előnézetei itt jelennek meg, miután a tesztsémában regisztrálta őket.</p></div></div></section> : <section className="order-revision-list" aria-label="Importfutások">{runs.map((run) => { const revision = run.revisions[0]; return <article className="order-revision" key={run.id}><header><div><span>{statusLabel[run.status]}</span><h2>{revision?.order.project.name ?? run.previewArtifact}</h2></div><div className="order-register-states"><b className={`order-status order-status-${run.status === "APPLIED" ? "approved" : run.status === "REJECTED" ? "superseded" : "draft"}`}>{statusLabel[run.status]}</b></div></header><div className="order-revision-meta"><span>{run.candidateCount} előnézeti rekord</span><span>{run._count.candidates} kereshető jelölt</span><span>{run._count.deadlineObservations} határidő-megfigyelés</span><span>Cél: {run.targetSchema}</span><span>{new Intl.DateTimeFormat("hu-HU", { dateStyle: "medium", timeStyle: "short" }).format(new Date(run.createdAt))}</span></div>{revision && <div className="order-position-summary"><div><strong>{revision.order.project.key}</strong><span>R{String(revision.revision).padStart(2, "0")} · {revision.intakeStage}</span><span>{revision._count.positions} pozíció · {revision._count.documents} dokumentum</span><span>{revision._count.feedback} visszajelzés</span></div></div>}<div className="order-audit-list"><div><b>Mapping</b><span>{run.profileVersion}</span><code>{run.sourceFingerprint.slice(0, 12)}…</code><Link to={`/imports/${encodeURIComponent(run.id)}`}>Bizonyítékok megnyitása →</Link></div>{revision && <div><b>Kapcsolt DRAFT</b><span>{revision.order.project.key}</span><span>R{String(revision.revision).padStart(2, "0")}</span><Link to={`/orders/${encodeURIComponent(revision.order.project.key)}`}>Rendelés megnyitása →</Link></div>}</div></article>; })}</section>}
-  </div></main>;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseImportInboxPage(searchParams.get("page"));
+  const { data, isLoading, isError, isFetching } = useImportInbox(page, PAGE_SIZE);
+  const items = data?.items ?? [];
+  const pageCount = importInboxPageCount(data?.total ?? 0, data?.pageSize ?? PAGE_SIZE);
+  const summary = useMemo(() => summarizeImportInbox(items), [items]);
+
+  useEffect(() => {
+    if (data && page > pageCount) {
+      const next = new URLSearchParams(searchParams);
+      if (pageCount === 1) next.delete("page");
+      else next.set("page", String(pageCount));
+      setSearchParams(next, { replace: true });
+    }
+  }, [data, page, pageCount, searchParams, setSearchParams]);
+
+  function goToPage(nextPage: number) {
+    const next = new URLSearchParams(searchParams);
+    if (nextPage <= 1) next.delete("page");
+    else next.set("page", String(nextPage));
+    setSearchParams(next);
+  }
+
+  return (
+    <main className="orders-page">
+      <div className="orders-content">
+        <header className="orders-hero">
+          <div>
+            <p>Adatátállás · munkaszám szerinti ellenőrzés</p>
+            <h1>Import Inbox</h1>
+            <span>
+              Egy helyen láthatók a forrásokból felismert munkaszámok, a nyitott ellenőrzések és a pontos
+              bizonyítékhelyek.
+            </span>
+          </div>
+          <Link className="doorstar-home-primary-action" to="/orders">Rendelések</Link>
+        </header>
+
+        <section className="import-safety-banner" aria-label="Import biztonsági határ">
+          <strong>Csak tesztkörnyezet</strong>
+          <span>
+            A felület kizárólag a <code>doorstar_test</code> sémából olvas. A teszt-DRAFT létrejötte nem
+            jelent műszaki jóváhagyást, kész importot vagy gyártási kiadást.
+          </span>
+        </section>
+
+        {!isLoading && !isError && data && (
+          <section className="import-inbox-summary" aria-label="Import Inbox összesítés">
+            <div>
+              <span>Összes munkaszámcsomag</span>
+              <strong>{data.total}</strong>
+              <small>A teljes inboxban</small>
+            </div>
+            <div>
+              <span>Jelölt rekord</span>
+              <strong>{summary.candidateCount}</strong>
+              <small>Ezen az oldalon</small>
+            </div>
+            <div>
+              <span>Előkészített</span>
+              <strong>{summary.readyCount}</strong>
+              <small>Ezen az oldalon</small>
+            </div>
+            <div>
+              <span>Ellenőrzendő</span>
+              <strong>{summary.reviewCount}</strong>
+              <small>Ezen az oldalon</small>
+            </div>
+            <div>
+              <span>Blokkolt</span>
+              <strong>{summary.blockedCount}</strong>
+              <small>Ezen az oldalon</small>
+            </div>
+          </section>
+        )}
+
+        {isLoading ? (
+          <div className="orders-state">Munkaszámcsomagok betöltése…</div>
+        ) : isError ? (
+          <div className="orders-state">
+            Az Import Inbox nem érhető el. Ellenőrizd a termelési szolgáltatást.
+          </div>
+        ) : items.length === 0 ? (
+          <section className="order-document-card">
+            <div className="order-document-heading">
+              <div>
+                <span>Üres inbox</span>
+                <h2>Még nincs munkaszámhoz kötött importjelölt</h2>
+                <p>
+                  Az adatfelderítő által regisztrált bizonyítékcsomagok itt jelennek meg, változatlan
+                  forráshivatkozásokkal.
+                </p>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section
+            className="import-work-package-list"
+            aria-label="Munkaszám szerinti importcsomagok"
+            aria-busy={isFetching}
+          >
+            {items.map((item) => {
+              const workNumberLabel = displayImportWorkNumber(item.workNumber);
+              const cardTone = importInboxCardTone(item);
+              const pageContext = page > 1 ? `?page=${page}` : "";
+
+              return (
+                <article className={`import-work-package import-work-package-${cardTone}`} key={`${item.importRunId}:${item.workNumber}`}>
+                  <header>
+                    <div className="import-work-package-title">
+                      <span>{item.workNumber === "UNASSIGNED" ? "Nem csoportosított forrás" : "Munkaszám"}</span>
+                      <h2>{workNumberLabel}</h2>
+                      <p>{item.candidateCount} forrásrekord ebben a bizonyítékcsomagban</p>
+                    </div>
+                    <div className="import-work-package-states" aria-label="Csomagállapotok">
+                      {item.states.map((state) => {
+                        const meta = IMPORT_INBOX_STATE_META[state];
+                        return (
+                          <span
+                            className={`import-inbox-state import-inbox-state-${meta.tone}`}
+                            title={meta.hint}
+                            key={state}
+                          >
+                            {meta.label}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </header>
+
+                  <div className="import-work-package-body">
+                    <dl className="import-work-package-counts">
+                      <div>
+                        <dt>Előkészített</dt>
+                        <dd>{item.readyCount}</dd>
+                      </div>
+                      <div>
+                        <dt>Ellenőrzendő</dt>
+                        <dd>{item.reviewCount}</dd>
+                      </div>
+                      <div>
+                        <dt>Blokkolt</dt>
+                        <dd>{item.blockedCount}</dd>
+                      </div>
+                    </dl>
+
+                    <section className="import-work-package-sources" aria-label={`${workNumberLabel} forrásai`}>
+                      <h3>Források</h3>
+                      <ul>
+                        {item.sourcePaths.slice(0, 3).map((path) => <li key={path}>{path}</li>)}
+                      </ul>
+                      {item.sourcePaths.length > 3 && <small>+ {item.sourcePaths.length - 3} további forrás</small>}
+                    </section>
+
+                    <dl className="import-work-package-provenance">
+                      <div>
+                        <dt>Mappingprofil</dt>
+                        <dd>{item.profileVersion}</dd>
+                      </div>
+                      <div>
+                        <dt>Forrás-fingerprint</dt>
+                        <dd><code>{item.sourceFingerprint.slice(0, 16)}…</code></dd>
+                      </div>
+                      <div>
+                        <dt>Cél</dt>
+                        <dd><code>{item.targetSchema}</code></dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <footer>
+                    <Link
+                      className="import-work-package-primary"
+                      to={`/imports/${encodeURIComponent(item.importRunId)}/${encodeURIComponent(item.workNumber)}${pageContext}`}
+                    >
+                      Bizonyítékcsomag megnyitása
+                    </Link>
+                    <Link
+                      className="import-work-package-secondary"
+                      to={`/imports/${encodeURIComponent(item.importRunId)}${pageContext}`}
+                    >
+                      Teljes importfutás
+                    </Link>
+                  </footer>
+                </article>
+              );
+            })}
+          </section>
+        )}
+
+        {!isLoading && !isError && data && data.total > 0 && (
+          <nav className="import-inbox-pagination" aria-label="Import Inbox lapozás">
+            <button type="button" onClick={() => goToPage(Math.max(1, page - 1))} disabled={page <= 1 || isFetching}>
+              ← Előző
+            </button>
+            <span>
+              <strong>{data.page} / {pageCount}</strong>
+              <small>{data.total} munkaszámcsomag</small>
+            </span>
+            <button type="button" onClick={() => goToPage(Math.min(pageCount, page + 1))} disabled={page >= pageCount || isFetching}>
+              Következő →
+            </button>
+          </nav>
+        )}
+      </div>
+    </main>
+  );
 }

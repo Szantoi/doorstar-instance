@@ -3,28 +3,46 @@ import { PRODUCTION_API_BASE as BASE } from "./config";
 import type {
   BoardResponse,
   ApplyManufacturedItemCandidatesResult,
+  ComponentCalculatorProfiles,
+  ComponentSnapshot,
+  CreateComponentSnapshotInput,
+  CreateComponentSnapshotResult,
   EpikRollup,
   EpikTemplate,
   IssueSessionResult,
   ImportRun,
   ImportRunEvidence,
-  ManufacturedItem,
+  ImportInboxResponse,
+  ImportWorkNumberEvidence,
+  ManufacturedItemCommandResponse,
+  ManufacturedItemEvidence,
   KanbanResponse,
   LoadReport,
   OrderChecklistItem,
+  CreatedOrderDocument,
+  CreatedSalesIntake,
   ProductionOverview,
   ProductionOrderCard,
   ProductionOrderDetail,
   OrderRevisionInput,
   OrderDocumentInput,
+  OrderDocumentPositionLinkRecord,
   OrderFeedback,
   OrderFeedbackCategory,
   OrderPositionEvidence,
+  OperationPlanSnapshotList,
+  OrderSupplementaryItem,
+  OrderSupplementaryItemEvidence,
+  OrderSupplementaryItemInput,
   OrderIntakeStage,
+  OrderRevisionReadiness,
+  SalesIntakeInput,
   ProjectCard,
   ProjectDetail,
+  ProjectWorkflow,
   SheetTemplate,
   StationConfig,
+  TechnicalCatalog,
   Task,
   TaskDetail,
   UpdateTaskPatch,
@@ -32,6 +50,8 @@ import type {
 
 export const productionApi = {
   getStations: () => apiFetch<{ stations: StationConfig[] }>(`${BASE}/stations`),
+  getTechnicalCatalog: () => apiFetch<TechnicalCatalog>(`${BASE}/technical-catalog`),
+  getComponentCalculatorProfiles: () => apiFetch<ComponentCalculatorProfiles>(`${BASE}/component-calculator-profiles`),
 
   getBoard: (week: string) => apiFetch<BoardResponse>(`${BASE}/board`, { query: { week } }),
 
@@ -74,6 +94,12 @@ export const productionApi = {
 
   getProjects: () => apiFetch<ProjectCard[]>(`${BASE}/projects`),
   getProductionOrders: () => apiFetch<ProductionOrderCard[]>(`${BASE}/production-orders`),
+  getImportInbox: (page: number, pageSize: number) =>
+    apiFetch<ImportInboxResponse>(`${BASE}/import-inbox`, { query: { page, pageSize } }),
+  getImportWorkNumberEvidence: (importRunId: string, workNumber: string) =>
+    apiFetch<ImportWorkNumberEvidence>(
+      `${BASE}/import-inbox/${encodeURIComponent(importRunId)}/${encodeURIComponent(workNumber)}/evidence`,
+    ),
   getImportRuns: () => apiFetch<ImportRun[]>(`${BASE}/import-runs`),
   getImportRunEvidence: (importRunId: string) => apiFetch<ImportRunEvidence>(`${BASE}/import-runs/${encodeURIComponent(importRunId)}/evidence`),
   applyManufacturedItemCandidates: (
@@ -83,15 +109,45 @@ export const productionApi = {
     `${BASE}/import-runs/${encodeURIComponent(importRunId)}/apply-manufactured-items`,
     { method: "POST", body: input },
   ),
-  getProductionOrder: (projectKey: string) => apiFetch<ProductionOrderDetail>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}`),
-  createSalesIntake: (input: OrderRevisionInput & { projectKey: string; projectName: string; projectNum?: string }) =>
-    apiFetch(`${BASE}/production-orders/sales-intake`, { method: "POST", body: input }),
+  getProductionOrder: (projectKey: string) => apiFetch<ProductionOrderDetail | null>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}`),
+  getOrderRevisionReadiness: (projectKey: string, revision: number) =>
+    apiFetch<OrderRevisionReadiness>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/readiness`),
+  getProjectWorkflow: (projectKey: string) =>
+    apiFetch<ProjectWorkflow>(`${BASE}/projects/${encodeURIComponent(projectKey)}/workflow`),
+  getComponentSnapshots: (projectKey: string, revision: number) =>
+    apiFetch<ComponentSnapshot[]>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/component-snapshots`),
+  getOperationPlanSnapshots: (projectKey: string, revision: number) =>
+    apiFetch<OperationPlanSnapshotList>(
+      `${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/operation-plan-snapshots`,
+    ),
+  createComponentSnapshot: (
+    projectKey: string,
+    revision: number,
+    input: CreateComponentSnapshotInput,
+  ) => apiFetch<CreateComponentSnapshotResult>(
+    `${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/component-snapshots`,
+    { method: "POST", body: input },
+  ),
+  reviewComponentSnapshot: (
+    projectKey: string,
+    revision: number,
+    snapshotId: string,
+    state: "VERIFIED" | "REJECTED",
+    resolution: string,
+  ) => apiFetch<ComponentSnapshot>(
+    `${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/component-snapshots/${encodeURIComponent(snapshotId)}/review`,
+    { method: "PATCH", body: { state, resolution } },
+  ),
+  createSalesIntake: (input: SalesIntakeInput) =>
+    apiFetch<CreatedSalesIntake>(`${BASE}/production-orders/sales-intake`, { method: "POST", body: input }),
   advanceOrderIntakeStage: (projectKey: string, revision: number, stage: OrderIntakeStage, exceptionReason?: string) =>
     apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/intake-stage`, { method: "PATCH", body: { stage, exceptionReason } }),
   updateOrderRevision: (projectKey: string, revision: number, input: OrderRevisionInput) =>
     apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}`, { method: "PUT", body: input }),
   addOrderDocument: (projectKey: string, revision: number, input: OrderDocumentInput) =>
-    apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/documents`, { method: "POST", body: input }),
+    apiFetch<CreatedOrderDocument>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/documents`, { method: "POST", body: input }),
+  linkOrderDocumentToPosition: (projectKey: string, revision: number, documentId: string, orderPositionId: string) =>
+    apiFetch<OrderDocumentPositionLinkRecord>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/documents/${encodeURIComponent(documentId)}/positions`, { method: "POST", body: { orderPositionId } }),
   getOrderFeedback: (projectKey: string, revision: number) => apiFetch<OrderFeedback[]>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/feedback`),
   createOrderFeedback: (projectKey: string, revision: number, category: OrderFeedbackCategory, message: string) =>
     apiFetch<OrderFeedback>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/feedback`, { method: "POST", body: { category, message } }),
@@ -100,7 +156,15 @@ export const productionApi = {
   resolveOrderPositionEvidence: (projectKey: string, revision: number, positionId: string, evidenceId: string, reviewState: "RESOLVED" | "REJECTED", resolution: string) =>
     apiFetch<OrderPositionEvidence>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/positions/${encodeURIComponent(positionId)}/evidence/${encodeURIComponent(evidenceId)}`, { method: "PATCH", body: { reviewState, resolution } }),
   reviewManufacturedItem: (projectKey: string, revision: number, itemId: string, state: "VERIFIED" | "REJECTED", resolution: string) =>
-    apiFetch<ManufacturedItem>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/manufactured-items/${encodeURIComponent(itemId)}/review`, { method: "PATCH", body: { state, resolution } }),
+    apiFetch<ManufacturedItemCommandResponse>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/manufactured-items/${encodeURIComponent(itemId)}/review`, { method: "PATCH", body: { state, resolution } }),
+  reviewManufacturedItemEvidence: (projectKey: string, revision: number, itemId: string, evidenceId: string, reviewState: "RESOLVED" | "REJECTED", resolution: string) =>
+    apiFetch<ManufacturedItemEvidence>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/manufactured-items/${encodeURIComponent(itemId)}/evidence/${encodeURIComponent(evidenceId)}/review`, { method: "PATCH", body: { reviewState, resolution } }),
+  createOrderSupplementaryItem: (projectKey: string, revision: number, input: OrderSupplementaryItemInput) =>
+    apiFetch<OrderSupplementaryItem>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/supplementary-items`, { method: "POST", body: input }),
+  reviewOrderSupplementaryItem: (projectKey: string, revision: number, itemId: string, state: "VERIFIED" | "REJECTED", resolution: string) =>
+    apiFetch<OrderSupplementaryItem>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/supplementary-items/${encodeURIComponent(itemId)}/review`, { method: "PATCH", body: { state, resolution } }),
+  reviewOrderSupplementaryItemEvidence: (projectKey: string, revision: number, itemId: string, evidenceId: string, reviewState: "RESOLVED" | "REJECTED", resolution: string) =>
+    apiFetch<OrderSupplementaryItemEvidence>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/supplementary-items/${encodeURIComponent(itemId)}/evidence/${encodeURIComponent(evidenceId)}/review`, { method: "PATCH", body: { reviewState, resolution } }),
   requestOrderReview: (projectKey: string, revision: number, note?: string) =>
     apiFetch(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/review`, { method: "POST", body: { note } }),
   approveOrderRevision: (projectKey: string, revision: number, note: string) =>

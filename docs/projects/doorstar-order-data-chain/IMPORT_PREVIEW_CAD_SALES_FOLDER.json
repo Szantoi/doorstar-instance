@@ -1,0 +1,158 @@
+{
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "cad-reference-metadata-v1",
+  "records": [
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "992cdd8d61141fba5a5eb7528b2786e5e54bee3ff21379a9219c2fd1d90835b1",
+      "databaseWrite": false,
+      "displayName": "K01.DWG",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1018",
+      "dwgVersion": "AutoCAD 2004",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "_Archiv/Ajánlat Ágnes Köz Bútor/Ágnes köz garázsbútor/Blum/K01.DWG",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "e5944570ce1258a0fd5596976dfbd1083d594e3758cba48f1a737db2466a7f14",
+      "databaseWrite": false,
+      "displayName": "K02.DWG",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1018",
+      "dwgVersion": "AutoCAD 2004",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "_Archiv/Ajánlat Ágnes Köz Bútor/Ágnes köz garázsbútor/Blum/K02.DWG",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "2c141d6e904cbb809da7eabe06126d2fbaf221ecdbcf552b8ffb35a2e2aefd40",
+      "databaseWrite": false,
+      "displayName": "K03.DWG",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1018",
+      "dwgVersion": "AutoCAD 2004",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "_Archiv/Ajánlat Ágnes Köz Bútor/Ágnes köz garázsbútor/Blum/K03.DWG",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "c944fdb4aa4866db7d579f6d2e22dbdebb2107e187447ea60bf9f7061a56c58e",
+      "databaseWrite": false,
+      "displayName": "DSMR25118_Propellant Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/CAD/DSMR25118_Propellant Kft..dwg",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": "25118"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "681d015cd5d5994bfcfb78fc4210cfd67ef2004ca10cfd3723bd3d011dac6907",
+      "databaseWrite": false,
+      "displayName": "DSMR 25171 Görög Nikoletta.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "DSMR 25171 GN Vagyonkezelő Kft. (Görög Nikoletta) előzetes mérések/CAD/DSMR 25171 Görög Nikoletta.dwg",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": "25171"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "9747ba03668a82628e7a20ea762beca0596f4365e65a87edc4de8c7dcd9f7e81",
+      "databaseWrite": false,
+      "displayName": "DSMR_22126_Halassy.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR_21126_Halassy/DSMR_22126_Halassy.dwg",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": "22126"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "57b929f15917ec7f0707841a46375ee6fc1bcd149a9423445e03389816498c30",
+      "databaseWrite": false,
+      "displayName": "DSMR_22126_Halassy.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1027",
+      "dwgVersion": "AutoCAD 2013",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "DSMR 26147 Z-Caffe 73 Kft. (Halasi Zsolt) GYÁRTÁSMEGRENDELÉS/DSMR_21126_Halassyd/DSMR_22126_Halassy.dwg",
+      "sourceRoot": "SALES_FOLDER",
+      "workNumberCandidate": "22126"
+    }
+  ],
+  "sameContentDuplicates": [],
+  "summary": {
+    "byExtension": {
+      ".dwg": 7
+    },
+    "drawingCount": 7,
+    "knownDwgVersionCount": 7,
+    "sameContentDuplicateGroupCount": 0,
+    "workNumberCandidateCount": 4
+  }
+}

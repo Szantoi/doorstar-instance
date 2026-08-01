@@ -7,12 +7,72 @@ import { getRequester, requireRole } from "../middleware/requester.js";
 import { logger } from "../logger.js";
 import { applyManufacturedItemCandidates, ManufacturedItemImportError } from "../services/manufacturedItemImport.js";
 import { createSalesDraft } from "../services/orderDrafts.js";
+import { isImportTestSchema } from "../services/importSchemaGuard.js";
 
 export const importRunsRouter = Router();
 
+type InboxState = "PDF_REVISION_SELECTION_REQUIRED" | "SALES_REVIEW" | "SURVEY_RECONCILIATION" | "DEADLINE_CONFLICT" | "READY_FOR_TEST_DRAFT" | "APPLIED_TO_TEST";
+
+function inboxStates(runStatus: string, candidateStatus: string, errors: string[]): InboxState[] {
+  if (runStatus === "APPLIED") return ["APPLIED_TO_TEST"];
+  const text = errors.join(" ").toLowerCase();
+  const states: InboxState[] = [];
+  if (text.includes("revision") && text.includes("selection")) states.push("PDF_REVISION_SELECTION_REQUIRED");
+  if (text.includes("deadline") && (text.includes("conflict") || text.includes("ambiguous"))) states.push("DEADLINE_CONFLICT");
+  if (text.includes("survey") || text.includes("reconciliation")) states.push("SURVEY_RECONCILIATION");
+  if (candidateStatus === "READY" && states.length === 0) states.push("READY_FOR_TEST_DRAFT");
+  if (states.length === 0) states.push("SALES_REVIEW");
+  return states;
+}
+
+/** Paginated backend-owned review projection. Dates are deliberately absent:
+ * source file timestamps never become delay or completion states here. */
+importRunsRouter.get("/import-inbox", async (req, res) => {
+  const page = Math.max(1, Number.parseInt(String(req.query.page ?? "1"), 10) || 1);
+  const pageSize = Math.min(100, Math.max(1, Number.parseInt(String(req.query.pageSize ?? "25"), 10) || 25));
+  const candidates = await prisma.importCandidate.findMany({
+    orderBy: [{ importRun: { createdAt: "desc" } }, { workNumber: "asc" }, { createdAt: "asc" }],
+    include: { importRun: { select: { id: true, profileVersion: true, sourceFingerprint: true, status: true, targetSchema: true, createdAt: true } } },
+  });
+  const grouped = new Map<string, { importRun: typeof candidates[number]["importRun"]; workNumber: string; states: Set<InboxState>; candidateCount: number; readyCount: number; reviewCount: number; blockedCount: number; sourcePaths: Set<string> }>();
+  for (const candidate of candidates) {
+    const workNumber = candidate.workNumber ?? "UNASSIGNED";
+    const key = `${candidate.importRunId}:${workNumber}`;
+    const item = grouped.get(key) ?? { importRun: candidate.importRun, workNumber, states: new Set<InboxState>(), candidateCount: 0, readyCount: 0, reviewCount: 0, blockedCount: 0, sourcePaths: new Set<string>() };
+    inboxStates(candidate.importRun.status, candidate.status, candidate.errors).forEach((state) => item.states.add(state));
+    item.candidateCount += 1;
+    if (candidate.status === "READY") item.readyCount += 1;
+    if (candidate.status === "REVIEW") item.reviewCount += 1;
+    if (candidate.status === "BLOCKED") item.blockedCount += 1;
+    item.sourcePaths.add(candidate.relativePath);
+    grouped.set(key, item);
+  }
+  const rows = [...grouped.values()];
+  const total = rows.length;
+  res.json({ page, pageSize, total, items: rows.slice((page - 1) * pageSize, page * pageSize).map((item) => ({
+    importRunId: item.importRun.id, workNumber: item.workNumber, profileVersion: item.importRun.profileVersion,
+    sourceFingerprint: item.importRun.sourceFingerprint, targetSchema: item.importRun.targetSchema,
+    states: [...item.states].sort(), candidateCount: item.candidateCount, readyCount: item.readyCount,
+    reviewCount: item.reviewCount, blockedCount: item.blockedCount, sourcePaths: [...item.sourcePaths].sort(),
+  })) });
+});
+
+/** Evidence packet for one reviewed work-number group. It deliberately
+ * reports source facts and review markers, never an inferred reconciliation. */
+importRunsRouter.get("/import-inbox/:importRunId/:workNumber/evidence", async (req, res) => {
+  const run = await prisma.importRun.findUnique({ where: { id: req.params.importRunId }, select: { id: true, profileVersion: true, sourceFingerprint: true, targetSchema: true } });
+  if (!run) return void res.status(404).json({ error: "import_run_not_found" });
+  const workNumber = req.params.workNumber === "UNASSIGNED" ? null : req.params.workNumber;
+  const [candidates, deadlines] = await Promise.all([
+    prisma.importCandidate.findMany({ where: { importRunId: run.id, workNumber }, orderBy: { createdAt: "asc" }, select: { id: true, recordType: true, status: true, sourceRoot: true, relativePath: true, sheet: true, page: true, row: true, normalizedPayload: true, errors: true } }),
+    workNumber ? prisma.orderDeadlineObservation.findMany({ where: { importRunId: run.id, workNumber }, orderBy: { createdAt: "asc" }, select: { id: true, kind: true, rawValue: true, normalizedDate: true, confidence: true, reviewState: true, resolution: true, sourceRoot: true, relativePath: true, sheet: true, page: true, row: true } }) : Promise.resolve([]),
+  ]);
+  res.json({ workNumber: workNumber ?? "UNASSIGNED", importRun: run, candidates, deadlineObservations: deadlines });
+});
+
 function isTestSchemaConnection(): boolean {
   try {
-    return new URL(process.env.DATABASE_URL ?? "").searchParams.get("schema") === "doorstar_test";
+    return isImportTestSchema(new URL(process.env.DATABASE_URL ?? "").searchParams.get("schema"));
   } catch {
     return false;
   }
@@ -55,6 +115,10 @@ importRunsRouter.get("/import-runs/:importRunId/evidence", async (req, res) => {
   res.json({
     importRun: {
       id: run.id,
+      registrationKey: run.registrationKey,
+      registrationVersion: run.registrationVersion,
+      artifactFingerprint: run.artifactFingerprint,
+      reviewNote: run.reviewNote,
       profileVersion: run.profileVersion,
       sourceFingerprint: run.sourceFingerprint,
       previewArtifact: run.previewArtifact,

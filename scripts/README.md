@@ -2,6 +2,13 @@
 
 > Automatizációs szkriptek a Doorstar (ügyfél) island terminál menedzsmentjéhez.
 
+## Codex-agent identity validation
+
+`python scripts/validateCodexAgents.py` ellenőrzi a hat projekt-szintű
+`.codex/agents/*.toml` fájlt, a Codex agent–Nexus principal leképezést, a
+terminálonkénti `AGENTS.md` jelenlétét és azt, hogy credential literal nem került
+a követett TOML-konfigurációkba. Python 3.11+ szükséges, külső csomag nélkül.
+
 ## Telepítési hely
 
 ```

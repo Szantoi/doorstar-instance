@@ -1,0 +1,1713 @@
+{
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "dxf-text-evidence-v1",
+  "records": [
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "8bb04cde5143e9fbd3b39105b471488322a609ff3f9b110108b19d56c3c8dd79",
+      "databaseWrite": false,
+      "displayName": "Nappali_02.dxf",
+      "encoding": "cp1252",
+      "entityCounts": {
+        "LWPOLYLINE": 1586,
+        "VIEWPORT": 1
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/Nappali_02.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [],
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "1c56d54fe07686643bfb9adb19ffaf58a5997a8f862ac316ab39939942f61acf",
+      "databaseWrite": false,
+      "displayName": "25181_Saincaize-Prauda Orsolya.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "ARC": 204,
+        "CIRCLE": 5,
+        "LINE": 2325,
+        "TEXT": 85
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/CAD/25181_Saincaize-Prauda Orsolya.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 2535,
+          "entityType": "TEXT",
+          "text": "1/FP1"
+        },
+        {
+          "entityIndex": 2536,
+          "entityType": "TEXT",
+          "text": "1/FP2"
+        },
+        {
+          "entityIndex": 2537,
+          "entityType": "TEXT",
+          "text": "1/FP3"
+        },
+        {
+          "entityIndex": 2538,
+          "entityType": "TEXT",
+          "text": "1/Tolo"
+        },
+        {
+          "entityIndex": 2539,
+          "entityType": "TEXT",
+          "text": "2/FP1"
+        },
+        {
+          "entityIndex": 2540,
+          "entityType": "TEXT",
+          "text": "2/FP2"
+        },
+        {
+          "entityIndex": 2541,
+          "entityType": "TEXT",
+          "text": "2/FP3"
+        },
+        {
+          "entityIndex": 2542,
+          "entityType": "TEXT",
+          "text": "2/FP4"
+        },
+        {
+          "entityIndex": 2543,
+          "entityType": "TEXT",
+          "text": "1540"
+        },
+        {
+          "entityIndex": 2544,
+          "entityType": "TEXT",
+          "text": "2497"
+        },
+        {
+          "entityIndex": 2545,
+          "entityType": "TEXT",
+          "text": "915"
+        },
+        {
+          "entityIndex": 2546,
+          "entityType": "TEXT",
+          "text": "719"
+        },
+        {
+          "entityIndex": 2547,
+          "entityType": "TEXT",
+          "text": "893"
+        },
+        {
+          "entityIndex": 2548,
+          "entityType": "TEXT",
+          "text": "874"
+        },
+        {
+          "entityIndex": 2549,
+          "entityType": "TEXT",
+          "text": "225"
+        },
+        {
+          "entityIndex": 2550,
+          "entityType": "TEXT",
+          "text": "430"
+        },
+        {
+          "entityIndex": 2551,
+          "entityType": "TEXT",
+          "text": "8"
+        },
+        {
+          "entityIndex": 2552,
+          "entityType": "TEXT",
+          "text": "58"
+        },
+        {
+          "entityIndex": 2553,
+          "entityType": "TEXT",
+          "text": "40"
+        },
+        {
+          "entityIndex": 2554,
+          "entityType": "TEXT",
+          "text": "18"
+        },
+        {
+          "entityIndex": 2555,
+          "entityType": "TEXT",
+          "text": "11"
+        },
+        {
+          "entityIndex": 2556,
+          "entityType": "TEXT",
+          "text": "1851"
+        },
+        {
+          "entityIndex": 2557,
+          "entityType": "TEXT",
+          "text": "874"
+        },
+        {
+          "entityIndex": 2558,
+          "entityType": "TEXT",
+          "text": "2368"
+        },
+        {
+          "entityIndex": 2559,
+          "entityType": "TEXT",
+          "text": "2"
+        },
+        {
+          "entityIndex": 2560,
+          "entityType": "TEXT",
+          "text": "2368"
+        },
+        {
+          "entityIndex": 2561,
+          "entityType": "TEXT",
+          "text": "5"
+        },
+        {
+          "entityIndex": 2562,
+          "entityType": "TEXT",
+          "text": "225"
+        },
+        {
+          "entityIndex": 2563,
+          "entityType": "TEXT",
+          "text": "915"
+        },
+        {
+          "entityIndex": 2564,
+          "entityType": "TEXT",
+          "text": "3.5"
+        },
+        {
+          "entityIndex": 2565,
+          "entityType": "TEXT",
+          "text": "3.5"
+        },
+        {
+          "entityIndex": 2566,
+          "entityType": "TEXT",
+          "text": "719"
+        },
+        {
+          "entityIndex": 2567,
+          "entityType": "TEXT",
+          "text": "874"
+        },
+        {
+          "entityIndex": 2568,
+          "entityType": "TEXT",
+          "text": "3.5"
+        },
+        {
+          "entityIndex": 2569,
+          "entityType": "TEXT",
+          "text": "A2"
+        },
+        {
+          "entityIndex": 2570,
+          "entityType": "TEXT",
+          "text": "A1"
+        },
+        {
+          "entityIndex": 2571,
+          "entityType": "TEXT",
+          "text": "2094"
+        },
+        {
+          "entityIndex": 2572,
+          "entityType": "TEXT",
+          "text": "8"
+        },
+        {
+          "entityIndex": 2573,
+          "entityType": "TEXT",
+          "text": "621"
+        },
+        {
+          "entityIndex": 2574,
+          "entityType": "TEXT",
+          "text": "749"
+        },
+        {
+          "entityIndex": 2575,
+          "entityType": "TEXT",
+          "text": "170"
+        },
+        {
+          "entityIndex": 2576,
+          "entityType": "TEXT",
+          "text": "5"
+        },
+        {
+          "entityIndex": 2577,
+          "entityType": "TEXT",
+          "text": "2081"
+        },
+        {
+          "entityIndex": 2578,
+          "entityType": "TEXT",
+          "text": "2100"
+        },
+        {
+          "entityIndex": 2579,
+          "entityType": "TEXT",
+          "text": "12.5"
+        },
+        {
+          "entityIndex": 2580,
+          "entityType": "TEXT",
+          "text": "12.5"
+        },
+        {
+          "entityIndex": 2581,
+          "entityType": "TEXT",
+          "text": "270"
+        },
+        {
+          "entityIndex": 2582,
+          "entityType": "TEXT",
+          "text": "2083"
+        },
+        {
+          "entityIndex": 2583,
+          "entityType": "TEXT",
+          "text": "2067"
+        },
+        {
+          "entityIndex": 2584,
+          "entityType": "TEXT",
+          "text": "15"
+        },
+        {
+          "entityIndex": 2585,
+          "entityType": "TEXT",
+          "text": "Alol -5mm ferdén"
+        },
+        {
+          "entityIndex": 2586,
+          "entityType": "TEXT",
+          "text": "Vakoló él látszódó rész"
+        },
+        {
+          "entityIndex": 2587,
+          "entityType": "TEXT",
+          "text": "Panel rétegrend"
+        },
+        {
+          "entityIndex": 2588,
+          "entityType": "TEXT",
+          "text": "6*4*2.5=12.5"
+        },
+        {
+          "entityIndex": 2589,
+          "entityType": "TEXT",
+          "text": "-5mm ferde marás"
+        },
+        {
+          "entityIndex": 2590,
+          "entityType": "TEXT",
+          "text": "3.5"
+        },
+        {
+          "entityIndex": 2591,
+          "entityType": "TEXT",
+          "text": "21"
+        },
+        {
+          "entityIndex": 2592,
+          "entityType": "TEXT",
+          "text": "7.5"
+        },
+        {
+          "entityIndex": 2593,
+          "entityType": "TEXT",
+          "text": "4.5"
+        },
+        {
+          "entityIndex": 2594,
+          "entityType": "TEXT",
+          "text": "14"
+        },
+        {
+          "entityIndex": 2595,
+          "entityType": "TEXT",
+          "text": "11"
+        },
+        {
+          "entityIndex": 2596,
+          "entityType": "TEXT",
+          "text": "3.5"
+        },
+        {
+          "entityIndex": 2597,
+          "entityType": "TEXT",
+          "text": "24.5"
+        },
+        {
+          "entityIndex": 2598,
+          "entityType": "TEXT",
+          "text": "805"
+        },
+        {
+          "entityIndex": 2599,
+          "entityType": "TEXT",
+          "text": "170"
+        },
+        {
+          "entityIndex": 2600,
+          "entityType": "TEXT",
+          "text": "749"
+        },
+        {
+          "entityIndex": 2601,
+          "entityType": "TEXT",
+          "text": "621"
+        },
+        {
+          "entityIndex": 2602,
+          "entityType": "TEXT",
+          "text": "30"
+        },
+        {
+          "entityIndex": 2603,
+          "entityType": "TEXT",
+          "text": "28"
+        },
+        {
+          "entityIndex": 2604,
+          "entityType": "TEXT",
+          "text": "28"
+        },
+        {
+          "entityIndex": 2605,
+          "entityType": "TEXT",
+          "text": "58"
+        },
+        {
+          "entityIndex": 2606,
+          "entityType": "TEXT",
+          "text": "58"
+        },
+        {
+          "entityIndex": 2607,
+          "entityType": "TEXT",
+          "text": "80"
+        },
+        {
+          "entityIndex": 2608,
+          "entityType": "TEXT",
+          "text": "22"
+        },
+        {
+          "entityIndex": 2609,
+          "entityType": "TEXT",
+          "text": "805"
+        },
+        {
+          "entityIndex": 2610,
+          "entityType": "TEXT",
+          "text": "170"
+        },
+        {
+          "entityIndex": 2611,
+          "entityType": "TEXT",
+          "text": "749"
+        },
+        {
+          "entityIndex": 2612,
+          "entityType": "TEXT",
+          "text": "621"
+        },
+        {
+          "entityIndex": 2613,
+          "entityType": "TEXT",
+          "text": "30"
+        },
+        {
+          "entityIndex": 2614,
+          "entityType": "TEXT",
+          "text": "28"
+        },
+        {
+          "entityIndex": 2615,
+          "entityType": "TEXT",
+          "text": "28"
+        },
+        {
+          "entityIndex": 2616,
+          "entityType": "TEXT",
+          "text": "58"
+        },
+        {
+          "entityIndex": 2617,
+          "entityType": "TEXT",
+          "text": "58"
+        },
+        {
+          "entityIndex": 2618,
+          "entityType": "TEXT",
+          "text": "80"
+        },
+        {
+          "entityIndex": 2619,
+          "entityType": "TEXT",
+          "text": "22"
+        }
+      ],
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "357d3f02736669be891487eb629f88cfb1290fbe508c0aaaa922c72bab91b558",
+      "databaseWrite": false,
+      "displayName": "26102_Presits Balázs_Rajz.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "ARC": 85,
+        "CIRCLE": 56,
+        "LINE": 1898,
+        "TEXT": 111
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "03_Március/26102 - Presits Balázs/CAD/26102_Presits Balázs_Rajz.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 2040,
+          "entityType": "TEXT",
+          "text": "2058"
+        },
+        {
+          "entityIndex": 2041,
+          "entityType": "TEXT",
+          "text": "623"
+        },
+        {
+          "entityIndex": 2042,
+          "entityType": "TEXT",
+          "text": "870"
+        },
+        {
+          "entityIndex": 2043,
+          "entityType": "TEXT",
+          "text": "695"
+        },
+        {
+          "entityIndex": 2044,
+          "entityType": "TEXT",
+          "text": "677"
+        },
+        {
+          "entityIndex": 2045,
+          "entityType": "TEXT",
+          "text": "690"
+        },
+        {
+          "entityIndex": 2046,
+          "entityType": "TEXT",
+          "text": "635"
+        },
+        {
+          "entityIndex": 2047,
+          "entityType": "TEXT",
+          "text": "22"
+        },
+        {
+          "entityIndex": 2048,
+          "entityType": "TEXT",
+          "text": "22"
+        },
+        {
+          "entityIndex": 2049,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2050,
+          "entityType": "TEXT",
+          "text": "FP1"
+        },
+        {
+          "entityIndex": 2051,
+          "entityType": "TEXT",
+          "text": "FP2"
+        },
+        {
+          "entityIndex": 2052,
+          "entityType": "TEXT",
+          "text": "FP3"
+        },
+        {
+          "entityIndex": 2053,
+          "entityType": "TEXT",
+          "text": "blende"
+        },
+        {
+          "entityIndex": 2054,
+          "entityType": "TEXT",
+          "text": "FP4"
+        },
+        {
+          "entityIndex": 2055,
+          "entityType": "TEXT",
+          "text": "FP5"
+        },
+        {
+          "entityIndex": 2056,
+          "entityType": "TEXT",
+          "text": "FP6"
+        },
+        {
+          "entityIndex": 2057,
+          "entityType": "TEXT",
+          "text": "FP7"
+        },
+        {
+          "entityIndex": 2058,
+          "entityType": "TEXT",
+          "text": "A1"
+        },
+        {
+          "entityIndex": 2059,
+          "entityType": "TEXT",
+          "text": "FP1"
+        },
+        {
+          "entityIndex": 2060,
+          "entityType": "TEXT",
+          "text": "FP2"
+        },
+        {
+          "entityIndex": 2061,
+          "entityType": "TEXT",
+          "text": "FP3"
+        },
+        {
+          "entityIndex": 2062,
+          "entityType": "TEXT",
+          "text": "blende"
+        },
+        {
+          "entityIndex": 2063,
+          "entityType": "TEXT",
+          "text": "FP4"
+        },
+        {
+          "entityIndex": 2064,
+          "entityType": "TEXT",
+          "text": "FP5"
+        },
+        {
+          "entityIndex": 2065,
+          "entityType": "TEXT",
+          "text": "A1"
+        },
+        {
+          "entityIndex": 2066,
+          "entityType": "TEXT",
+          "text": "2799"
+        },
+        {
+          "entityIndex": 2067,
+          "entityType": "TEXT",
+          "text": "2072"
+        },
+        {
+          "entityIndex": 2068,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2069,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2070,
+          "entityType": "TEXT",
+          "text": "3mm ferde marás 0-ra"
+        },
+        {
+          "entityIndex": 2071,
+          "entityType": "TEXT",
+          "text": "Lent +2mm padló dõlés miatt"
+        },
+        {
+          "entityIndex": 2072,
+          "entityType": "TEXT",
+          "text": "Bemart panel illesztés"
+        },
+        {
+          "entityIndex": 2073,
+          "entityType": "TEXT",
+          "text": "10mm-es csap a végén"
+        },
+        {
+          "entityIndex": 2074,
+          "entityType": "TEXT",
+          "text": "870"
+        },
+        {
+          "entityIndex": 2075,
+          "entityType": "TEXT",
+          "text": "623"
+        },
+        {
+          "entityIndex": 2076,
+          "entityType": "TEXT",
+          "text": "695"
+        },
+        {
+          "entityIndex": 2077,
+          "entityType": "TEXT",
+          "text": "695"
+        },
+        {
+          "entityIndex": 2078,
+          "entityType": "TEXT",
+          "text": "630"
+        },
+        {
+          "entityIndex": 2079,
+          "entityType": "TEXT",
+          "text": "870"
+        },
+        {
+          "entityIndex": 2080,
+          "entityType": "TEXT",
+          "text": "2070"
+        },
+        {
+          "entityIndex": 2081,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2082,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2083,
+          "entityType": "TEXT",
+          "text": "2070"
+        },
+        {
+          "entityIndex": 2084,
+          "entityType": "TEXT",
+          "text": "2058"
+        },
+        {
+          "entityIndex": 2085,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2086,
+          "entityType": "TEXT",
+          "text": "580"
+        },
+        {
+          "entityIndex": 2087,
+          "entityType": "TEXT",
+          "text": "2072"
+        },
+        {
+          "entityIndex": 2088,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2089,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2090,
+          "entityType": "TEXT",
+          "text": "625"
+        },
+        {
+          "entityIndex": 2091,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2092,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2093,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2094,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2095,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2096,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2097,
+          "entityType": "TEXT",
+          "text": "591"
+        },
+        {
+          "entityIndex": 2098,
+          "entityType": "TEXT",
+          "text": "Lamello"
+        },
+        {
+          "entityIndex": 2099,
+          "entityType": "TEXT",
+          "text": "T"
+        },
+        {
+          "entityIndex": 2100,
+          "entityType": "TEXT",
+          "text": "Ü"
+        },
+        {
+          "entityIndex": 2101,
+          "entityType": "TEXT",
+          "text": "K"
+        },
+        {
+          "entityIndex": 2102,
+          "entityType": "TEXT",
+          "text": "Ö"
+        },
+        {
+          "entityIndex": 2103,
+          "entityType": "TEXT",
+          "text": "R"
+        },
+        {
+          "entityIndex": 2104,
+          "entityType": "TEXT",
+          "text": "T"
+        },
+        {
+          "entityIndex": 2105,
+          "entityType": "TEXT",
+          "text": "Ü"
+        },
+        {
+          "entityIndex": 2106,
+          "entityType": "TEXT",
+          "text": "K"
+        },
+        {
+          "entityIndex": 2107,
+          "entityType": "TEXT",
+          "text": "Ö"
+        },
+        {
+          "entityIndex": 2108,
+          "entityType": "TEXT",
+          "text": "R"
+        },
+        {
+          "entityIndex": 2109,
+          "entityType": "TEXT",
+          "text": "2799"
+        },
+        {
+          "entityIndex": 2110,
+          "entityType": "TEXT",
+          "text": "2072"
+        },
+        {
+          "entityIndex": 2111,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2112,
+          "entityType": "TEXT",
+          "text": "336"
+        },
+        {
+          "entityIndex": 2113,
+          "entityType": "TEXT",
+          "text": "336"
+        },
+        {
+          "entityIndex": 2114,
+          "entityType": "TEXT",
+          "text": "50"
+        },
+        {
+          "entityIndex": 2115,
+          "entityType": "TEXT",
+          "text": "22"
+        },
+        {
+          "entityIndex": 2116,
+          "entityType": "TEXT",
+          "text": "22"
+        },
+        {
+          "entityIndex": 2117,
+          "entityType": "TEXT",
+          "text": "336"
+        },
+        {
+          "entityIndex": 2118,
+          "entityType": "TEXT",
+          "text": "336"
+        },
+        {
+          "entityIndex": 2119,
+          "entityType": "TEXT",
+          "text": "1273"
+        },
+        {
+          "entityIndex": 2120,
+          "entityType": "TEXT",
+          "text": "50"
+        },
+        {
+          "entityIndex": 2121,
+          "entityType": "TEXT",
+          "text": "10*17-es bemarás 10mm-es hátfalnak"
+        },
+        {
+          "entityIndex": 2122,
+          "entityType": "TEXT",
+          "text": "Polcok+korpusz külsõ él kerekítés"
+        },
+        {
+          "entityIndex": 2123,
+          "entityType": "TEXT",
+          "text": "10*5mm nutolás a polcok aljába és a korpusz külsejébe"
+        },
+        {
+          "entityIndex": 2124,
+          "entityType": "TEXT",
+          "text": "fólia visszahajtás miatt!"
+        },
+        {
+          "entityIndex": 2125,
+          "entityType": "TEXT",
+          "text": "10"
+        },
+        {
+          "entityIndex": 2126,
+          "entityType": "TEXT",
+          "text": "17"
+        },
+        {
+          "entityIndex": 2127,
+          "entityType": "TEXT",
+          "text": "13"
+        },
+        {
+          "entityIndex": 2128,
+          "entityType": "TEXT",
+          "text": "13"
+        },
+        {
+          "entityIndex": 2129,
+          "entityType": "TEXT",
+          "text": "Hátfal bearás"
+        },
+        {
+          "entityIndex": 2130,
+          "entityType": "TEXT",
+          "text": "13"
+        },
+        {
+          "entityIndex": 2131,
+          "entityType": "TEXT",
+          "text": "13"
+        },
+        {
+          "entityIndex": 2132,
+          "entityType": "TEXT",
+          "text": "FP-4,5,6,7 panel illesztés"
+        },
+        {
+          "entityIndex": 2133,
+          "entityType": "TEXT",
+          "text": "11"
+        },
+        {
+          "entityIndex": 2134,
+          "entityType": "TEXT",
+          "text": "11"
+        },
+        {
+          "entityIndex": 2135,
+          "entityType": "TEXT",
+          "text": "Fólia visszahajtás"
+        },
+        {
+          "entityIndex": 2136,
+          "entityType": "TEXT",
+          "text": "Lamello az összehúzók között"
+        },
+        {
+          "entityIndex": 2137,
+          "entityType": "TEXT",
+          "text": "Csak a bútornál!"
+        },
+        {
+          "entityIndex": 2138,
+          "entityType": "TEXT",
+          "text": "142"
+        },
+        {
+          "entityIndex": 2139,
+          "entityType": "TEXT",
+          "text": "129"
+        },
+        {
+          "entityIndex": 2140,
+          "entityType": "TEXT",
+          "text": "FP6"
+        },
+        {
+          "entityIndex": 2141,
+          "entityType": "TEXT",
+          "text": "FP7"
+        },
+        {
+          "entityIndex": 2142,
+          "entityType": "TEXT",
+          "text": "2936"
+        },
+        {
+          "entityIndex": 2143,
+          "entityType": "TEXT",
+          "text": "2301"
+        },
+        {
+          "entityIndex": 2144,
+          "entityType": "TEXT",
+          "text": "635"
+        },
+        {
+          "entityIndex": 2145,
+          "entityType": "TEXT",
+          "text": "129"
+        },
+        {
+          "entityIndex": 2146,
+          "entityType": "TEXT",
+          "text": "129"
+        },
+        {
+          "entityIndex": 2147,
+          "entityType": "TEXT",
+          "text": "727"
+        },
+        {
+          "entityIndex": 2148,
+          "entityType": "TEXT",
+          "text": "2070"
+        },
+        {
+          "entityIndex": 2149,
+          "entityType": "TEXT",
+          "text": "10"
+        },
+        {
+          "entityIndex": 2150,
+          "entityType": "TEXT",
+          "text": "568"
+        }
+      ],
+      "workNumberCandidate": "26102"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "759fb7bcc0022b1f04552eafef186ed016da07e1a27573b2c3a9034d5d86f2eb",
+      "databaseWrite": false,
+      "displayName": "25163_Megepit sablon.dxf",
+      "encoding": "utf-8",
+      "entityCounts": {
+        "ARC": 4,
+        "INSERT": 1,
+        "LINE": 4
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/25163_Megepit sablon.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [],
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "74f39b62a17afc099a068227d37ebdc3492ee87825b91124b514be0246578779",
+      "databaseWrite": false,
+      "displayName": "25163.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "CIRCLE": 3,
+        "LINE": 499,
+        "TEXT": 14
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CNC/proba/25163.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 503,
+          "entityType": "TEXT",
+          "text": "2840"
+        },
+        {
+          "entityIndex": 504,
+          "entityType": "TEXT",
+          "text": "10130"
+        },
+        {
+          "entityIndex": 505,
+          "entityType": "TEXT",
+          "text": "FNY 950"
+        },
+        {
+          "entityIndex": 506,
+          "entityType": "TEXT",
+          "text": "TKM 918"
+        },
+        {
+          "entityIndex": 507,
+          "entityType": "TEXT",
+          "text": "Ajtólap 867"
+        },
+        {
+          "entityIndex": 508,
+          "entityType": "TEXT",
+          "text": "FNY 2270"
+        },
+        {
+          "entityIndex": 509,
+          "entityType": "TEXT",
+          "text": "Ajtólap 2220"
+        },
+        {
+          "entityIndex": 510,
+          "entityType": "TEXT",
+          "text": "TKM 2254"
+        },
+        {
+          "entityIndex": 511,
+          "entityType": "TEXT",
+          "text": "FNY 950"
+        },
+        {
+          "entityIndex": 512,
+          "entityType": "TEXT",
+          "text": "TKM 918"
+        },
+        {
+          "entityIndex": 513,
+          "entityType": "TEXT",
+          "text": "Ajtólap 867"
+        },
+        {
+          "entityIndex": 514,
+          "entityType": "TEXT",
+          "text": "70"
+        },
+        {
+          "entityIndex": 515,
+          "entityType": "TEXT",
+          "text": "0,01"
+        },
+        {
+          "entityIndex": 516,
+          "entityType": "TEXT",
+          "text": "4350"
+        }
+      ],
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "37e3f0d806ded15156b3099c68fd1b019bd57ab27d3698afaf8824ea483da6f4",
+      "databaseWrite": false,
+      "displayName": "0901_Mohaköz_falpanel (003).dxf",
+      "encoding": "utf-8",
+      "entityCounts": {
+        "LWPOLYLINE": 951,
+        "SPLINE": 1396
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/Felmérés/0901_Mohaköz_falpanel (003).dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [],
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "117ea0c6dc03c0ce8178c5c1e9a4e298f97a7597796bb6deb7cfc510b3d425a7",
+      "databaseWrite": false,
+      "displayName": "SDSMR_26116_Savmart üveg.dxf",
+      "encoding": "cp1250",
+      "entityCounts": {
+        "DIMENSION": 3,
+        "HATCH": 8,
+        "LINE": 72,
+        "LWPOLYLINE": 2
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "04_Április/26116 - Dr. Majoros Árpád/CAD/SDSMR_26116_Savmart üveg.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "displayText": null,
+          "entityIndex": 82,
+          "entityType": "DIMENSION",
+          "measurementValue": "2218.0",
+          "reviewNote": "DXF dimension evidence only; confirm entity scope and drawing units before use."
+        },
+        {
+          "displayText": null,
+          "entityIndex": 84,
+          "entityType": "DIMENSION",
+          "measurementValue": "373.0",
+          "reviewNote": "DXF dimension evidence only; confirm entity scope and drawing units before use."
+        },
+        {
+          "displayText": null,
+          "entityIndex": 85,
+          "entityType": "DIMENSION",
+          "measurementValue": "5.0",
+          "reviewNote": "DXF dimension evidence only; confirm entity scope and drawing units before use."
+        }
+      ],
+      "workNumberCandidate": "26116"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d7c80c31bfbc071c03e81abf4eed371098c92aef081e8f6e176868419fda3cbd",
+      "databaseWrite": false,
+      "displayName": "26118_LFA_Uj felmeres.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "ARC": 73,
+        "CIRCLE": 33,
+        "LINE": 628,
+        "TEXT": 44
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "04_Április/26118 - LFA Ingatlan Kft/CAD/26118_LFA_Uj felmeres.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 735,
+          "entityType": "TEXT",
+          "text": "Hi-tech 5-ös felosztás  2/3"
+        },
+        {
+          "entityIndex": 736,
+          "entityType": "TEXT",
+          "text": "Titanium Metallic"
+        },
+        {
+          "entityIndex": 737,
+          "entityType": "TEXT",
+          "text": "DSMR 26118 bejárati ajtó panel"
+        },
+        {
+          "entityIndex": 738,
+          "entityType": "TEXT",
+          "text": "Keret"
+        },
+        {
+          "entityIndex": 739,
+          "entityType": "TEXT",
+          "text": "Keret"
+        },
+        {
+          "entityIndex": 740,
+          "entityType": "TEXT",
+          "text": "Keret"
+        },
+        {
+          "entityIndex": 741,
+          "entityType": "TEXT",
+          "text": "988"
+        },
+        {
+          "entityIndex": 742,
+          "entityType": "TEXT",
+          "text": "2085"
+        },
+        {
+          "entityIndex": 743,
+          "entityType": "TEXT",
+          "text": "2079"
+        },
+        {
+          "entityIndex": 744,
+          "entityType": "TEXT",
+          "text": "6"
+        },
+        {
+          "entityIndex": 745,
+          "entityType": "TEXT",
+          "text": "6"
+        },
+        {
+          "entityIndex": 746,
+          "entityType": "TEXT",
+          "text": "215"
+        },
+        {
+          "entityIndex": 747,
+          "entityType": "TEXT",
+          "text": "322"
+        },
+        {
+          "entityIndex": 748,
+          "entityType": "TEXT",
+          "text": "1650"
+        },
+        {
+          "entityIndex": 749,
+          "entityType": "TEXT",
+          "text": "1755"
+        },
+        {
+          "entityIndex": 750,
+          "entityType": "TEXT",
+          "text": "976"
+        },
+        {
+          "entityIndex": 751,
+          "entityType": "TEXT",
+          "text": "6"
+        },
+        {
+          "entityIndex": 752,
+          "entityType": "TEXT",
+          "text": "8"
+        },
+        {
+          "entityIndex": 753,
+          "entityType": "TEXT",
+          "text": "210"
+        },
+        {
+          "entityIndex": 754,
+          "entityType": "TEXT",
+          "text": "120"
+        },
+        {
+          "entityIndex": 755,
+          "entityType": "TEXT",
+          "text": "310"
+        },
+        {
+          "entityIndex": 756,
+          "entityType": "TEXT",
+          "text": "145"
+        },
+        {
+          "entityIndex": 757,
+          "entityType": "TEXT",
+          "text": "147"
+        },
+        {
+          "entityIndex": 758,
+          "entityType": "TEXT",
+          "text": "195"
+        },
+        {
+          "entityIndex": 759,
+          "entityType": "TEXT",
+          "text": "322"
+        },
+        {
+          "entityIndex": 760,
+          "entityType": "TEXT",
+          "text": "120"
+        },
+        {
+          "entityIndex": 761,
+          "entityType": "TEXT",
+          "text": "70"
+        },
+        {
+          "entityIndex": 762,
+          "entityType": "TEXT",
+          "text": "3"
+        },
+        {
+          "entityIndex": 763,
+          "entityType": "TEXT",
+          "text": "16"
+        },
+        {
+          "entityIndex": 764,
+          "entityType": "TEXT",
+          "text": "494"
+        },
+        {
+          "entityIndex": 765,
+          "entityType": "TEXT",
+          "text": "160"
+        },
+        {
+          "entityIndex": 766,
+          "entityType": "TEXT",
+          "text": "160"
+        },
+        {
+          "entityIndex": 767,
+          "entityType": "TEXT",
+          "text": "2168"
+        },
+        {
+          "entityIndex": 768,
+          "entityType": "TEXT",
+          "text": "1134"
+        },
+        {
+          "entityIndex": 769,
+          "entityType": "TEXT",
+          "text": "40"
+        },
+        {
+          "entityIndex": 770,
+          "entityType": "TEXT",
+          "text": "18"
+        },
+        {
+          "entityIndex": 771,
+          "entityType": "TEXT",
+          "text": "4"
+        },
+        {
+          "entityIndex": 772,
+          "entityType": "TEXT",
+          "text": "79"
+        },
+        {
+          "entityIndex": 773,
+          "entityType": "TEXT",
+          "text": "84"
+        },
+        {
+          "entityIndex": 774,
+          "entityType": "TEXT",
+          "text": "O16"
+        },
+        {
+          "entityIndex": 775,
+          "entityType": "TEXT",
+          "text": "1037"
+        },
+        {
+          "entityIndex": 776,
+          "entityType": "TEXT",
+          "text": "1048"
+        },
+        {
+          "entityIndex": 777,
+          "entityType": "TEXT",
+          "text": "245"
+        },
+        {
+          "entityIndex": 778,
+          "entityType": "TEXT",
+          "text": "85"
+        }
+      ],
+      "workNumberCandidate": "26118"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "4f1336134648bfc4d7f8b23ca3b1bdbc77fb057deffcb66f9a1913cbe5fbd7a1",
+      "databaseWrite": false,
+      "displayName": "21199_Keszi Zs_Mozgo oldal.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "CIRCLE": 6,
+        "LINE": 91,
+        "TEXT": 20
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "05_Május/26114 - Gremlin_Club_Kft/CAD/21199_Keszi Zs_Mozgo oldal.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 98,
+          "entityType": "TEXT",
+          "text": "H3"
+        },
+        {
+          "entityIndex": 100,
+          "entityType": "TEXT",
+          "text": "H1"
+        },
+        {
+          "entityIndex": 102,
+          "entityType": "TEXT",
+          "text": "H2"
+        },
+        {
+          "entityIndex": 104,
+          "entityType": "TEXT",
+          "text": "A7 mozgo"
+        },
+        {
+          "entityIndex": 106,
+          "entityType": "TEXT",
+          "text": "H4"
+        },
+        {
+          "entityIndex": 108,
+          "entityType": "TEXT",
+          "text": "H5"
+        },
+        {
+          "entityIndex": 110,
+          "entityType": "TEXT",
+          "text": "H6"
+        },
+        {
+          "entityIndex": 112,
+          "entityType": "TEXT",
+          "text": "H7"
+        },
+        {
+          "entityIndex": 114,
+          "entityType": "TEXT",
+          "text": "H8"
+        },
+        {
+          "entityIndex": 116,
+          "entityType": "TEXT",
+          "text": "H9"
+        }
+      ],
+      "workNumberCandidate": "21199"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6e8ac08647c064df8f77bb201723dfccf1e540678957bf22ea009e0dc970210d",
+      "databaseWrite": false,
+      "displayName": "Dani_SOS.dxf",
+      "encoding": "latin-1-fallback",
+      "entityCounts": {
+        "LINE": 373,
+        "TEXT": 24
+      },
+      "errors": [
+        "requires_human_review",
+        "drawing_units_and_entity_scope_not_automatically_verified"
+      ],
+      "extension": ".dxf",
+      "macroExecution": false,
+      "recordType": "DrawingTextEvidence",
+      "relativePath": "07_Július/26142 - Panakoda Kft/CAD/Dani_SOS.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "textEvidence": [
+        {
+          "entityIndex": 374,
+          "entityType": "TEXT",
+          "text": "1308"
+        },
+        {
+          "entityIndex": 375,
+          "entityType": "TEXT",
+          "text": "258"
+        },
+        {
+          "entityIndex": 376,
+          "entityType": "TEXT",
+          "text": "909"
+        },
+        {
+          "entityIndex": 377,
+          "entityType": "TEXT",
+          "text": "141"
+        },
+        {
+          "entityIndex": 378,
+          "entityType": "TEXT",
+          "text": "2224"
+        },
+        {
+          "entityIndex": 379,
+          "entityType": "TEXT",
+          "text": "253"
+        },
+        {
+          "entityIndex": 380,
+          "entityType": "TEXT",
+          "text": "2208.5"
+        },
+        {
+          "entityIndex": 381,
+          "entityType": "TEXT",
+          "text": "895"
+        },
+        {
+          "entityIndex": 382,
+          "entityType": "TEXT",
+          "text": "895"
+        },
+        {
+          "entityIndex": 383,
+          "entityType": "TEXT",
+          "text": "258"
+        },
+        {
+          "entityIndex": 384,
+          "entityType": "TEXT",
+          "text": "141"
+        },
+        {
+          "entityIndex": 385,
+          "entityType": "TEXT",
+          "text": "2214"
+        },
+        {
+          "entityIndex": 386,
+          "entityType": "TEXT",
+          "text": "2248"
+        },
+        {
+          "entityIndex": 387,
+          "entityType": "TEXT",
+          "text": "919"
+        },
+        {
+          "entityIndex": 388,
+          "entityType": "TEXT",
+          "text": "970"
+        },
+        {
+          "entityIndex": 389,
+          "entityType": "TEXT",
+          "text": "2202"
+        },
+        {
+          "entityIndex": 390,
+          "entityType": "TEXT",
+          "text": "7"
+        },
+        {
+          "entityIndex": 391,
+          "entityType": "TEXT",
+          "text": "8.5"
+        },
+        {
+          "entityIndex": 392,
+          "entityType": "TEXT",
+          "text": "7"
+        },
+        {
+          "entityIndex": 393,
+          "entityType": "TEXT",
+          "text": "7"
+        },
+        {
+          "entityIndex": 394,
+          "entityType": "TEXT",
+          "text": "2221"
+        },
+        {
+          "entityIndex": 395,
+          "entityType": "TEXT",
+          "text": "12"
+        },
+        {
+          "entityIndex": 396,
+          "entityType": "TEXT",
+          "text": "12"
+        },
+        {
+          "entityIndex": 397,
+          "entityType": "TEXT",
+          "text": "12.5"
+        }
+      ],
+      "workNumberCandidate": "26142"
+    }
+  ],
+  "summary": {
+    "dimensionEvidenceCount": 3,
+    "drawingCount": 10,
+    "textEvidenceCount": 291,
+    "workNumberCandidateCount": 10
+  }
+}

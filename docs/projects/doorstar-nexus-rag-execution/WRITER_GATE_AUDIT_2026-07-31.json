@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-writer-gate-audit.v1",
+  "observedAt": "2026-07-31T21:58:00+02:00",
+  "targetCollection": "doorstar-knowledge",
+  "blockingWriter": {
+    "pid": 3539287,
+    "user": "gabor",
+    "cwd": "/opt/nexus-doorstar/knowledge-service",
+    "listenerPort": 3460,
+    "launchKind": "abandoned-ssh-session",
+    "systemdManaged": false,
+    "automaticRestart": false,
+    "writesAtStartupOnlyWhenCollectionEmpty": true,
+    "manualIndexWriteEndpointPresent": true
+  },
+  "nonBlockingProcesses": {
+    "sharedNexusServicePid": 1733284,
+    "sharedNexusDefaultCollection": "nexus-dev-knowledge",
+    "extraNexusProcessIds": [118041, 1247861],
+    "graphTimerTouchesChroma": false,
+    "graphTimerTargets": ["joinerytech", "spaceos"],
+    "graphTimerStore": "neo4j"
+  },
+  "maintenanceDecision": {
+    "stopOnlyExactLegacyDoorstarProcess": true,
+    "pidReuseCwdGuardRequired": true,
+    "waitForProcessExit": true,
+    "waitForPort3460Close": true,
+    "stopSharedNexusService": false,
+    "stopGraphTimer": false,
+    "restartLegacyProcessAfterVerification": true
+  },
+  "networkReadPerformed": true,
+  "processOrServiceMutationPerformed": false,
+  "nexusWritePerformed": false,
+  "chromaWritePerformed": false
+}

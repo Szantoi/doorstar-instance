@@ -34,6 +34,9 @@ export async function createSalesDraft(
       positions: { create: body.positions.map((position, index) => ({ ...position, position: index, notes: position.notes ?? "" })) },
       documents: options.documents ? { create: options.documents } : undefined,
     },
-    include: { positions: { orderBy: { position: "asc" } }, documents: { orderBy: { createdAt: "asc" } } },
+    include: {
+      positions: { orderBy: [{ position: "asc" }, { id: "asc" }] },
+      documents: { orderBy: [{ createdAt: "asc" }, { id: "asc" }] },
+    },
   });
 }

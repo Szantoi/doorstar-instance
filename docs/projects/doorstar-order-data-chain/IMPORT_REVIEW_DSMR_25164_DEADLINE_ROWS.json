@@ -1,0 +1,69 @@
+{
+  "containsVba": false,
+  "databaseWrite": false,
+  "macroExecution": false,
+  "matches": [
+    {
+      "fields": [
+        {
+          "columnIndex": 1,
+          "header": "MEGR. SZÁMA",
+          "rawValue": "25164"
+        },
+        {
+          "columnIndex": 2,
+          "header": "MEGRENDELŐ NEVE",
+          "rawValue": "Arador Kft. (Dr. Lukács László)"
+        },
+        {
+          "columnIndex": 3,
+          "header": "Prioritás",
+          "rawValue": "0"
+        },
+        {
+          "columnIndex": 4,
+          "header": "Vállalt szállítási határidő",
+          "rawValue": "2025-12-01"
+        },
+        {
+          "columnIndex": 6,
+          "header": "Gyártás-megrendelés feltéve",
+          "rawValue": "2025-12-12"
+        },
+        {
+          "columnIndex": 7,
+          "header": "TB megjegyzés",
+          "rawValue": "december első fele"
+        },
+        {
+          "columnIndex": 11,
+          "header": "Mikor tudja fogadni az ügyfél",
+          "rawValue": "amint elkészültünk"
+        },
+        {
+          "columnIndex": 12,
+          "header": "Beütemezve",
+          "rawValue": "2025-12-08"
+        },
+        {
+          "columnIndex": 14,
+          "header": "Ügyféllel beszéltünk",
+          "rawValue": "Nem"
+        }
+      ],
+      "headerRow": 4,
+      "relativePath": "Ütemterv.xlsx",
+      "reviewRequired": true,
+      "row": 151,
+      "sheet": "ADAT",
+      "sourceLabel": "DEADLINES"
+    }
+  ],
+  "mode": "preview",
+  "summary": {
+    "matchCount": 1,
+    "reviewRequired": true
+  },
+  "textQuery": "Arador",
+  "workNumber": "25164"
+}

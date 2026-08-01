@@ -1,6 +1,6 @@
 # Doorstar Root állapot
 
-**Frissítve:** 2026-07-31
+**Frissítve:** 2026-08-01
 **Szerep:** Doorstar ügyfél-specifikus root
 
 ## Aktív állapot
@@ -633,3 +633,66 @@
   üzemeltetési döntés: systemd-felügyelet a jelenlegi 3460-as processhez.
 - Utolsó teljes kapu: RAG Python 68/68, Nexus evaluator 9/9, backend build,
   OpenAPI 85/85 és backend 44 fájl / 144 teszt PASS.
+
+## 2026-08-01 — Telefon/tablet/PC rendelési UX lezárva
+
+- A `doorstar_frontend` külön office interakciót készített telefonra
+  (`<=620 px`), tabletre (`621–1023 px`) és PC-re (`>=1024 px`). Telefonon
+  alsó menü, ritka célokhoz `Továbbiak`, egyetlen megnyitott pozíciórészlet és
+  egy kézzel elérhető Vissza gomb működik; tableten olvasható kétpaneles nézet,
+  PC-n a kompakt Sales-átadólap maradt.
+- Az authority closure fail-closed: pozíciós szerkesztés kizárólag jogosult,
+  latest/valid `DRAFT` revízión látható. Független `doorstar_monitor` review:
+  PASS, P0–P3 finding nincs.
+- QA: 3 célfájl / 37 teszt, teljes frontend 38/38 fájl és 193/193 teszt,
+  TypeScript lint, production build (165 modul), 390×844 / 820×1180 /
+  1440×1000 light/dark browser-ellenőrzés, fókusz/Escape és nulla vízszintes
+  túlcsordulás.
+- A 2026-08-01 07:30-as frontend fixture-handoff átvéve. A referencia kizárólag
+  a helyi fejlesztési adatbázis `UX-REFERENCE-RETROFIT-001` projektje; a
+  snapshotok explicit demóadatok. Új backend/import-contract, RAG-írás,
+  alkalmazás-DB módosítás vagy deploy nem történt. A production OpenAPI pin
+  változatlan.
+
+## 2026-08-01 — Mobil részletszélesség follow-up
+
+- A felhasználói visszajelzés alapján a telefonos pozíciódetail üres második
+  grid-oszlopa megszűnt. 390 px-en a részlet 320 px-ről a teljes 353,6 px
+  használható munkatérre nőtt; 320 és 620 px-en is 100%-os, overflow nélkül.
+- A tablet/PC kétpaneles elrendezés, one-hand Back/nav stacking, authority és
+  ajtószerkezeti invariáns változatlan. Teljes frontend 193/193, lint/build és
+  független monitor review PASS. Backend/import/DB/deploy változás nincs.
+
+## 2026-08-01 — Konzol 404 lezárva
+
+- A hiányzó implicit favicon helyett explicit, statikus Doorstar SVG asset
+  került az office appba. Friss böngészőlap: `/favicon.svg` 200,
+  `image/svg+xml`, warning/error nélkül.
+- A megmaradó React DevTools sor kizárólag dev-mode információ, nem hiba és
+  production buildben nincs jelen. Lint/build és független review PASS;
+  backend-, adatbázis- vagy deploy-változás nem történt.
+
+## 2026-08-01 — 26133 Sales intake és teljes dokumentumlánc előkészítése
+
+- A `doorstar_import_discovery` read-only auditja mind a kilenc PDF-oldalt
+  ellenőrizte: Sales `01–06` ↔ Gyártólap `01–06` ↔ Szabászati `T=01–06` exact
+  lineage; lábazat és két accessory külön; Mennyiségek/Munkamenet aggregált.
+- A `doorstar_frontend` elkészítette a `/orders/new` DEV Sales-rögzítőt három
+  eszközmóddal, egyetlen pozícióeditorral, contact/address/notes adatokkal,
+  nyers Sales mezőkkel és exact cm→mm normalizálással. A duplikált pozíciókód,
+  MONTH és structured appearance fail-closed.
+- Production/public buildben a Sales PII POST
+  `AUTHENTICATED_SALES_PRINCIPAL_REQUIRED` állapotban DOM- és handler-szinten
+  zárt. A backend audit igazolta a jelenlegi header-only auth, idempotencia,
+  source-lineage, delivery union, structured surface, code uniqueness és
+  concurrency hiányát.
+- Új handoffok: DSORD-17 production document package; DSORD-18 authenticated
+  Sales intake v2; import MSG-DOORSTAR-IMPORT-011 parser/output lineage.
+  Review, artifact-content access, stable errors és exact state transitionök
+  részletezve; SIDE/casing cross-inference mindenhol tiltott.
+- QA: frontend célzott 30/30; teljes 40/40 fájl, 223/223 teszt; lint/build 166
+  modul; 390/820/1440 light/dark browser, overflow és konzolhiba nélkül.
+  Független source-aware closure review: P0–P3 = 0.
+- Alkalmazás-DB, production/public séma, OpenAPI implementáció, deploy és RAG
+  nem változott. Következő terméklánc-feladat a DSORD-18 feloldása, majd a
+  DSORD-17 read-only műszaki dokumentumcsomag UI adoptionja.

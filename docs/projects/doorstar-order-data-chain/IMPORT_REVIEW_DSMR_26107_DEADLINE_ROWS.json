@@ -1,0 +1,199 @@
+{
+  "containsVba": false,
+  "databaseWrite": false,
+  "macroExecution": false,
+  "matches": [
+    {
+      "fields": [
+        {
+          "columnIndex": 1,
+          "header": "MEGR. SZÁMA",
+          "rawValue": "24158"
+        },
+        {
+          "columnIndex": 2,
+          "header": "MEGRENDELŐ NEVE",
+          "rawValue": "Dr. Szabó Imre András - Pintér Mónika"
+        },
+        {
+          "columnIndex": 3,
+          "header": "Prioritás",
+          "rawValue": "0"
+        },
+        {
+          "columnIndex": 4,
+          "header": "Vállalt szállítási határidő",
+          "rawValue": "2024-12-01"
+        },
+        {
+          "columnIndex": 5,
+          "header": "VSzH megjegyzés",
+          "rawValue": "2024. december"
+        },
+        {
+          "columnIndex": 6,
+          "header": "Gyártás-megrendelés feltéve",
+          "rawValue": "2025-01-15"
+        },
+        {
+          "columnIndex": 7,
+          "header": "TB megjegyzés",
+          "rawValue": "2025. január"
+        },
+        {
+          "columnIndex": 11,
+          "header": "Mikor tudja fogadni az ügyfél",
+          "rawValue": "Beépítés megtörtént. A 3 blendével vagyunk adósok."
+        },
+        {
+          "columnIndex": 12,
+          "header": "Beütemezve",
+          "rawValue": "2025-01-31"
+        },
+        {
+          "columnIndex": 14,
+          "header": "Ügyféllel beszéltünk",
+          "rawValue": "Igen"
+        },
+        {
+          "columnIndex": 15,
+          "header": "Megjegyzés / Tényleges várható beépítés",
+          "rawValue": "Beépítés megtörtént, de 3 blendét újra kell fóliázni. Valamint egy szegőt az ügyfél kérésére nem tettünk fel mert ott tapétázni fognak. Amint megvannak a blendék menni kell véglegesíteni a beépítést."
+        }
+      ],
+      "headerRow": 4,
+      "matchReason": "TEXT_FALLBACK",
+      "relativePath": "Ütemterv.xlsx",
+      "reviewRequired": true,
+      "row": 64,
+      "sheet": "ADAT",
+      "sourceLabel": "DEADLINES"
+    },
+    {
+      "fields": [
+        {
+          "columnIndex": 1,
+          "header": "MEGR. SZÁMA",
+          "rawValue": "26107"
+        },
+        {
+          "columnIndex": 2,
+          "header": "MEGRENDELŐ NEVE",
+          "rawValue": "Pintér Mónika"
+        },
+        {
+          "columnIndex": 3,
+          "header": "Prioritás",
+          "rawValue": "0"
+        },
+        {
+          "columnIndex": 4,
+          "header": "Vállalt szállítási határidő",
+          "rawValue": "2026-04-30"
+        },
+        {
+          "columnIndex": 6,
+          "header": "Gyártás-megrendelés feltéve",
+          "rawValue": "2026-03-02"
+        },
+        {
+          "columnIndex": 12,
+          "header": "Beütemezve",
+          "rawValue": "2026-05-04"
+        },
+        {
+          "columnIndex": 14,
+          "header": "Ügyféllel beszéltünk",
+          "rawValue": "igen"
+        },
+        {
+          "columnIndex": 15,
+          "header": "Megjegyzés / Tényleges várható beépítés",
+          "rawValue": "Fix az időpont. Jó lenne tartanunk."
+        }
+      ],
+      "headerRow": 4,
+      "matchReason": "WORK_NUMBER_EXACT",
+      "relativePath": "Ütemterv.xlsx",
+      "reviewRequired": true,
+      "row": 147,
+      "sheet": "ADAT",
+      "sourceLabel": "DEADLINES"
+    },
+    {
+      "fields": [
+        {
+          "columnIndex": 1,
+          "header": "MEGR. SZÁMA",
+          "rawValue": "24158"
+        },
+        {
+          "columnIndex": 2,
+          "header": "MEGRENDELŐ NEVE",
+          "rawValue": "Dr. Szabó Imre András - Pintér Mónika"
+        },
+        {
+          "columnIndex": 3,
+          "header": "Prioritás",
+          "rawValue": "0"
+        },
+        {
+          "columnIndex": 4,
+          "header": "Vállalt szállítási határidő",
+          "rawValue": "2024-12-01"
+        },
+        {
+          "columnIndex": 5,
+          "header": "VSzH megjegyzés",
+          "rawValue": "2024. december"
+        },
+        {
+          "columnIndex": 6,
+          "header": "Tervezett beépítés",
+          "rawValue": "2025-01-15"
+        },
+        {
+          "columnIndex": 7,
+          "header": "TB megjegyzés",
+          "rawValue": "2025. január"
+        },
+        {
+          "columnIndex": 11,
+          "header": "Mikor tudja fogadni az ügyfél",
+          "rawValue": "Beépítés megtörtént. A 3 blendével vagyunk adósok."
+        },
+        {
+          "columnIndex": 12,
+          "header": "Beütemezve",
+          "rawValue": "2025-01-31"
+        },
+        {
+          "columnIndex": 13,
+          "header": "Ügyféllel beszél - tünk",
+          "rawValue": "Igen"
+        },
+        {
+          "columnIndex": 14,
+          "header": "Megjegyzés / Tényleges várható beépítés",
+          "rawValue": "Beépítés megtörtént, de 3 blendét újra kell fóliázni. Valamint egy szegőt az ügyfél kérésére nem tettünk fel mert ott tapétázni fognak. Amint megvannak a blendék menni kell véglegesíteni a beépítést."
+        }
+      ],
+      "headerRow": 1,
+      "matchReason": "TEXT_FALLBACK",
+      "relativePath": "Ütemterv.xlsx",
+      "reviewRequired": true,
+      "row": 76,
+      "sheet": "Ütemterv",
+      "sourceLabel": "DEADLINES"
+    }
+  ],
+  "mode": "preview",
+  "summary": {
+    "exactWorkNumberMatchCount": 1,
+    "matchCount": 3,
+    "reviewRequired": true,
+    "textFallbackMatchCount": 2
+  },
+  "textQuery": "Pintér Mónika",
+  "workNumber": "26107"
+}

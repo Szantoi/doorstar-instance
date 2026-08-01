@@ -65,6 +65,45 @@ describe("legacy import preview provenance", () => {
     await request(app).post(`/api/production/import-runs/${run.body.id}/apply-draft`).set("X-Role", "administrator").send(payload).expect(409);
   });
 
+  it("preserves accented preview values through an explicit UTF-8 JSON HTTP round trip", async () => {
+    const run = await request(app)
+      .post("/api/production/import-runs")
+      .set("X-Role", "administrator")
+      .set("Content-Type", "application/json; charset=utf-8")
+      .send({ profileVersion: "legacy-utf8-v1", sourceFingerprint: "c".repeat(64), previewArtifact: "tmp/26148-séfer-preview.json", targetSchema: "doorstar_test", candidateCount: 2 })
+      .expect("Content-Type", /application\/json; charset=utf-8/)
+      .expect(201);
+
+    await request(app)
+      .post(`/api/production/import-runs/${run.body.id}/apply-draft`)
+      .set("X-Role", "administrator")
+      .set("Content-Type", "application/json; charset=utf-8")
+      .send({
+        projectKey: "DSMR-UTF8-TEST",
+        projectName: "Séfer Kft. (Offenbächer Ferenc)",
+        projectNum: "26148",
+        customerName: "Séfer Kft. (Offenbächer Ferenc)",
+        notes: "Ékezetes forrás-preview visszaolvasási kapu.",
+        positions: [{ code: "02", name: "Gardrób (női)", quantity: 1, productType: "Tapéta (Falsíkban záródó) TUT", openingDirection: "Jobb ki", openingWidthMm: 840, openingHeightMm: 2150, surface: "Festésre előkészített felülettel" }],
+        documents: [{ source: "LEGACY_FOLDER", kind: "SALES_ORDER", displayName: "DSMR 26148 Séfer GYÁRTÁSMEGRENDELÉS.pdf", relativePath: "DSMR 26148 Séfer Kft./Offenbächer Ferenc.pdf", contentSha256: "c".repeat(64) }],
+      })
+      .expect("Content-Type", /application\/json; charset=utf-8/)
+      .expect(201);
+
+    const restored = await request(app)
+      .get("/api/production/production-orders/DSMR-UTF8-TEST")
+      .expect("Content-Type", /application\/json; charset=utf-8/)
+      .expect(200);
+    expect(restored.body).toMatchObject({
+      revisions: [{
+        customerName: "Séfer Kft. (Offenbächer Ferenc)",
+        notes: "Ékezetes forrás-preview visszaolvasási kapu.",
+        positions: [{ name: "Gardrób (női)", productType: "Tapéta (Falsíkban záródó) TUT" }],
+        documents: [{ relativePath: "DSMR 26148 Séfer Kft./Offenbächer Ferenc.pdf" }],
+      }],
+    });
+  });
+
   it("idempotently applies only explicitly selected READY manufactured-item candidates to its test draft", async () => {
     const run = await request(app)
       .post("/api/production/import-runs")

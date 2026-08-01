@@ -1,0 +1,1987 @@
+{
+  "conditionalFirstTestCandidates": [],
+  "databaseWrite": false,
+  "firstTestCandidates": [
+    {
+      "canonicalDocument": {
+        "contentSha256": "b923ee0f97a5f291b4571ac455c709db48478a5866738e29dc0f4a8da62382ae",
+        "displayName": "DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "b923ee0f97a5f291b4571ac455c709db48478a5866738e29dc0f4a8da62382ae",
+          "displayName": "DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Arador Kft. / Dr. Lukács László",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25164",
+      "issues": [],
+      "pathWorkNumberCandidate": "25164",
+      "positionCandidateCount": 2,
+      "positionsWithCompleteIdentityAndQuantity": 2,
+      "positionsWithCompleteOpeningDimensions": 2,
+      "positionsWithPlausibleOpeningDimensions": 2,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25164",
+      "sourceWorkNumberLabels": [
+        "25164"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "25164"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039",
+        "displayName": "DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039",
+          "displayName": "DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Pintér Mónika",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26107",
+      "issues": [],
+      "pathWorkNumberCandidate": "26107",
+      "positionCandidateCount": 3,
+      "positionsWithCompleteIdentityAndQuantity": 3,
+      "positionsWithCompleteOpeningDimensions": 3,
+      "positionsWithPlausibleOpeningDimensions": 3,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26107",
+      "sourceWorkNumberLabels": [
+        "26107"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26107"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+        "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+          "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Tormay Zsolt és Tormay Tímea",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26135",
+      "issues": [],
+      "pathWorkNumberCandidate": "26135",
+      "positionCandidateCount": 5,
+      "positionsWithCompleteIdentityAndQuantity": 5,
+      "positionsWithCompleteOpeningDimensions": 5,
+      "positionsWithPlausibleOpeningDimensions": 5,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26135",
+      "sourceWorkNumberLabels": [
+        "26135"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26135"
+    }
+  ],
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "sales-pdf-import-readiness-v1",
+  "records": [
+    {
+      "canonicalDocument": {
+        "contentSha256": "d2e529cc6683ec21aad0aedeee4027564f73d83a24e2dc18048f32bbdc396cd9",
+        "displayName": "DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf",
+        "relativePath": "_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "d2e529cc6683ec21aad0aedeee4027564f73d83a24e2dc18048f32bbdc396cd9",
+          "displayName": "DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf",
+          "relativePath": "_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Borsi Ilona",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "22124",
+      "issues": [
+        "position_identity_or_quantity_missing",
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "22124",
+      "positionCandidateCount": 17,
+      "positionsWithCompleteIdentityAndQuantity": 8,
+      "positionsWithCompleteOpeningDimensions": 16,
+      "positionsWithPlausibleOpeningDimensions": 16,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "22124 MÓD.3",
+      "sourceWorkNumberLabels": [
+        "22124 MÓD.3"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 3,
+      "workNumber": "22124"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "670f61a9e01411de179a832e1b4179ba025ed64c86d5c0a5d48fa5964531840f",
+        "displayName": "DSMR 24170 Koza Petra Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 24170 Koza Petra Gyártásmegrendelés/DSMR 24170 Koza Petra Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "670f61a9e01411de179a832e1b4179ba025ed64c86d5c0a5d48fa5964531840f",
+          "displayName": "DSMR 24170 Koza Petra Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 24170 Koza Petra Gyártásmegrendelés/DSMR 24170 Koza Petra Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Koza Petra",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "24170",
+      "issues": [
+        "position_identity_or_quantity_missing"
+      ],
+      "pathWorkNumberCandidate": "24170",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "24170",
+      "sourceWorkNumberLabels": [
+        "24170"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "24170"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "502037b49d6193be301f97d4e9cc1aedec8dc3af8927dbe47d82e1be948e9fc2",
+        "displayName": "DSMR 24181 Aktív és Passzívház Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 24181 Passzív és Aktívház Kft. GYÁRTÁSMEGRENDELÉS/DSMR 24181 Aktív és Passzívház Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "502037b49d6193be301f97d4e9cc1aedec8dc3af8927dbe47d82e1be948e9fc2",
+          "displayName": "DSMR 24181 Aktív és Passzívház Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 24181 Passzív és Aktívház Kft. GYÁRTÁSMEGRENDELÉS/DSMR 24181 Aktív és Passzívház Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Aktív és Passzívház Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "24181",
+      "issues": [],
+      "pathWorkNumberCandidate": "24181",
+      "positionCandidateCount": 12,
+      "positionsWithCompleteIdentityAndQuantity": 12,
+      "positionsWithCompleteOpeningDimensions": 12,
+      "positionsWithPlausibleOpeningDimensions": 12,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "24181",
+      "sourceWorkNumberLabels": [
+        "24181"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 5,
+      "workNumber": "24181"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "6343d252b1aaf6f183830a309cbe75bab71fb3c3febc4de3b45d600afc50aebe",
+        "displayName": "DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "6343d252b1aaf6f183830a309cbe75bab71fb3c3febc4de3b45d600afc50aebe",
+          "displayName": "DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Propellant Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25118",
+      "issues": [
+        "position_identity_or_quantity_missing",
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "25118",
+      "positionCandidateCount": 11,
+      "positionsWithCompleteIdentityAndQuantity": 7,
+      "positionsWithCompleteOpeningDimensions": 10,
+      "positionsWithPlausibleOpeningDimensions": 10,
+      "sameContentReferenceCount": 4,
+      "sourceWorkNumber": "25118",
+      "sourceWorkNumberLabels": [
+        "25118"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 4,
+      "workNumber": "25118"
+    },
+    {
+      "contentRevisionCount": 3,
+      "contentRevisions": [
+        {
+          "contentSha256": "e4e18824e7e68fadd03f5457b09aaf9bd2218c45f9939693b83977f2c9760d5b",
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "ce314bd85648cbe76079d83ebe4e5033b9f898b6db38f4959209299e664036d7",
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "48393576bd4e55af021706d7c5f0e557bf9afc8ad424e46916bc29f21b725f43",
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított.pdf",
+          "relativePath": "04_Április/25129 - Ultrasped/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumberLabels": [
+        "25129"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25129"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "8278d6e5edb30abf873b30ce378dbe208ec68daea57e4dc3eeb305aac7af963f",
+        "displayName": "DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "8278d6e5edb30abf873b30ce378dbe208ec68daea57e4dc3eeb305aac7af963f",
+          "displayName": "DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Heves Ádám",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25136",
+      "issues": [
+        "position_identity_or_quantity_missing",
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "25136",
+      "positionCandidateCount": 11,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 10,
+      "positionsWithPlausibleOpeningDimensions": 10,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "25136",
+      "sourceWorkNumberLabels": [
+        "25136"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 6,
+      "workNumber": "25136"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "4870f73ce8e195b9ca1639954bb1d09beb1be6c11d56edda36df7fa8c1ec28be",
+        "displayName": "DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "4870f73ce8e195b9ca1639954bb1d09beb1be6c11d56edda36df7fa8c1ec28be",
+          "displayName": "DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Tilki Róbert",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25143",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "25143",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25143 LÁBAZATI SZEGŐLÉC",
+      "sourceWorkNumberLabels": [
+        "25143 LÁBAZATI SZEGŐLÉC"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "25143"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "1b9ad24a98e5192e8ae0fc71bfc8f5fc5bde32ecf3b47fdfaf677a89c82112b9",
+        "displayName": "DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "01_Január/25152 - Gremlin Club Kft. Keszi Zsolt/DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "LEGACY_2026"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "1b9ad24a98e5192e8ae0fc71bfc8f5fc5bde32ecf3b47fdfaf677a89c82112b9",
+          "displayName": "DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "01_Január/25152 - Gremlin Club Kft. Keszi Zsolt/DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "customerName": "Gremlin Club Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": "Telefon: 06 30 933 5844 Keszi Zsolt",
+      "headerWorkNumberCandidate": "25152",
+      "issues": [
+        "no_door_position_candidates",
+        "expected_delivery_is_free_text"
+      ],
+      "pathWorkNumberCandidate": "25152",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25152",
+      "sourceWorkNumberLabels": [
+        "25152"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "25152"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "42e05a3e66c37d0b8167614720d08af6cbf3be1fce527ca679f86ad8e1a5d336",
+        "displayName": "DSMR 25156 Tilki Róbert Bútorfront GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25156 Tilki BÚTORFRONT Gyártásmegrendelés/DSMR 25156 Tilki Róbert Bútorfront GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "42e05a3e66c37d0b8167614720d08af6cbf3be1fce527ca679f86ad8e1a5d336",
+          "displayName": "DSMR 25156 Tilki Róbert Bútorfront GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25156 Tilki BÚTORFRONT Gyártásmegrendelés/DSMR 25156 Tilki Róbert Bútorfront GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Tilki Róbert",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25156",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "25156",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25156 BÚTORFRONT",
+      "sourceWorkNumberLabels": [
+        "25156 BÚTORFRONT"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 0,
+      "workNumber": "25156"
+    },
+    {
+      "contentRevisionCount": 4,
+      "contentRevisions": [
+        {
+          "contentSha256": "7da8cdc560a1f13ab35eee731b36f1badbef38bdc5b0adff8cb79e8d413f29f6",
+          "displayName": "DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf",
+          "relativePath": "_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "5799422d437ca4c040febd41a37ba1b291fbc6abf9ff20dd36269c8c8f004d4d",
+          "displayName": "DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "contentSha256": "8cca9058bbf8c446d5e0d67de8a1c628f09e9ef0f8bb34a5876309d558f40a9b",
+          "displayName": "DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf",
+          "relativePath": "01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "contentSha256": "2e911de763f6f00fbf27b4c4e3bb2bb4ca318d03c8f92e38bae8517f52c457b0",
+          "displayName": "DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf",
+          "relativePath": "01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 5,
+      "sourceWorkNumberLabels": [
+        "25159"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25159"
+    },
+    {
+      "contentRevisionCount": 3,
+      "contentRevisions": [
+        {
+          "contentSha256": "92fd4d1c2ecf01b892024e1df991dd2b3a4ada599317b2f9672e13c717e7f608",
+          "displayName": "DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/25161 - SAVIL/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "15c37169f5e7a6de5d8c18600fc3a49460abdfb73b899951306ff9e09e3c34cf",
+          "displayName": "DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/25161 - SAVIL/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "2a10bf45aa0b003b0fe76042b6b64136605f6e7854f1c5a5c431659ac624cdfd",
+          "displayName": "DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS_színkóddal.pdf",
+          "relativePath": "03_Március/25161 - SAVIL sro/Felmérés/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS_színkóddal.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 4,
+      "sourceWorkNumberLabels": [
+        "25161"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25161"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "a774233a3bb79963d1ed8e2a069ad80c41d9eb4fd87d7a9fbe541ae6c21d4f0b",
+          "displayName": "DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "04_Április/25163 - Megépít plusz Kft/Archiv/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "contentSha256": "bbf50a2a3f6a7acb77a844558edf0661bcbb07888e1e2c0edc41a89db0b75834",
+          "displayName": "DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS mód. 02.12!!!.pdf",
+          "relativePath": "04_Április/25163 - Megépít plusz Kft/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS mód. 02.12!!!.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumberLabels": [
+        "25163",
+        "25163 mód."
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25163"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "b923ee0f97a5f291b4571ac455c709db48478a5866738e29dc0f4a8da62382ae",
+        "displayName": "DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "b923ee0f97a5f291b4571ac455c709db48478a5866738e29dc0f4a8da62382ae",
+          "displayName": "DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Arador Kft. / Dr. Lukács László",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25164",
+      "issues": [],
+      "pathWorkNumberCandidate": "25164",
+      "positionCandidateCount": 2,
+      "positionsWithCompleteIdentityAndQuantity": 2,
+      "positionsWithCompleteOpeningDimensions": 2,
+      "positionsWithPlausibleOpeningDimensions": 2,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25164",
+      "sourceWorkNumberLabels": [
+        "25164"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "25164"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "a0b24a156a5608595687d36da8754d1ca20ed39a5e132b799ac8c40308ded3ee",
+        "displayName": "DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "a0b24a156a5608595687d36da8754d1ca20ed39a5e132b799ac8c40308ded3ee",
+          "displayName": "DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25167 Pannónia Bútorstúdió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Pannónia Bútorstúdió Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": "K elte: 2025.10.27",
+      "headerWorkNumberCandidate": null,
+      "issues": [
+        "sales_header_or_filename_work_number_mismatch",
+        "expected_delivery_is_free_text"
+      ],
+      "pathWorkNumberCandidate": "25167",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "252167",
+      "sourceWorkNumberLabels": [
+        "252167"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 0,
+      "workNumber": "25167"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "330bcc3d43ccb7261a13b3b7b4bc00436e3cbb15025ac295ddc5cd8636151716",
+        "displayName": "DSMR 25168 Koroknai Richárd GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+        "relativePath": "04_Április/25168 - Koroknai Richárd/DSMR 25168 Koroknai Richárd GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+        "sourceRoot": "LEGACY_2026"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "330bcc3d43ccb7261a13b3b7b4bc00436e3cbb15025ac295ddc5cd8636151716",
+          "displayName": "DSMR 25168 Koroknai Richárd GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "relativePath": "04_Április/25168 - Koroknai Richárd/DSMR 25168 Koroknai Richárd GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "customerName": "Koroknai Richárd",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": "Telefon: 06703334783 Terék Csilla",
+      "headerWorkNumberCandidate": "25168",
+      "issues": [
+        "expected_delivery_is_free_text"
+      ],
+      "pathWorkNumberCandidate": "25168",
+      "positionCandidateCount": 18,
+      "positionsWithCompleteIdentityAndQuantity": 18,
+      "positionsWithCompleteOpeningDimensions": 18,
+      "positionsWithPlausibleOpeningDimensions": 18,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25168",
+      "sourceWorkNumberLabels": [
+        "25168"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 8,
+      "workNumber": "25168"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "5ce23d7644b762399bf5c4067af53bcebf31bdec9ad0f2955578f77a0e04b0cb",
+        "displayName": "DSMR 25170 NATURAL HOMES GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "01_Január/25170 - NATURAL HOMES/DSMR 25170 NATURAL HOMES GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "LEGACY_2026"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "5ce23d7644b762399bf5c4067af53bcebf31bdec9ad0f2955578f77a0e04b0cb",
+          "displayName": "DSMR 25170 NATURAL HOMES GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "01_Január/25170 - NATURAL HOMES/DSMR 25170 NATURAL HOMES GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "customerName": "NATURAL HOMES",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": "Telefon: +40 728 125 045 Vincze Nemet Laszlo január-február",
+      "headerWorkNumberCandidate": "25170",
+      "issues": [
+        "expected_delivery_is_free_text"
+      ],
+      "pathWorkNumberCandidate": "25170",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "25170",
+      "sourceWorkNumberLabels": [
+        "25170"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "25170"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "74c3afef960e8f299bc7abac92fb88f99932fb17df03343856a97e8dbe6f7816",
+        "displayName": "DSMR 25174 Szvitek László BLENDE Gyártásmegrendelés.pdf",
+        "relativePath": "01_Január/25174 - Szvitek László_BLENDE/DSMR 25174 Szvitek László BLENDE Gyártásmegrendelés.pdf",
+        "sourceRoot": "LEGACY_2026"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "74c3afef960e8f299bc7abac92fb88f99932fb17df03343856a97e8dbe6f7816",
+          "displayName": "DSMR 25174 Szvitek László BLENDE Gyártásmegrendelés.pdf",
+          "relativePath": "01_Január/25174 - Szvitek László_BLENDE/DSMR 25174 Szvitek László BLENDE Gyártásmegrendelés.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "customerName": "Szvitek László",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25174",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "25174",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25174",
+      "sourceWorkNumberLabels": [
+        "25174"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "25174"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "78df8c863c15ebf62a69814e50377d396dd86606d0c96fff545e096aea780f4f",
+          "displayName": "DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "contentSha256": "1d069d3f9a8d5b3ec4463f81d54a96233fc9427b81116dd2746b3d845db832f1",
+          "displayName": "DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf",
+          "relativePath": "05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumberLabels": [
+        "25177"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25177"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "7977a053d0e78092554ca0bb8cd20d948498d0a382eb86db7bd14e833d43ab81",
+        "displayName": "DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "01_Január/25178 - Dienes Testvérek Kft/DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "LEGACY_2026"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "7977a053d0e78092554ca0bb8cd20d948498d0a382eb86db7bd14e833d43ab81",
+          "displayName": "DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "01_Január/25178 - Dienes Testvérek Kft/DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "customerName": "Dienes Testvérek Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "25178",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "25178",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "25178",
+      "sourceWorkNumberLabels": [
+        "25178"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 3,
+      "workNumber": "25178"
+    },
+    {
+      "contentRevisionCount": 3,
+      "contentRevisions": [
+        {
+          "contentSha256": "c54673e45f201c4b943ceeee4c70e0c244e16b58c77722d180a6281704134baa",
+          "displayName": "DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "relativePath": "_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "b6c61d65b255651c8f415f67d158eb4333ef677853c9b2c308f5bfd495cad4af",
+          "displayName": "DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD. 2.pdf",
+          "relativePath": "_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD. 2.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "4be85f125c4d21d088f20e1e34ae0664e3974318b958444eff620018d2d149ec",
+          "displayName": "DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 6,
+      "sourceWorkNumberLabels": [
+        "25180"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25180"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "e7aa93bb484f191ef2b1f11101733d2a56ac71948479c507fcb5f75b1830d48f",
+          "displayName": "DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/25181 - Saincaize-Prauda Orsolya/Archiv/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "2fb4b966261cc1874fc95f466bf76ce09e2e17c514b420d32d4503b4c73b9e41",
+          "displayName": "DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf",
+          "relativePath": "_Archiv/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumberLabels": [
+        "25181"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "25181"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "7291009e63138de438ca4802aad30f6096b9a482bb1f1400dfffa41ee1ccf387",
+        "displayName": "DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS/DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "7291009e63138de438ca4802aad30f6096b9a482bb1f1400dfffa41ee1ccf387",
+          "displayName": "DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS/DSMR 26102 Presits Balázs GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Presits Balázs",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26102",
+      "issues": [],
+      "pathWorkNumberCandidate": "26102",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumber": "26102",
+      "sourceWorkNumberLabels": [
+        "26102"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26102"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "43c2702d2f42d69dc11ee64ed04a7e4845da740292f0ffa61db0c9ccbcc6435b",
+        "displayName": "DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "43c2702d2f42d69dc11ee64ed04a7e4845da740292f0ffa61db0c9ccbcc6435b",
+          "displayName": "DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26103 Intendo Studió Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Intendo Stúdió Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26103",
+      "issues": [],
+      "pathWorkNumberCandidate": "26103",
+      "positionCandidateCount": 9,
+      "positionsWithCompleteIdentityAndQuantity": 9,
+      "positionsWithCompleteOpeningDimensions": 9,
+      "positionsWithPlausibleOpeningDimensions": 9,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26103",
+      "sourceWorkNumberLabels": [
+        "26103"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26103"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "552a08bd1a2ccfe374065efbc55f5023fc09f15826ac282b748d9acb73bc99e2",
+          "displayName": "DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "05d7698b0dde7e7866bd2dc1e940ef9873fa5b0468e4d6722b81970ed3b363ee",
+          "displayName": "DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "03_Március/26106 - Sipőcz András/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumberLabels": [
+        "26106"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26106"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039",
+        "displayName": "DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "2be476255635766ed93e117b9b6080ca4fb564f451c835d895aae93e8e06e039",
+          "displayName": "DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS/DSMR 26107 Pintér Mónika GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Pintér Mónika",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26107",
+      "issues": [],
+      "pathWorkNumberCandidate": "26107",
+      "positionCandidateCount": 3,
+      "positionsWithCompleteIdentityAndQuantity": 3,
+      "positionsWithCompleteOpeningDimensions": 3,
+      "positionsWithPlausibleOpeningDimensions": 3,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26107",
+      "sourceWorkNumberLabels": [
+        "26107"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26107"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "f1150d81552514b39602076ccb3e1406f240a1d4806eb02e2fa5e2fb218a33ed",
+        "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 26109 Luctor BT. Gyártásmegrendelés/DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "f1150d81552514b39602076ccb3e1406f240a1d4806eb02e2fa5e2fb218a33ed",
+          "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 26109 Luctor BT. Gyártásmegrendelés/DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Luctor Bt. (Szilágyi Áron)",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26109",
+      "issues": [],
+      "pathWorkNumberCandidate": "26109",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26109",
+      "sourceWorkNumberLabels": [
+        "26109"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26109"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "392d4ca6c20eff02a1018ce9318ea5b1a8521259f9d89645400f876bdf985612",
+        "displayName": "DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS/DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "392d4ca6c20eff02a1018ce9318ea5b1a8521259f9d89645400f876bdf985612",
+          "displayName": "DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS/DSMR 26110 SmartCube Consulting Kft GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "SmartCube Consulting Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26110",
+      "issues": [],
+      "pathWorkNumberCandidate": "26110",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26110",
+      "sourceWorkNumberLabels": [
+        "26110"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26110"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "b3fbd595256e423919f9f62ecf8a046dae34ec9573f0d88b85fa641298601663",
+        "displayName": "DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "b3fbd595256e423919f9f62ecf8a046dae34ec9573f0d88b85fa641298601663",
+          "displayName": "DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "West Invest Company Kft. DSAR 26111 Felm. Mód.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": null,
+      "issues": [
+        "customer_name_contains_document_identifier"
+      ],
+      "pathWorkNumberCandidate": "26111",
+      "positionCandidateCount": 5,
+      "positionsWithCompleteIdentityAndQuantity": 5,
+      "positionsWithCompleteOpeningDimensions": 5,
+      "positionsWithPlausibleOpeningDimensions": 5,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": null,
+      "sourceWorkNumberLabels": [
+        "None"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26111"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "052cdb81ad8208f220bc1213717b65d3a41d1723161c954a4039e099f82a7c7c",
+        "displayName": "DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "052cdb81ad8208f220bc1213717b65d3a41d1723161c954a4039e099f82a7c7c",
+          "displayName": "DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Derby Trans Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26112",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26112",
+      "positionCandidateCount": 6,
+      "positionsWithCompleteIdentityAndQuantity": 6,
+      "positionsWithCompleteOpeningDimensions": 5,
+      "positionsWithPlausibleOpeningDimensions": 5,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26112",
+      "sourceWorkNumberLabels": [
+        "26112"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26112"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "77c3db4a1884f72a38e4a9645fa70dcb308a052484238de606a4f698b788fa69",
+        "displayName": "DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 26114 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "77c3db4a1884f72a38e4a9645fa70dcb308a052484238de606a4f698b788fa69",
+          "displayName": "DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 26114 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Gremlin Club Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26114",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "26114",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26114",
+      "sourceWorkNumberLabels": [
+        "26114"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26114"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "4583cc50fc1129882f09b06078693f8127e43dbd2bf4f892b59f898ca8165bac",
+        "displayName": "DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf",
+        "relativePath": "_Archiv/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "4583cc50fc1129882f09b06078693f8127e43dbd2bf4f892b59f898ca8165bac",
+          "displayName": "DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf",
+          "relativePath": "_Archiv/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Dr. Majoros Árpád",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26116",
+      "issues": [],
+      "pathWorkNumberCandidate": "26116",
+      "positionCandidateCount": 8,
+      "positionsWithCompleteIdentityAndQuantity": 8,
+      "positionsWithCompleteOpeningDimensions": 8,
+      "positionsWithPlausibleOpeningDimensions": 8,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26116 Új! Végleges",
+      "sourceWorkNumberLabels": [
+        "26116 Új! Végleges"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26116"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "c4491ef314aedb6463111a106bee2a9bf7c8af400e04b9419d679b5974ed582c",
+        "displayName": "DSMR 26117 LFA Ingatlan Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26117 LFA Ingatlan Kft. (Toma Ferenc)/DSMR 26117 LFA Ingatlan Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "c4491ef314aedb6463111a106bee2a9bf7c8af400e04b9419d679b5974ed582c",
+          "displayName": "DSMR 26117 LFA Ingatlan Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26117 LFA Ingatlan Kft. (Toma Ferenc)/DSMR 26117 LFA Ingatlan Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "LFA Ingatlan Kft. / Toma Ferenc",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26117",
+      "issues": [],
+      "pathWorkNumberCandidate": "26117",
+      "positionCandidateCount": 8,
+      "positionsWithCompleteIdentityAndQuantity": 8,
+      "positionsWithCompleteOpeningDimensions": 8,
+      "positionsWithPlausibleOpeningDimensions": 8,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26117",
+      "sourceWorkNumberLabels": [
+        "26117"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 3,
+      "workNumber": "26117"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "f427822a51065ea408776394ada7d3e08c24cd2a11fcc7116e3be45329cde9f2",
+        "displayName": "DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26118 LFA Ingatlan Kft. (Toma Ferenc-Bejárati ajtó panel)/DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "f427822a51065ea408776394ada7d3e08c24cd2a11fcc7116e3be45329cde9f2",
+          "displayName": "DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26118 LFA Ingatlan Kft. (Toma Ferenc-Bejárati ajtó panel)/DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "LFA Ingatlan Kft. / Toma Ferenc",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26118",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26118",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26118",
+      "sourceWorkNumberLabels": [
+        "26118"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26118"
+    },
+    {
+      "contentRevisionCount": 3,
+      "contentRevisions": [
+        {
+          "contentSha256": "21beaaade81ba41371f85b4a37331a36c79c8b720ca4a3a8c29d27b546787676",
+          "displayName": "DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód.pdf",
+          "relativePath": "_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "a0098f59a174beaa5904daf46444c67f4834481dd671afb23d5a4faa168ee89e",
+          "displayName": "DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "cd7c50a7af5fa3e7022d2e252a63d2a2b74901487c7980a92a87bc106a36290e",
+          "displayName": "DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf",
+          "relativePath": "_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 4,
+      "sourceWorkNumberLabels": [
+        "26119",
+        "26119 mód."
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26119"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "ade7eba6aa5b91b218725a02ec2d69307c76ad228bb2cfdf3487230eda0c218b",
+        "displayName": "DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "ade7eba6aa5b91b218725a02ec2d69307c76ad228bb2cfdf3487230eda0c218b",
+          "displayName": "DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Szabadi Sándor",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26122",
+      "issues": [],
+      "pathWorkNumberCandidate": "26122",
+      "positionCandidateCount": 6,
+      "positionsWithCompleteIdentityAndQuantity": 6,
+      "positionsWithCompleteOpeningDimensions": 6,
+      "positionsWithPlausibleOpeningDimensions": 6,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26122",
+      "sourceWorkNumberLabels": [
+        "26122"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 3,
+      "workNumber": "26122"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "840e043b684935f2a3b2e5d5fee23752fef0cf1dab4788b429e5b2fff093659c",
+          "displayName": "DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "relativePath": "_Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "4917f2901072d57d90e9a4a2dc2063f9d0458359766ebe04460b81f48ccbdfa2",
+          "displayName": "DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.2.pdf",
+          "relativePath": "05_Május/26123 - Korrekt Hungary Kft/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.2.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumberLabels": [
+        "26123"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26123"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "a3ca5d5540fbd49a4cd4cf16e824647f1e8f1d43fc3e3da353b4c44602214788",
+          "displayName": "DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "9a918606e7f30c8be97412d9d34db3bf7ffef9b013220e9a8ac729613a03a2c1",
+          "displayName": "DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "relativePath": "05_Május/26124 - Kovács Ákos/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumberLabels": [
+        "26124"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26124"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "3f43aecaf325e0234700427afa1f95be18f3cbe175152b1b95802d8a0197456a",
+          "displayName": "DSMR 26125 HEAD-UP Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26125 HEAD-UP Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26125 HEAD-UP Kft. GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "4737a2f4c8e1c3da6df43b330314a5ec9ab7438626ca32980c63010c1a8c7d61",
+          "displayName": "DSMR 26125 HEAD-UP Kft. GYÁRTÁSMEGRENDELÉS mód.pdf",
+          "relativePath": "05_Május/26125 - Head_Up Kft/DSMR 26125 HEAD-UP Kft. GYÁRTÁSMEGRENDELÉS mód.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 3,
+      "sourceWorkNumberLabels": [
+        "26125",
+        "26125 mód."
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26125"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "1de6e27f517289f2b6b28ba9cbff64cc7772f01da712cb579b035e0b6f295a72",
+        "displayName": "DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 26128 Dotkom Invest Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "1de6e27f517289f2b6b28ba9cbff64cc7772f01da712cb579b035e0b6f295a72",
+          "displayName": "DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 26128 Dotkom Invest Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Dotkom Invest Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26128",
+      "issues": [
+        "position_identity_or_quantity_missing"
+      ],
+      "pathWorkNumberCandidate": "26128",
+      "positionCandidateCount": 6,
+      "positionsWithCompleteIdentityAndQuantity": 4,
+      "positionsWithCompleteOpeningDimensions": 6,
+      "positionsWithPlausibleOpeningDimensions": 6,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26128",
+      "sourceWorkNumberLabels": [
+        "26128"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26128"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "e44a41dcb75443e8691786cc3420b697e43b1797535849076ffd21b9375f4501",
+        "displayName": "DSMR 26130 KOBA Construction Kft. Gyártásmegrendelé.pdf",
+        "relativePath": "_Archiv/DSMR 26130 KOBA Construction Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26130 KOBA Construction Kft. Gyártásmegrendelé.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "e44a41dcb75443e8691786cc3420b697e43b1797535849076ffd21b9375f4501",
+          "displayName": "DSMR 26130 KOBA Construction Kft. Gyártásmegrendelé.pdf",
+          "relativePath": "_Archiv/DSMR 26130 KOBA Construction Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26130 KOBA Construction Kft. Gyártásmegrendelé.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "KOBA Construction Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26130",
+      "issues": [],
+      "pathWorkNumberCandidate": "26130",
+      "positionCandidateCount": 8,
+      "positionsWithCompleteIdentityAndQuantity": 8,
+      "positionsWithCompleteOpeningDimensions": 8,
+      "positionsWithPlausibleOpeningDimensions": 8,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26130",
+      "sourceWorkNumberLabels": [
+        "26130"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26130"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "c5f137ba595d10772669b83405146f1db47e79cc38eed5788dc741b989664d4e",
+        "displayName": "DSMR 26131 Variotech Kft. (Németh Miklós) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26131 Variotech Kft. (Németh Miklós) Gyártásmegrendelés/DSMR 26131 Variotech Kft. (Németh Miklós) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "c5f137ba595d10772669b83405146f1db47e79cc38eed5788dc741b989664d4e",
+          "displayName": "DSMR 26131 Variotech Kft. (Németh Miklós) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26131 Variotech Kft. (Németh Miklós) Gyártásmegrendelés/DSMR 26131 Variotech Kft. (Németh Miklós) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Variotech Kft. / Németh Miklós",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26131",
+      "issues": [],
+      "pathWorkNumberCandidate": "26131",
+      "positionCandidateCount": 7,
+      "positionsWithCompleteIdentityAndQuantity": 7,
+      "positionsWithCompleteOpeningDimensions": 7,
+      "positionsWithPlausibleOpeningDimensions": 7,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26131",
+      "sourceWorkNumberLabels": [
+        "26131"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26131"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "e13e0a2e2b23853bf4815b05217f768986ccd2489557da2edb84338c5bd7304b",
+        "displayName": "DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS JÓ!.pdf",
+        "relativePath": "_Archiv/DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS JÓ!.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "e13e0a2e2b23853bf4815b05217f768986ccd2489557da2edb84338c5bd7304b",
+          "displayName": "DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS JÓ!.pdf",
+          "relativePath": "_Archiv/DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26132 Margaréta Otthonok Kft. GYÁRTÁSMEGRENDELÉS JÓ!.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Margaréta Otthonok Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26132",
+      "issues": [],
+      "pathWorkNumberCandidate": "26132",
+      "positionCandidateCount": 6,
+      "positionsWithCompleteIdentityAndQuantity": 6,
+      "positionsWithCompleteOpeningDimensions": 6,
+      "positionsWithPlausibleOpeningDimensions": 6,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26132",
+      "sourceWorkNumberLabels": [
+        "26132"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 0,
+      "workNumber": "26132"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "50879a659099cf2269b4155dadd6bcc62b59f5b3df1777aaf86a27e330da8ba9",
+        "displayName": "DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "50879a659099cf2269b4155dadd6bcc62b59f5b3df1777aaf86a27e330da8ba9",
+          "displayName": "DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Fehér László",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26133",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26133",
+      "positionCandidateCount": 7,
+      "positionsWithCompleteIdentityAndQuantity": 7,
+      "positionsWithCompleteOpeningDimensions": 6,
+      "positionsWithPlausibleOpeningDimensions": 6,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26133",
+      "sourceWorkNumberLabels": [
+        "26133"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26133"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+        "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+          "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26135 Tormay Zsolt (új) GYÁRTÁSMEGRENDELÉS/DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Tormay Zsolt és Tormay Tímea",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26135",
+      "issues": [],
+      "pathWorkNumberCandidate": "26135",
+      "positionCandidateCount": 5,
+      "positionsWithCompleteIdentityAndQuantity": 5,
+      "positionsWithCompleteOpeningDimensions": 5,
+      "positionsWithPlausibleOpeningDimensions": 5,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26135",
+      "sourceWorkNumberLabels": [
+        "26135"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26135"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "024c8c1b2ec98d90452a7b720a217dc3a91758d023254ff1881d25d13a32981a",
+        "displayName": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "024c8c1b2ec98d90452a7b720a217dc3a91758d023254ff1881d25d13a32981a",
+          "displayName": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Aelan Beauty Kft.",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26141",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26141",
+      "positionCandidateCount": 5,
+      "positionsWithCompleteIdentityAndQuantity": 5,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "26141",
+      "sourceWorkNumberLabels": [
+        "26141"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26141"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "a4627544e7b386ca2f9d2b2fa129ba58d6a143dc4f8a9dd99c1b95ced96f3acf",
+        "displayName": "DSMR 26142 Panakoda Kft. (Kovács péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26142 Panakoda Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26142 Panakoda Kft. (Kovács péter) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "a4627544e7b386ca2f9d2b2fa129ba58d6a143dc4f8a9dd99c1b95ced96f3acf",
+          "displayName": "DSMR 26142 Panakoda Kft. (Kovács péter) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26142 Panakoda Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26142 Panakoda Kft. (Kovács péter) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Panakoda Kft. (Kovács Péter)",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26142",
+      "issues": [],
+      "pathWorkNumberCandidate": "26142",
+      "positionCandidateCount": 1,
+      "positionsWithCompleteIdentityAndQuantity": 1,
+      "positionsWithCompleteOpeningDimensions": 1,
+      "positionsWithPlausibleOpeningDimensions": 1,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26142",
+      "sourceWorkNumberLabels": [
+        "26142"
+      ],
+      "state": "TECHNICAL_REVIEW_READY",
+      "supplementaryProductCandidateCount": 0,
+      "workNumber": "26142"
+    },
+    {
+      "contentRevisionCount": 2,
+      "contentRevisions": [
+        {
+          "contentSha256": "3991d4f8150d5e933e3133b19bb3f62af13ef291ac22dc2517f4d40696798db3",
+          "displayName": "DSMR 26143 AP Cash Kft. Falpanel+ajtó GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26143 AP Cash Kft. Falpanel+ajtó GYÁRTÁSMEGRENDELÉS/DSMR 26143 AP Cash Kft. Falpanel+ajtó GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "contentSha256": "5e4c30f299e9bcb14d251c265e755f770bf28c53afd23511b343c5d71ceb07cf",
+          "displayName": "DSMR 26143 AP Cash Kft. Falpanel+ajtó GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "relativePath": "07_Július/26143 - AP Cash Kft/DSMR 26143 AP Cash Kft. Falpanel+ajtó GYÁRTÁSMEGRENDELÉS MÓD.pdf",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ],
+      "databaseWrite": false,
+      "issues": [
+        "multiple_sales_pdf_content_revisions"
+      ],
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumberLabels": [
+        "26143"
+      ],
+      "state": "REVISION_SELECTION_REQUIRED",
+      "workNumber": "26143"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "dde0bf174dde36c139716676c1d1d78af70104e29a5aba9a2fd9c4ea3bba4c8b",
+        "displayName": "DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "dde0bf174dde36c139716676c1d1d78af70104e29a5aba9a2fd9c4ea3bba4c8b",
+          "displayName": "DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Aptermanné dr. Csoma Barbara",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26144",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26144",
+      "positionCandidateCount": 8,
+      "positionsWithCompleteIdentityAndQuantity": 8,
+      "positionsWithCompleteOpeningDimensions": 7,
+      "positionsWithPlausibleOpeningDimensions": 7,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26144",
+      "sourceWorkNumberLabels": [
+        "26144"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 3,
+      "workNumber": "26144"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "5357d9833298021d5c3c3833709c1aeed07d6d0f2b69830e6441a20c9d2c0795",
+        "displayName": "DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "_Archiv/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "5357d9833298021d5c3c3833709c1aeed07d6d0f2b69830e6441a20c9d2c0795",
+          "displayName": "DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "_Archiv/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS/DSMR 26145 Koroknai Richárd Lábazat GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Koroknai Richárd",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26145",
+      "issues": [
+        "no_door_position_candidates"
+      ],
+      "pathWorkNumberCandidate": "26145",
+      "positionCandidateCount": 0,
+      "positionsWithCompleteIdentityAndQuantity": 0,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26145",
+      "sourceWorkNumberLabels": [
+        "26145"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26145"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "ada96646678b2f282c1e85bb0edf1fef2036aaad46bc77ae1fb47db450b4fcc6",
+        "displayName": "DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf",
+        "relativePath": "_Archiv/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "ada96646678b2f282c1e85bb0edf1fef2036aaad46bc77ae1fb47db450b4fcc6",
+          "displayName": "DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf",
+          "relativePath": "_Archiv/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Sipőcz András",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26146",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26146",
+      "positionCandidateCount": 2,
+      "positionsWithCompleteIdentityAndQuantity": 2,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 2,
+      "sourceWorkNumber": "26146 Felm. Mód.",
+      "sourceWorkNumberLabels": [
+        "26146 Felm. Mód."
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26146"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "ec017886a730729a5a59a310e57514bf86c1bc3fea7f062759b3c9489fa6d1e1",
+        "displayName": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "ec017886a730729a5a59a310e57514bf86c1bc3fea7f062759b3c9489fa6d1e1",
+          "displayName": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Séfer Kft. / Offenbächer Ferenc",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26148",
+      "issues": [
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26148",
+      "positionCandidateCount": 4,
+      "positionsWithCompleteIdentityAndQuantity": 4,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "26148",
+      "sourceWorkNumberLabels": [
+        "26148"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 1,
+      "workNumber": "26148"
+    },
+    {
+      "canonicalDocument": {
+        "contentSha256": "50a38ad3c6381b5438bb2fa95b36fbb2807bc7a35d966b520358ea3a7988690d",
+        "displayName": "DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+        "relativePath": "DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "contentRevisionCount": 1,
+      "contentRevisions": [
+        {
+          "contentSha256": "50a38ad3c6381b5438bb2fa95b36fbb2807bc7a35d966b520358ea3a7988690d",
+          "displayName": "DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "customerName": "Dr. Powell Miriam",
+      "databaseWrite": false,
+      "expectedDelivery": null,
+      "expectedDeliveryText": null,
+      "headerWorkNumberCandidate": "26151",
+      "issues": [
+        "position_identity_or_quantity_missing",
+        "opening_dimensions_missing_or_incomplete",
+        "opening_dimensions_outside_review_range"
+      ],
+      "pathWorkNumberCandidate": "26151",
+      "positionCandidateCount": 7,
+      "positionsWithCompleteIdentityAndQuantity": 6,
+      "positionsWithCompleteOpeningDimensions": 0,
+      "positionsWithPlausibleOpeningDimensions": 0,
+      "sameContentReferenceCount": 1,
+      "sourceWorkNumber": "26151",
+      "sourceWorkNumberLabels": [
+        "26151"
+      ],
+      "state": "REVIEW_REQUIRED",
+      "supplementaryProductCandidateCount": 2,
+      "workNumber": "26151"
+    }
+  ],
+  "scope": "Sales-PDF-only; survey, deadline and CAD reconciliation remain mandatory.",
+  "summary": {
+    "conditionalFirstTestCandidateCount": 0,
+    "firstTestCandidateCount": 3,
+    "reviewRequiredCount": 24,
+    "revisionSelectionRequiredCount": 13,
+    "technicalReviewReadyCount": 15,
+    "workNumberCount": 52
+  }
+}

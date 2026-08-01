@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-live-apply-audit.v1",
+  "executedAt": "2026-08-01T09:25:03+02:00",
+  "target": {
+    "island": "doorstar",
+    "collection": "doorstar-knowledge",
+    "collectionId": "f8ed148e-743e-4a8d-a5b0-aa95a4b0b90a"
+  },
+  "package": {
+    "id": "doorstar-controlled-knowledge-rag",
+    "version": "1.0.0",
+    "packageHash": "34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116",
+    "manifestSha256": "4c3f3cf612a4b118981a094204fbbc64ad03dfe4ca0ed16dc050d40d1e72dd72",
+    "inventorySha256": "bd7844df8024d7fb96bdd37293872d88f19ebb0eac2975cf876fce439c27aa50",
+    "evalSha256": "b3d42264ddbfe68b610611813f50d46280c241ad5a825f70491ad77085f7812d",
+    "dryRunReportSha256": "c4e74c696495c96b3ee649d26003ef54fedbbacf28a8b7a2f5c1e320729e5cc2",
+    "chunkSetSha256": "2376472ba67e9a40fcf8f2194006b66b461057ac4dff95e9f3daba54102b303b"
+  },
+  "authorization": {
+    "decision": "APPROVED",
+    "approvedBy": "Doorstar project owner",
+    "approvedAt": "2026-07-31T21:39:39+02:00",
+    "sha256": "3f6bcb3c4584e985e3eaf437fb295ea7e05363e0307763bab9782698c7445df0",
+    "exactLegacyReplacementApproved": true,
+    "describeOnlySourceDriftOverrideApproved": true
+  },
+  "executor": {
+    "sourceSha256": "bcbbdff382492a6c121d944c8c29b416dce47d1167df283efa79e5b751e1904b",
+    "testSha256": "d6e6339a1307b3af7922007a7e161af2abb0e96b23a501e6ca20e33d6b9c0ce9",
+    "focusedTestsPassed": 103,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "independentReview": "PASS_NO_P0_P1_P2"
+  },
+  "successfulRun": {
+    "runId": "5fb8e2b9-9f58-47a8-9706-d5cf256097d3",
+    "status": "APPLIED",
+    "preCount": 1998,
+    "intermediateCount": 2039,
+    "postCount": 2016,
+    "preFingerprint": "7f2c2727c6dc0893ba81ca8389161e8fd9d9ca724d40120f3bb02b33c84ce4e4",
+    "postFingerprint": "bc18cc0363597e91d301eeb25c8d9f06f425c236fc1f7fb8560ad040a18ffd18",
+    "untouchedRecordCount": 1975,
+    "untouchedFingerprint": "ea61f546863b18b0813d18d4a17e7122a9e5be3f75a9d3368ce761bcba53ec00",
+    "createdCount": 41,
+    "createdIdsSha256": "153a7f9ac09419418d491e87f66d3e8dbb5239aed09d97d1abc4d67bcaf7cbb3",
+    "deletedLegacyCount": 23,
+    "deletedLegacyIdsSha256": "c2e39a94dca864cbc47e0f33f98b22db6c49c49ad8682089a43c78e04fa31162",
+    "embeddingSetSha256": "4c7bce930bb91b5c6b43d57e89b3467a1ddaa0da9547428ee63d7558ba843ad0",
+    "exactPostRead": true,
+    "fullUntouchedFingerprintVerified": true,
+    "rollbackRequired": false,
+    "executionLockRelease": "SUCCEEDED"
+  },
+  "backup": {
+    "identifier": "doorstar-rag-5fb8e2b9-9f58-47a8-9706-d5cf256097d3",
+    "location": "/home/gabor/.local/state/doorstar-rag-backups/doorstar-rag-5fb8e2b9-9f58-47a8-9706-d5cf256097d3/backup.json",
+    "sha256": "e684f22c31ed1225f62a93161d053b38aeb7730042352d3bc1be3e83e89e6897",
+    "mode": "0600",
+    "repositoryExternal": true,
+    "contentIncludedInRepository": false
+  },
+  "priorAttempts": [
+    {
+      "runId": "85ddefe0-751a-41a6-920c-0a099def521a",
+      "status": "APPLY_FAILED_ROLLED_BACK",
+      "postCount": 1998,
+      "rollback": "SUCCEEDED",
+      "backupSha256": "25339bcb7fbd376d986ff59bcf4472eddacd5a336299dfc9e6b8aced4714adbc"
+    },
+    {
+      "runId": null,
+      "status": "BLOCKED_BEFORE_WRITE",
+      "errorCode": "MODEL_CACHE_ROOT_INVALID",
+      "rollback": "NOT_REQUIRED"
+    },
+    {
+      "runId": "53eb0383-8324-4e47-89bf-2f2acbbabec5",
+      "status": "APPLY_FAILED_ROLLED_BACK",
+      "errorCode": "NEW_RECORD_EMBEDDING_VALUE_MISMATCH",
+      "operation": "new-post-read",
+      "postCount": 1998,
+      "rollback": "SUCCEEDED",
+      "backupSha256": "9204c3e4acb2e0eab838553e6d98e5f4f45b8baadc284f6c44a7a4990dadb2ba"
+    }
+  ],
+  "runtime": {
+    "chromadbClientVersion": "3.5.0",
+    "embeddingModel": "Xenova/all-MiniLM-L6-v2",
+    "embeddingDimension": 384,
+    "modelArtifactSetSha256": "4f429104fcaa08f366e27ab44917d046d455ead6526d6e074b9633c465ae9a14",
+    "textRuntimeSetSha256": "2a7985c3ead935c16872ed538a8012bd30c9293d3adf8d804236b16b41106ad8",
+    "onnxRuntimeVersion": "1.14.0",
+    "onnxRuntimeEntrySha256": "d6f7e42a0ef6c3d67028cf481ebce6ea047c58853b5d25ff3f4bb37d3384b406"
+  },
+  "idempotencyReadback": {
+    "status": "SKIP_IDENTICAL",
+    "count": 2016,
+    "postFingerprint": "bc18cc0363597e91d301eeb25c8d9f06f425c236fc1f7fb8560ad040a18ffd18",
+    "legacyCountInState": 0,
+    "approvedChunkCountInState": 41
+  },
+  "databaseWrites": false,
+  "applicationDeployPerformed": false,
+  "rawBusinessContentLogged": false
+}

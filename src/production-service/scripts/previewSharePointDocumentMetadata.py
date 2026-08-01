@@ -9,17 +9,25 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from collections import Counter
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from previewLegacyOrderImport import is_excluded, normalized, parse_workbook
+from previewIo import require_output_outside_source_tree, write_json_atomic
+from previewLegacyOrderImport import is_excluded, normalized, parse_workbook, source_file_hash
+from sharePointMetadataRules import (
+    RELEVANT_EXTENSIONS,
+    derive_document_mapping,
+    project_package_candidate,
+    resolve_work_number,
+    work_numbers_from,
+)
 
 
-WORK_NUMBER = re.compile(r"(?<!\d)(?:DSMR[_ -]?)?(\d{5})(?!\d)", re.IGNORECASE)
-RELEVANT_EXTENSIONS = {".pdf", ".dwg", ".xlsx", ".xlsm"}
+REQUIRED_HEADERS = {"nev", "modositva", "modositotta", "elemtipus", "eleresi ut"}
+METADATA_PROFILE = "sharepoint-iqy-metadata-preview/v3"
+MAPPING_RULESET = "sharepoint-iqy-work-number-mapping/2026-07-30.2"
 
 
 def header_index(header: list[object], name: str) -> int | None:
@@ -31,27 +39,44 @@ def cell(row: list[object], index: int | None) -> object | None:
     return row[index] if index is not None and index < len(row) else None
 
 
-def excel_datetime(value: object) -> str | None:
+def source_relative_path(parent: object, name: object) -> str:
+    raw = f"{str(parent or '').strip().strip('/')}/{str(name or '').strip()}".strip("/")
+    parts = [part for part in raw.replace("\\", "/").split("/") if part]
+    if any(part in {".", ".."} or ":" in part for part in parts):
+        raise ValueError(f"unsafe source-relative path: {raw}")
+    return "/".join(parts)
+
+
+def excel_datetime(value: object, date_system: str = "1900") -> str | None:
     if not isinstance(value, (int, float)) or isinstance(value, bool):
         return None
-    # Excel's 1900 serial system, including the conventional 1899-12-30 epoch.
-    return (datetime(1899, 12, 30) + timedelta(days=float(value))).isoformat(timespec="seconds")
+    epoch = datetime(1904, 1, 1) if date_system == "1904" else datetime(1899, 12, 30)
+    return (epoch + timedelta(days=float(value))).isoformat(timespec="seconds")
 
 
-def work_number(filename: str, server_path: str) -> str | None:
-    # An explicit work number in a file name wins over an enclosing archive
-    # folder: a later order may be stored in an earlier project's package.
-    match = WORK_NUMBER.search(filename)
-    if match:
-        return match.group(1)
-    match = WORK_NUMBER.search(server_path)
-    return match.group(1) if match else None
-
-
-def preview(workbook: dict[str, Any]) -> dict[str, Any]:
+def select_query_sheet(workbook: dict[str, Any], requested_name: str | None = None) -> dict[str, Any]:
     if not workbook["sheets"]:
         raise ValueError("workbook has no sheets")
-    rows = workbook["sheets"][0]["rows"]
+    if requested_name:
+        matches = [sheet for sheet in workbook["sheets"] if sheet["name"] == requested_name]
+        if len(matches) != 1:
+            raise ValueError(f"requested sheet not found exactly once: {requested_name}")
+        return matches[0]
+    matches = []
+    for sheet in workbook["sheets"]:
+        if not sheet["rows"]:
+            continue
+        normalized_headers = {normalized(value) for value in sheet["rows"][0]}
+        if REQUIRED_HEADERS.issubset(normalized_headers):
+            matches.append(sheet)
+    if len(matches) != 1:
+        raise ValueError(f"expected exactly one SharePoint query sheet, found {len(matches)}")
+    return matches[0]
+
+
+def preview(workbook: dict[str, Any], requested_sheet: str | None = None) -> dict[str, Any]:
+    sheet = select_query_sheet(workbook, requested_sheet)
+    rows = sheet["rows"]
     if not rows:
         raise ValueError("workbook has no rows")
     header = rows[0]
@@ -67,15 +92,33 @@ def preview(workbook: dict[str, Any]) -> dict[str, Any]:
         raise ValueError(f"missing required SharePoint export columns: {', '.join(missing)}")
 
     records: list[dict[str, Any]] = []
+    folders: list[dict[str, Any]] = []
     excluded: Counter[str] = Counter()
     folder_count = 0
+    blank_filename_count = 0
     for logical_row, row in enumerate(rows[1:], start=2):
         filename = str(cell(row, columns["filename"]) or "").strip()
         if not filename:
+            blank_filename_count += 1
             continue
         item_type = cell(row, columns["itemType"])
         if normalized(item_type) == "mappa":
             folder_count += 1
+            server_path = str(cell(row, columns["serverPath"]) or "").strip().strip("/")
+            folder_path = source_relative_path(server_path, filename)
+            folders.append({
+                "recordType": "DocumentSourceFolderMetadata",
+                "sourceSystem": "SHAREPOINT_IQY_EXPORT",
+                "sourceRelativePath": folder_path,
+                "parentRelativePath": "/".join(folder_path.split("/")[:-1]) or None,
+                "folderName": filename,
+                "sourceLastModifiedAt": excel_datetime(cell(row, columns["modified"]), workbook.get("dateSystem", "1900")),
+                "sourceLastModifiedTimezone": "UNKNOWN_EXPORT_TIMEZONE",
+                "sourceLastModifiedBy": cell(row, columns["modifiedBy"]),
+                "sourceSheet": sheet["name"],
+                "sourceLogicalRow": logical_row,
+                "errors": ["source_created_at_not_present_in_export"],
+            })
             continue
         path = Path(filename)
         if is_excluded(path):
@@ -83,49 +126,135 @@ def preview(workbook: dict[str, Any]) -> dict[str, Any]:
             continue
         server_path = str(cell(row, columns["serverPath"]) or "").strip().strip("/")
         extension = path.suffix.lower()
+        mapping = derive_document_mapping(filename, server_path)
+        resolution = mapping["workNumberResolution"]
+        errors = ["source_created_at_not_present_in_export", "requires_project_link_review"]
+        if resolution == "CONFLICT":
+            errors.append("filename_path_work_number_conflict")
+        if resolution == "MULTIPLE":
+            errors.append("multiple_work_number_candidates")
         records.append({
             "recordType": "DocumentSourceMetadata",
             "action": "REVIEW",
             "sourceSystem": "SHAREPOINT_IQY_EXPORT",
-            "sourceRelativePath": f"{server_path}/{filename}" if server_path else filename,
+            "sourceRelativePath": source_relative_path(server_path, filename),
             "filename": filename,
             "extension": extension or None,
-            "sourceLastModifiedAt": excel_datetime(cell(row, columns["modified"])),
+            "sourceLastModifiedAt": excel_datetime(cell(row, columns["modified"]), workbook.get("dateSystem", "1900")),
+            "sourceLastModifiedTimezone": "UNKNOWN_EXPORT_TIMEZONE",
             "sourceLastModifiedBy": cell(row, columns["modifiedBy"]),
             "sharePointItemType": item_type,
-            "workNumberCandidate": work_number(filename, server_path),
-            "relevance": "POTENTIAL_IMPORT_DOCUMENT" if extension in RELEVANT_EXTENSIONS else "DOCUMENT_METADATA_ONLY",
-            "sourceSheet": workbook["sheets"][0]["name"],
+            "workNumberCandidate": mapping["workNumberCandidate"],
+            "filenameWorkNumberCandidate": mapping["filenameWorkNumberCandidate"],
+            "pathWorkNumberCandidate": mapping["pathWorkNumberCandidate"],
+            "filenameWorkNumberCandidates": mapping["filenameWorkNumberCandidates"],
+            "pathWorkNumberCandidates": mapping["pathWorkNumberCandidates"],
+            "workNumberResolution": resolution,
+            "projectPackageWorkNumberCandidate": mapping["projectPackageWorkNumberCandidate"],
+            "projectPackageEvidence": mapping["projectPackageEvidence"],
+            "relevance": mapping["relevance"],
+            "sourceSheet": sheet["name"],
             "sourceLogicalRow": logical_row,
-            "errors": ["source_created_at_not_present_in_export", "requires_project_link_review"],
+            "errors": errors,
         })
     records.sort(key=lambda item: (item["sourceRelativePath"].lower(), item["filename"].lower()))
+    folders.sort(key=lambda item: (item["sourceRelativePath"].lower(), item["folderName"].lower()))
+    source_data_row_count = len(rows) - 1
+    accounted_row_count = len(records) + len(folders) + sum(excluded.values()) + blank_filename_count
     return {
+        "profile": METADATA_PROFILE,
+        "mappingRuleset": MAPPING_RULESET,
+        "sourceContainsVba": workbook.get("containsVba") is True,
         "mode": "preview",
         "databaseWrite": False,
         "macroExecution": False,
         "summary": {
             "metadataRecordCount": len(records),
-            "folderMetadataExcludedCount": folder_count,
+            "folderMetadataRecordCount": len(folders),
+            "folderMetadataExcludedFromDocumentCount": folder_count,
+            "sourceDataRowCount": source_data_row_count,
+            "accountedSourceRowCount": accounted_row_count,
+            "sourceRowAccountingMatches": accounted_row_count == source_data_row_count,
+            "blankFilenameRowCount": blank_filename_count,
+            "sourceExcelDateSystem": workbook.get("dateSystem", "1900"),
             "excludedByExtension": dict(sorted(excluded.items())),
             "potentialImportDocumentCount": sum(record["relevance"] == "POTENTIAL_IMPORT_DOCUMENT" for record in records),
             "workNumberCandidateCount": len({record["workNumberCandidate"] for record in records if record["workNumberCandidate"]}),
+            "filenamePathWorkNumberConflictCount": sum(record["workNumberResolution"] == "CONFLICT" for record in records),
+            "multipleWorkNumberCandidateCount": sum(record["workNumberResolution"] == "MULTIPLE" for record in records),
+            "pathFallbackWorkNumberCount": sum(record["workNumberResolution"] == "PATH" for record in records),
+            "candidateProjectPackageCount": len({
+                record["projectPackageWorkNumberCandidate"]
+                for record in records
+                if record["projectPackageWorkNumberCandidate"]
+            }),
+            "potentialImportProjectLinkCandidateCount": sum(
+                record["relevance"] == "POTENTIAL_IMPORT_DOCUMENT"
+                and record["workNumberResolution"] in {"FILENAME", "PATH"}
+                for record in records
+            ),
+            "potentialImportProjectLinkConflictCount": sum(
+                record["relevance"] == "POTENTIAL_IMPORT_DOCUMENT"
+                and record["workNumberResolution"] == "CONFLICT"
+                for record in records
+            ),
+            "potentialImportPathFallbackCount": sum(
+                record["relevance"] == "POTENTIAL_IMPORT_DOCUMENT"
+                and record["workNumberResolution"] == "PATH"
+                for record in records
+            ),
+            "potentialImportUnresolvedCount": sum(
+                record["relevance"] == "POTENTIAL_IMPORT_DOCUMENT"
+                and record["workNumberResolution"] == "UNRESOLVED"
+                for record in records
+            ),
             "extensions": dict(sorted(Counter(record["extension"] or "no_extension" for record in records).items())),
         },
+        "folders": folders,
         "records": records,
     }
+
+
+def enforce_selected_sheet_row_limit(
+    workbook: dict[str, Any],
+    requested_sheet: str | None,
+    max_rows: int,
+) -> None:
+    if max_rows <= 0:
+        return
+    selected_sheet = select_query_sheet(workbook, requested_sheet)
+    if len(selected_sheet["rows"]) > max_rows + 1:
+        raise ValueError(
+            f"source has more than --max-rows={max_rows} data rows; "
+            "refusing a silently truncated preview"
+        )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Preview SharePoint .iqy metadata export without database writes")
     parser.add_argument("--input-xlsx", required=True, type=Path)
     parser.add_argument("--output-json", required=True, type=Path)
-    parser.add_argument("--max-rows", type=int, default=20000)
+    parser.add_argument("--sheet", help="Exact query sheet name; otherwise required headers select it.")
+    parser.add_argument(
+        "--max-rows",
+        type=int,
+        default=0,
+        help="Optional positive data-row guard; 0 reads the complete cached query.",
+    )
     args = parser.parse_args()
-    workbook = parse_workbook(args.input_xlsx, row_limit=args.max_rows)
-    payload = preview(workbook)
-    args.output_json.parent.mkdir(parents=True, exist_ok=True)
-    args.output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    require_output_outside_source_tree(args.input_xlsx, args.output_json)
+    if args.max_rows < 0:
+        raise ValueError("max-rows must be zero or positive")
+    row_limit = args.max_rows + 2 if args.max_rows else None
+    source_hash_before = source_file_hash(args.input_xlsx)
+    workbook = parse_workbook(args.input_xlsx, row_limit=row_limit)
+    enforce_selected_sheet_row_limit(workbook, args.sheet, args.max_rows)
+    payload = preview(workbook, args.sheet)
+    source_hash_after = source_file_hash(args.input_xlsx)
+    if source_hash_before != source_hash_after:
+        raise ValueError("source workbook changed while the preview was being read")
+    payload["sourceWorkbookSha256"] = source_hash_after
+    write_json_atomic(args.output_json, payload)
     print(json.dumps(payload["summary"], ensure_ascii=False, sort_keys=True))
     return 0
 

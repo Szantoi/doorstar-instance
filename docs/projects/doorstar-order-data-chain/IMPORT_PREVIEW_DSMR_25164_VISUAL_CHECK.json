@@ -1,0 +1,388 @@
+{
+  "databaseWrite": false,
+  "document": {
+    "action": "CREATE_REFERENCE",
+    "contentSha256": "b923ee0f97a5f291b4571ac455c709db48478a5866738e29dc0f4a8da62382ae",
+    "displayName": "DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+    "kind": "SALES_ORDER",
+    "recordType": "OrderDocument",
+    "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+    "reviewRequired": true,
+    "source": "LEGACY_FOLDER"
+  },
+  "macroExecution": false,
+  "mode": "preview",
+  "pages": [
+    {
+      "page": 1,
+      "tableCount": 6,
+      "textExtracted": true
+    }
+  ],
+  "positionCandidates": [
+    {
+      "action": "REVIEW",
+      "errors": [
+        "requires_survey_or_technical_review"
+      ],
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Beltéri ajtó - Tároló (emelet)",
+          "page": 1,
+          "rawValue": "Beltéri ajtó - Tároló (emelet)",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Jobb ki",
+          "page": 1,
+          "rawValue": "Jobb ki",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 710,
+          "page": 1,
+          "rawValue": "7 1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2100,
+          "page": 1,
+          "rawValue": "210",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 125,
+          "page": 1,
+          "rawValue": "12,5",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 3,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "extractionState": "SALES_SOURCE_UNVERIFIED",
+      "parserLayout": "STANDARD",
+      "rawManufacturingAttributes": {
+        "casingProfileRaw": "so k ra s",
+        "hingeSupplement": null,
+        "keyholeAndHinge": "Nincs Rejtett",
+        "lapColour": "THERMOFILM II. 2009-056-K30N / WHITE",
+        "lapPattern": "Minta nélkül",
+        "lapSideBlende": "---",
+        "lock": "BB",
+        "tokColour": "THERMOFILM II. 2009-056-K30N / WHITE",
+        "tokPattern": "Minta nélkül",
+        "tokSideBlende": "---"
+      },
+      "recordType": "SalesOrderPositionCandidate",
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 3,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "target": {
+        "code": "1",
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "doorWidthMm": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "name": "Beltéri ajtó - Tároló (emelet)",
+        "notes": "",
+        "openingDepthMm": 125,
+        "openingDirection": "Jobb ki",
+        "openingHeightMm": 2100,
+        "openingWidthMm": 710,
+        "productType": "Síkban záródó",
+        "quantity": 1,
+        "surface": null,
+        "wallTreatment": null
+      }
+    },
+    {
+      "action": "REVIEW",
+      "errors": [
+        "requires_survey_or_technical_review"
+      ],
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "2",
+          "page": 1,
+          "rawValue": "2",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Beltéri ajtó (földszint)",
+          "page": 1,
+          "rawValue": "Beltéri ajtó (földszint)",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Síkban záródó",
+          "page": 1,
+          "rawValue": "Síkban záródó",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Bal ki",
+          "page": 1,
+          "rawValue": "Bal ki",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 760,
+          "page": 1,
+          "rawValue": "76",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2100,
+          "page": 1,
+          "rawValue": "210",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 120,
+          "page": 1,
+          "rawValue": "12",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 4,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "extractionState": "SALES_SOURCE_UNVERIFIED",
+      "parserLayout": "STANDARD",
+      "rawManufacturingAttributes": {
+        "casingProfileRaw": "so k ra s",
+        "hingeSupplement": null,
+        "keyholeAndHinge": "Nincs Rejtett",
+        "lapColour": "THERMOFILM II. 2009-056-K30N / WHITE",
+        "lapPattern": "Minta nélkül",
+        "lapSideBlende": "---",
+        "lock": "BB",
+        "tokColour": "THERMOFILM II. 2009-056-K30N / WHITE",
+        "tokPattern": "Minta nélkül",
+        "tokSideBlende": "---"
+      },
+      "recordType": "SalesOrderPositionCandidate",
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 4,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "target": {
+        "code": "2",
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "doorWidthMm": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "name": "Beltéri ajtó (földszint)",
+        "notes": "",
+        "openingDepthMm": 120,
+        "openingDirection": "Bal ki",
+        "openingHeightMm": 2100,
+        "openingWidthMm": 760,
+        "productType": "Síkban záródó",
+        "quantity": 1,
+        "surface": null,
+        "wallTreatment": null
+      }
+    }
+  ],
+  "salesOrder": {
+    "contactName": null,
+    "contactPhone": "+36 30 377 5120",
+    "customerName": "Arador Kft. / Dr. Lukács László",
+    "deliveryAddress": "1121 Budapest, Arató u. 8.",
+    "expectedDelivery": null,
+    "expectedDeliveryText": null,
+    "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+    "orderDate": "2025.10.20",
+    "reviewRequired": true,
+    "workNumber": "25164"
+  },
+  "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+  "summary": {
+    "pageCount": 1,
+    "positionCandidateCount": 2,
+    "positionsRequiringReview": 2,
+    "positionsWithCompleteOpeningDimensions": 2,
+    "supplementaryProductCandidateCount": 1
+  },
+  "supplementaryProductCandidates": [
+    {
+      "action": "REVIEW",
+      "errors": [
+        "requires_human_review",
+        "supplementary_product_storage_not_implemented"
+      ],
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Beltéri ajtó kilincs BB",
+          "page": 1,
+          "rawValue": "Beltéri ajtó kilincs BB",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "FIMET Corsa 1354 fekete körrozettás kilincsgarnitúra",
+          "page": 1,
+          "rawValue": "FIMET Corsa 1354 fekete körrozettás kilincsgarnitúra",
+          "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+          "reviewState": "REVIEW",
+          "row": 2,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "extractionState": "SALES_SOURCE_UNVERIFIED",
+      "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+      "recordType": "SalesOrderSupplementaryProductCandidate",
+      "source": {
+        "page": 1,
+        "relativePath": "_Archiv/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS/DSMR 25164 Arador Kft. (Dr. Lukács László) GYÁRTÁSMEGRENDELÉS.pdf",
+        "row": 2,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "target": {
+        "calculation": null,
+        "code": "1",
+        "description": "FIMET Corsa 1354 fekete körrozettás kilincsgarnitúra",
+        "linearMetresCalculated": null,
+        "linearMetresPerPiece": null,
+        "name": "Beltéri ajtó kilincs BB",
+        "notes": null,
+        "quantity": 1
+      }
+    }
+  ]
+}

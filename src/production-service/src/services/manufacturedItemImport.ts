@@ -42,6 +42,17 @@ export async function applyManufacturedItemCandidates(
       throw new ManufacturedItemImportError("import_source_fingerprint_changed");
     }
 
+    // Serialize the importer with review and direct manufactured-item writes.
+    // A candidate can never be inserted after the revision has left DRAFT.
+    const lockedRevision = await tx.$queryRaw<Array<{ id: string }>>`
+      SELECT "id"
+      FROM "OrderRevision"
+      WHERE "id" = ${input.orderRevisionId}
+      FOR UPDATE
+    `;
+    if (lockedRevision.length === 0) {
+      throw new ManufacturedItemImportError("import_revision_not_from_run");
+    }
     const revision = await tx.orderRevision.findFirst({
       where: { id: input.orderRevisionId, importRunId: run.id },
       select: {
@@ -58,7 +69,13 @@ export async function applyManufacturedItemCandidates(
 
     const candidates = await tx.importCandidate.findMany({
       where: { importRunId: run.id, id: { in: input.candidateIds } },
-      include: { manufacturedItem: { include: { evidence: { orderBy: { createdAt: "asc" } } } } },
+      include: {
+        manufacturedItem: {
+          include: {
+            evidence: { orderBy: [{ createdAt: "asc" }, { id: "asc" }] },
+          },
+        },
+      },
     });
     if (candidates.length !== input.candidateIds.length) {
       throw new ManufacturedItemImportError("import_candidate_not_found");
@@ -154,7 +171,9 @@ export async function applyManufacturedItemCandidates(
             })),
           },
         },
-        include: { evidence: { orderBy: { createdAt: "asc" } } },
+        include: {
+          evidence: { orderBy: [{ createdAt: "asc" }, { id: "asc" }] },
+        },
       });
       items.push(created);
       createdCount += 1;

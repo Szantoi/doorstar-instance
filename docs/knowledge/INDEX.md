@@ -3,7 +3,7 @@
 **Sziget:** Doorstar (`/opt/doorstar/`)
 **Fókusz:** Doorstar Kft. specifikus fejlesztés
 **Port:** 3460-3461
-**Frissítve:** 2026-07-18
+**Frissítve:** 2026-07-31
 
 ---
 
@@ -32,9 +32,17 @@ A Doorstar sziget a **Doorstar Kft. ügyfél-specifikus implementációjának k�
 
 - `6-STAGE_WORKFLOW.md` — 6-STAGE production workflow FSM és integráció
 
-### domain/ (1 dokumentum) ✅ KÉSZ
+### domain/
 
 - `DOOR_MANUFACTURING_DOMAIN.md` — Ajtógyártás domain model (DDD)
+- `DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md` — szakzsargon-audit,
+  kanonikus Doorstar-fogalmak, legacy/import aliasok, UI/API-megfeleltetés és
+  gépi JSON-szótár
+- `doorstar-faipari-terminology.v1.json` — a terminológiai baseline
+  géppel feldolgozható, verziózott párja
+- `DOORSTAR_ADJUSTABLE_INTERIOR_DOOR_TERMINOLOGY_2026-07-30.md` — utólag
+  szerelhető, állítható átfogó tok szerkezete, kanonikus alkatrésznevek,
+  stabil fizikai oldalmodell, bizonyossági szintek és RAG-kérdések
 
 ### context/ (1 dokumentum) ✅ KÉSZ
 
@@ -57,30 +65,36 @@ A Doorstar sziget a **Doorstar Kft. ügyfél-specifikus implementációjának k�
 ## Technológiák
 
 **Backend:**
-- .NET 8 (örökölt JoineryTech platform-ról)
+- Node.js / TypeScript, Express és Prisma (`src/production-service`)
 - PostgreSQL
-- 6-STAGE FSM (ProductionJob aggregate)
+- konfigurált 6-stage követés a `Stage` enum, munkaállomások és a jelenlegi
+  Project/EpicStep/Task üzemi modell körül
+
+> A domainmappában található C# `ProductionJob` példa történeti/célmodell, nem
+> a jelenlegi futó service implementációja.
 
 **Frontend:**
-- React 18 (örökölt JoineryTech platform-ról)
+- React 18 + Vite (`src/uzemi-tabla-web`)
 - Production tracking UI (mobile-first)
 
 **Integráció:**
 - Cabinet VPS (Federation protokoll)
-- Telegram notifications
+- SharePoint/Graph read-only forráskatalógus (tervezett, P0 auth-kapukkal)
+- a legacy Telegram-értesítés csak célmodellként dokumentált; aktuális
+  runtime implementációját külön kód-/tesztbizonyíték nélkül nem állítjuk
 
 ---
 
 ## 6-STAGE Production Workflow
 
-| # | Stage | Trigger | UI |
-|---|-------|---------|-----|
-| 1 | **Szabászat/Előgyártás** | Auto: CuttingCompleted | Auto sárga→zöld |
-| 2 | **Megmunkálás** | Manuális | Tap Start/Done |
-| 3 | **Felületkezelés** | Manuális | Tap Start/Done |
-| 4 | **Összeszerelés** | Manuális + fotó | Tap + photo |
-| 5 | **Csomagolás** | Manuális | Tap "ZÖLD" |
-| 6 | **Kiszállítható** | Auto: Step 5 Done | Push notification |
+| # | Stage | Szakmai jelentés | Jelenlegi állomáspélda |
+|---|-------|------------------|-------------------------|
+| 1 | **Szabászat / előgyártás** | Darabolás és ide sorolt előgyártás | Körfűrész |
+| 2 | **Megmunkálás** | Forgácsoló/alakító műveletek | CNC, Bürkle |
+| 3 | **Felület-előkészítés és felületkezelés** | Csiszolás, előkészítés, bevonatképzés | Csiszoló, Fújó |
+| 4 | **Összeállítás és szerelés** | Alkatrész- és vasalatszerelés | Asztalos |
+| 5 | **Csomagolás** | Védelem, csomagegység, jelölés | `Egyéb` — felülvizsgálandó |
+| 6 | **Kiszállításra kész** | Készültségi állapot, nem kiszállítás/beépítés | `Száll./Kész` legacy címke |
 
 **FSM Állapotok:** `Queued` (szürke) → `InProgress` (sárga) → `Done` (zöld)
 

@@ -1,0 +1,318 @@
+{
+  "schemaVersion": "doorstar-rag-manifest.v1",
+  "packageId": "doorstar-controlled-knowledge-rag",
+  "packageVersion": "1.0.0",
+  "targetIsland": "doorstar",
+  "mode": "dry-run",
+  "nexusWrite": false,
+  "chromaWrite": false,
+  "sourceInventoryFile": "SOURCE_INVENTORY.json",
+  "evalFile": "RAG_EVAL_QUESTIONS.json",
+  "idempotency": {
+    "documentKeyAlgorithm": "sha256(id|version|canonicalSha256|policyVersion)",
+    "duplicatePolicy": "reject",
+    "baselineDocuments": []
+  },
+  "documents": [
+    {
+      "id": "doorstar.documents-source-fields",
+      "title": "Doorstar dokumentumtípusok és forrásmezők",
+      "version": "1.0.0",
+      "domain": "document-provenance",
+      "tags": ["documents", "legacy-sources", "provenance", "source-fields"],
+      "canonicalFile": "canonical/doorstar-document-types-and-source-fields.v1.md",
+      "canonicalSha256": "fc62706e7b7206a9689a0785e0db95bb0b7e2329d537afcca124c1f94097c8e5",
+      "sources": [
+        {
+          "sourceId": "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+          "relativePath": "docs/decisions/ADR-2026-07-30-sharepoint-readonly-source-catalog.md",
+          "sourceHash": "46bf388043b5699cd2e7f032a8e6f9de197f81eb55adede5f14fb8c4590d807e"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-MAPPING",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_MAPPING.md",
+          "sourceHash": "9b7d4fc739ed8c813e44726eaa3b910d5d88cc9a7550fa1bc576fdd989f9f237"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-METHODS",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_METHODS.md",
+          "sourceHash": "bd1e467b990554ced2b2c7f5895473592e8ab39e0b728a4d45451e1dd751bac0"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-PROCESS",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_PROCESS.md",
+          "sourceHash": "e3ba31c16b7b71db5bd0d7c6afbb1694fc9049f16257d8355446b14c347a1e0d"
+        },
+        {
+          "sourceId": "SRC-ORDER-PROJECT",
+          "relativePath": "docs/projects/doorstar-order-data-chain/PROJECT.md",
+          "sourceHash": "27306ae26b493bc17d60f9a8f5bd68ab235f5697d114c86fe80e6209bced5c5e"
+        },
+        {
+          "sourceId": "SRC-ORDER-SALES-SURVEY-WORKFLOW",
+          "relativePath": "docs/projects/doorstar-order-data-chain/SALES_SURVEY_WORKFLOW.md",
+          "sourceHash": "f0a29a6d6dc310be25077586ba47b37d7a670a845e0a83d764d8aadb5e413414"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+        "SRC-ORDER-IMPORT-MAPPING",
+        "SRC-ORDER-IMPORT-METHODS",
+        "SRC-ORDER-IMPORT-PROCESS",
+        "SRC-ORDER-PROJECT",
+        "SRC-ORDER-SALES-SURVEY-WORKFLOW"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-import-discovery",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    },
+    {
+      "id": "doorstar.import-evidence-review",
+      "title": "Doorstar import-, evidence- és review-szabályok",
+      "version": "1.0.0",
+      "domain": "import-governance",
+      "tags": ["evidence", "idempotency", "import", "review"],
+      "canonicalFile": "canonical/doorstar-import-evidence-and-review-rules.v1.md",
+      "canonicalSha256": "86bb9be421f4cc7a1b57e8f9e2a77a61375b79c989246d31e71eeef812dff063",
+      "sources": [
+        {
+          "sourceId": "SRC-ADR-CONTROLLED-MANUFACTURED-IMPORT-APPLY",
+          "relativePath": "docs/decisions/ADR-2026-07-29-controlled-manufactured-item-import-apply.md",
+          "sourceHash": "9a4946904e259ffc54b5a5b4ed751302c08e18a0b88573e2259c050a3fe1d3ba"
+        },
+        {
+          "sourceId": "SRC-ADR-ORDER-SUPPLEMENTARY-ITEMS",
+          "relativePath": "docs/decisions/ADR-2026-07-30-order-supplementary-items.md",
+          "sourceHash": "1aaa236f9ce51f29a477af6a2e9240e170c4fe0b09a0dcde05294b9cceea59b7"
+        },
+        {
+          "sourceId": "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+          "relativePath": "docs/decisions/ADR-2026-07-30-sharepoint-readonly-source-catalog.md",
+          "sourceHash": "46bf388043b5699cd2e7f032a8e6f9de197f81eb55adede5f14fb8c4590d807e"
+        },
+        {
+          "sourceId": "SRC-ADR-SUPPLEMENTARY-EVIDENCE-REVIEW-GATE",
+          "relativePath": "docs/decisions/ADR-2026-07-30-supplementary-evidence-review-gate.md",
+          "sourceHash": "397c9d8c66b81f7207e61255731d913ddfa99aa11990bca65d24ded9548ff042"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-METHODS",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_METHODS.md",
+          "sourceHash": "bd1e467b990554ced2b2c7f5895473592e8ab39e0b728a4d45451e1dd751bac0"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-PROCESS",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_PROCESS.md",
+          "sourceHash": "e3ba31c16b7b71db5bd0d7c6afbb1694fc9049f16257d8355446b14c347a1e0d"
+        },
+        {
+          "sourceId": "SRC-ORDER-PROJECT",
+          "relativePath": "docs/projects/doorstar-order-data-chain/PROJECT.md",
+          "sourceHash": "27306ae26b493bc17d60f9a8f5bd68ab235f5697d114c86fe80e6209bced5c5e"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-ADR-CONTROLLED-MANUFACTURED-IMPORT-APPLY",
+        "SRC-ADR-ORDER-SUPPLEMENTARY-ITEMS",
+        "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+        "SRC-ADR-SUPPLEMENTARY-EVIDENCE-REVIEW-GATE",
+        "SRC-ORDER-IMPORT-METHODS",
+        "SRC-ORDER-IMPORT-PROCESS",
+        "SRC-ORDER-PROJECT"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-import-discovery",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    },
+    {
+      "id": "doorstar.order-production-process",
+      "title": "Doorstar rendeléstől az üzemi kiadásig",
+      "version": "1.0.0",
+      "domain": "order-to-production",
+      "tags": ["authority", "order", "production", "revision"],
+      "canonicalFile": "canonical/doorstar-order-to-production-process.v1.md",
+      "canonicalSha256": "0f5b05f25b85731ccff6ac1e9b69a8bf9959e5c07b94967c095c4868bfb27171",
+      "sources": [
+        {
+          "sourceId": "SRC-DOMAIN-PRODUCTION-DATA-CHAIN",
+          "relativePath": "docs/knowledge/domain/DOORSTAR_PRODUCTION_DATA_CHAIN_2026-07-28.md",
+          "sourceHash": "80e2a40fc42574b05657a42f0ab7f7f4c9e79f5e59c7b560f1b95acd6a65c021"
+        },
+        {
+          "sourceId": "SRC-ORDER-PROJECT",
+          "relativePath": "docs/projects/doorstar-order-data-chain/PROJECT.md",
+          "sourceHash": "27306ae26b493bc17d60f9a8f5bd68ab235f5697d114c86fe80e6209bced5c5e"
+        },
+        {
+          "sourceId": "SRC-ORDER-SALES-SURVEY-WORKFLOW",
+          "relativePath": "docs/projects/doorstar-order-data-chain/SALES_SURVEY_WORKFLOW.md",
+          "sourceHash": "f0a29a6d6dc310be25077586ba47b37d7a670a845e0a83d764d8aadb5e413414"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-DOMAIN-PRODUCTION-DATA-CHAIN",
+        "SRC-ORDER-PROJECT",
+        "SRC-ORDER-SALES-SURVEY-WORKFLOW"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-root",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    },
+    {
+      "id": "doorstar.production-stages-status-dates",
+      "title": "Doorstar gyártási szakaszok, állapotok és dátumjelentések",
+      "version": "1.0.0",
+      "domain": "production-workflow",
+      "tags": ["dates", "production", "stages", "statuses"],
+      "canonicalFile": "canonical/doorstar-manufacturing-stages-status-and-dates.v1.md",
+      "canonicalSha256": "a2aa1412a59010787df9ce9de554f073fd6d55b5483411018a986e75d32fe48c",
+      "sources": [
+        {
+          "sourceId": "SRC-BACKEND-PRISMA-SCHEMA",
+          "relativePath": "src/production-service/prisma/schema.prisma",
+          "sourceHash": "5bbef71d70c258788d45ac290d313357da4d708f3f48d0bc206289aa4109a62b"
+        },
+        {
+          "sourceId": "SRC-BACKEND-STATIONS-CONFIG",
+          "relativePath": "src/production-service/src/config/stations.json",
+          "sourceHash": "f7847485d21e91e25e7b90aa5c92dcbfbedee59a5cd9da8103db29fdc6e11899"
+        },
+        {
+          "sourceId": "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-JSON",
+          "relativePath": "docs/knowledge/domain/doorstar-faipari-terminology.v1.json",
+          "sourceHash": "198b53b18d846444a58c898e1622c9c32ee410aee1398d279ead47cf616be9eb"
+        },
+        {
+          "sourceId": "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD",
+          "relativePath": "docs/knowledge/domain/DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md",
+          "sourceHash": "2e7c42717d8cc8c111fb98e8a5645d11bd519ec649bf0254aafad26a7a8e305a"
+        },
+        {
+          "sourceId": "SRC-ORDER-IMPORT-PROCESS",
+          "relativePath": "docs/projects/doorstar-order-data-chain/IMPORT_PROCESS.md",
+          "sourceHash": "e3ba31c16b7b71db5bd0d7c6afbb1694fc9049f16257d8355446b14c347a1e0d"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-BACKEND-PRISMA-SCHEMA",
+        "SRC-BACKEND-STATIONS-CONFIG",
+        "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-JSON",
+        "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD",
+        "SRC-ORDER-IMPORT-PROCESS"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-production",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    },
+    {
+      "id": "doorstar.roles-authority",
+      "title": "Doorstar szerepkörök és döntési authority",
+      "version": "1.0.0",
+      "domain": "company-governance",
+      "tags": ["approval", "authority", "roles", "security"],
+      "canonicalFile": "canonical/doorstar-company-roles-and-authority.v1.md",
+      "canonicalSha256": "e05a7cfba0bf503b0130380c2f005b5f862350df74579485f2bbe831ccba3382",
+      "sources": [
+        {
+          "sourceId": "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+          "relativePath": "docs/decisions/ADR-2026-07-30-sharepoint-readonly-source-catalog.md",
+          "sourceHash": "46bf388043b5699cd2e7f032a8e6f9de197f81eb55adede5f14fb8c4590d807e"
+        },
+        {
+          "sourceId": "SRC-ORDER-ROLE-MATRIX",
+          "relativePath": "docs/projects/doorstar-order-data-chain/ROLE-MATRIX.md",
+          "sourceHash": "1cfb3e5313c558bc23ef85746148da83ec5979c6b325af2bf622b6ce3fa70ad0"
+        },
+        {
+          "sourceId": "SRC-ORDER-SALES-SURVEY-WORKFLOW",
+          "relativePath": "docs/projects/doorstar-order-data-chain/SALES_SURVEY_WORKFLOW.md",
+          "sourceHash": "f0a29a6d6dc310be25077586ba47b37d7a670a845e0a83d764d8aadb5e413414"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-ADR-SHAREPOINT-READONLY-SOURCE-CATALOG",
+        "SRC-ORDER-ROLE-MATRIX",
+        "SRC-ORDER-SALES-SURVEY-WORKFLOW"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-root",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    },
+    {
+      "id": "doorstar.terminology-aliases",
+      "title": "Doorstar belső szóhasználat és faipari szaknyelv",
+      "version": "1.0.0",
+      "domain": "woodworking-terminology",
+      "tags": ["aliases", "doorstar-local", "terminology", "woodworking"],
+      "canonicalFile": "canonical/doorstar-terminology-and-aliases.v1.md",
+      "canonicalSha256": "8bc4a776bf30f7031eb48424f0cea5044438db5f78feb48e3f0d4691b9aad533",
+      "sources": [
+        {
+          "sourceId": "SRC-ADR-TWO-SIDED-DOOR-APPEARANCE",
+          "relativePath": "docs/decisions/ADR-2026-07-30-two-sided-door-structure-appearance.md",
+          "sourceHash": "5ef4d4e9f51165eeeb578b923fb52005d54d3dfe855639c6689794153ca16698"
+        },
+        {
+          "sourceId": "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD",
+          "relativePath": "docs/knowledge/domain/DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md",
+          "sourceHash": "2e7c42717d8cc8c111fb98e8a5645d11bd519ec649bf0254aafad26a7a8e305a"
+        }
+      ],
+      "sourceInventoryRefs": [
+        "SRC-ADR-TWO-SIDED-DOOR-APPEARANCE",
+        "SRC-DOMAIN-DOORSTAR-TERMINOLOGY-MD"
+      ],
+      "reviewStatus": "READY_FOR_HUMAN_REVIEW",
+      "owner": "doorstar-root",
+      "sensitivity": "INTERNAL",
+      "validFrom": "2026-07-31",
+      "chunkingPolicy": {
+        "strategy": "markdown_heading_paragraph",
+        "policyVersion": "v1",
+        "maxChars": 1600,
+        "overlapChars": 0,
+        "headingDepth": 3
+      }
+    }
+  ]
+}

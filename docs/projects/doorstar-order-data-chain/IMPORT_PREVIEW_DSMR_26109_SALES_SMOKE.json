@@ -1,0 +1,331 @@
+{
+  "canonicalWorkNumberGroups": [
+    {
+      "canonicalWorkNumber": "26109",
+      "documents": [
+        {
+          "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "headerCandidate": "26109",
+          "pathCandidate": "26109",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "resolutionState": "SALES_HEADER",
+          "sourceRoot": "SALES_FOLDER",
+          "sourceWorkNumber": "26109"
+        }
+      ],
+      "reviewRequired": false,
+      "sourceWorkNumberVariants": [
+        "26109"
+      ]
+    }
+  ],
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "sales-order-pdf-batch-v1",
+  "salesOrderPdfPreviews": [
+    {
+      "databaseWrite": false,
+      "document": {
+        "action": "CREATE_REFERENCE",
+        "contentSha256": "f1150d81552514b39602076ccb3e1406f240a1d4806eb02e2fa5e2fb218a33ed",
+        "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "kind": "SALES_ORDER",
+        "recordType": "OrderDocument",
+        "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "reviewRequired": true,
+        "source": "LEGACY_FOLDER"
+      },
+      "macroExecution": false,
+      "mode": "preview",
+      "pages": [
+        {
+          "page": 1,
+          "tableCount": 3,
+          "textExtracted": true
+        },
+        {
+          "page": 2,
+          "tableCount": 0,
+          "textExtracted": true
+        }
+      ],
+      "positionCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó",
+              "page": 1,
+              "rawValue": "Beltéri ajtó",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 800,
+              "page": 1,
+              "rawValue": "80",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2160,
+              "page": 1,
+              "rawValue": "216",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 115,
+              "page": 1,
+              "rawValue": "11,5",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással",
+              "page": 1,
+              "rawValue": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "SHIFTED_AFTER_NAME",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": null,
+            "keyholeAndHinge": "Van Rejtett",
+            "lapColour": "Fekete alapozóval, NCS S 5040-R80B sötétkék színre festve, selyemfényű felülettel (20 gloss)",
+            "lapPattern": "Minta nélkül",
+            "lapSideBlende": "---",
+            "lock": "WC",
+            "tokColour": "Fekete alapozóval, NCS S 5040-R80B sötétkék színre festve, selyemfényű felülettel (20 gloss)",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+            "row": 9,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "1",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Beltéri ajtó",
+            "notes": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással",
+            "openingDepthMm": 115,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2160,
+            "openingWidthMm": 800,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        }
+      ],
+      "salesOrder": {
+        "contactName": null,
+        "contactPhone": null,
+        "customerName": "Luctor Bt. (Szilágyi Áron)",
+        "deliveryAddress": null,
+        "expectedDelivery": null,
+        "expectedDeliveryText": null,
+        "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+        "orderDate": "2026.02.20",
+        "reviewRequired": true,
+        "workNumber": "26109"
+      },
+      "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+      "sourceRoot": "SALES_FOLDER",
+      "summary": {
+        "pageCount": 2,
+        "positionCandidateCount": 1,
+        "positionsRequiringReview": 1,
+        "positionsWithCompleteOpeningDimensions": 1,
+        "supplementaryProductCandidateCount": 1
+      },
+      "supplementaryProductCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs WC",
+              "page": 1,
+              "rawValue": "Beltéri ajtó kilincs WC",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Colombo Design One óceán kék körrozettás kilincsgarnitúra CC11 WC zárral",
+              "page": 1,
+              "rawValue": "Colombo Design One óceán kék körrozettás kilincsgarnitúra CC11 WC zárral",
+              "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "1",
+            "description": "Colombo Design One óceán kék körrozettás kilincsgarnitúra CC11 WC zárral",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs WC",
+            "notes": null,
+            "quantity": 1
+          }
+        }
+      ],
+      "workNumberResolution": {
+        "candidate": "26109",
+        "headerCandidate": "26109",
+        "pathCandidate": "26109",
+        "reviewRequired": false,
+        "state": "SALES_HEADER"
+      }
+    }
+  ],
+  "sameContentDuplicates": [],
+  "summary": {
+    "canonicalWorkNumberCount": 1,
+    "canonicalWorkNumberVariantReviewCount": 0,
+    "doorPositionCandidateCount": 1,
+    "failedExtractionCount": 0,
+    "headerPathWorkNumberConflictCount": 0,
+    "matchingPdfCount": 1,
+    "pathFallbackWorkNumberCount": 0,
+    "sameContentDuplicateGroupCount": 0,
+    "supplementaryProductCandidateCount": 1,
+    "unresolvedWorkNumberCount": 0,
+    "workNumberCount": 1
+  },
+  "workNumberGroups": [
+    {
+      "documents": [
+        {
+          "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "workNumber": "26109"
+    }
+  ]
+}

@@ -13,6 +13,16 @@
 - [x] A claim-szintű chunkolású RAG v1.1 dry-run üzleti/minőségi review-ja:
       exact lineage PASS, retrieval-döntés `HOLD_FOR_RETRIEVAL_TUNING`; nem
       történt újabb Nexus/ChromaDB módosítás.
+- [x] A 26133 közvetlen Sales+gyártási PDF evidence alapján a fejlesztői Sales
+      intake UI elkészítése: három eszközmód, normalizált egyedi pozíciókód,
+      MONTH/structured-appearance fail-closed és production PII POST-zár.
+      Teljes frontend 223/223, lint/build/browser és reviewer P0–P3 = 0.
+- [ ] P0 — DSORD-18 backend/OpenAPI: hitelesített és idempotens Sales intake v2,
+      delivery precision union, raw cm/conversion lineage, külön komponens-
+      felületek, DB-unique pozíciókód és stabil concurrency/error envelope.
+- [ ] P0 — DSORD-17 + import-011 után a műszaki előkészítés read-only
+      dokumentumcsomag-readiness/preview UI-ja; review/kiadás csak exact
+      package/IssuedWorkPackage authorityval.
 - [ ] P0 — Külön verziózott kétlépcsős retrieval-kísérlet készítése: dokumentum-/
       témaszintű előszűrés, azon belüli claim-ranking, előre jóváhagyott
       @5/@10/@20 acceptance-küszöbök és változatlan kanonikus/eval bemenetek.
@@ -37,6 +47,15 @@
 - [x] A DSMR Sales-lap vizuális hierarchiáját követő kompakt rendelési
       átadónézet, progresszív részletek, exact következő teendő, refetch/
       historical/invalid fail-closed szöveg és tablet-header overflow-javítás.
+- [x] Külön telefon/tablet/PC rendelési UX: egykezes alsó mobil menü,
+      egytételes pozíciórészlet és fókusz-visszaadás; olvasható kétpaneles
+      tablet; megtartott papírszerű PC-átadás. Teljes frontend 193/193,
+      lint/build és független reviewer PASS.
+- [x] A telefonos megnyitott pozíciórészlet teljes használható szélességének
+      helyreállítása explicit egyoszlopos phone griddel; 320/390/620 px QA,
+      621 px tablet-határ és független reviewer PASS.
+- [x] A fejlesztői favicon 404 megszüntetése explicit SVG public assettel;
+      friss browser-konzol warning/error nélkül, lint/build és reviewer PASS.
 - [ ] Következő P0: exact-revíziós, read-only Product Position Register a
       projektcockpitben külön `DOOR | WALL_PANEL` pozíciókkal, per-position
       product-spec/readiness adatokkal és OIDC-ig nulla mutationnel.
@@ -61,9 +80,9 @@
       `orchestrator_helper_launch_failed / os error 5` jogosultsági hibáját.
       Ez nem Doorstar/Nexus konfigurációs hiba; a sandbox nélküli discovery
       smoke és a statikus sandbox-contract zöld.
-- [ ] Folyamatos mailbox-feldolgozás: a 2026-07-31 21:54:57-ig beérkezett
-      frontend/backend readiness-handoffok feldolgozva; minden későbbi új
-      üzenetet külön át kell venni és a döntését rögzíteni.
+- [ ] Folyamatos mailbox-feldolgozás: a 2026-08-01 07:30-as frontend UX-
+      fixture-handoffig minden üzenet feldolgozva; minden későbbi új üzenetet
+      külön át kell venni és a döntését rögzíteni.
 - [ ] Begyűjteni a Schedulinghez a kontraktus-reviewer jelölést, a standard
       verzióváltási példát, az overload-példát és a naptárjóváhagyást.
 - [x] Fogadni és rögzíteni a platform `spaceos.scheduling` M3 read-only

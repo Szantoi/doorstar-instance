@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "doorstar-operation-plan-snapshot/v1",
+  "generatorProfiles": [
+    {
+      "version": "doorstar-explicit-operation-adapter/v1",
+      "label": "Ellenőrzött, explicit műveletterv-adapter v1",
+      "inputMode": "EXPLICIT_REVIEWED_OUTPUT",
+      "active": true,
+      "allowsAutomaticStandardSelection": false,
+      "allowsAutomaticResourceSelection": false,
+      "allowsImplicitDurations": false
+    }
+  ],
+  "standardCatalog": {
+    "version": "doorstar-explicit-operation-standards/v1",
+    "standards": [
+      {
+        "key": "doorstar-explicit-technological-operation",
+        "version": "v1",
+        "processKind": "TECHNOLOGICAL",
+        "requiresTimeStandardSource": true,
+        "requiresWorkInstruction": true,
+        "requiresQualityCheckpoint": true,
+        "allowsPurchasedPart": false
+      },
+      {
+        "key": "doorstar-explicit-non-technological-operation",
+        "version": "v1",
+        "processKind": "NON_TECHNOLOGICAL",
+        "requiresTimeStandardSource": false,
+        "requiresWorkInstruction": true,
+        "requiresQualityCheckpoint": true,
+        "allowsPurchasedPart": true
+      },
+      {
+        "key": "doorstar-explicit-natural-process",
+        "version": "v1",
+        "processKind": "NATURAL",
+        "requiresTimeStandardSource": false,
+        "requiresWorkInstruction": true,
+        "requiresQualityCheckpoint": true,
+        "allowsPurchasedPart": false
+      }
+    ]
+  },
+  "resourceMapping": {
+    "version": "doorstar-station-resource-mapping/v1",
+    "resources": [
+      { "key": "circular-saw", "stationKey": "Körfűrész", "processKinds": ["TECHNOLOGICAL"], "machineKeys": [], "toolKeys": [] },
+      { "key": "cnc", "stationKey": "CNC", "processKinds": ["TECHNOLOGICAL"], "machineKeys": ["cnc"], "toolKeys": [] },
+      { "key": "burkle", "stationKey": "Bürkle", "processKinds": ["TECHNOLOGICAL"], "machineKeys": ["burkle"], "toolKeys": [] },
+      { "key": "sanding", "stationKey": "Csiszoló", "processKinds": ["TECHNOLOGICAL"], "machineKeys": [], "toolKeys": [] },
+      { "key": "spray-finishing", "stationKey": "Fújó", "processKinds": ["TECHNOLOGICAL", "NATURAL"], "machineKeys": [], "toolKeys": [] },
+      { "key": "joinery", "stationKey": "Asztalos", "processKinds": ["TECHNOLOGICAL", "NON_TECHNOLOGICAL", "NATURAL"], "machineKeys": [], "toolKeys": [] },
+      { "key": "packaging", "stationKey": "Egyéb", "processKinds": ["NON_TECHNOLOGICAL"], "machineKeys": [], "toolKeys": [] },
+      { "key": "dispatch", "stationKey": "Száll./Kész", "processKinds": ["NON_TECHNOLOGICAL"], "machineKeys": [], "toolKeys": [] }
+    ]
+  }
+}

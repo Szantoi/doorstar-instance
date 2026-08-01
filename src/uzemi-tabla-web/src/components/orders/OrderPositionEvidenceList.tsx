@@ -1,31 +1,6 @@
 import { useState } from "react";
-import type { OrderPositionEvidenceField, ProductionOrderPosition } from "@/services/production/types";
-
-const fieldLabel: Record<OrderPositionEvidenceField, string> = {
-  CODE: "Pozíciókód",
-  NAME: "Megnevezés",
-  QUANTITY: "Mennyiség",
-  PRODUCT_TYPE: "Ajtótípus",
-  OPENING_DIRECTION: "Nyitásirány",
-  OPENING_WIDTH_MM: "Falnyílás szélesség",
-  OPENING_HEIGHT_MM: "Falnyílás magasság",
-  OPENING_DEPTH_MM: "Falvastagság",
-  DOOR_WIDTH_MM: "Ajtólap szélesség",
-  DOOR_HEIGHT_MM: "Ajtólap magasság",
-  DOOR_THICKNESS_MM: "Ajtólap vastagság",
-  SURFACE: "Felület",
-  WALL_TREATMENT: "Falmegoldás",
-  GLAZING: "Üvegezés",
-  GLAZING_SPECIFICATION: "Üvegspecifikáció",
-  NOTES: "Megjegyzés",
-};
-
-const stateLabel = {
-  UNVERIFIED: "Ellenőrizetlen",
-  REVIEW: "Ellenőrzendő",
-  RESOLVED: "Elfogadva",
-  REJECTED: "Elutasítva",
-} as const;
+import { formatEvidenceValue, orderPositionEvidenceFieldLabel, orderPositionEvidenceStateLabel } from "../../lib/orderEvidence";
+import type { ProductionOrderPosition } from "@/services/production/types";
 
 interface Props {
   positions: ProductionOrderPosition[];
@@ -56,8 +31,8 @@ export function OrderPositionEvidenceList({ positions, canReview, pending, onRev
           const note = notes[item.id] ?? "";
           const open = item.reviewState === "UNVERIFIED" || item.reviewState === "REVIEW";
           return <li key={item.id}>
-            <div className="position-evidence-main"><b>{fieldLabel[item.field]}</b><span>{item.rawValue} → {String(item.normalizedValue ?? "—")}</span><code>{locator}</code></div>
-            <span className={`position-evidence-state position-evidence-state-${item.reviewState.toLowerCase()}`}>{stateLabel[item.reviewState]}</span>
+            <div className="position-evidence-main"><b>{orderPositionEvidenceFieldLabel[item.field]}</b><span>{item.rawValue} → {formatEvidenceValue(item.normalizedValue)}</span><code>{locator}</code></div>
+            <span className={`position-evidence-state position-evidence-state-${item.reviewState.toLowerCase()}`}>{orderPositionEvidenceStateLabel[item.reviewState]}</span>
             {item.resolution && <p>{item.resolution}</p>}
             {canReview && open && <div className="position-evidence-review">
               <input value={note} onChange={(event) => setNotes((current) => ({ ...current, [item.id]: event.target.value }))} placeholder="Ellenőrzési megjegyzés *" />

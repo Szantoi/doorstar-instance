@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-execution-authorization.v1",
+  "decision": "APPROVED",
+  "packageHash": "34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116",
+  "dryRunReportSha256": "c4e74c696495c96b3ee649d26003ef54fedbbacf28a8b7a2f5c1e320729e5cc2",
+  "manifestSha256": "4c3f3cf612a4b118981a094204fbbc64ad03dfe4ca0ed16dc050d40d1e72dd72",
+  "inventorySha256": "bd7844df8024d7fb96bdd37293872d88f19ebb0eac2975cf876fce439c27aa50",
+  "evalSha256": "b3d42264ddbfe68b610611813f50d46280c241ad5a825f70491ad77085f7812d",
+  "targetIsland": "doorstar",
+  "targetCollection": "doorstar-knowledge",
+  "approvedBy": "Doorstar project owner",
+  "approvedAt": "2026-07-31T21:39:39+02:00",
+  "postApprovalSourceDriftOverride": {
+    "mode": "DESCRIBE_ONLY",
+    "sourceId": "SRC-BACKEND-OPENAPI",
+    "inventorySha256": "d4e32a3570dd23bf22e6f9bf4e1d2d2b6e95d2ad6159e0c461a6d1fc4ac0a22a",
+    "observedSha256": "555d90a095ee757e75d78f294e68584bfc878ac82218397ad437f9ea626c204d",
+    "reason": "The Doorstar project owner explicitly approved the controlled RAG apply and this inventory-only post-approval OpenAPI drift. SRC-BACKEND-OPENAPI is not referenced by any manifest document or canonical claim; the immutable package, canonical files, manifest, eval and dry-run report remain unchanged.",
+    "manifestMutation": false
+  }
+}

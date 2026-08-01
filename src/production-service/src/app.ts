@@ -13,6 +13,11 @@ import { productionOrdersRouter } from "./routes/productionOrders.js";
 import { importRunsRouter } from "./routes/importRuns.js";
 import { orderPositionEvidenceRouter } from "./routes/orderPositionEvidence.js";
 import { manufacturedItemsRouter } from "./routes/manufacturedItems.js";
+import { technicalCatalogRouter } from "./routes/technicalCatalog.js";
+import { supplementaryItemsRouter } from "./routes/supplementaryItems.js";
+import { componentSnapshotsRouter } from "./routes/componentSnapshots.js";
+import { operationPlanSnapshotsRouter } from "./routes/operationPlanSnapshots.js";
+import { readinessRouter } from "./routes/readiness.js";
 import { productionServiceOpenApi } from "./openapi.js";
 import { prisma } from "./db/client.js";
 import { isServiceReady } from "./services/readiness.js";
@@ -58,6 +63,11 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
   api.use(productionOrdersRouter);
   api.use(orderPositionEvidenceRouter);
   api.use(manufacturedItemsRouter);
+  api.use(supplementaryItemsRouter);
+  api.use(componentSnapshotsRouter);
+  api.use(operationPlanSnapshotsRouter);
+  api.use(readinessRouter);
+  api.use(technicalCatalogRouter);
   api.use(importRunsRouter);
   app.use("/api/production", api);
 

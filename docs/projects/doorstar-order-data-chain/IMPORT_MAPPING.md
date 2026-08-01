@@ -160,8 +160,9 @@ production connection string and no import switch.
 `src/production-service/scripts/scanLegacyManufacturedItems.py` scans legacy
 XLSX/XLSM cached values for wall-panel and furniture-front evidence. It never
 opens Excel, executes a macro or connects to a database. A keyword hit is only
-schema evidence; a review candidate additionally needs an explicit numeric
-value in the same cached row and can never become an automatic import.
+schema evidence; a review candidate additionally needs labelled width, height
+and positive quantity in the same cached row and can never become an automatic
+import.
 
 ```powershell
 python .\scripts\scanLegacyManufacturedItems.py `
@@ -172,6 +173,40 @@ python .\scripts\scanLegacyManufacturedItems.py `
 The output includes a relative source path, hash, sheet, logical row, cached
 cells, extraction state and ignored macro-container list. The companion unit
 test is `tests/legacyManufacturedItemScan.unit.test.ts`.
+
+## Exact-revision component/calculator boundary
+
+The import layer may propose component evidence but must not materialize
+component or cutting rows. A component source reference is lineage only:
+
+| Source/evidence value | Calculator target | Automation |
+| --- | --- | --- |
+| `ORDER_POSITION` ID | `ComponentRequirement.source` | Reference candidate only; copy no quantity, dimensions, material or finish |
+| `MANUFACTURED_ITEM` ID | `ComponentRequirement.source` | Reference only after `VERIFIED` + at least one evidence + every evidence `RESOLVED`; import may not promote it |
+| `SUPPLEMENTARY_ITEM` ID | `ComponentRequirement.source` | `VERIFIED`; `SOURCE_REVIEW` additionally needs at least one evidence and every evidence `RESOLVED` |
+| Excel/PDF formula result or legacy cutting column | raw evidence | Never execute or copy as a component value |
+| Document version + relative path | component-proposal lineage | Required |
+| Page/sheet/row/cell or drawing entity | source locator | Required when available |
+| Raw and normalized value | evidence pair | Preserve both; normalized value remains a candidate |
+| Candidate component key | proposed `componentKey` | Review-only; not manufacturing authority |
+| Calculator/BOM rule key + rule version | derivation lineage | Required for every derived proposal |
+| Product/profile key + fingerprint | applicability lineage | Required before a profile-specific rule can be evaluated |
+| Physical side | `SIDE_A` / `SIDE_B` | Only from explicit physical-side evidence |
+| Casing role | `FIXED` / `ADJUSTABLE` / `OTHER` | Separate profile-specific axis; never infer physical side, handing or jamb role |
+| Human review state + resolution | proposal lifecycle | Import/RAG may create only an open state; final decision comes from the audited backend review endpoint |
+| `reviewedByRole`, `reviewedAt` | decision audit | Never supplied or inferred by import/RAG; backend writes them from the authenticated review action |
+
+A new component row begins with empty business values. Import must not fill
+quantity, finished/cutting dimensions, material, finish or formula from the
+source link. Final `ComponentSnapshot` materialization belongs to the office
+review workspace and backend authority for the exact approved revision.
+
+RAG, profile drawing and literature processing may only emit read-only
+candidate/evidence records until a Doorstar product profile and its rules are
+approved and versioned. A source marked `VERIFIED` is not safe if any required
+source evidence lacks a complete `RESOLVED` decision, resolution, reviewer and
+timestamp. Both supplementary and manufactured source gates now enforce this,
+and component-snapshot materialization independently rechecks the invariant.
 
 ## Controlled first import route
 
@@ -213,10 +248,11 @@ local filesystem inventory. It maps as follows:
 
 | SharePoint export column | Doorstar preview field | Importability |
 |---|---|---|
-| `Név` + `Elérési út` | `DocumentReference.sourceRelativePath`, filename | Automatic after project-link review |
-| `Módosítva` | `DocumentSourceMetadata.sourceLastModifiedAt` | Automatic, source metadata only |
-| `Módosította` | `DocumentSourceMetadata.sourceLastModifiedBy` | Automatic, source metadata only |
-| `Elemtípus` | `sharePointItemType` | Automatic; `Mappa` is excluded from document records |
+| `Név` + `Elérési út` (`Elem`) | `SourceCatalogDocument.relativePath`, filename | Automatic catalog metadata; `OrderDocument` only after project-link review |
+| `Név` + `Elérési út` (`Mappa`) | `SourceCatalogFolder.relativePath`, parent, display name | Automatic catalog structure; never a document import |
+| `Módosítva` | source `lastModifiedAt` | Automatic, source metadata only |
+| `Módosította` | source `lastModifiedBy` | Automatic, source metadata only |
+| `Elemtípus` | folder/document discriminator | Automatic |
 
 The current export has no `Létrehozva` or version-history field. Therefore
 `Módosítva` means **last SharePoint document modification**, never an
@@ -225,7 +261,11 @@ order-received, survey-finalised or delivered event. `.bak`, `.dwl` and
 documents; macros are never executed.
 
 `scripts/previewSharePointDocumentMetadata.py` creates the metadata-only JSON
-preview and has no database-writing mode.
+preview and has no database-writing mode. It preserves all 2,974 exported
+folder rows. `simulateSharePointMetadataCatalog.py` adds only 14 missing
+ancestors, yielding 2,988 folder nodes, and assigns a deterministic snapshot
+fingerprint/run key. The source catalog remains a separate bounded context;
+it is not bulk-loaded into `OrderDocument`.
 
 ## Work-number precedence for mixed archive folders
 
@@ -234,6 +274,21 @@ SharePoint metadata preview therefore resolves `workNumberCandidate` in this
 order: explicit work number in the **filename**, then work number in the
 folder path. A filename/folder disagreement is a review signal; it must not
 silently attach the document to the enclosing folder's Project.
+
+All distinct filename and path candidates are also retained as arrays. More
+than one distinct number in either locator is `MULTIPLE`, with no selected
+`workNumberCandidate`. A project-package candidate requires stronger evidence:
+an explicit `DSMR` filename or a canonical `NNNNN - customer`/DSMR project
+folder. A generic five-digit product, décor or hash token remains document-level
+review evidence and does not inflate the project/package count.
+
+An explicit `DSMR` filename is retained as strong Sales-package evidence even
+when the enclosing path contains another work number. This does **not** resolve
+the project link: the record remains `CONFLICT` and requires human review.
+Canonical folder evidence alone is not accepted as a package when filename and
+path conflict. Both preview and catalog validation recompute these labels from
+the raw filename, extension and parent path through the shared
+`sharePointMetadataRules.py` module.
 
 ## GYÁRTÁSMEGRENDELÉS PDF — elsődleges Sales → műhely forrás
 
@@ -256,3 +311,22 @@ ellenőrizheti vagy véglegesítheti a műszaki adatot. A preview `SALES_DOCUMEN
 Az `extractSalesOrderPdfPreview.py` csak olvasható, determinisztikus JSON preview-t
 ír relatív útvonallal, oldal/sor evidence-szel és SHA-256 hash-sel. A PDF-ben nem
 szereplő üvegezés, ajtólapméret vagy végleges felület `null` marad.
+
+## Gyártóilap / műhely-specifikáció PDF
+
+The `Gyártóilap` is a reviewed manufacturing derivation, not a replacement for
+Sales or survey evidence. Its `FNY` row can corroborate `openingWidthMm`,
+`openingHeightMm` and `openingDepthMm`; its explicit `LAP` width/height can be
+stored as review evidence for the existing `doorWidthMm` and `doorHeightMm`
+fields. Do not infer a door-leaf thickness when the document does not label one.
+
+| Production-sheet value | Current Doorstar storage | Import rule |
+| --- | --- | --- |
+| `FNY` width × height × wall depth | existing opening dimensions + `OrderPositionEvidence` | Review; compare to survey and Sales |
+| `LAP` width × height | `doorWidthMm`, `doorHeightMm` + field evidence | Review; explicit values only |
+| BKM fix / BKM moving / TOK component measurements | **Schema gap:** proposed `PositionManufacturingSpecification` with component key, dimensions, source document/page and review state | Preview/evidence only; never coerce into opening or door-leaf fields |
+| CNC, lock, hinge, pattern and machining entries | technical catalog keys where explicitly mapped; otherwise raw reviewed specification/evidence | Human technical mapping required |
+
+The controlled first import may save only the reviewed opening and door-leaf
+fields already covered by the API contract. Component measurements remain in
+the preview until the dedicated specification model and UI are implemented.

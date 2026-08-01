@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-live-smoke-audit.v1",
+  "checkedAt": "2026-08-01T09:35:00+02:00",
+  "service": {
+    "root": "/opt/nexus-doorstar/knowledge-service",
+    "pidAtCheck": 492075,
+    "port": 3460,
+    "healthStatus": "ok",
+    "vectorBackend": "chroma",
+    "documents": 2016,
+    "collectionName": "doorstar-knowledge"
+  },
+  "querySha256": "712fed59678ebd97b77b7bcfec3397bc3ab2de6665b7f65c6bfb12c1bb573d59",
+  "limit": 10,
+  "principals": [
+    "doorstar-root-codex",
+    "doorstar-conductor-codex",
+    "doorstar-monitor-codex",
+    "doorstar-backend-codex",
+    "doorstar-frontend-codex",
+    "doorstar-import-discovery-codex"
+  ],
+  "principalCount": 6,
+  "successCount": 6,
+  "allResultsMentionNewProjectRule": true,
+  "allResultsMentionSalesAndSurveyAuthority": true,
+  "resultShapeEqualAcrossPrincipals": true,
+  "writeCapabilityUsed": false,
+  "rawRetrievedContentIncluded": false
+}

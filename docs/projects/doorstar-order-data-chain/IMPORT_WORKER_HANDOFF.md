@@ -730,7 +730,9 @@ az összes nyitott eltérést és blokkot. Az adatfeltérképező a következő 
   ad. A helyi újraszinkronizálás fájlidejét nem használjuk.
 - 9 297 forrássorból 2 974 `Mappa` és 468 kizárt `.bak/.dwl/.dwl2` sor után
   5 855 dokumentum-metadata rekord marad. 3 977 PDF/DWG/XLSX/XLSM potenciális
-  import-dokumentum, 292 munkaszám-jelölttel. A preview géppel olvasható:
+  import-dokumentum, az akkori egyszerű fájlnév-parserrel 292
+  munkaszám-jelölttel. Ezt a későbbi, többes/gyenge számokat karanténozó
+  felderítés váltotta le. A preview géppel olvasható:
   `IMPORT_PREVIEW_SHAREPOINT_DOCUMENT_METADATA.json`.
 - A jelenlegi export nem tartalmaz `Létrehozva` vagy verziótörténet mezőt;
   ezért belőle csak utolsó dokumentummódosítás, nem rendelési vagy tényleges
@@ -913,3 +915,601 @@ az összes nyitott eltérést és blokkot. Az adatfeltérképező a következő 
 - Nyitott fejlesztési eltérés: evidence-alapú `OrderSupplementaryItem` tároló
   kell kilincshez, zártesthez, lábazathoz, szegőléc- és más tartozékhoz. Addig
   ezek nem `OrderPosition` és nem `ManufacturedItem` rekordok.
+### 2026-07-30 09:10 — Teljes Sales-PDF kötegelt index és módszertár
+
+- Új `previewSalesOrderPdfBatch.py` az összes GYÁRTÁSMEGRENDELÉS PDF-et
+  determinisztikusan, csak olvasással feldolgozza. Az eredmény:
+  `IMPORT_PREVIEW_SALES_PDF_BATCH.json`.
+- Lefedettség: 111 PDF (53 `01 - Megrendelés`, 58 `2026`), 604 ajtópozíció-
+  jelölt, 244 kiegészítőtermék-jelölt, 0 olvasási hiba. A kimenet továbbra is
+  `databaseWrite:false`, `macroExecution:false`; production/public adatbázis
+  nem érintett.
+- Dokumentumrendszerezés: 37 azonos SHA-256-tartalmú másolatcsoport és 50
+  kanonikus numerikus munkaszám azonosítva. A szó szerinti munkaszámok száma 53.
+- Review-kötelező változatcsoportok: `25163` / `25163 mód.`, `26119` /
+  `26119 mód.`, `26125` / `26125 mód.`. A teljes forrásazonosító megmarad;
+  a numerikus egyezés csak döntési jelzés, nem automatikus projekt- vagy
+  revízió-összevonás.
+- Új `IMPORT_METHODS.md`: Sales-PDF-first index, csak hibaeseti OCR, Sales ↔
+  felmérés mezőszintű egyeztetés, készméret-sablon karantén, tartozék-lane,
+  verzió/duplikátum klaszterezés, explicit eseményhatáridő és kontrollált
+  `doorstar_test` import sorrendje.
+### 2026-07-30 — Feldolgozási eljárás rögzítve
+
+- Elkészült `IMPORT_PROCESS.md`: a források kötelező sorrendje, PDF-first
+  Sales-feldolgozás, felmérési egyeztetés, készméret-karantén, tartozékok
+  kezelése, verzió/duplikátum-review, határidő-szabályok, adatminőségi kapuk és
+  kontrollált `doorstar_test` importlépések egy helyen szerepelnek.
+
+### 2026-07-30 — Preview-validáció és CAD-metaadat teszt
+
+- A teljes `IMPORT_PREVIEW_SALES_PDF_BATCH.json` validációja javítás után
+  zöld: 0 hiba, 286 review-figyelmeztetés. A korábbi ellenőrzés 104 hiányzó
+  pozíció-darabszámot hibának jelzett. A forrás megvizsgálása azt igazolta,
+  hogy ezek valódi, hiányos Sales-PDF tételek, nem parserhiba. A validator
+  ezért most `position_quantity_missing_or_unverified` review-figyelmeztetést
+  ad; soha nem talál ki `1 db` értéket. Ugyanez vonatkozik a tartozék
+  mennyiségére. Hiányzó név, hash, relatív hivatkozás vagy preview-biztonsági
+  flag továbbra is blokkoló hiba.
+- Elkészült a CAD-hivatkozások olvasási indexe:
+  `IMPORT_PREVIEW_CAD_SALES_FOLDER.json`,
+  `IMPORT_PREVIEW_CAD_LEGACY_2026.json` és az egyesített
+  `IMPORT_PREVIEW_CAD_METADATA.json`. 83 rajz: 73 DWG, 10 DXF; 76
+  fájlnév-alapú munkaszámjelölt, 73 ismert DWG-verzió, 3 azonos bináris
+  tartalmú dokumentumcsoport. Mindegyik `REVIEW_REFERENCE`; adatbázisírás,
+  makrófuttatás és geometria-kikövetkeztetés nem történt.
+- Új, újrahasznosítható eszközök: `inspectCadReferences.py` (forrás-index)
+  és `mergeCadReferencePreviews.py` (preview-összefűzés, duplikátum- és
+  biztonsági ellenőrzés). A merge ellenőrzés Python-fordítással és valós
+  kétforrásos futással sikeres volt.
+- Teljes technikai ellenőrzés: `npm run build`, `npm run verify:openapi` és
+  `npm test` sikeres. OpenAPI 3.1, 65 művelet, teljes route-lefedettség;
+  24 tesztfájl / 86 teszt zöld. A tesztfutás futásonként elkülönített lokális
+  `doorstar_test_vitest_*` sémát használt; `public`, production és a kézi
+  import `doorstar_test` séma nem kapott importadatot.
+
+### 2026-07-30 — DXF szöveges evidence próba
+
+- Az új `previewDxfTextEvidence.py` a 10 2026-os DXF-et csak olvasta:
+  291 TEXT/MTEXT/DIMENSION evidence, ebből 3 explicit DIMENSION érték. A
+  kimenet `IMPORT_PREVIEW_DXF_TEXT_EVIDENCE.json`; minden rekord preview-only,
+  relatív hivatkozású és emberi review-köteles.
+- A 26116 üvegrajzban a DIMENSION entitások 2218, 373 és 5 értéket adnak, de
+  nincs automatikusan bizonyított rajzi egység vagy termék-/pozíciókapcsolat.
+  Ezek nem kerülnek méretmezőbe, amíg műszaki review nem igazolja őket.
+- A `26114 - Gremlin_Club_Kft` mappában levő `21199_Keszi Zs_Mozgo oldal.dxf`
+  fájlnév munkaszáma 21199, tehát a fájlnév és mappa ellentmond. Ez explicit
+  dokumentum-link review, nem automatikus Project-hozzárendelés.
+- A 26118-as DXF-ben a szöveg bizonyítékot ad a `DSMR 26118 bejárati ajtó
+  panel`, `Titanium Metallic`, valamint 988/2085/2079 jelölésekre, de a
+  szövegek rajzi kapcsolata és egysége nincs géppel igazolva. Csak egy
+  felmérő/technikus által jóváhagyott entity-indexes kivonat lehet belőle
+  végleges műszaki érték.
+
+### 2026-07-30 — CAD-konverziós megőrzési szabály jóváhagyva
+
+- A konverter az eredeti DWG/DXF-et kizárólag olvasható bemenetként kezeli.
+  Nem írhatja felül, nem mentheti vissza, nem nevezheti át és nem mozgathatja a
+  forrásállományt.
+- A DXF-kimenet csak repositoryn és forrásmappákon kívüli ideiglenes
+  munkamappába készülhet. Konverzió előtt és után az eredeti SHA-256 hash-t
+  össze kell vetni; eltérés esetén a futás megáll.
+- A repositoryban csak relatív hivatkozás, hash és review-evidence maradhat;
+  eredeti üzleti CAD-bináris nem. Az ideiglenes DXF nem helyettesíti a forrást.
+
+### 2026-07-30 — Sales-PDF → API DRAFT rögzítési előellenőrzés
+
+- Új `preflightSalesPdfDraft.ts`: egy Sales-PDF preview-ból létrehozza a
+  tényleges `apply-draft` API-payload preview-ját, majd a meglévő Zod
+  szerződéssel ellenőrzi. Nem hoz létre `ImportRun`-t, nem hív API-t és nem
+  kapcsolódik adatbázishoz.
+- 26135 Tormay valós adatai: a kiválasztott Sales-PDF hash-e
+  `20ff…79ad`; 5 pozícióval a payload `contractValid:true`. Két azonos
+  tartalmú dokumentumhivatkozás van (Sales-folder + 2026-archív); a Sales
+  forrás az elsődleges referencia. A kimenet:
+  `IMPORT_PREVIEW_DSMR_26135_DRAFT_PREFLIGHT.json`.
+- A szerződéses érvényesség ellenére az alkalmazás továbbra is tiltott:
+  a várható szállítás csak `2026. július-augusztus` szabad szöveg, és mind az
+  5 pozíció felmérési/műszaki review-t igényel. `databaseApplyAllowed:false`.
+- Negatív teszt: 25129 esetén 3 különböző Sales-PDF SHA-256 van. A hash nélküli
+  preflight helyesen elutasította a futást. Új szabály: eltérő tartalmú
+  munkaszám-verzióból csak explicit, ember által kiválasztott
+  `--document-sha256` után épülhet DRAFT preview.
+- Evidence-rögzítési teszt: a 26135 5 pozíciójának mind az 50 mezőszintű
+  Sales-evidence-e átment a Doorstar `createOrderPositionEvidenceSchema`
+  ellenőrzésén (0 hiba). Lefedett mezők: kód, név, darabszám, típus,
+  nyitásirány, falnyílás szélesség/magasság/falvastagság, blende és megjegyzés.
+  Ezek a DRAFT létrehozása után, a visszakapott pozíció- és dokumentum-ID-val
+  `REVIEW` állapotban rögzíthetők; automatikus műszaki jóváhagyás nincs.
+- Utóellenőrzés: a teljes backend tesztcsomag zöld (25 tesztfájl, 88 teszt),
+  beleértve az ImportRun, DRAFT, dokumentumhivatkozás, pozíció-evidence és
+  önálló falpanel/bútorfront útvonalakat. A tesztfutás elkülönített
+  `doorstar_test_vitest_*` sémát használt; üzleti import nem történt.
+
+### 2026-07-30 — Felderítési visszacsatolás: PDF-layout és fejlécminőség
+
+- A 26109 Luctor Sales-PDF vizuális és gépi összevetése parserhibát talált:
+  a `pdfplumber` táblázatában a megnevezés után egy üres cella tolta el a
+  mezőket. A dokumentum vizuálisan 80 × 216 × 11,5 cm, Bal be, Tokbanyíló,
+  1 db; korábban ezek rossz mezőkbe kerültek. Az új szigorú
+  `SHIFTED_AFTER_NAME` minta csak üres cella + három egymást követő számszerű
+  falnyílásérték esetén tolja el a mappinget. A javított 26109 preview:
+  800 × 2160 × 115 mm, Bal be, Tokbanyíló, 1 db; API DRAFT- és evidence-
+  szerződés ellenőrzése zöld.
+- A 26109 fejlécénél a gépi szövegösszefűzés ügyfélnév-, cím- és határidőhibát
+  okozott. A biztonsági szabály most a szennyezett címet és a `Kelte` értéket
+  `null`-on hagyja; nem tölt helyettesítő adatot. A telefonszám továbbra is
+  hiányzó/review adat, noha a vizuális PDF-en látható.
+- 26135 regressziós minta: 5 pozíció, minden falnyílásméret és mennyiség
+  változatlanul helyes; `STANDARD` layout. A parserjavítás nem rontotta el a
+  korábbi jó kivonatot.
+- Teljes újraindex: 111 PDF, 604 pozíciójelölt, 244 tartozékjelölt, 0 olvasási
+  hiba; 52 kanonikus munkaszámjelölt. 3 fájlnév-alapú munkaszám fallback és 3
+  fejléc–útvonal konfliktus látszik, ezért review-kötelesek. A batch-validátor
+  zöld: 0 blokkoló hiba, 256 review-figyelmeztetés (korábban 286).
+- Új `rankSalesPdfImportReadiness.py` Sales-forrás-szintű queue: 15 technikai
+  review-ra előkészíthető, 24 további review-t igénylő és 13 explicit
+  PDF-revízióválasztást igénylő munkaszám. A legkisebb, Sales-PDF szempontból
+  rendezett próbajelöltek: 25164 (2 pozíció), 26107 (3), 26135 (5). Ez nem
+  importengedély: felmérés-, határidő- és CAD-egyeztetés kötelező marad.
+- Nyitott eltérések: 25167-nél a PDF-fejléc `252167`, a fájlnév/mappa `25167`;
+  26111-nél az ügyfélnévhez dokumentumazonosító került. Mindkettő blokkolja az
+  automatikus törzsadatkapcsolást.
+
+### 2026-07-30 — Frontend UI átadás
+
+- A `terminals/frontend/inbox/2026-07-30-import-discovery-ui-handoff.md`
+  rögzíti az Import Inbox, projektcsomag-review, dokumentumverzióválasztó,
+  határidő-timeline, falpanel/front- és tartozék-lane, CAD-evidence és
+  kontrollált `doorstar_test` DRAFT UX-javaslatát.
+- Kiemelt viselkedési szabályok: új munkaszám = új Project; a `contractValid`
+  nem jóváhagyás; bizonytalan érték `null` + review; relatív hivatkozás és
+  evidence marad meg; `public`/production importválasztó nem jelenhet meg.
+
+### 2026-07-30 — DSMR-25164 vizuális PDF-ellenőrzés és méretvédő korlát
+
+- A Sales `GYÁRTÁSMEGRENDELÉS` első oldalának vizuális ellenőrzése szerint az
+  Arador Kft. / Dr. Lukács László, DSMR-25164 dokumentumban két ajtópozíció
+  van: `71 × 210 × 12,5 cm` és `76 × 210 × 12 cm`. A normalizált nyílásméretek
+  rendre `710 × 2100 × 125 mm` és `760 × 2100 × 120 mm`.
+- Feltárt parserjelenség: a `pdfplumber` az első szélesség celláját `7 1`
+  értékként adta vissza. A parser kizárólag teljesen számjegyekből és
+  szóközökből álló cellában fűzi újra a számjegyeket, ezért `7 1 → 71 cm`;
+  tetszőleges szöveget vagy decimális értéket nem alakít át.
+- Új, review-only minőségkapu: ajtónyílás szélesség 300–5000 mm, magasság
+  1200–5000 mm, falvastagság 30–2000 mm. Tartományon kívüli érték warning és
+  `REVIEW_REQUIRED`, nem technikai kész jelölt. Ez nem gyártási tűrés, csak
+  import-előszűrés.
+- Újraépített teljes Sales-preview: 111 PDF, 604 pozíciójelölt, 244
+  kiegészítőtermék-jelölt, 0 olvasási hiba. Validáció: 0 blokkoló hiba, 288
+  review-figyelmeztetés. A DSMR-25164 API-alakú DRAFT-preview-ja
+  `contractValid:true` és `evidenceContractValid:true`, de
+  `databaseApplyAllowed:false`; felmérés-, határidő- és CAD-egyeztetés továbbra
+  is kötelező.
+- Ellenőrző futások: két parser- és két readiness-unit teszt zöld. Sem
+  production/public, sem `doorstar_test` üzleti import nem történt.
+
+### 2026-07-30 — DSMR-25164 Ütemterv-egyeztetés
+
+- Az új, cache-only `inspectDeadlineWorkNumber.py` a `03 - Határidők/
+  Ütemterv.xlsx` `ADAT!151` sorát azonosította. A munkaszám Excelben nyers
+  `25164` numerikus érték; az általános dátumkonverzió ezt hibásan
+  `1968-11-22`-nek mutathatná. A munkaszám-oszlopban a diagnosztika ezért a
+  nyers ötjegyű azonosítót őrzi meg.
+- Rögzítendő deadline-megfigyelések: vállalt szállítási határidő `2025-12-01`,
+  beütemezés `2025-12-08`, „gyártás-megrendelés feltéve” `2025-12-12`, valamint
+  `december első fele` megjegyzés. A Sales PDF kelte `2025-10-20`, várható
+  szállítás szövege csak `december`.
+- A dátumok eltérő, részben egymásnak ellentmondó tervek/kommunikációs
+  megfigyelések; nem igazolnak gyártási elkészülést, kiszállítást vagy
+  beépítést. `OrderDeadlineObservation`-ként, saját forrásmezővel és
+  `REVIEW` állapottal tárolandók; a revision `expectedDelivery` csak Sales
+  döntése után tölthető.
+- Preview: `IMPORT_REVIEW_DSMR_25164_DEADLINE_ROWS.json`. A három
+  work-number-diagnosztikai unit teszt zöld; sem Excel, sem makró, sem
+  adatbázis nem futott/íródott.
+
+### 2026-07-30 — Záró ellenőrzés ezen felderítési körhöz
+
+- `production-service` build zöld; OpenAPI 3.1 ellenőrzés: 68 művelet,
+  teljes route-lefedettség; teljes backend Vitest: 27 fájl, 93 teszt zöld.
+- A tesztfutás csak az egyszeri `doorstar_test_vitest_*` sémát használta. Nem
+  történt `doorstar_test` üzleti import, és `public`/production séma sem volt
+  importcél.
+
+### 2026-07-30 — DSMR-26107 Pintér Mónika PDF- és határidő-ellenőrzés
+
+- Vizuálisan ellenőrzött Sales-PDF: 3 ajtópozíció, rendre `750 × 2080 × 160`,
+  `860 × 2100 × 130` és `860 × 2100 × 160 mm`; irány/típus/mennyiség az
+  API-alakú DRAFT-preview-ban egyezik a lappal. `contractValid:true`,
+  `evidenceContractValid:true`; továbbra is csak DRAFT/review, adatbázisírás
+  nélkül.
+- Dokumentumdátum-eltérés: a fejléc `2026-02-28`, a PDF-lábléc `2026-03-02`.
+  A forrásként rögzített eltérést nem oldjuk fel géppel.
+- `Ütemterv.xlsx` pontos kapcsolata `ADAT!147`, `WORK_NUMBER_EXACT`: vállalt
+  `2026-04-30`, gyártásmegrendelés feltéve `2026-03-02`, beütemezve
+  `2026-05-04`, megjegyzés „Fix az időpont. Jó lenne tartanunk.” A vállalt és
+  az ütemezett nap között 4 nap van; ez tervezési/határidő-review, nem tényleges
+  késés vagy teljesítés.
+- Azonos ügyfélnév miatt `ADAT!64` és `Ütemterv!76` a régi 24158-as projektre
+  mutat. Az optional szöveges fallback most `TEXT_FALLBACK` jelölést kap; csak
+  `WORK_NUMBER_EXACT` lehet automatikus projektkapcsolat-jelölt.
+- Új preview-k: `IMPORT_PREVIEW_DSMR_26107_DRAFT_PREFLIGHT.json` és
+  `IMPORT_REVIEW_DSMR_26107_DEADLINE_ROWS.json`. A deadline-diagnosztika három
+  unit tesztje zöld.
+
+### 2026-07-30 — DSMR-26107 felmérés és XLSM-csomag egyeztetés
+
+- A `Felmérés/Pintér_2026-02-27_Felmérés.jpg` vizuális ellenőrzése a három
+  kézzel javított végleges falnyílást mutatja: `75 × 208 × 16`, `86 × 210 × 13`
+  és `86 × 210 × 16 cm`. Ezek pontosan egyeznek a Sales PDF normalizált
+  `750 × 2080 × 160`, `860 × 2100 × 130`, `860 × 2100 × 160 mm` értékeivel.
+  A felmérés dátuma `2026-02-10`, várható szállítási szövege `2026. április`.
+- A 26107-es 2026-csomag négy XLSM konténere csak cache-értékből futott át:
+  437 falpanel/front schema-evidence (235 falpanel, 202 bútorfront kulcsszó),
+  de 0 gyártási tételjelölt. Egyik sorban sincs a szükséges, felcímkézett
+  szélesség + magasság + darabszám együtt; ezek Kiíró-sablonok, nem rendelési
+  mennyiségek.
+- Scanner-szigorítás: a kulcsszó vagy tetszőleges számszerű érték többé nem
+  hoz létre `ManufacturedItemCandidate` rekordot. Csak egy strukturált
+  méret/darabszám sor lehet review-jelölt. A célzott 2 teszt zöld.
+- Preview: `IMPORT_PREVIEW_DSMR_26107_MANUFACTURED_ITEMS.json`; minden
+  rekord preview-only, `databaseWrite:false`, `macroExecution:false`.
+
+### 2026-07-30 — DSMR-26107 Gyártóilap műhelyspecifikáció
+
+- A `Dokumentumok/26107 - 02 - Gyártóilap.pdf` 1. oldala három gyártási
+  pozícióra bontott, vizuálisan ellenőrzött műhelylap. Az `FNY` méretek
+  mindhárom esetben egyeznek a felmérés/Sales lánccal.
+- Explicit `LAP` ajtólapméretek: 01 WC `683 × 2038 mm`; 02 Háló és 03 Fürdő
+  `777 × 2050 mm`. Ezek a meglévő `OrderPosition.doorWidthMm` és
+  `doorHeightMm` mezőkbe csak műszaki review után vihetők át; lapvastagságot a
+  forrás nem címkéz egyértelműen, ezért `null` marad.
+- BKM fix/mozgó és TOK komponensméretek is jelen vannak, de ezek nem
+  falnyílás- és nem ajtólapmezők. A jelenlegi séma/evidence-enum nem tudja
+  kereshetően, típusosan tárolni őket. Javasolt bővítés:
+  `PositionManufacturingSpecification` (pozíció, komponenskulcs, dimenziók,
+  forrásdokumentum/oldal, review állapot). Addig csak preview-evidence marad.
+- Preview: `IMPORT_REVIEW_DSMR_26107_PRODUCTION_SHEET.json`, három pozíció,
+  relatív hivatkozás, `databaseWrite:false`, `macroExecution:false`.
+
+### 2026-07-30 — SharePoint metaadat-katalógus és mappaszimuláció
+
+- A `Fájlok_Módositás_dátuma.xlsx` csak olvasható `.iqy`-exportjából újraépült
+  a géppel olvasható, makrómentes metaadat-katalógus: 5 855 dokumentumrekord,
+  2 974 exportált mappasor + 14 hiányzó levezetett ős, összesen 2 988 virtuális
+  mappa és 3 977 potenciálisan releváns dokumentum. A gyenge ötjegyű
+  termék/dekor/hash találatok karanténja után 271 erős DSMR/projektmappa
+  csomagjelölt marad. A
+  mapparekordok kereshető struktúraelemek, nem dokumentumimport-jelöltek.
+- A szimuláció kizárólag relatív `sites/...` útvonalból állítja elő a virtuális
+  folder/document/project-package rekordokat; `databaseWrite:false`,
+  `macroExecution:false`, sem SharePoint-, sem üzleti dokumentumbináris-, sem
+  adatbázis-művelet nincs benne. Kimenet:
+  `IMPORT_PREVIEW_SHAREPOINT_CATALOG_SIMULATION.json`.
+- 105 fájlnál egyetlen fájlnév-/útvonal-munkaszám ütközik, további 4 rekord
+  több különböző számot tartalmaz. Együtt 109 `PROJECT_LINK_REVIEW`, ebből 76
+  PDF/DWG/XLSX/XLSM. Összesen 1 512 egyértelmű azonosítás csak
+  mappaútvonalból jön, ebből 515 releváns típusú; ez jelölt lehet, nem
+  projekt-igazság.
+- Élő integráció csak a forrásazonosítók (site/drive/item/parent ID,
+  created/modified, user, eTag vagy verzió, folder/file facet), kijelölt
+  olvasási jogosultság és emberi link-review után indulhat. A javasolt
+  `SourceCatalog` / `SourceCatalogSyncRun` / `SourceCatalogCursor` /
+  `SourceCatalogFolder` / `SourceCatalogDocument` /
+  `SourceCatalogDocumentVersion` / `SourceCatalogProjectLink` modell elkülönül
+  az elfogadott rendelési `OrderDocument`-től. Részletek:
+  `SHAREPOINT_INTEGRATION_CONDITIONS.md`.
+- QUALITY.md szerinti készítő–ellenőr kör után a preview fail-closed a csendes
+  sorlevágásra, abszolút/traversal vagy duplikált dokumentumútra és a bemenet
+  felülírására. A golden fingerprint
+  `cc4c13d962a29dbcdc27651dd2b7ef0512e5a1489e3e32852055f900a6fea30f`,
+  source snapshot key `spsnapshot_43e46abbdf1872e530dc`, transzformációs run
+  key `spcatalog_974bb607bd9c693017d1`.
+- Újrafelhasználható QA-kapu:
+  `validateSharePointMetadataCatalog.py`; eredménye
+  `IMPORT_REVIEW_SHAREPOINT_CATALOG_VALIDATION.json`, `errorCount:0`. A Python
+  import-tool tesztek bekerültek a teljes Vitest regresszióba.
+- P0 élő-integrációs blokk: a jelenlegi `X-Role` nem hitelesítés. Entra/OIDC,
+  szerveroldali RBAC, tenant-admin által kijelölt read-only library scope és
+  megnevezett üzleti reviewer nélkül nem indul Graph connector vagy katalógus
+  API. ADR: `ADR-2026-07-30-sharepoint-readonly-source-catalog.md`.
+
+### 2026-07-30 — DSMR-26107 átadás-átvételi forrás minősítése
+
+- A `Dokumentumok/26107 - Beszerelés - Átadásátvételi.pdf` 2026-03-05-i
+  előkészített sablon. Megrendelő és munkaszám van rajta, de a beépítési hely,
+  tételmennyiségek, átvevő, dátum és átvételi aláírás üres.
+- A nyomtatott „Kilincsezés / Finombeállítás / Vasalattakarózás / Takarítás:
+  Kész” sorok önmagukban nem bizonyítanak beépítést vagy átvételt. Nincs belőle
+  `DELIVERED`, `INSTALLED` vagy `COMPLETED` importesemény; a teljesítési
+  státusz `UNKNOWN` marad, a dokumentum csak `OTHER` referenciaként kapcsolható.
+
+### 2026-07-30 — SharePoint katalógus végső QUALITY/QA kapu
+
+- A készítő–ellenőr kör maradék szerződésrését javítottuk:
+  `sharePointMetadataRules.py` lett a közös, tiszta szabálykönyvtár. A preview
+  és a szimulátor ugyanebből számolja a relevanciát, munkaszámfeloldást és erős
+  csomagbizonyítékot; a szimulátor a nyers fájlnév/kiterjesztés/szülőút alapján
+  újraszámol és eltérésnél fail-closed.
+- Adverszáriális regresszió fedi a hamis JPG-relevanciát, a DSMR marker nélküli
+  `FILENAME_DSMR` címkét és a nem kanonikus útvonalra adott `PROJECT_FOLDER`
+  címkét. Az explicit DSMR fájlnév útvonal-konfliktusban is erős Sales-csomag
+  evidence marad, de a projektkapcsolat kötelező `CONFLICT` review; puszta
+  folder evidence konfliktusban nem csomagolható.
+- A teljes forrásból megismételt három artifact byte-pontosan egyezik a
+  goldennel; `spcatalog_974bb607bd9c693017d1`, validáció `errorCount:0`,
+  a forráshash olvasás előtt/után egyezik. A tesztfuttatás izolált
+  `doorstar_test_vitest_*` sémát használt és eltakarította.
+- Záró bizonyíték: backend build zöld; OpenAPI 3.1, 78 művelet, teljes
+  route-lefedettség; teljes backend Vitest 32 fájl / 98 teszt zöld. Nem történt
+  SharePoint-írás, üzleti adatbázis-import, `public`/production sémaérintés vagy
+  deploy.
+- Nyitott P0 változatlan: élő connector/API csak valódi Entra/OIDC +
+  szerveroldali RBAC, tenant-admin által kijelölt read-only library scope,
+  perzisztens cursor/tombstone modell és megnevezett üzleti reviewer után.
+
+### 2026-07-30 — Frontend exact-revision Kalkulátor source-contract fogadva
+
+- Feldolgozott üzenet:
+  `terminals/import-discovery/inbox/2026-07-30_007_frontend-component-workspace-source-contract.md`.
+  A kész frontend munkatér:
+  `/orders/:projectKey/revisions/:revision/calculator`.
+- Az import és a frontend közös határa: a komponens `source` csak lineage.
+  `ORDER_POSITION`, valamint csak `VERIFIED` `MANUFACTURED_ITEM` vagy
+  `SUPPLEMENTARY_ITEM` hivatkozható; mennyiség, ajtó-/falnyílásméret, anyag,
+  felület, szabászati méret vagy Excel/PDF képlet nem másolható át.
+- A tárolási terv terminológiai driftje javítva: a stabil fizikai oldal
+  `SIDE_A/SIDE_B`; a jelen lévő tokborítás profilfüggő szerepe külön
+  `FIXED/ADJUSTABLE/OTHER/UNRESOLVED`. Egyikből sem következik a másik,
+  pánt-/zároldal vagy handing.
+- A jövőbeli RAG/profilrajz-javaslat kötelező lineage-e: pontos
+  dokumentumverzió és relatív út, page/sheet/row/rajzi lokátor, nyers és
+  normalizált érték, komponenskulcs-jelölt, calculator/BOM rule key + version,
+  termékprofil + fingerprint, review state és resolution.
+- Nyitott P0 pontosítva: a supplementary-item review már megköveteli minden
+  evidence explicit `RESOLVED` állapotát, a manufactured-item review végpont
+  viszont jelenleg evidence-összesítés nélkül is beállíthat `VERIFIED`
+  állapotot. Import ezt nem tekintheti komponens-authoritynek a backend kapu és
+  adverszáriális teszt elkészültéig. Jóváhagyott, verziózott Doorstar profil
+  nélkül a RAG/profilrajz eredménye read-only candidate; `ComponentSnapshot`
+  materializálását az exact-revision irodai review és a backend végzi.
+
+### 2026-07-30 — Frontend komponens-evidence kapu visszaigazolva
+
+- A frontend Kalkulátor most csak `VERIFIED` + legalább egy evidence + minden
+  evidence `RESOLVED` feltétellel enged `MANUFACTURED_ITEM` forrást.
+  `SOURCE_REVIEW` supplementary esetén ugyanez a nem üres/all-`RESOLVED`
+  feltétel érvényes; kézi supplementary tételnél a `VERIFIED` állapot marad a
+  kliensfeltétel.
+- A küldő task jelentése szerint a teljes frontend suite 18 fájl / 52 teszt,
+  lint és build zöld. Import-discovery célzottan újrafuttatta a
+  `componentWorkspace.unit.test.ts` fájlt: 8/8 teszt zöld.
+- Ez kliensoldali fail-closed védelem, nem backend authority. A manufactured
+  review végpont P0-ja továbbra is nyitott: közvetlen API-kérés sem kerülheti
+  meg az evidence-összesítést. A pontos blokk a backend inbox
+  `2026-07-30_011_import-discovery-manufactured-evidence-gate.md` üzenetében
+  szerepel.
+
+### 2026-07-30 — Source-evidence teljes lánc és manufactured P0 lezárva
+
+- Backend handoff feldolgozva:
+  `terminals/import-discovery/inbox/2026-07-30_008_backend-manufactured-evidence-gate-closed.md`.
+  Elkészült a role-protected, egyszeri manufactured evidence-review PATCH;
+  final `RESOLVED/REJECTED`, resolution, reviewer és timestamp auditálódik.
+- Manufactured parent csak legalább egy és minden soron teljes auditú
+  `RESOLVED` evidence mellett lehet `VERIFIED`. A komponens-snapshot ezt
+  külön újraellenőrzi, így közvetlen DB-művelettel hamisított `VERIFIED`
+  forrás sem kerülhet át. Import-discovery célzott backend futása: 10/10 zöld.
+- Frontend handoff feldolgozva:
+  `terminals/import-discovery/inbox/2026-07-30_009_frontend-source-evidence-review-adoption.md`.
+  Minden manufactured/supplementary evidence külön, egyszeri döntési UI-t kap;
+  raw/normalized érték és locator read-only. Hiányos `RESOLVED` audit
+  fail-closed marad a parent review, readiness és Component Workspace kapuban.
+- Import-discovery célzott frontend futása: 6 fájl / 19 teszt zöld. A küldő
+  task teljes eredménye: 21 fájl / 61 teszt, lint és build zöld. A backend
+  handoff teljes eredménye: 34 fájl / 113 teszt, build és 80 műveletes OpenAPI
+  zöld.
+- Authority-határ: import/RAG rögzíthet relatív locatorral raw/normalizált
+  candidate evidence-et és nyitott állapotot, de final state-et, resolutiont,
+  reviewert vagy review-időpontot nem. Ezek kizárólag az auditált backend
+  review műveletből származhatnak.
+- A korábbi `MSG-DOORSTAR-BACKEND-011` P0 üzenet `RESOLVED`; ez a komponens-
+  source evidence blokk lezárt állapota. A SharePoint Entra/OIDC P0 ettől
+  függetlenül továbbra is nyitott.
+
+### 2026-07-30 — Frontend teljes-revíziós source gate végleges átvétele
+
+- A Kalkulátor readiness már a rendelési revízió teljes
+  `manufacturedItems` és `supplementaryItems` parent-listájából készül, nem a
+  kiválasztott vagy a komponens-payloadba került sorokból. Emiatt egy nyitott,
+  de a payloadból kihagyott forrástétel is blokkolja a materializálást.
+- Manufactured és `SOURCE_REVIEW` supplementary lineage csak backend által
+  auditált, teljes `RESOLVED` evidence-döntéssel ready. Az import/RAG mezőiből
+  továbbra sem képezhető final review-state, reviewer/idő metaadat vagy
+  komponens-default.
+- Import-discovery független teljes frontend ellenőrzése: Vitest 22 fájl /
+  68 teszt zöld, TypeScript lint zöld, production build zöld. A külön
+  QA-agent 5 releváns fájl / 19 teszttel nem talált P0/P1 logikai rést.
+- Nyitott P2 tesztmélységi eltérés: nincs külön `ComponentWorkspacePage`
+  DOM/API integrációs teszt, amely aggregált parent-blocker mellett a snapshot
+  POST elmaradását bizonyítja. A tiszta kapufüggvény és a backend független
+  újraellenőrzése miatt ez nem jelenlegi authority-megkerülés, és nem nyit új
+  importoldali követelményt.
+- Forrásdokumentum, adatbázis és deploy nem érintett; a SharePoint
+  Entra/OIDC P0 továbbra is külön, nyitott kapu.
+
+### 2026-07-30 — Frontend P2 route-/mutation-regresszió lezárva
+
+- A korábbi `ComponentWorkspacePage` tesztmélységi eltérést az új, valós
+  `/orders/:projectKey/revisions/:revision/calculator` route-on futó regresszió
+  lezárta. A tesztben van használható `ORDER_POSITION`, érvényes approval hash,
+  aktív profil és minden technikai függőség kész.
+- Egy `VERIFIED` manufactured parent nyitott `REVIEW` evidence-e ennek ellenére
+  aggregate blockert képez. A DOM `Gyártott 0/1` számlálót és a műszaki
+  forrásaudit-linket mutatja, miközben a komponensszerkesztő és a
+  materializáló gomb hiányzik; a create-mutation hívásszáma nulla.
+- Import-discovery független teljes futása: Vitest 23 fájl / 69 teszt zöld,
+  TypeScript lint zöld, production build zöld. A P2 lezárva, P0/P1
+  komponens-source rés nincs, új importoldali kérés nem keletkezett.
+- Külön, csak olvasó QA célzottan 1 fájl / 1 tesztet futtatott zölden; P0–P2
+  funkcionális rés nem maradt. Nem blokkoló P3 teszt-robosztussági követés:
+  a regresszió kézzel ismétli az App route-mintát, és nem assertálja külön,
+  hogy az evidence az egyetlen blocker. A jelenlegi fixture/kód ezt teljesíti,
+  az import-authority határt nem gyengíti.
+- Forrásdokumentum, adatbázis és deploy nem érintett. A SharePoint
+  Entra/OIDC P0 ettől függetlenül továbbra is nyitott.
+
+### 2026-07-31 — Kontrollált Nexus RAG dry-run csomag review-ra átadva
+
+- Elkészült a `docs/projects/doorstar-nexus-rag/` csomag. A
+  `SOURCE_INVENTORY.json` 45 repository-forrást osztályoz: 30 `PROCESS`,
+  9 `HUMAN_REVIEW`, 6 `EXCLUDE`; további 11 kizárt nyers/bináris/preview
+  forrásosztályt rögzít. A leltár egésze `ragIndexable:false`.
+- A kereshető jelölt réteg 6 kanonikus, ügyfél-, személy- és rendelésadat-
+  mentes dokumentum: szerepkör/authority; rendeléstől gyártásig tartó folyamat;
+  Doorstar-belső és faipari terminológia; dokumentumtípusok és forrásmezők;
+  import/evidence/review; gyártási stage-, állapot- és dátumszemantika.
+- Minden claim `VERIFIED`, `INFERENCE` vagy `OPEN` minősítésű, és inventory
+  source ID + teljes SHA-256 + lokátor hivatkozást tartalmaz. Összesen 98
+  claim, ebből 88 verified, 1 inference és 9 open.
+- A verziózott `doorstar-rag-manifest.v1.json` kizárólag `doorstar` targetet,
+  `dry-run` módot, `nexusWrite:false` és `chromaWrite:false` értéket enged. A
+  dokumentumkulcs id + verzió + kanonikus hash + chunk-policy verzió SHA-256;
+  azonos id/verzió eltérő tartalommal blokkol.
+- A `RAG_EVAL_QUESTIONS.json` 35, forrás- és claim-elvárással ellátott
+  ellenőrző kérdést tartalmaz. A determinisztikus chunk-policy H1–H3 és
+  bekezdés alapú, legfeljebb 1600 karakterrel és átfedés nélkül.
+- Újrahasználható offline ellenőrző:
+  `scripts/prepareDoorstarNexusRag.py`; célzott Python unit teszt 12/12 zöld.
+  A dry-run 6 dokumentum / 98 claim / 41 chunk / 35 eval, 0 hiba és 0 warning;
+  ismételt futás bájtszinten azonos reportot adott.
+- A validátor delimiter-, repository-root-, érzékeny-forrás-, output-overwrite-,
+  hardlink/symlink- és eval-forrásparitási kapukat alkalmaz. Független
+  adverszáriális QA: PASS, P0/P1 nincs; a locator szemantikai létezése emberi
+  review marad.
+- Teljes QA: backend build zöld; OpenAPI 3.1, 83 művelet, teljes
+  route-lefedettség; teljes backend Vitest 39 fájl / 127 teszt, izolált
+  `doorstar_test_vitest_*` sémával zöld.
+- Nyitott review: Entra/OIDC és ACL authority; jóváhagyott DWG–DXF lánc; élő
+  SharePoint connector; `Egyéb` állomás; teljes dátumtaxonómia runtime mezői;
+  BKM/TOK profiljelentés; blende-osztályozás; nyitásirány-konvenció.
+- **Leállási kapu:** `HUMAN_APPROVAL_REQUIRED — STOP`. Nexus-, ChromaDB-,
+  production/public adatbázis- vagy deploymódosítás nem történt. A csomag
+  betöltése csak külön emberi jóváhagyás és változatlan hash-ek mellett indulhat.
+
+### 2026-07-31 — Faipari szakzsargon-audit és importalias-szótár
+
+- Elkészült a kanonikus emberi és gépi terminológiai baseline:
+  `docs/knowledge/domain/DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md`
+  és `docs/knowledge/domain/doorstar-faipari-terminology.v1.json`.
+- A Doorstar üzleti adatút szakmailag megfelelő alapokra épül, de a faipari,
+  belső, szoftveres és legacy szavakat külön kell kezelni. A JSON ezért
+  `CANONICAL`, `DOORSTAR_LOCAL`, `SYSTEM_TERM`, `REVIEW`, `DEPRECATED`,
+  valamint `ALLOW`, `ALIAS_ONLY`, `REVIEW_REQUIRED`, `FORBIDDEN` minősítést
+  ad az import és keresés számára.
+- Automatikusan kereshető alias maradhat többek között a DSMR, FNY, LAP,
+  „mozgó borítás”, ajtószárny, front/frontlap és falpanel. A nyers érték,
+  relatív forrásút és lokátor minden esetben megmarad.
+- `BKM_FIX`, `BKM_MOVING`, `TOK`, `FixOldal`, `MozgoOldal` és `blende` pontos
+  célmezője profil-/BOM-bizonyíték nélkül nem állapítható meg. Ezekből nem
+  készül automatikusan tok-, oldal-, felület- vagy komponensadat.
+- A fix/állítható tokborítási szerep nem azonos `SIDE_A/SIDE_B` fizikai
+  oldallal, pánt-/zároldallal vagy handinggel. A `surface` nem teríthető szét
+  automatikusan ajtólapra, tokra és borításokra.
+- A falpanel és bútorfront külön gyártandó tétel; a `wallTreatment=WALL_PANEL`
+  csak kapcsolódó igényjelzés. A blende külön, tisztázandó kiegészítő elem.
+- A hatlépcsős modell Doorstar-makrofolyamat. A fúrás megmunkálás, a csiszolás
+  jellemzően felület-előkészítés; a `KISZALLITASRA_MEGJELOLES` készre jelentés,
+  nem tényleges kiszállítás/beépítés/teljesítés.
+- Nyitott P1-ek a valós adat kiadása előtt: vállalt kontra várható dátum külön
+  mező/szemantika; backend felmérési teljesség és UI egyezése; kétoldali
+  ajtószerkezet backend-szerződése; falpanel-igény kontra gyártott panel;
+  Sales átadódokumentum kontra gyártási kiadás; stage–állomás–művelet
+  határának konszolidálása.
+- Read-only MCP-bizonyíték erősíti a falnyílás-, tokmag-/állítható borítás-,
+  falborítás-, bútorfront-, dokumentációs és műveletterv-fogalmakat. A blende
+  és a BKM/TOK helyi jelentésére nem volt elégséges szakirodalmi találat, ezért
+  a rendszer nem talál ki feloldást.
+- Forrásdokumentum, adatbázis, éles/public séma és deploy nem érintett.
+
+### 2026-07-30 — Frontend P3 közös route-szerződés lezárva
+
+- A `src/uzemi-tabla-web/src/lib/componentWorkspaceRoute.ts` adja a
+  Kalkulátor route-mintáját és URL-builderét. Az App route-regisztrációja, az
+  OrderDetailPage, a ProjectProcessOverview és a ComponentWorkspacePage
+  regresszió ezt használja; más calculator route-literal nincs a frontend
+  forrásban.
+- A page-regresszió a névvel azonosított blocker-régióban pontosan egy
+  listaelemet követel, és az egyetlen elem az evidence-audit hiányát nevezi
+  meg. Ezzel külön bizonyított, hogy a revízió, approval hash, profil,
+  jogosultság és technikai függőségek készek.
+- Import-discovery független teljes futása: Vitest 23 fájl / 69 teszt zöld,
+  TypeScript lint zöld, production build zöld. P0–P3 rés nem maradt; új
+  importoldali kérés nem keletkezett. Külön, csak olvasó QA célzott futása
+  1 fájl / 1 teszt zöld; a teljes frontend forráskeresés sem talált
+  calculator route-duplikációt a közös helperen kívül.
+- Forrásdokumentum, adatbázis és deploy nem érintett. A SharePoint
+  Entra/OIDC P0 ettől függetlenül továbbra is nyitott.
+
+### 2026-08-01 — Kanonikus Doorstar RAG v1 alkalmazva, retrieval-v1.1 nyitva
+
+- A projektgazda explicit engedélyével a változatlan
+  `doorstar-controlled-knowledge-rag@1.0.0` csomag bekerült a kizárólagos
+  `doorstar` / `doorstar-knowledge` célba. Exact csere: 41 új kanonikus chunk,
+  23 előre azonosított legacy chunk törlése; count `1998 → 2039 → 2016`.
+- A 1975 nem célzott rekord teljes fingerprintje változatlan. Repositoryn
+  kívüli, 0600 jogosultságú rollback-backup készült; az ismételt terv
+  `SKIP_IDENTICAL`. Alkalmazásadatbázis, production/public séma és Doorstar-
+  deploy nem változott.
+- A Doorstar Knowledge Service újraindítás után `health=ok`, 2016 dokumentumot
+  lát. A hat elkülönített Doorstar Nexus-principal read-only smoke-ja 6/6 PASS,
+  és mind visszaadta az új Project, illetve Sales/felmérés authority lényegét.
+- Nyitott minőségi eltérés: a live 35 kérdéses, szűretlen top-10 eval csak
+  13 dokumentum- és 1 teljes claim-egyezést adott. A v1 1600/0 mechanikus
+  chunkolása 17/98 claim-sort kettévágott; 5 esetben az ID elszakadt az
+  állítás szövegétől. A vegyes, 2016 rekordos korpusz további rangsorolási
+  hígítást okoz.
+- A v1.0 alkalmazási integritása PASS, ezért nem gördült vissza és nem írható
+  át helyben. A javítás külön `1.1.0` dry-run: állítássor-határt őrző claim-
+  chunkok, exact claim→chunk megfeleltetés, package-filterelt retrieval-eval,
+  valamint külön szűretlen island/MCP smoke.
+- A v1.1 package hash, report és exact migrációs ID-halmaz új emberi review és
+  jóváhagyás nélkül nem kerülhet Nexusba vagy ChromaDB-be.
+- Tartalommentes audit:
+  `docs/projects/doorstar-nexus-rag-execution/LIVE_APPLY_2026-08-01.json`,
+  `LIVE_EVAL_2026-08-01.json`, `LIVE_SMOKE_2026-08-01.json`.
+
+### 2026-08-01 — RAG v1.1 claim-lineage dry-run és quality hold
+
+- A v1.0 négy befagyasztott pinje változatlan. Külön v1.1 manifest, inventory,
+  eval és dry-run report készült; package hash
+  `237dcdf5be94131ae9d5be0dc9062d757896b7b11693c37198323db43db68e16`.
+- A `markdown_claim_rows/v2` policy 98 teljes, egyedi claim chunkot és 6
+  claim-táblát nem tartalmazó overview chunkot képez. Claim-sor nem darabolható,
+  1600 karakter felett fail-closed. A report 6 dokumentum / 98 claim / 104
+  chunk / 35 explicit ALL/ANY eval, 0 hiba és 0 warning.
+- Az élő v1 apply-receipthez kötött baseline exact 6 dokumentum / 41 chunk. A
+  tartalommentes planner exact 41→104 cserét mutat, broad delete és DELETE
+  action nélkül; payload nincs, minden write-proof hamis, státusz
+  `HUMAN_APPROVAL_REQUIRED`.
+- Offline, auditált MiniLM package-only mérés: @5 dokumentum recall 29/36 és
+  claim recall 25/61; @10 32/36 és 30/61; @20 34/36 és 34/61. A szigorú,
+  all-or-nothing teljes claim-match rendre 14/35, 17/35 és 18/35. A
+  claim→chunk/citation mapping 98/98, az elvárt forrás-lineage 35/35.
+- Döntés: `HOLD_FOR_RETRIEVAL_TUNING`. A v1.1 strukturális javítása jó, de a
+  flat retrieval még nem elég megbízható több-claim kérdésekhez. Következő
+  jelölt a dokumentum-/témaszintű első retrieval és a claim-szintű második
+  retrieval, előre jóváhagyott @5/@10/@20 küszöbbel; eval-overfitting tilos.
+- A független QA három P2 hardeninget talált és a javítás után újra auditált:
+  write-enabled manifest elutasítása; live baseline nyers report-hash pin;
+  duplikált JSON-kulcsok fail-closed kezelése. Re-audit PASS, P0–P2 nem maradt,
+  a releváns Python fókusztesztek 67/67, a Nexus evaluator 9/9 zöld.
+- Review-artefaktumok:
+  `docs/projects/doorstar-nexus-rag/RAG_REVIEW_REPORT.v1.1.md`,
+  `CANDIDATE_EVAL_SUMMARY.v1.1.0.json`,
+  `DRY_RUN_REPORT.v1.1.0.json`, valamint
+  `docs/projects/doorstar-nexus-rag-execution/PACKAGE_BASELINE.live-v1.0.json`.
+- Nexus-, ChromaDB-, alkalmazásadatbázis-, production/public séma- vagy
+  deploymódosítás nem történt. Új élő írás csak külön, explicit emberi
+  jóváhagyással kezdhető.

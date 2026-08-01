@@ -99,6 +99,12 @@ def workbook_sheets(archive: zipfile.ZipFile) -> list[tuple[str, str]]:
     return sheets
 
 
+def workbook_date_system(archive: zipfile.ZipFile) -> str:
+    workbook = ET.fromstring(archive.read("xl/workbook.xml"))
+    properties = workbook.find(f"{OOXML_NS}workbookPr")
+    return "1904" if properties is not None and properties.attrib.get("date1904") in {"1", "true"} else "1900"
+
+
 def cell_value(cell: ET.Element, shared_strings: list[str]) -> object:
     data_type = cell.attrib.get("t")
     if data_type == "inlineStr":
@@ -146,7 +152,11 @@ def parse_workbook(path: Path, row_limit: int | None = 80) -> dict[str, Any]:
                     if row_limit is not None and len(rows) >= row_limit:
                         break
             result_sheets.append({"name": name, "rows": rows})
-        return {"sheets": result_sheets, "containsVba": "xl/vbaProject.bin" in archive.namelist()}
+        return {
+            "sheets": result_sheets,
+            "containsVba": "xl/vbaProject.bin" in archive.namelist(),
+            "dateSystem": workbook_date_system(archive),
+        }
 
 
 def header_row(rows: list[list[object]]) -> tuple[int | None, list[str]]:

@@ -1,9 +1,12 @@
 # Doorstar's domain MCP is launched locally by Codex. It is deliberately
 # limited to the read-only tool allowlist; see src/doorstar-production-mcp.
+# Concurrency stays on the runtime default: codex-cli 0.144.5 predates the
+# newer max_concurrent_threads_per_session global setting.
 [mcp_servers.doorstar_production]
 command = "node"
-args = ["dist/index.js"]
-cwd = "../src/doorstar-production-mcp"
+# Absolute entrypoint keeps the project MCP available when a Codex task starts
+# from terminals/frontend (or another repository subdirectory).
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/index.js"]
 enabled = true
 required = false
 enabled_tools = [
@@ -23,3 +26,92 @@ tool_timeout_sec = 30
 
 [mcp_servers.doorstar_production.env]
 DOORSTAR_PRODUCTION_API_BASE_URL = "http://127.0.0.1:4610/api/production"
+
+# Doorstar-scoped woodworking RAG on the shared Nexus-dev service. Codex CLI
+# 0.144.5 loads custom-agent instructions but not child-only MCP additions, so
+# all six uniquely named, one-tool role bridges are registered at project
+# level. Role instructions permit only their matching bridge. This is caller
+# attribution, not hard secret isolation inside one Windows account.
+[mcp_servers.doorstar_knowledge_root]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_ROOT_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_root.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-root-codex"
+
+[mcp_servers.doorstar_knowledge_conductor]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_CONDUCTOR_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_conductor.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-conductor-codex"
+
+[mcp_servers.doorstar_knowledge_monitor]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_MONITOR_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_monitor.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-monitor-codex"
+
+[mcp_servers.doorstar_knowledge_backend]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_BACKEND_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_backend.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-backend-codex"
+
+[mcp_servers.doorstar_knowledge_frontend]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_FRONTEND_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_frontend.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-frontend-codex"
+
+[mcp_servers.doorstar_knowledge_import_discovery]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_IMPORT_DISCOVERY_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_import_discovery.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-import-discovery-codex"

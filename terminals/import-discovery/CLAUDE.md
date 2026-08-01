@@ -39,18 +39,26 @@ review-köteles DRAFT-ként készíti elő, a felmérés hitelesít.
 - A panel/front saját mennyiséget, méretet, anyagot, felületet,
   megmunkálást és forrásbizonyítékot kap. Nem szabad ajtó-megjegyzésbe rejteni.
 - Kalkulátor-sablon kulcsszava schema evidence, nem automatikus tétel.
+- A komponens `source` kapcsolata kizárólag lineage. Nem másol mennyiséget,
+  ajtó-/falnyílásméretet, anyagot, felületet vagy legacy képletet a komponensbe.
+- A stabil fizikai oldal `SIDE_A/SIDE_B`. A tokborítás
+  `FIXED/ADJUSTABLE` szerepe külön, profilfüggő tengely; egyikből sem
+  következik pánt-/zároldal, handing vagy a másik tengely értéke.
+- RAG/profilrajz csak verziózott, lokátorral és szabály-/profil-fingerprinttel
+  ellátott candidate evidence-et adhat; `ComponentSnapshot` authority nem lehet.
 
 ## Tartós eszközök és tudás
 
 - Módszertani tudás: `docs/projects/doorstar-order-data-chain/IMPORT_EXTRACTION_LESSONS.md`
 - Közös eredménynapló: `docs/projects/doorstar-order-data-chain/IMPORT_WORKER_HANDOFF.md`
+- Aktuális feladatlista és kapuk: `TODO.md`
 - Széles preview: `src/production-service/scripts/previewLegacyOrderImport.py`
 - Panel/front scanner: `src/production-service/scripts/scanLegacyManufacturedItems.py`
 - Scriptek használata: `src/production-service/scripts/README.md`
 
 ## Session-rituálé
 
-1. Olvasd el ezt a fájlt, a `memory.md`-t és a `state.md`-t.
+1. Olvasd el ezt a fájlt, a `memory.md`-t, a `state.md`-t és a `TODO.md`-t.
 2. Ellenőrizd a közös handoff legfrissebb bejegyzését.
 3. Használd a meglévő scriptet; ha új ismételhető lépés kell, azt scriptként
    és teszttel a repóban rögzítsd.

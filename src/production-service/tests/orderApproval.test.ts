@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import request from "supertest";
 import { createApp } from "../src/app.js";
 import { prisma } from "../src/db/client.js";
+import { attachSurveySource } from "./support/surveySource.js";
 
 const app = createApp();
 
@@ -12,15 +13,21 @@ describe("order review and approval", () => {
   it("freezes a complete technical revision and records an approval hash", async () => {
     const projectKey = `APPROVAL-${Date.now()}`;
     const sales = request(app).post("/api/production/production-orders/sales-intake").set("X-Role", "sales");
-    await sales.send({ projectKey, projectName: "Jóváhagyás teszt", customerName: "Teszt ügyfél", positions: [{ code: "01", name: "Ajtó", quantity: 1 }] }).expect(201);
+    const draft = await sales.send({ projectKey, projectName: "Jóváhagyás teszt", customerName: "Teszt ügyfél", positions: [{ code: "01", name: "Ajtó", quantity: 1 }] }).expect(201);
+    const positionId = draft.body.positions[0].id as string;
     await request(app).post(`/api/production/production-orders/${projectKey}/revisions/1/documents`).set("X-Role", "sales").send({ source: "LEGACY_FOLDER", kind: "SALES_ORDER", displayName: "Megrendelés.pdf", relativePath: "Teszt/Megrendeles.pdf" }).expect(201);
     await request(app).patch(`/api/production/production-orders/${projectKey}/revisions/1/intake-stage`).set("X-Role", "sales").send({ stage: "SALES_DOCUMENTS_RECEIVED" }).expect(200);
     await request(app).patch(`/api/production/production-orders/${projectKey}/revisions/1/intake-stage`).set("X-Role", "sales").send({ stage: "SURVEY_PENDING" }).expect(200);
     await request(app).put(`/api/production/production-orders/${projectKey}/revisions/1`).set("X-Role", "technical_preparation").send({
-      customerName: "Teszt ügyfél", positions: [{ code: "01", name: "Ajtó", quantity: 1, productType: "Beltéri", openingDirection: "Bal be", openingWidthMm: 900, openingHeightMm: 2100, doorThicknessMm: 40, surface: "RAL 9016", wallTreatment: "NONE", glazing: "NONE" }],
+      customerName: "Teszt ügyfél", positions: [{ id: positionId, code: "01", name: "Ajtó", quantity: 1, productType: "Beltéri", openingDirection: "Bal be", openingWidthMm: 900, openingHeightMm: 2100, openingDepthMm: 150, doorThicknessMm: 40, surface: "RAL 9016", wallTreatment: "NONE", glazing: "NONE", doorTypeKey: "interior-rebated", wallSolutionKey: "none", glassKey: "none" }],
     }).expect(200);
+    await attachSurveySource(app, projectKey, [positionId]);
     await request(app).patch(`/api/production/production-orders/${projectKey}/revisions/1/intake-stage`).set("X-Role", "technical_preparation").send({ stage: "SURVEY_COMPLETED" }).expect(200);
     await request(app).patch(`/api/production/production-orders/${projectKey}/revisions/1/intake-stage`).set("X-Role", "technical_preparation").send({ stage: "TECHNICAL_PREPARATION" }).expect(200);
+
+    const extra = await request(app).post(`/api/production/production-orders/${projectKey}/revisions/1/supplementary-items`).set("X-Role", "sales").send({ entryMode: "MANUAL", category: "HARDWARE", name: "Kilincsgarnitúra", quantity: 1, unit: "db", manualReason: "Megrendelői kérés." }).expect(201);
+    await request(app).post(`/api/production/production-orders/${projectKey}/revisions/1/review`).set("X-Role", "technical_preparation").send({ note: "Műszakilag teljes" }).expect(409).expect({ error: "review_readiness_incomplete" });
+    await request(app).patch(`/api/production/production-orders/${projectKey}/revisions/1/supplementary-items/${extra.body.id}/review`).set("X-Role", "technical_preparation").send({ state: "VERIFIED", resolution: "Tétel ellenőrizve." }).expect(200);
 
     const review = await request(app).post(`/api/production/production-orders/${projectKey}/revisions/1/review`).set("X-Role", "technical_preparation").send({ note: "Műszakilag teljes" }).expect(201);
     expect(review.body.action).toBe("REVIEW_REQUESTED");

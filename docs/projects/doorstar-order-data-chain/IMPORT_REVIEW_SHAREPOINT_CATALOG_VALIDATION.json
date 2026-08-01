@@ -1,0 +1,16 @@
+{
+  "databaseWrite": false,
+  "errors": [],
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "sharepoint-metadata-catalog-validation/v1",
+  "summary": {
+    "catalogRunKey": "spcatalog_974bb607bd9c693017d1",
+    "documentCount": 5855,
+    "errorCount": 0,
+    "folderCount": 2988,
+    "projectPackageCount": 271,
+    "sourceDataRowCount": 9297
+  },
+  "valid": true
+}

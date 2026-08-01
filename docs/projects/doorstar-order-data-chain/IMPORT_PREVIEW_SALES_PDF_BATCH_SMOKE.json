@@ -1,0 +1,3237 @@
+{
+  "canonicalWorkNumberGroups": [
+    {
+      "canonicalWorkNumber": "25129",
+      "documents": [
+        {
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "sourceRoot": "SALES_FOLDER",
+          "sourceWorkNumber": "25129"
+        },
+        {
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "sourceRoot": "SALES_FOLDER",
+          "sourceWorkNumber": "25129"
+        }
+      ],
+      "reviewRequired": false,
+      "sourceWorkNumberVariants": [
+        "25129"
+      ]
+    }
+  ],
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "sales-order-pdf-batch-v1",
+  "salesOrderPdfPreviews": [
+    {
+      "databaseWrite": false,
+      "document": {
+        "action": "CREATE_REFERENCE",
+        "contentSha256": "e4e18824e7e68fadd03f5457b09aaf9bd2218c45f9939693b83977f2c9760d5b",
+        "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+        "kind": "SALES_ORDER",
+        "recordType": "OrderDocument",
+        "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+        "reviewRequired": true,
+        "source": "LEGACY_FOLDER"
+      },
+      "macroExecution": false,
+      "mode": "preview",
+      "pages": [
+        {
+          "page": 1,
+          "tableCount": 4,
+          "textExtracted": true
+        },
+        {
+          "page": 2,
+          "tableCount": 3,
+          "textExtracted": true
+        },
+        {
+          "page": 3,
+          "tableCount": 0,
+          "textExtracted": true
+        }
+      ],
+      "positionCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt. Feljáró",
+              "page": 1,
+              "rawValue": "Fszt. Feljáró",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2070,
+              "page": 1,
+              "rawValue": "207",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 500,
+              "page": 1,
+              "rawValue": "50",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "page": 1,
+              "rawValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, Kronospan Fémfelületű Dekoritlemez AL04 mintával",
+            "lapSideBlende": "mérés szük- séges",
+            "lock": "PZ",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "1",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt. Feljáró",
+            "notes": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+            "openingDepthMm": 500,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2070,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 1,
+              "rawValue": "2",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt - Fürdő I.",
+              "page": 1,
+              "rawValue": "Fszt - Fürdő I.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 160,
+              "page": 1,
+              "rawValue": "16",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, Kronospan Fémfelületű Dekoritlemez AL04 mintával",
+            "lapSideBlende": "---",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 4,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "2",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt - Fürdő I.",
+            "notes": "",
+            "openingDepthMm": 160,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "3",
+              "page": 1,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt - Gardrób",
+              "page": 1,
+              "rawValue": "Fszt - Gardrób",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 110,
+              "page": 1,
+              "rawValue": "11",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, Kronospan Fémfelületű Dekoritlemez AL04 mintával",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 5,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "3",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt - Gardrób",
+            "notes": "",
+            "openingDepthMm": 110,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "4",
+              "page": 1,
+              "rawValue": "4",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló 1.",
+              "page": 1,
+              "rawValue": "Em. - Háló 1.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 950,
+              "page": 1,
+              "rawValue": "95",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 220,
+              "page": 1,
+              "rawValue": "22",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254,5",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 6,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "4",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló 1.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 220,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 950,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "5",
+              "page": 1,
+              "rawValue": "5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló fürdő",
+              "page": 1,
+              "rawValue": "Em. - Háló fürdő",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 1,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 800,
+              "page": 1,
+              "rawValue": "80",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 145,
+              "page": 1,
+              "rawValue": "14,5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Minta nélkül",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 7,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "5",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló fürdő",
+            "notes": "",
+            "openingDepthMm": 145,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 800,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "6",
+              "page": 1,
+              "rawValue": "6",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em.- Master Háló 2.",
+              "page": 1,
+              "rawValue": "Em.- Master Háló 2.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 1,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 900,
+              "page": 1,
+              "rawValue": "90",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 1,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 240,
+              "page": 1,
+              "rawValue": "24",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254,5",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 8,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "6",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em.- Master Háló 2.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 240,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 900,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "7",
+              "page": 1,
+              "rawValue": "7",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Dolgozó",
+              "page": 1,
+              "rawValue": "Em. - Dolgozó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 1,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 900,
+              "page": 1,
+              "rawValue": "90",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 1,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 105,
+              "page": 1,
+              "rawValue": "10,5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 9,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 9,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "7",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Dolgozó",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 105,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 900,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "8",
+              "page": 2,
+              "rawValue": "8",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló 3.",
+              "page": 2,
+              "rawValue": "Em. - Háló 3.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 2,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 2,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 950,
+              "page": 2,
+              "rawValue": "95",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 2,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 340,
+              "page": 2,
+              "rawValue": "34",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "Van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 1,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "8",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló 3.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 340,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 950,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "9",
+              "page": 2,
+              "rawValue": "9",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló fürdő 3.",
+              "page": 2,
+              "rawValue": "Em. - Háló fürdő 3.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 2,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal ki",
+              "page": 2,
+              "rawValue": "Bal ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 800,
+              "page": 2,
+              "rawValue": "80",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 2,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 140,
+              "page": 2,
+              "rawValue": "14",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Minta nélkül",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "9",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló fürdő 3.",
+            "notes": "",
+            "openingDepthMm": 140,
+            "openingDirection": "Bal ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 800,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        }
+      ],
+      "salesOrder": {
+        "contactName": "36 70 320 0820 Tóth Márton & Buda Zita",
+        "contactPhone": null,
+        "customerName": "Ultrasped s.r.o.",
+        "deliveryAddress": null,
+        "expectedDelivery": null,
+        "expectedDeliveryText": "2026. március",
+        "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+        "orderDate": "2025.12.13",
+        "reviewRequired": true,
+        "workNumber": "25129"
+      },
+      "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+      "sourceRoot": "SALES_FOLDER",
+      "summary": {
+        "pageCount": 3,
+        "positionCandidateCount": 9,
+        "positionsRequiringReview": 9,
+        "positionsWithCompleteOpeningDimensions": 9,
+        "supplementaryProductCandidateCount": 3
+      },
+      "supplementaryProductCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs BB",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs BB",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 5,
+              "page": 2,
+              "rawValue": "5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 1,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "1",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs BB",
+            "notes": null,
+            "quantity": 5
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 2,
+              "rawValue": "2",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs WC",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs WC",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 3,
+              "page": 2,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "2",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs WC",
+            "notes": null,
+            "quantity": 3
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "3",
+              "page": 2,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs PZ",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs PZ",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "3",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs PZ",
+            "notes": null,
+            "quantity": 1
+          }
+        }
+      ]
+    },
+    {
+      "databaseWrite": false,
+      "document": {
+        "action": "CREATE_REFERENCE",
+        "contentSha256": "ce314bd85648cbe76079d83ebe4e5033b9f898b6db38f4959209299e664036d7",
+        "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+        "kind": "SALES_ORDER",
+        "recordType": "OrderDocument",
+        "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+        "reviewRequired": true,
+        "source": "LEGACY_FOLDER"
+      },
+      "macroExecution": false,
+      "mode": "preview",
+      "pages": [
+        {
+          "page": 1,
+          "tableCount": 4,
+          "textExtracted": true
+        },
+        {
+          "page": 2,
+          "tableCount": 3,
+          "textExtracted": true
+        },
+        {
+          "page": 3,
+          "tableCount": 0,
+          "textExtracted": true
+        }
+      ],
+      "positionCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt. Feljáró",
+              "page": 1,
+              "rawValue": "Fszt. Feljáró",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2070,
+              "page": 1,
+              "rawValue": "207",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 500,
+              "page": 1,
+              "rawValue": "50",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "page": 1,
+              "rawValue": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, ld. lent, Kronospan Fémfelületű Dekoritlemezzel",
+            "lapSideBlende": "mérés szük- séges",
+            "lock": "PZ",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "1",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt. Feljáró",
+            "notes": "Automata küszöbbel, Síkoldalon blende, minta nélkül",
+            "openingDepthMm": 500,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2070,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 1,
+              "rawValue": "2",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt - Fürdő I.",
+              "page": 1,
+              "rawValue": "Fszt - Fürdő I.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 160,
+              "page": 1,
+              "rawValue": "16",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, ld. lent, Kronospan Fémfelületű Dekoritlemezzel",
+            "lapSideBlende": "---",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 4,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "2",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt - Fürdő I.",
+            "notes": "",
+            "openingDepthMm": 160,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "3",
+              "page": 1,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fszt - Gardrób",
+              "page": 1,
+              "rawValue": "Fszt - Gardrób",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 870,
+              "page": 1,
+              "rawValue": "87",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 110,
+              "page": 1,
+              "rawValue": "11",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi minta, ld. lent, Kronospan Fémfelületű Dekoritlemezzel",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 5,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "3",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fszt - Gardrób",
+            "notes": "",
+            "openingDepthMm": 110,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 870,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "4",
+              "page": 1,
+              "rawValue": "4",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló 1.",
+              "page": 1,
+              "rawValue": "Em. - Háló 1.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 1,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 950,
+              "page": 1,
+              "rawValue": "95",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 220,
+              "page": 1,
+              "rawValue": "22",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254,5",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 6,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "4",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló 1.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 220,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 950,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "5",
+              "page": 1,
+              "rawValue": "5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló fürdő",
+              "page": 1,
+              "rawValue": "Em. - Háló fürdő",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 1,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 800,
+              "page": 1,
+              "rawValue": "80",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 1,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 145,
+              "page": 1,
+              "rawValue": "14,5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Minta nélkül",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 7,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "5",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló fürdő",
+            "notes": "",
+            "openingDepthMm": 145,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 800,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "6",
+              "page": 1,
+              "rawValue": "6",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em.- Master Háló 2.",
+              "page": 1,
+              "rawValue": "Em.- Master Háló 2.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 1,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 900,
+              "page": 1,
+              "rawValue": "90",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 1,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 240,
+              "page": 1,
+              "rawValue": "24",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 1,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 8,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254,5",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 8,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "6",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em.- Master Háló 2.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 240,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 900,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "7",
+              "page": 2,
+              "rawValue": "7",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Dolgozó",
+              "page": 2,
+              "rawValue": "Em. - Dolgozó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 2,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb ki",
+              "page": 2,
+              "rawValue": "Jobb ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 900,
+              "page": 2,
+              "rawValue": "90",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 2,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 105,
+              "page": 2,
+              "rawValue": "10,5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 1,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "7",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Dolgozó",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 105,
+            "openingDirection": "Jobb ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 900,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "8",
+              "page": 2,
+              "rawValue": "8",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló 3.",
+              "page": 2,
+              "rawValue": "Em. - Háló 3.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Tokbanyíló",
+              "page": 2,
+              "rawValue": "Tokbanyíló",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 2,
+              "rawValue": "Bal be",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 950,
+              "page": 2,
+              "rawValue": "95",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2100,
+              "page": 2,
+              "rawValue": "210",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 340,
+              "page": 2,
+              "rawValue": "34",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "page": 2,
+              "rawValue": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "Van",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Egyedi, 2 db függőleges dekorcsíkkal Krono AL04",
+            "lapSideBlende": "254",
+            "lock": "WC",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "8",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló 3.",
+            "notes": "Síkoldali blende minta: ajtóval megegyező, felfut a 2 db dekorcsík",
+            "openingDepthMm": 340,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2100,
+            "openingWidthMm": 950,
+            "productType": "Tokbanyíló",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "9",
+              "page": 2,
+              "rawValue": "9",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Em. - Háló fürdő 3.",
+              "page": 2,
+              "rawValue": "Em. - Háló fürdő 3.",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 2,
+              "rawValue": "Síkban záródó",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal ki",
+              "page": 2,
+              "rawValue": "Bal ki",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 800,
+              "page": 2,
+              "rawValue": "80",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2080,
+              "page": 2,
+              "rawValue": "208",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 140,
+              "page": 2,
+              "rawValue": "14",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett",
+            "keyholeAndHinge": "nincs",
+            "lapColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "lapPattern": "Minta nélkül",
+            "lapSideBlende": "---",
+            "lock": "BB",
+            "tokColour": "Lana Grey Satin Classic S40.40.13.0003.00 0",
+            "tokPattern": "Minta nélkül",
+            "tokSideBlende": "---"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "9",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Em. - Háló fürdő 3.",
+            "notes": "",
+            "openingDepthMm": 140,
+            "openingDirection": "Bal ki",
+            "openingHeightMm": 2080,
+            "openingWidthMm": 800,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": null
+          }
+        }
+      ],
+      "salesOrder": {
+        "contactName": "36 70 320 0820 Tóth Márton & Buda Zita",
+        "contactPhone": null,
+        "customerName": "Ultrasped s.r.o.",
+        "deliveryAddress": null,
+        "expectedDelivery": null,
+        "expectedDeliveryText": "2026. március",
+        "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+        "orderDate": "2025.12.13",
+        "reviewRequired": true,
+        "workNumber": "25129"
+      },
+      "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+      "sourceRoot": "SALES_FOLDER",
+      "summary": {
+        "pageCount": 3,
+        "positionCandidateCount": 9,
+        "positionsRequiringReview": 9,
+        "positionsWithCompleteOpeningDimensions": 9,
+        "supplementaryProductCandidateCount": 3
+      },
+      "supplementaryProductCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs BB",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs BB",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 5,
+              "page": 2,
+              "rawValue": "5",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 1,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 1,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "1",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs BB",
+            "notes": null,
+            "quantity": 5
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 2,
+              "rawValue": "2",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs WC",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs WC",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 3,
+              "page": 2,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "2",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, WC zárral",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs WC",
+            "notes": null,
+            "quantity": 3
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "3",
+              "page": 2,
+              "rawValue": "3",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs PZ",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs PZ",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+              "page": 2,
+              "rawValue": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+              "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "3",
+            "description": "DND Timeless szatén arany (ARO) körrozettás kilincsgarnitúra, PZ zárral",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs PZ",
+            "notes": null,
+            "quantity": 1
+          }
+        }
+      ]
+    }
+  ],
+  "sameContentDuplicates": [],
+  "summary": {
+    "canonicalWorkNumberCount": 1,
+    "canonicalWorkNumberVariantReviewCount": 0,
+    "doorPositionCandidateCount": 18,
+    "failedExtractionCount": 0,
+    "matchingPdfCount": 2,
+    "sameContentDuplicateGroupCount": 0,
+    "supplementaryProductCandidateCount": 6,
+    "workNumberCount": 1
+  },
+  "workNumberGroups": [
+    {
+      "documents": [
+        {
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS MÓD..pdf",
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "displayName": "DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "relativePath": "_Archiv/25129 - Ultrasped/Archiv/DSMR 25129 Ultrasped GYÁRTÁSMEGRENDELÉS pontosított..pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "workNumber": "25129"
+    }
+  ]
+}

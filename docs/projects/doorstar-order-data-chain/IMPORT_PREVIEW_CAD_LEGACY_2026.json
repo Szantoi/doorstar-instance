@@ -1,0 +1,1590 @@
+{
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "cad-reference-metadata-v1",
+  "records": [
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d11d8212159aad5fa5a1296641dd28c37f51fa64fefc68189302103b48d72bf7",
+      "databaseWrite": false,
+      "displayName": "DSMR22124_Borsi Ilona Jellegrajz-MOD_4.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/22124 - Borsi Ilona Mod.4/CAD/DSMR22124_Borsi Ilona Jellegrajz-MOD_4.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "22124"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "c55cb141ce097db695f798e8a262533f705d32fe55c4167771a901387d9c7dfc",
+      "databaseWrite": false,
+      "displayName": "DSMR25152_Keszi Zsolt.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25152 - Gremlin Club Kft. Keszi Zsolt/CAD/DSMR25152_Keszi Zsolt.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25152"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "cf956f1f32a6fec6eafb308566f637fdcd65d564611839969cdab6098d43eba4",
+      "databaseWrite": false,
+      "displayName": "DSMR25170_NATURAL HOME.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25170 - NATURAL HOMES/CAD/DSMR25170_NATURAL HOME.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25170"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "20d87ca4c6007e643b4fc03be83462fb9abf545673ac8d8498517c654513b08d",
+      "databaseWrite": false,
+      "displayName": "DSMR25170_NATURAL HOME.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25170 - NATURAL HOMES/CNC/DSMR25170_NATURAL HOME.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25170"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "fd8d69085cc69d9013b63c51faa9f58644503783184e99a943f3215ab4ad1430",
+      "databaseWrite": false,
+      "displayName": "25174_Szvitek_Laszlo_6 os blende.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25174 - Szvitek László_BLENDE/CAD/25174_Szvitek_Laszlo_6 os blende.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25174"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "3d57d271c3fbdee0ef909db725f2aa6bd16d856453f874d0e1ef8c11f84d20a2",
+      "databaseWrite": false,
+      "displayName": "Bútor_Front.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25219 - Swiss Luxury Kft/CAD/Bútor_Front.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25219"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "774da1ea20a09e14c1cc9a49304e4c43f736a213b33fa08815c9bbf9763b3569",
+      "databaseWrite": false,
+      "displayName": "Bútor_Front_CNC.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25219 - Swiss Luxury Kft/CAD/Bútor_Front_CNC.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25219"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "99bf0859f172c042951247d32cab3ee4289e93eaece166f1336c40b0ed53b355",
+      "databaseWrite": false,
+      "displayName": "DSMR25219_Swiss Luxury Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "01_Január/25219 - Swiss Luxury Kft/CAD/DSMR25219_Swiss Luxury Kft..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25219"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "c944fdb4aa4866db7d579f6d2e22dbdebb2107e187447ea60bf9f7061a56c58e",
+      "databaseWrite": false,
+      "displayName": "DSMR25118_Propellant Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/CAD/DSMR25118_Propellant Kft..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25118"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "cd99861f54381e2250d2dce477edffa03c9478c34ef166cc2efe8acb7d67d263",
+      "databaseWrite": false,
+      "displayName": "DSMR25136_Heves Ádám.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25136 - Heves Ádám/Archiv/DSMR25136_Heves Ádám.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25136"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "1c3872054d91ea726ef730f4e53ed5ee603e96c2ec18581a0583c852a34c78cc",
+      "databaseWrite": false,
+      "displayName": "DSMR25136_Heves Ádám_módosított 1_3 marás.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25136 - Heves Ádám/Archiv/DSMR25136_Heves Ádám_módosított 1_3 marás.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25136"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "5230c30cffca57b42d44fa94447da1b201fb65aee93648cf31998d17f785d9d6",
+      "databaseWrite": false,
+      "displayName": "DSMR25136_Heves Ádám_rajz_István_módosított_01.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25136 - Heves Ádám/CAD/DSMR25136_Heves Ádám_rajz_István_módosított_01.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25136"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "66ac9a404960dd4b3329aec5d819cbae579cb1cd95465ed68086b6d4ed1f7271",
+      "databaseWrite": false,
+      "displayName": "DSMR25136_Heves Ádám_rajz_István_módosított_CNC.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25136 - Heves Ádám/CAD/DSMR25136_Heves Ádám_rajz_István_módosított_CNC.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25136"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "06658f97694232919af2f2700623a74ac68f51c51e7b7e463b368a2b83787db3",
+      "databaseWrite": false,
+      "displayName": "DSMR_25-181_Nappali_02.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/DSMR_25-181_Nappali_02.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d8b418c85421b64babb12eae93de665059cdf42e78f4961d26b1d39ef7d7dd08",
+      "databaseWrite": false,
+      "displayName": "DSMR_25_181_01_emelet.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/DSMR_25_181_01_emelet.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "f53e58178dc663159137e7f78584489a2ef8498dea3c4b3fea429ada6bdb1cb6",
+      "databaseWrite": false,
+      "displayName": "DSMR_25_181_Fsz_03_Háztartási.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/DSMR_25_181_Fsz_03_Háztartási.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "9a3605d31f17fb2cff02f1f2ef870c99b74c982588f86444c454dcbbf954e847",
+      "databaseWrite": false,
+      "displayName": "DSMR_25_181_Fsz_04_előszoba.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/DSMR_25_181_Fsz_04_előszoba.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "8bb04cde5143e9fbd3b39105b471488322a609ff3f9b110108b19d56c3c8dd79",
+      "databaseWrite": false,
+      "displayName": "Nappali_02.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/Bútor/CAD/Nappali_02.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "bd131a799cacbf3cb826e7ea73f9b20b8b256fa44a9ab7524325108bf2d35e39",
+      "databaseWrite": false,
+      "displayName": "25181_Saincaize-Prauda Orsolya.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/CAD/25181_Saincaize-Prauda Orsolya.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "1c56d54fe07686643bfb9adb19ffaf58a5997a8f862ac316ab39939942f61acf",
+      "databaseWrite": false,
+      "displayName": "25181_Saincaize-Prauda Orsolya.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/CAD/25181_Saincaize-Prauda Orsolya.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "bb95410301e3a41cddf8d76cdb6b87ba499aef8ab49d07e2541983a86426dd98",
+      "databaseWrite": false,
+      "displayName": "3_fürdő_háztartási helyiség.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/25181 - Saincaize-Prauda Orsolya/CAD/3_fürdő_háztartási helyiség.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "357d3f02736669be891487eb629f88cfb1290fbe508c0aaaa922c72bab91b558",
+      "databaseWrite": false,
+      "displayName": "26102_Presits Balázs_Rajz.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/26102 - Presits Balázs/CAD/26102_Presits Balázs_Rajz.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26102"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b5d86f801ceb3c0844fdd4fd9793e9a7fb4f94b5b0bb8c46122019b978ffccd2",
+      "databaseWrite": false,
+      "displayName": "DSMR_26_106_Sipőcz_András.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/26106 - Sipőcz András/CAD/DSMR_26_106_Sipőcz_András.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26106"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "48a3420133830575fa9152a3c2402bd84aa3b97306dc7ffe69aa0f8dd85f4e36",
+      "databaseWrite": false,
+      "displayName": "DSMR_26_106_Sipőcz_András_Iroda.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "03_Március/26106 - Sipőcz András/CAD/DSMR_26_106_Sipőcz_András_Iroda.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26106"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "3d57d271c3fbdee0ef909db725f2aa6bd16d856453f874d0e1ef8c11f84d20a2",
+      "databaseWrite": false,
+      "displayName": "Bútor_Front.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25129 - Swiss Luxuri Frontok/CAD/Bútor_Front.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25129"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "a48a2f79c4e481b3d4da4674856d5188522d6347f04be0316d7ebf81d629e46a",
+      "databaseWrite": false,
+      "displayName": "Bútor_Front_CNC.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25129 - Swiss Luxuri Frontok/CAD/Bútor_Front_CNC.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25129"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6bbfb38252b2ac9a5040c172a98a6bac0ee9f9f2f6707afd248b4d8f54ef8b91",
+      "databaseWrite": false,
+      "displayName": "DSMR_25129_Ultrasped.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25129 - Ultrasped/CAD/DSMR_25129_Ultrasped.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25129"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "759fb7bcc0022b1f04552eafef186ed016da07e1a27573b2c3a9034d5d86f2eb",
+      "databaseWrite": false,
+      "displayName": "25163_Megepit sablon.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/25163_Megepit sablon.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "926aa41491a628aa2611fe062113748b4dab57f5fbd6a341a006eac99e43f281",
+      "databaseWrite": false,
+      "displayName": "DSMR 25163_Megépít_Pusz_09_tétel_NIVO.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/DSMR 25163_Megépít_Pusz_09_tétel_NIVO.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "e354c476f7737e37409a80a25f363c9677558af72d79f35ed7980ef5c576bc10",
+      "databaseWrite": false,
+      "displayName": "DSMR 25163_Megépít_Pusz_10_tétel_NIVO.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/DSMR 25163_Megépít_Pusz_10_tétel_NIVO.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "27da597b331d39915aff4211d575f72ea1abb18a23ec597a6dc1ca2f2c09c95c",
+      "databaseWrite": false,
+      "displayName": "DSMR25163_Megépít Plusz Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/DSMR25163_Megépít Plusz Kft..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "1c7c539c16f57f76795edbd3aec54e3070544be48095914761451c6a97f5a9e8",
+      "databaseWrite": false,
+      "displayName": "DSMR25163_Megépít Plusz_Kft_István..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CAD/DSMR25163_Megépít Plusz_Kft_István..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "dbb037d56ce14237fc2f917d31434459e49b32e3142bc9ea3c6a8f77d97fd394",
+      "databaseWrite": false,
+      "displayName": "DSMR25163_Megépít Plusz Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CNC/DSMR25163_Megépít Plusz Kft..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "74f39b62a17afc099a068227d37ebdc3492ee87825b91124b514be0246578779",
+      "databaseWrite": false,
+      "displayName": "25163.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/CNC/proba/25163.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "37e3f0d806ded15156b3099c68fd1b019bd57ab27d3698afaf8824ea483da6f4",
+      "databaseWrite": false,
+      "displayName": "0901_Mohaköz_falpanel (003).dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25163 - Megépít plusz Kft/Felmérés/0901_Mohaköz_falpanel (003).dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25163"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "18422cd79e7b22a2b28e4b3eddc7667e87f8d052143485c13e081115abe1ab8f",
+      "databaseWrite": false,
+      "displayName": "DSMR 25168 6_Tétel_Fszt_WC.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/25168 - Koroknai Richárd/CAD/DSMR 25168 6_Tétel_Fszt_WC.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25168"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "cf4dc67fc48d0d1e031a6fef5d222e3f39e329e659b65e16687b74a776a3f40f",
+      "databaseWrite": false,
+      "displayName": "DSMR_26116_Dr_Majoros_Árpád_8_tétel.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26116 - Dr. Majoros Árpád/CAD/DSMR_26116_Dr_Majoros_Árpád_8_tétel.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26116"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "4bc03ad2a28b0c5cd373935ae34a0c9a138eaa8c54dc721b53e2425b9d9e66fa",
+      "databaseWrite": false,
+      "displayName": "DSMR_26116_Savmart üveg.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26116 - Dr. Majoros Árpád/CAD/DSMR_26116_Savmart üveg.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26116"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "117ea0c6dc03c0ce8178c5c1e9a4e298f97a7597796bb6deb7cfc510b3d425a7",
+      "databaseWrite": false,
+      "displayName": "SDSMR_26116_Savmart üveg.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26116 - Dr. Majoros Árpád/CAD/SDSMR_26116_Savmart üveg.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26116"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "9e25773de77f2de9bd2919e2f072703292d63e0b39ab53483eb2fe92972b7951",
+      "databaseWrite": false,
+      "displayName": "26117 LFA Ingatlan Kft_3_Tétel.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26117 - LFA Ingatlan Kft/CAD/26117 LFA Ingatlan Kft_3_Tétel.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26117"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "cbcd06de3fb8def3e93f0b8d41c2b9893527edf47021dbf6ba38c3a9e9720273",
+      "databaseWrite": false,
+      "displayName": "26117 LFA Ingatlan Kft_3_Tétel.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26118 - LFA Ingatlan Kft/CAD/26117 LFA Ingatlan Kft_3_Tétel.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26117"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d1c622b22392f2423cf701fb1b73b47e0e09413e71e3f2d60b6acfd7b935595a",
+      "databaseWrite": false,
+      "displayName": "26118_LFA_Uj felmeres.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26118 - LFA Ingatlan Kft/CAD/26118_LFA_Uj felmeres.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26118"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d7c80c31bfbc071c03e81abf4eed371098c92aef081e8f6e176868419fda3cbd",
+      "databaseWrite": false,
+      "displayName": "26118_LFA_Uj felmeres.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26118 - LFA Ingatlan Kft/CAD/26118_LFA_Uj felmeres.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26118"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "fddbaa0d30e82d473ba1464ebd8d0190508d7d1ba2433bc142e516a3f9926d18",
+      "databaseWrite": false,
+      "displayName": "Ajtó minták egyben.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "04_Április/26119 - Tormay zsolt/CAD/Ajtó minták egyben.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26119"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "1315c491779671f77351c3016fc7e3e8d6102e78b07feba288e44094582410d5",
+      "databaseWrite": false,
+      "displayName": "113_Szántói.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/113 - Szántói/CAD/113_Szántói.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6d18edf8c02ade747c2a434268f03dd8e724d902ab11e2a5e20dd15a3e503884",
+      "databaseWrite": false,
+      "displayName": "Szemészet_Istvan.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/113 - Szántói/CNC/Szemészet_Istvan.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "2d682c44a88d135a17097888787387aa0e7bd74c346f16aca15e1ce2babbb6cc",
+      "databaseWrite": false,
+      "displayName": "Szemésze_CNC.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/113 - Szántói/Szántói - 113 - Szemészet/Szemésze_CNC.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "a90020653764ac8fe988efe7440b35ff8a4d0be854eb10e9e1cb04727b569087",
+      "databaseWrite": false,
+      "displayName": "Szemészet 03.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/113 - Szántói/Szántói - 113 - Szemészet/Szemészet 03.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": null
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d64a3f35fba962fc37dae18253ad23ccb7d065fa6fcd7d5d5481494f77a1e091",
+      "databaseWrite": false,
+      "displayName": "25159 - Swiss Luxury Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/25159 - Swiss Luxury Kft/CAD/25159 - Swiss Luxury Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25159"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6a7d7f48350e73f4d6ae2bbd648c15a79048f1b8382d83a47ca2aa0b7e73503f",
+      "databaseWrite": false,
+      "displayName": "DSMR_25177_Tükörhegy_Kft.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/25177 - Tükörhegy Kft/CAD/DSMR_25177_Tükörhegy_Kft.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "25177"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "d3ce04deca792ee4647f0fa0e96e8b370198acb8ef8bc1199846c9c8eaca03d7",
+      "databaseWrite": false,
+      "displayName": "26112 - Derby Trans Kft. - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26112 - Derby Trans Kft/CAD/26112 - Derby Trans Kft. - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26112"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "f4beb9b599e5b9dba53513658806484d1fd223501114d959f2baf2c9a4b6e6c6",
+      "databaseWrite": false,
+      "displayName": "21199_Keszi Zs_Mozgo oldal.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26114 - Gremlin_Club_Kft/CAD/21199_Keszi Zs_Mozgo oldal.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "21199"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "4f1336134648bfc4d7f8b23ca3b1bdbc77fb057deffcb66f9a1913cbe5fbd7a1",
+      "databaseWrite": false,
+      "displayName": "21199_Keszi Zs_Mozgo oldal.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26114 - Gremlin_Club_Kft/CAD/21199_Keszi Zs_Mozgo oldal.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "21199"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "bc2285b5bf8b6503c330abfe43a6559c0bd5f65159613b23d4f86342d7ebdfc1",
+      "databaseWrite": false,
+      "displayName": "Gremlin_Club_Kft..dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26114 - Gremlin_Club_Kft/CAD/Gremlin_Club_Kft..dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26114"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26122 - Szabadi Sándor - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26122 - Szabadi Sándor/CAD/26122 - Szabadi Sándor - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26122"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "5210e44d727398078c1602f70fd14c056e512a05020badde76da901959382f05",
+      "databaseWrite": false,
+      "displayName": "26123 - Korrekt Hungary Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26123 - Korrekt Hungary Kft/CAD/26123 - Korrekt Hungary Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26123"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26124 - Kovács Ákos - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26124 - Kovács Ákos/CAD/26124 - Kovács Ákos - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26124"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26125 - Head_Up Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26125 - Head_Up Kft/CAD/26125 - Head_Up Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26125"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "07e3c9438edb125bd90bc7351b02864e124fc7b90cb742c44cf92280018bd4d0",
+      "databaseWrite": false,
+      "displayName": "26128 - Dotkom Invest Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "05_Május/26128 - Dotkom Invest Kft/CAD/26128 - Dotkom Invest Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26128"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6cf796c6499499c208f3f0c025cfe2d46dba962c98a36d7586aa05380835cb6d",
+      "databaseWrite": false,
+      "displayName": "22139 - Glett Design Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "06_Június/22139 - Glett Design Kft/CAD/22139 - Glett Design Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "22139"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26130 - KOBA Construktion Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "06_Június/26130 - KOBA Construktion Kft/CAD/26130 - KOBA Construktion Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26130"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26131 - Variotech Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "06_Június/26131 - Variotech Kft/CAD/26131 - Variotech Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26131"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26133 - Fehér László - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "06_Június/26133 - Fehér László/CAD/26133 - Fehér László - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26133"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "e3551916021cb5001a1513ef3c3205833704086f658217630af083c39bedeeff",
+      "databaseWrite": false,
+      "displayName": "26137 - In_Tuition Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "06_Június/26137 - In_Tuition Kft/CAD/26137 - In_Tuition Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26137"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "0b4c1c7eeb4139b3b81e73c61cad9b76867f660bdcc697fcc968fd25386b2a16",
+      "databaseWrite": false,
+      "displayName": "24170 - Koza Petra - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/24170 - Koza Petra/CAD/24170 - Koza Petra - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "24170"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "24181 - Aktív és Passzívház Kft. - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/24181 - Aktív és Passzívház Kft/CAD/24181 - Aktív és Passzívház Kft. - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "24181"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "ce178f2d0ef72e319f95727030ee3be84b83403e224396e7e6ce2a828021b909",
+      "databaseWrite": false,
+      "displayName": "26104 - Mérnökangyal Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26104 - Mérnökangyal Kft/CAD/26104 - Mérnökangyal Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26104"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "databaseWrite": false,
+      "displayName": "26132 - Margaréta Otthonok Kft - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26132 - Margaréta Otthonok Kft/CAD/26132 - Margaréta Otthonok Kft - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26132"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "19c3b8a060f1397be67a113f2c01c11227ebd7339500365c61034760b22f0111",
+      "databaseWrite": false,
+      "displayName": "26135 - Tormay Zsolt és Tormay Tímea - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26135 - Tormay Zsolt és Tormay Tímea/CAD/26135 - Tormay Zsolt és Tormay Tímea - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26135"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "3d263fdc336c618e98c967c5026d65ab20147e0415acd59cdbbc65acf0a1b141",
+      "databaseWrite": false,
+      "displayName": "26142 - Panakoda Kft. - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26142 - Panakoda Kft/CAD/26142 - Panakoda Kft. - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26142"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "6e8ac08647c064df8f77bb201723dfccf1e540678957bf22ea009e0dc970210d",
+      "databaseWrite": false,
+      "displayName": "Dani_SOS.dxf",
+      "documentKind": "DRAWING",
+      "dwgHeader": null,
+      "dwgVersion": null,
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dxf",
+      "geometryInspectionState": "DXF_REVIEWABLE_AFTER_APPROVED_PARSER",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26142 - Panakoda Kft/CAD/Dani_SOS.dxf",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26142"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "52833ece7db66005245266f6e43c1c282ce30fd5a6871528f75fe218e8e84409",
+      "databaseWrite": false,
+      "displayName": "26143 - AP Cash Kft. - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26143 - AP Cash Kft/CAD/26143 - AP Cash Kft. - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26143"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "2d87dd15a34a6aa626c3263912d9ec02b2e9f4890a89f03d5b87dda33dd8c6ba",
+      "databaseWrite": false,
+      "displayName": "Sziget_sablon_01.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26143 - AP Cash Kft/CAD/Sziget_sablon_01.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26143"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "fa4e743a3b9a11cbf696d902f8d6ad2a04c7fcec54f9736df38c8fbcb2c3f857",
+      "databaseWrite": false,
+      "displayName": "Sziget_sablon_02.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26143 - AP Cash Kft/CAD/Sziget_sablon_02.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26143"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "db49ab533dfda8ade36d753a7eb6b6e123ba9d2f249887573ae42c1e0c62a220",
+      "databaseWrite": false,
+      "displayName": "26144 - Aptermanné dr. Csoma Barbara  - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26144 - Aptermanné dr. Csoma Barbara/CAD/26144 - Aptermanné dr. Csoma Barbara  - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26144"
+    },
+    {
+      "action": "REVIEW_REFERENCE",
+      "contentSha256": "10cff813972850ea7c399b0cf05d042b19172e12b3c6682c173212591e7ab97b",
+      "databaseWrite": false,
+      "displayName": "26146 - Sipőcz András - Gyartasmegrendelő.dwg",
+      "documentKind": "DRAWING",
+      "dwgHeader": "AC1032",
+      "dwgVersion": "AutoCAD 2018",
+      "errors": [
+        "requires_human_review",
+        "geometry_not_extracted_from_binary_cad_source"
+      ],
+      "extension": ".dwg",
+      "geometryInspectionState": "DWG_CONVERSION_REQUIRED",
+      "macroExecution": false,
+      "recordType": "OrderDocument",
+      "relativePath": "07_Július/26146 - Sipőcz András/CAD/26146 - Sipőcz András - Gyartasmegrendelő.dwg",
+      "sourceRoot": "LEGACY_2026",
+      "workNumberCandidate": "26146"
+    }
+  ],
+  "sameContentDuplicates": [
+    {
+      "contentSha256": "3d57d271c3fbdee0ef909db725f2aa6bd16d856453f874d0e1ef8c11f84d20a2",
+      "documents": [
+        {
+          "relativePath": "01_Január/25219 - Swiss Luxury Kft/CAD/Bútor_Front.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "04_Április/25129 - Swiss Luxuri Frontok/CAD/Bútor_Front.dwg",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ]
+    },
+    {
+      "contentSha256": "b075f490174e1ed5af8815ddbc6d4b0e069c0d3f6809ea5b32472aa5b7b5fd0f",
+      "documents": [
+        {
+          "relativePath": "05_Május/26122 - Szabadi Sándor/CAD/26122 - Szabadi Sándor - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "05_Május/26124 - Kovács Ákos/CAD/26124 - Kovács Ákos - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "05_Május/26125 - Head_Up Kft/CAD/26125 - Head_Up Kft - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "06_Június/26130 - KOBA Construktion Kft/CAD/26130 - KOBA Construktion Kft - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "06_Június/26131 - Variotech Kft/CAD/26131 - Variotech Kft - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "06_Június/26133 - Fehér László/CAD/26133 - Fehér László - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "07_Július/24181 - Aktív és Passzívház Kft/CAD/24181 - Aktív és Passzívház Kft. - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        },
+        {
+          "relativePath": "07_Július/26132 - Margaréta Otthonok Kft/CAD/26132 - Margaréta Otthonok Kft - Gyartasmegrendelő.dwg",
+          "sourceRoot": "LEGACY_2026"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "byExtension": {
+      ".dwg": 66,
+      ".dxf": 10
+    },
+    "drawingCount": 76,
+    "knownDwgVersionCount": 66,
+    "sameContentDuplicateGroupCount": 2,
+    "workNumberCandidateCount": 72
+  }
+}

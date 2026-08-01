@@ -1,14 +1,28 @@
 # Doorstar Ajtógyártás Domain Model
 
-**Verzió:** 1.0
-**Frissítve:** 2026-07-11
+**Verzió:** 1.1
+**Frissítve:** 2026-07-31
 **Epic:** EPIC-DOORSTAR-SOFTLAUNCH
+
+> **Státusz:** a C# `ProductionJob` példák történeti/célmodell-leírások. A
+> jelenlegi Doorstar runtime authority a TypeScript production-service,
+> `prisma/schema.prisma`, az OpenAPI és a konfigurációk. A dokumentált legacy
+> eseménynevek csak akkor tekinthetők működő szerződésnek, ha a futó kód és
+> teszt külön igazolja őket.
 
 ---
 
 ## Domain Áttekintés
 
-A Doorstar Kft. beltéri ajtókat gyárt egyedi megrendelésre. A gyártási folyamat (Munkamenet) egy 17-fázisú workflow, amelyet digitálisan 6 összevont STAGE-ben követünk.
+A Doorstar Kft. beltéri ajtókat és kapcsolódó külön gyártandó elemeket készít
+egyedi megrendelésre. A részletes műveleti tervet a rendszer hat összevont
+Doorstar makroszakaszban követi. A **gyártási folyamat**, a **műveleti terv**, a
+**munkaállomás** és a felhasználói **munkamenet** külön fogalom; a hat
+makroszakasz nem állítja, hogy minden termék technológiája pontosan hat
+műveletből áll.
+
+A kanonikus szókészlet és az örökölt/import aliasok:
+`DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md`.
 
 ---
 
@@ -22,7 +36,7 @@ A gyártási megrendelés fő entitása.
 public class ProductionJob : AggregateRoot
 {
     public ProductionJobId Id { get; private set; }
-    public ProjectName ProjectName { get; private set; }  // "DSMR 26144"
+    public ProjectName ProjectName { get; private set; }  // "DSMR XXXXX"
     public OrderId OrderId { get; private set; }          // CRM/Joinery correlation
     public ProductionDeadline Deadline { get; private set; }
     public ProductionStatus Status { get; private set; }
@@ -57,7 +71,7 @@ public class WorkflowStep : Entity
 ### ProjectName
 - Format: `DSMR XXXXX` (ahol XXXXX = 5 számjegy)
 - Regex: `^DSMR \d{5}$`
-- Példa: "DSMR 26144"
+- Szemléltető alak: `DSMR XXXXX` (nem valós munkaszám)
 
 ### WorkflowStepName (Enum)
 ```csharp
@@ -68,7 +82,7 @@ public enum WorkflowStepName
     Feluletkezeles,        // 3. Felületkezelés
     Osszeszereles,         // 4. Összeszerelés
     Csomagolas,            // 5. Csomagolás
-    Kiszallithato          // 6. Kiszállítható
+    KiszallitasraMegjeloles // 6. Kiszállításra készre jelentés (átmenet)
 }
 ```
 
@@ -110,9 +124,10 @@ public enum StepStatus
 - Payload: ProductionJobId, StepId, StepName, CompletedAt, CompletedBy
 
 ### ProductionJobShippingReady
-- Trigger: Utolsó step (Kiszállítható) Done
+- Trigger: A legacy célmodellben a készre jelentési step lezárása
 - Payload: ProductionJobId, ProjectName, CompletedAt
-- Side Effect: Telegram notification Sales/tulaj-nak
+- Jelentés: `ShippingReady` készültségi állapot; nem kiszállítási vagy
+  beépítési esemény
 
 ---
 
@@ -125,7 +140,9 @@ Csak az aktuális step indítható/fejezhető be. Nem lehet átugorni STAGE-eket
 A `CuttingJob.CuttingCompleted` event automatikusan Done-ra állítja az 1. STAGE-et.
 
 ### BR-003: ShippingReady Notification
-Ha az utolsó STAGE (Kiszállítható) Done → push notification Sales/tulaj-nak.
+Legacy célviselkedés: a készre jelentési átmenet után értesítés készülhet.
+Ennek aktuális runtime implementációját külön kód- és tesztbizonyíték nélkül
+nem állítjuk.
 
 ### BR-004: Csúszó Projekt Kiemelés
 Ha `currentDate > Deadline` && `Status != ShippingReady` → piros kiemelés UI-on.
@@ -134,25 +151,28 @@ Ha `currentDate > Deadline` && `Status != ShippingReady` → piros kiemelés UI-
 
 ## Doorstar-specifikus Terminológia
 
-| Magyar | Angol | Definíció |
+| Kanonikus magyar | Angol | Definíció |
 |--------|-------|-----------|
-| Munkamenet | Production workflow | 17 fázisú gyártási folyamat |
-| Szabászat | Cutting | CNC/kézi vágás |
-| Megmunkálás | Machining | CNC marás, csiszolás |
-| Felületkezelés | Surface treatment | Fúrás, ragasztás, fóliázás |
-| Összeszerelés | Assembly | Ajtólap + tok összerakás |
-| Csomagolás | Packaging | Paknizás, védőcsomagolás |
-| Kiszállítható | Shipping ready | Raktárba került, beépíthető |
-| DSMR | Doorstar megrendelés | Projekt azonosító |
+| Gyártási folyamat | Production process | A megrendeléstől a gyártási és logisztikai átadásig tartó teljes folyamat. Nem azonos egy UI-munkamenettel. |
+| Műveleti terv | Operation plan / routing | A konkrét végrehajtandó műveletek sorrendje, erőforrása, normája és függősége. |
+| Szabászat / előgyártás | Cutting and prefabrication | A Doorstar első makroszakasza; anyagdarabolás és az ide sorolt előgyártás. Egy CNC művelet besorolását a művelet tartalma dönti el. |
+| Megmunkálás | Machining | Forgácsoló és alakító műveletek, például marás és fúrás. A csiszolás nem automatikusan ide tartozik. |
+| Felület-előkészítés és felületkezelés | Surface preparation and treatment | Előkészítő csiszolás, majd a műveleti terv szerinti bevonat-/felületképzés. A fúrás nem felületkezelés. |
+| Összeállítás és szerelés | Assembly | Alkatrészek egységgé építése és a kapcsolódó szerelés a műveleti terv szerint. |
+| Csomagolás | Packaging | Termékvédelem, csomagegység-képzés és jelölés. A „paknizás” műhelyalias lehet. |
+| Kiszállításra kész | Ready for dispatch | Készültségi állapot. Nem bizonyít tényleges kiszállítást, beépítést vagy átadás-átvételt. |
+| Doorstar munkaszám (DSMR) | Doorstar work number | Belső projekt-/megbízásazonosító. Egy tetszőleges ötjegyű szám önmagában nem DSMR. |
 
 ---
 
 ## Kapcsolódó Dokumentumok
 
 - `/opt/doorstar/docs/knowledge/patterns/6-STAGE_WORKFLOW.md`
+- `DOORSTAR_FAIPARI_TERMINOLOGIAI_SZOTAR_2026-07-31.md`
+- `DOORSTAR_ADJUSTABLE_INTERIOR_DOOR_TERMINOLOGY_2026-07-30.md`
 - `/opt/doorstar/docs/projects/TASKS.yaml`
 - `/opt/doorstar/docs/projects/KEYCLOAK_DOORSTAR_CONFIG.md`
 
 ---
 
-_Doorstar Ajtógyártás Domain Model v1.0 — 2026-07-11_
+_Doorstar Ajtógyártás Domain Model v1.1 — 2026-07-31_

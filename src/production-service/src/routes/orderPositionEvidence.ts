@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { Prisma } from "@prisma/client";
 import { prisma } from "../db/client.js";
 import { createOrderPositionEvidenceSchema, resolveOrderPositionEvidenceSchema } from "../domain/schemas.js";
 import { logger } from "../logger.js";
-import { getRequester, requireRole } from "../middleware/requester.js";
+import { getRequester, getRequesterPrincipal, requireRole } from "../middleware/requester.js";
 import { validateBody } from "../middleware/validate.js";
+import {
+  createOrderPositionEvidence,
+  OrderPositionEvidenceReviewError,
+  reviewOrderPositionEvidence,
+} from "../services/orderPositionEvidenceReview.js";
 import { findActiveProject } from "../services/projects.js";
 
 export const orderPositionEvidenceRouter = Router();
@@ -20,6 +24,11 @@ async function findRevision(projectKey: string, revisionValue: string) {
   });
 }
 
+function sendEvidenceError(res: Parameters<typeof requireRole>[1], error: unknown) {
+  if (!(error instanceof OrderPositionEvidenceReviewError)) throw error;
+  res.status(error.status).json({ error: error.code, ...error.responseFields });
+}
+
 /** Add source context to one field without changing the selected position
  * value. New evidence is accepted only while the revision is still a DRAFT. */
 orderPositionEvidenceRouter.post(
@@ -29,33 +38,22 @@ orderPositionEvidenceRouter.post(
     if (!requireRole(req, res, technicalRoles)) return;
     const revision = await findRevision(req.params.projectKey, req.params.revision);
     if (!revision) return void res.status(404).json({ error: "order_revision_not_found" });
-    if (revision.status !== "DRAFT") return void res.status(409).json({ error: "evidence_requires_draft" });
-
-    const position = await prisma.orderPosition.findFirst({
-      where: { id: req.params.positionId, orderRevisionId: revision.id },
-    });
-    if (!position) return void res.status(404).json({ error: "order_position_not_found" });
-
     const body = req.body as ReturnType<typeof createOrderPositionEvidenceSchema.parse>;
-    if (body.orderDocumentId) {
-      const document = await prisma.orderDocument.findFirst({
-        where: { id: body.orderDocumentId, orderRevisionId: revision.id },
-      });
-      if (!document) return void res.status(409).json({ error: "evidence_document_not_from_revision" });
+    let evidence;
+    try {
+      evidence = await createOrderPositionEvidence(
+        revision.id,
+        req.params.positionId,
+        body,
+        getRequester(req).role,
+      );
+    } catch (error) {
+      return void sendEvidenceError(res, error);
     }
-
-    const evidence = await prisma.orderPositionEvidence.create({
-      data: {
-        ...body,
-        normalizedValue: body.normalizedValue === null ? Prisma.JsonNull : body.normalizedValue,
-        orderPositionId: position.id,
-        createdByRole: getRequester(req).role,
-      },
-    });
     logger.info({
       projectKey: req.params.projectKey,
       revision: revision.revision,
-      positionId: position.id,
+      positionId: req.params.positionId,
       evidenceId: evidence.id,
       field: evidence.field,
     }, "order position evidence recorded");
@@ -63,8 +61,8 @@ orderPositionEvidenceRouter.post(
   },
 );
 
-/** Review metadata may be updated during DRAFT or REVIEW. It remains
- * explanatory and never writes the normalized value into the order. */
+/** Finalize one row exactly once. The command never applies its normalized
+ * candidate to the order position; it records only the human audit decision. */
 orderPositionEvidenceRouter.patch(
   "/production-orders/:projectKey/revisions/:revision/positions/:positionId/evidence/:evidenceId",
   validateBody(resolveOrderPositionEvidenceSchema),
@@ -72,26 +70,22 @@ orderPositionEvidenceRouter.patch(
     if (!requireRole(req, res, technicalRoles)) return;
     const revision = await findRevision(req.params.projectKey, req.params.revision);
     if (!revision) return void res.status(404).json({ error: "order_revision_not_found" });
-    if (revision.status === "APPROVED" || revision.status === "SUPERSEDED") {
-      return void res.status(409).json({ error: "approved_revision_evidence_immutable" });
-    }
-    const evidence = await prisma.orderPositionEvidence.findFirst({
-      where: {
-        id: req.params.evidenceId,
-        orderPositionId: req.params.positionId,
-        orderPosition: { orderRevisionId: revision.id },
-      },
-    });
-    if (!evidence) return void res.status(404).json({ error: "order_position_evidence_not_found" });
-
     const body = req.body as ReturnType<typeof resolveOrderPositionEvidenceSchema.parse>;
-    const updated = await prisma.orderPositionEvidence.update({
-      where: { id: evidence.id },
-      data: {
-        reviewState: body.reviewState,
-        resolution: body.resolution ?? (body.reviewState === "REVIEW" ? null : evidence.resolution),
-      },
-    });
+    let updated;
+    try {
+      updated = await reviewOrderPositionEvidence(
+        revision.id,
+        req.params.positionId,
+        req.params.evidenceId,
+        body,
+        {
+          principal: getRequesterPrincipal(req),
+          role: getRequester(req).role,
+        },
+      );
+    } catch (error) {
+      return void sendEvidenceError(res, error);
+    }
     logger.info({
       projectKey: req.params.projectKey,
       revision: revision.revision,

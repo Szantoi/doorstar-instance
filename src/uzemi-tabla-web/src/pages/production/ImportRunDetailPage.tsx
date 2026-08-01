@@ -1,9 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { ManufacturedItemImportGate } from "@/components/orders/ManufacturedItemImportGate";
+import { parseImportInboxPage } from "@/lib/importInbox";
 import { useImportRunEvidence } from "@/services/production/hooks";
 import type { ImportCandidate, OrderDeadlineObservation } from "@/services/production/types";
 
-const candidateStatus = { READY: "Betölthető", REVIEW: "Ellenőrzendő", BLOCKED: "Blokkolt", APPLIED: "Alkalmazva", SKIPPED: "Kihagyva" } as const;
+const candidateStatus = { READY: "Review után kijelölhető", REVIEW: "Ellenőrzendő", BLOCKED: "Blokkolt", APPLIED: "Teszt-DRAFT-ban rögzítve", SKIPPED: "Kihagyva" } as const;
 const deadlineKind = { CONTRACTUAL: "Vállalt határidő", PLANNED_INSTALL: "Tervezett beépítés", PRODUCTION_END: "Gyártás vége", NOTE: "Megjegyzés" } as const;
 const reviewState = { UNVERIFIED: "Ellenőrizetlen", REVIEW: "Ellenőrzendő", RESOLVED: "Feloldva", REJECTED: "Elutasítva" } as const;
 
@@ -19,6 +20,9 @@ function payloadSummary(payload: Record<string, unknown>) {
  * and conflicts but deliberately offers no production target or accept-all. */
 export function ImportRunDetailPage() {
   const { importRunId = "" } = useParams();
+  const [searchParams] = useSearchParams();
+  const inboxPage = parseImportInboxPage(searchParams.get("page"));
+  const inboxHref = inboxPage > 1 ? `/imports?page=${inboxPage}` : "/imports";
   const { data, isLoading, isError } = useImportRunEvidence(importRunId);
   if (isLoading) return <main className="orders-page"><div className="orders-content"><div className="orders-state">Importbizonyíték betöltése…</div></div></main>;
   if (isError || !data) return <main className="orders-page"><div className="orders-content"><div className="orders-state">Az importfutás nem érhető el.</div></div></main>;
@@ -28,8 +32,9 @@ export function ImportRunDetailPage() {
   const blocked = data.candidates.filter((item) => item.status === "BLOCKED").length;
 
   return <main className="orders-page"><div className="orders-content">
-    <div className="order-intake-breadcrumb"><Link to="/imports">Import Inbox</Link> / Bizonyíték</div>
-    <header className="orders-hero"><div><p>{run.status} / {run.targetSchema}</p><h1>Importfutás részletei</h1><span>{run.previewArtifact}</span></div><Link className="doorstar-home-primary-action" to="/imports">Vissza az Inboxhoz</Link></header>
+    <div className="order-intake-breadcrumb"><Link to={inboxHref}>Import Inbox</Link> / Bizonyíték</div>
+    <header className="orders-hero"><div><p>{run.status} / {run.targetSchema}</p><h1>Importfutás részletei</h1><span>{run.previewArtifact}</span></div><Link className="doorstar-home-primary-action" to={inboxHref}>Vissza az Inboxhoz</Link></header>
+    <section className="import-safety-banner" aria-label="Review határ"><strong>Bizonyíték-alapú review</strong><span>A <code>READY</code> csak azt jelenti, hogy a jelölt kijelölhető a teszt-DRAFT kapujában. Nem jelent műszaki jóváhagyást, kiadást vagy éles importot.</span></section>
     <section className="import-run-summary">
       <div><span>Mapping</span><strong>{run.profileVersion}</strong></div>
       <div><span>Betölthető</span><strong>{ready}</strong></div>

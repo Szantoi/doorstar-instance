@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-live-eval-audit.v1",
+  "evaluatedAt": "2026-08-01T09:27:00+02:00",
+  "targetIsland": "doorstar",
+  "targetCollection": "doorstar-knowledge",
+  "packageHash": "34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116",
+  "evalSha256": "b3d42264ddbfe68b610611813f50d46280c241ad5a825f70491ad77085f7812d",
+  "questionCount": 35,
+  "liveUnfilteredTop10": {
+    "documentMatchCount": 13,
+    "sourceMatchCount": 13,
+    "claimMatchCount": 1,
+    "fullMatchCount": 1,
+    "resultsSha256": "4959bf9817f5619edae5c4883eb4741c0ba7455259e7a84cdd895de1dfd8fcb0",
+    "receiptSha256": "07561246ba25439beebeb599a7aed93fefe0832df382724630c7e737454659e0"
+  },
+  "readOnlyDiagnostics": {
+    "liveUnfilteredTop50": {
+      "expectedDocumentCount": 15,
+      "allExpectedClaimCount": 1,
+      "averageCanonicalPackageChunksInTop10": 1.1428571428571428
+    },
+    "livePackageFilteredTop10": {
+      "expectedDocumentCount": 34,
+      "allExpectedClaimCount": 9
+    },
+    "exactModelPackageOnlySimulation": {
+      "top10DocumentCount": 34,
+      "top10AllExpectedClaimCount": 8,
+      "top20DocumentCount": 35,
+      "top20AllExpectedClaimCount": 19
+    },
+    "claimStructure": {
+      "totalClaims": 98,
+      "evalExpectedClaims": 61,
+      "splitClaimRows": 17,
+      "splitEvalClaimRows": 11,
+      "claimIdsSeparatedFromStatement": 5,
+      "multiClaimQuestions": 21,
+      "questionsRequiringTwoClaimChunks": 8
+    }
+  },
+  "findings": [
+    "The approved v1 chunker splits Markdown claim-table rows on character boundaries.",
+    "The package eval competes with all 2016 island records because it has no package filter.",
+    "Document-level source metadata makes sourceMatch largely redundant with documentMatch.",
+    "Raw substring claim checks and all-or-nothing multi-claim scoring are not a reliable retrieval metric."
+  ],
+  "disposition": {
+    "applyIntegrity": "PASS",
+    "retrievalAcceptance": "FAIL_REQUIRES_NEW_PACKAGE_VERSION",
+    "rollbackV1": false,
+    "reasonNotRolledBack": "The exact apply, idempotency and six-principal smoke passed; the defect is retrieval design, not state integrity. The approved immutable v1 package must not be rewritten in place.",
+    "nextVersion": "1.1.0",
+    "nextLiveWriteRequiresNewApproval": true
+  },
+  "rawQuestionTextIncluded": false,
+  "rawRetrievedContentIncluded": false
+}

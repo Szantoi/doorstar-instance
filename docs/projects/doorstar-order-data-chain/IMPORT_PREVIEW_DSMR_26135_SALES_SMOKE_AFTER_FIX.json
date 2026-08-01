@@ -1,0 +1,1042 @@
+{
+  "canonicalWorkNumberGroups": [
+    {
+      "canonicalWorkNumber": "26135",
+      "documents": [
+        {
+          "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "headerCandidate": "26135",
+          "pathCandidate": "26135",
+          "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "resolutionState": "SALES_HEADER",
+          "sourceRoot": "SALES_FOLDER",
+          "sourceWorkNumber": "26135"
+        }
+      ],
+      "reviewRequired": false,
+      "sourceWorkNumberVariants": [
+        "26135"
+      ]
+    }
+  ],
+  "databaseWrite": false,
+  "macroExecution": false,
+  "mode": "preview",
+  "profile": "sales-order-pdf-batch-v1",
+  "salesOrderPdfPreviews": [
+    {
+      "databaseWrite": false,
+      "document": {
+        "action": "CREATE_REFERENCE",
+        "contentSha256": "20ff428ea3322305fd8002b765ed2f439f8908094c256c6c7e0fdb778ef179ad",
+        "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "kind": "SALES_ORDER",
+        "recordType": "OrderDocument",
+        "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+        "reviewRequired": true,
+        "source": "LEGACY_FOLDER"
+      },
+      "macroExecution": false,
+      "mode": "preview",
+      "pages": [
+        {
+          "page": 1,
+          "tableCount": 4,
+          "textExtracted": true
+        },
+        {
+          "page": 2,
+          "tableCount": 2,
+          "textExtracted": true
+        }
+      ],
+      "positionCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Szauna",
+              "page": 1,
+              "rawValue": "Szauna",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Bal be",
+              "page": 1,
+              "rawValue": "Bal be",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 920,
+              "page": 1,
+              "rawValue": "92",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2090,
+              "page": 1,
+              "rawValue": "209",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 125,
+              "page": 1,
+              "rawValue": "12,5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Tokoldali blendével",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "STANDARD",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": null,
+            "keyholeAndHinge": "Nincs Rejtett",
+            "lapColour": "Tibero Cognac / 2009-205-S52A",
+            "lapPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "lapSideBlende": "---",
+            "lock": "Smart2 Lock int.zár, fekete zártest",
+            "tokColour": "Tibero Cognac / 2009-205-S52A",
+            "tokPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "tokSideBlende": "272,3 cm"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "1",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Szauna",
+            "notes": "Tokoldali blendével",
+            "openingDepthMm": 125,
+            "openingDirection": "Bal be",
+            "openingHeightMm": 2090,
+            "openingWidthMm": 920,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 1,
+              "rawValue": "2",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Fürdő",
+              "page": 1,
+              "rawValue": "Fürdő",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 880,
+              "page": 1,
+              "rawValue": "88",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2090,
+              "page": 1,
+              "rawValue": "209",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 290,
+              "page": 1,
+              "rawValue": "29",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Tokoldali blendével",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 4,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "STANDARD",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": null,
+            "keyholeAndHinge": "Nincs Rejtett",
+            "lapColour": "Tibero Cognac / 2009-205-S52A",
+            "lapPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "lapSideBlende": "---",
+            "lock": "Smart2 Lock int.zár, fekete zártest",
+            "tokColour": "Tibero Cognac / 2009-205-S52A",
+            "tokPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "tokSideBlende": "272,8 cm"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 4,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "2",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Fürdő",
+            "notes": "Tokoldali blendével",
+            "openingDepthMm": 290,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2090,
+            "openingWidthMm": 880,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "3",
+              "page": 1,
+              "rawValue": "3",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Mosókonyha",
+              "page": 1,
+              "rawValue": "Mosókonyha",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 1000,
+              "page": 1,
+              "rawValue": "100",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2090,
+              "page": 1,
+              "rawValue": "209",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 275,
+              "page": 1,
+              "rawValue": "27,5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Tokoldali blendével, plusz pánttal",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Tokoldali blendével, plusz pánttal",
+              "page": 1,
+              "rawValue": "Tokoldali blendével, plusz pánttal",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 5,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "STANDARD",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": "Rejtett (2+1)",
+            "keyholeAndHinge": "Nincs",
+            "lapColour": "Tibero Cognac / 2009-205-S52A",
+            "lapPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "lapSideBlende": "---",
+            "lock": "Smart2 Lock int.zár, fekete zártest",
+            "tokColour": "Tibero Cognac / 2009-205-S52A",
+            "tokPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "tokSideBlende": "272,7 cm"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 5,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "3",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Mosókonyha",
+            "notes": "Tokoldali blendével, plusz pánttal",
+            "openingDepthMm": 275,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2090,
+            "openingWidthMm": 1000,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "4",
+              "page": 1,
+              "rawValue": "4",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Szoba (dühöngő)",
+              "page": 1,
+              "rawValue": "Szoba (dühöngő)",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 880,
+              "page": 1,
+              "rawValue": "88",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2090,
+              "page": 1,
+              "rawValue": "209",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 125,
+              "page": 1,
+              "rawValue": "12,5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Tokoldali blendével",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 6,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "STANDARD",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": null,
+            "keyholeAndHinge": "Nincs Rejtett",
+            "lapColour": "Tibero Cognac / 2009-205-S52A",
+            "lapPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "lapSideBlende": "---",
+            "lock": "Smart2 Lock int.zár, fekete zártest",
+            "tokColour": "Tibero Cognac / 2009-205-S52A",
+            "tokPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "tokSideBlende": "272,2 cm"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 6,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "4",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Szoba (dühöngő)",
+            "notes": "Tokoldali blendével",
+            "openingDepthMm": 125,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2090,
+            "openingWidthMm": 880,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_survey_or_technical_review"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "5",
+              "page": 1,
+              "rawValue": "5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Szoba",
+              "page": 1,
+              "rawValue": "Szoba",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 1,
+              "page": 1,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "PRODUCT_TYPE",
+              "normalizedValue": "Síkban záródó",
+              "page": 1,
+              "rawValue": "Síkban záródó",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DIRECTION",
+              "normalizedValue": "Jobb be",
+              "page": 1,
+              "rawValue": "Jobb be",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_WIDTH_MM",
+              "normalizedValue": 880,
+              "page": 1,
+              "rawValue": "88",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_HEIGHT_MM",
+              "normalizedValue": 2090,
+              "page": 1,
+              "rawValue": "209",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "OPENING_DEPTH_MM",
+              "normalizedValue": 125,
+              "page": 1,
+              "rawValue": "12,5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "WALL_TREATMENT",
+              "normalizedValue": "BLENDE",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Tokoldali blendével",
+              "page": 1,
+              "rawValue": "Tokoldali blendével",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 7,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "parserLayout": "STANDARD",
+          "rawManufacturingAttributes": {
+            "casingProfileRaw": "so k ra s",
+            "hingeSupplement": null,
+            "keyholeAndHinge": "Nincs Rejtett",
+            "lapColour": "Tibero Cognac / 2009-205-S52A",
+            "lapPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "lapSideBlende": "---",
+            "lock": "Smart2 Lock int.zár, fekete zártest",
+            "tokColour": "Tibero Cognac / 2009-205-S52A",
+            "tokPattern": "Vertikális random csíkos marásmintával (ajtólap 2/3-án, pánt oldalon)",
+            "tokSideBlende": "272,7 cm"
+          },
+          "recordType": "SalesOrderPositionCandidate",
+          "source": {
+            "page": 1,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 7,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "code": "5",
+            "doorHeightMm": null,
+            "doorThicknessMm": null,
+            "doorWidthMm": null,
+            "glazing": null,
+            "glazingSpecification": null,
+            "name": "Szoba",
+            "notes": "Tokoldali blendével",
+            "openingDepthMm": 125,
+            "openingDirection": "Jobb be",
+            "openingHeightMm": 2090,
+            "openingWidthMm": 880,
+            "productType": "Síkban záródó",
+            "quantity": 1,
+            "surface": null,
+            "wallTreatment": "BLENDE"
+          }
+        }
+      ],
+      "salesOrder": {
+        "contactName": "Berta Judit lakberendező",
+        "contactPhone": "+36 20 222 2654",
+        "customerName": "Tormay Zsolt és Tormay Tímea",
+        "deliveryAddress": "Gödöllő, Fűzfa u. 49.",
+        "expectedDelivery": null,
+        "expectedDeliveryText": null,
+        "intakeStage": "SALES_DOCUMENTS_RECEIVED",
+        "orderDate": "2026.06.03",
+        "reviewRequired": true,
+        "workNumber": "26135"
+      },
+      "sourceAuthority": "SALES_TO_WORKSHOP_GYARTASMEGRENDELES",
+      "sourceRoot": "SALES_FOLDER",
+      "summary": {
+        "pageCount": 2,
+        "positionCandidateCount": 5,
+        "positionsRequiringReview": 5,
+        "positionsWithCompleteOpeningDimensions": 5,
+        "supplementaryProductCandidateCount": 2
+      },
+      "supplementaryProductCandidates": [
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "1",
+              "page": 2,
+              "rawValue": "1",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Beltéri ajtó kilincs zárható",
+              "page": 2,
+              "rawValue": "Beltéri ajtó kilincs zárható",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 5,
+              "page": 2,
+              "rawValue": "5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "Griffwerk Lucia Prof. Smart2Lock zárható fekete négyzetrozettás (52,5 x 10,5mm) kilincsgarnitúra",
+              "page": 2,
+              "rawValue": "Griffwerk Lucia Prof. Smart2Lock zárható fekete négyzetrozettás (52,5 x 10,5mm) kilincsgarnitúra",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 2,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 2,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "1",
+            "description": "Griffwerk Lucia Prof. Smart2Lock zárható fekete négyzetrozettás (52,5 x 10,5mm) kilincsgarnitúra",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Beltéri ajtó kilincs zárható",
+            "notes": null,
+            "quantity": 5
+          }
+        },
+        {
+          "action": "REVIEW",
+          "errors": [
+            "requires_human_review",
+            "supplementary_product_storage_not_implemented"
+          ],
+          "evidence": [
+            {
+              "confidence": 0.85,
+              "field": "CODE",
+              "normalizedValue": "2",
+              "page": 2,
+              "rawValue": "2",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NAME",
+              "normalizedValue": "Zártest BB",
+              "page": 2,
+              "rawValue": "Zártest BB",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "QUANTITY",
+              "normalizedValue": 5,
+              "page": 2,
+              "rawValue": "5",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            },
+            {
+              "confidence": 0.85,
+              "field": "NOTES",
+              "normalizedValue": "AGB Revolution XT fekete előlapos zártest és ellendarab",
+              "page": 2,
+              "rawValue": "AGB Revolution XT fekete előlapos zártest és ellendarab",
+              "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+              "reviewState": "REVIEW",
+              "row": 3,
+              "sourceRoot": "SALES_FOLDER"
+            }
+          ],
+          "extractionState": "SALES_SOURCE_UNVERIFIED",
+          "importStatus": "REQUIRES_SUPPLEMENTARY_PRODUCT_MODEL",
+          "recordType": "SalesOrderSupplementaryProductCandidate",
+          "source": {
+            "page": 2,
+            "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+            "row": 3,
+            "sourceRoot": "SALES_FOLDER"
+          },
+          "target": {
+            "calculation": null,
+            "code": "2",
+            "description": "AGB Revolution XT fekete előlapos zártest és ellendarab",
+            "linearMetresCalculated": null,
+            "linearMetresPerPiece": null,
+            "name": "Zártest BB",
+            "notes": null,
+            "quantity": 5
+          }
+        }
+      ],
+      "workNumberResolution": {
+        "candidate": "26135",
+        "headerCandidate": "26135",
+        "pathCandidate": "26135",
+        "reviewRequired": false,
+        "state": "SALES_HEADER"
+      }
+    }
+  ],
+  "sameContentDuplicates": [],
+  "summary": {
+    "canonicalWorkNumberCount": 1,
+    "canonicalWorkNumberVariantReviewCount": 0,
+    "doorPositionCandidateCount": 5,
+    "failedExtractionCount": 0,
+    "headerPathWorkNumberConflictCount": 0,
+    "matchingPdfCount": 1,
+    "pathFallbackWorkNumberCount": 0,
+    "sameContentDuplicateGroupCount": 0,
+    "supplementaryProductCandidateCount": 2,
+    "unresolvedWorkNumberCount": 0,
+    "workNumberCount": 1
+  },
+  "workNumberGroups": [
+    {
+      "documents": [
+        {
+          "displayName": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "relativePath": "DSMR 26135 Tormay Zsolt GYÁRTÁSMEGRENDELÉS.pdf",
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ],
+      "workNumber": "26135"
+    }
+  ]
+}

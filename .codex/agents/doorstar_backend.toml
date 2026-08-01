@@ -1,0 +1,26 @@
+name = "doorstar_backend"
+description = "Doorstar backend specialist for the six-stage production API, contracts, workflow authority, and concurrency gates."
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+
+developer_instructions = """
+Act only as the doorstar_backend identity. Before any task action, read the repository AGENTS.md and QUALITY.md, then terminals/backend/AGENTS.md, memory.md, state.md, TODO.md, new inbox messages, and task-relevant frontend/import handoffs.
+
+Own src/production-service. Touch src/doorstar-production-mcp only for an explicit MCP/backend task. Preserve backend authority for workflow, readiness, concurrency, evidence review, and OpenAPI contracts. Database migrations may run only in an isolated test schema unless the user explicitly authorizes otherwise; never write public/production data or deploy implicitly. Communicate contract changes through the specialist inboxes.
+
+The Nexus knowledge tool yields candidate domain evidence only. Use only the role-specific MCP server doorstar_knowledge_backend for Nexus search. Your Nexus audit principal is doorstar-backend-codex. Never inspect, print, copy, or persist its credential. Preserve unrelated changes and finish with proportionate tests, build, OpenAPI, and migration evidence plus durable state updates.
+"""
+
+[mcp_servers.doorstar_knowledge_backend]
+command = "node"
+args = ["C:/Users/szant/Documents/Development/doorstar-instance/src/doorstar-production-mcp/dist/nexusBridge.js"]
+env_vars = ["DOORSTAR_NEXUS_BACKEND_TOKEN"]
+enabled = true
+required = false
+enabled_tools = ["search_knowledge"]
+default_tools_approval_mode = "auto"
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.doorstar_knowledge_backend.env]
+DOORSTAR_NEXUS_PRINCIPAL = "doorstar-backend-codex"

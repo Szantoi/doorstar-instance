@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-live-preflight.v1",
+  "targetIsland": "doorstar",
+  "targetCollection": "doorstar-knowledge",
+  "collectionId": "f8ed148e-743e-4a8d-a5b0-aa95a4b0b90a",
+  "chromadbClientVersion": "3.5.0",
+  "countBefore": 1998,
+  "countAfter": 1998,
+  "scannedIdCount": 1998,
+  "uniqueIdCount": 1998,
+  "duplicateIdCount": 0,
+  "approvedChunkKeyPresentCount": 0,
+  "approvedChunkKeyExpectedCount": 41,
+  "legacy": [
+    {
+      "source": "INDEX.md",
+      "idPattern": "^INDEX_md_chunk_[0-9]+$",
+      "expectedCount": 5,
+      "ids": [
+        "INDEX_md_chunk_0",
+        "INDEX_md_chunk_1",
+        "INDEX_md_chunk_2",
+        "INDEX_md_chunk_3",
+        "INDEX_md_chunk_4"
+      ]
+    },
+    {
+      "source": "context/DOORSTAR_PRODUCTION_CONTEXT.md",
+      "idPattern": "^context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_[0-9]+$",
+      "expectedCount": 7,
+      "ids": [
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_5",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_6",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_7",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_8",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_9",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_10",
+        "context_DOORSTAR_PRODUCTION_CONTEXT_md_chunk_11"
+      ]
+    },
+    {
+      "source": "domain/DOOR_MANUFACTURING_DOMAIN.md",
+      "idPattern": "^domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_[0-9]+$",
+      "expectedCount": 7,
+      "ids": [
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_26",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_27",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_28",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_29",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_30",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_31",
+        "domain_DOOR_MANUFACTURING_DOMAIN_md_chunk_32"
+      ]
+    },
+    {
+      "source": "patterns/6-STAGE_WORKFLOW.md",
+      "idPattern": "^patterns_6_STAGE_WORKFLOW_md_chunk_[0-9]+$",
+      "expectedCount": 4,
+      "ids": [
+        "patterns_6_STAGE_WORKFLOW_md_chunk_33",
+        "patterns_6_STAGE_WORKFLOW_md_chunk_34",
+        "patterns_6_STAGE_WORKFLOW_md_chunk_35",
+        "patterns_6_STAGE_WORKFLOW_md_chunk_36"
+      ]
+    }
+  ],
+  "embedding": {
+    "configurationType": "legacy",
+    "model": "Xenova/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "sampleFinite": true
+  },
+  "runtime": {
+    "nexusServiceActive": true,
+    "nexusServicePid": 1733284,
+    "graphIndexTimerActive": true,
+    "extraWriterCapableProcessIds": [118041, 1247861]
+  },
+  "gateStatus": "BLOCKED_CONCURRENCY_REVIEW",
+  "networkReadPerformed": true,
+  "nexusWritePerformed": false,
+  "chromaWritePerformed": false,
+  "documentContentRead": false,
+  "secretValueExposed": false
+}

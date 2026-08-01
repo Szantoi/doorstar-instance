@@ -29,37 +29,32 @@ afterAll(async () => {
 });
 
 describe("board API", () => {
-  it("creates a pool task and returns it in the board for that week", async () => {
-    const created = await request(app)
+  it("blocks a pool task before any board row is created", async () => {
+    const blocked = await request(app)
       .post("/api/production/tasks")
-      .send({ title: "Teszt feladat", week, day: 2 })
-      .expect(201);
-
-    expect(created.body.station).toBeNull();
-    expect(created.body.week).toBe(week);
-
-    const board = await request(app).get(`/api/production/board?week=${week}`).expect(200);
-    const found = board.body.tasks.find((t: { id: string }) => t.id === created.body.id);
-    expect(found).toBeTruthy();
-    expect(found.status).toBe("assigned");
-    expect(found.isDone).toBe(false);
+      .send({ title: "Guarded board task", week, day: 2 })
+      .expect(409);
+    expect(blocked.body).toMatchObject({
+      error: "legacy_production_issue_blocked",
+      details: { mutation: "create_task", projectId: null },
+    });
+    expect((await request(app).get(`/api/production/board?week=${week}`).expect(200)).body.tasks).toEqual([]);
   });
 
   it("marks a task done once it reaches the last workflow step", async () => {
-    const created = await request(app)
-      .post("/api/production/tasks")
-      .send({ title: "CNC feladat", station: "CNC", week, day: 0 })
-      .expect(201);
+    const created = await prisma.task.create({
+      data: { title: "Existing CNC task", station: "CNC", week, day: 0 },
+    });
 
     const patched = await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .send({ stepIndex: 2 })
       .expect(200);
 
     expect(patched.body.stepIndex).toBe(2);
 
     const board = await request(app).get(`/api/production/board?week=${week}`).expect(200);
-    const found = board.body.tasks.find((t: { id: string }) => t.id === created.body.id);
+    const found = board.body.tasks.find((t: { id: string }) => t.id === created.id);
     expect(found.isDone).toBe(true);
     expect(found.status).toBe("done");
   });
@@ -68,25 +63,20 @@ describe("board API", () => {
     await request(app).post("/api/production/tasks").send({ title: "" }).expect(400);
   });
 
-  it("links a manually added board task to an existing project by project key", async () => {
-    const project = await prisma.project.create({ data: { key: `TEST-PROJECT-${Date.now()}`, name: "Demó projekt", num: "251" } });
+  it("blocks creating a manually added board task for an existing project", async () => {
+    const project = await prisma.project.create({ data: { key: `TEST-PROJECT-${Date.now()}`, name: "Guard project", num: "251" } });
 
-    const created = await request(app)
+    const blocked = await request(app)
       .post("/api/production/tasks")
-      .send({ title: "Kézzel felírt projektfeladat", projectKey: project.key, station: "CNC", week, day: 1 })
-      .expect(201);
+      .send({ title: "Guarded project task", projectKey: project.key, station: "CNC", week, day: 1 })
+      .expect(409);
 
-    expect(created.body.projectId).toBe(project.id);
-
-    const board = await request(app).get(`/api/production/board?week=${week}`).expect(200);
-    const found = board.body.tasks.find((task: { id: string }) => task.id === created.body.id);
-    expect(found.projectNum).toBe("251");
-
-    await prisma.task.delete({ where: { id: created.body.id } });
+    expect(blocked.body.details).toMatchObject({ mutation: "create_task", projectId: project.id });
+    expect(await prisma.task.count({ where: { projectId: project.id } })).toBe(0);
     await prisma.project.delete({ where: { id: project.id } });
   });
 
-  it("lets a manager change or clear a free task's project from its detail sheet", async () => {
+  it("blocks laundering a free task into project or epic production work", async () => {
     const suffix = Date.now();
     const [firstProject, secondProject] = await Promise.all([
       prisma.project.create({ data: { key: `TEST-DETAIL-A-${suffix}`, name: "Első projekt" } }),
@@ -94,61 +84,45 @@ describe("board API", () => {
     ]);
     const secondEpic = await prisma.epic.create({ data: { projectId: secondProject.id, name: "Ajtólap" } });
     const skippedEpic = await prisma.epic.create({ data: { projectId: secondProject.id, name: "Kihagyott", disabled: true } });
-    const created = await request(app)
-      .post("/api/production/tasks")
-      .send({ title: "Módosítható projektű feladat", projectKey: firstProject.key, station: "CNC", week, day: 1 })
-      .expect(201);
+    const created = await prisma.task.create({
+      data: { title: "Existing free task", station: "CNC", week, day: 1 },
+    });
 
     const moved = await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .send({ projectKey: secondProject.key })
-      .expect(200);
-    expect(moved.body.projectId).toBe(secondProject.id);
-
-    const detail = await request(app).get(`/api/production/tasks/${created.body.id}`).expect(200);
-    expect(detail.body.project).toMatchObject({ id: secondProject.id, key: secondProject.key, name: "Második projekt" });
-    expect(detail.body.audit[0].label).toBe("Projekt hozzárendelés módosítva");
+      .expect(409);
+    expect(moved.body.details).toMatchObject({ mutation: "attach_task_to_project", projectId: secondProject.id });
 
     await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .send({ epicId: skippedEpic.id })
       .expect(404);
 
     const linked = await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .send({ epicId: secondEpic.id, quantity: 20, unitHours: 0.25 })
-      .expect(200);
-    expect(linked.body).toMatchObject({ projectId: secondProject.id, epicId: secondEpic.id, epicName: "Ajtólap", quantity: 20, unitHours: 0.25 });
-    const linkedDetail = await request(app).get(`/api/production/tasks/${created.body.id}`).expect(200);
-    expect(linkedDetail.body.epic).toMatchObject({ id: secondEpic.id, name: "Ajtólap" });
-    const load = await request(app).get(`/api/production/load?week=${week}`).expect(200);
-    expect(load.body.stations.find((station: { station: string }) => station.station === "CNC").cells[1].hours).toBe(5);
-
-    const movedWithEpicCleared = await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
-      .send({ projectKey: firstProject.key, epicId: null })
-      .expect(200);
-    expect(movedWithEpicCleared.body).toMatchObject({ projectId: firstProject.id, epicId: null, epicName: null });
+      .expect(409);
+    expect(linked.body.details).toMatchObject({ mutation: "attach_task_to_project", projectId: secondProject.id });
 
     await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .set("X-Role", "allomas")
       .set("X-Station", "CNC")
       .send({ quantity: 99 })
       .expect(403);
 
     await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
+      .patch(`/api/production/tasks/${created.id}`)
       .set("X-Role", "allomas")
       .send({ projectKey: secondProject.key })
       .expect(403);
-    await request(app)
-      .patch(`/api/production/tasks/${created.body.id}`)
-      .send({ projectKey: null })
-      .expect(200);
-    expect((await prisma.task.findUniqueOrThrow({ where: { id: created.body.id } })).projectId).toBeNull();
+    expect(await prisma.task.findUniqueOrThrow({ where: { id: created.id } })).toMatchObject({
+      projectId: null,
+      epicId: null,
+    });
 
-    await prisma.task.delete({ where: { id: created.body.id } });
+    await prisma.task.delete({ where: { id: created.id } });
     await prisma.project.deleteMany({ where: { id: { in: [firstProject.id, secondProject.id] } } });
   });
 
@@ -195,10 +169,9 @@ describe("board API", () => {
 
   it("edits project identity, saves epic removal, and archives without losing issued tasks", async () => {
     const project = await prisma.project.create({ data: { key: `TEST-CRUD-${Date.now()}`, name: "Eredeti projekt", num: "100" } });
-    const task = await request(app)
-      .post("/api/production/tasks")
-      .send({ title: "Megmaradó előzmény", projectKey: project.key, week, day: 1 })
-      .expect(201);
+    const task = await prisma.task.create({
+      data: { title: "Megmaradó előzmény", projectId: project.id, week, day: 1 },
+    });
 
     const edited = await request(app)
       .put(`/api/production/projects/${project.key}`)
@@ -217,12 +190,27 @@ describe("board API", () => {
       })
       .expect(200);
 
-    await request(app).post(`/api/production/projects/${project.key}/schedule`).send({}).expect(200);
-    const issuedFromDeletedEpic = await prisma.task.findFirstOrThrow({
-      where: { projectId: project.id, epicName: "Törlendő epik" },
+    const issuedFromDeletedEpic = await prisma.task.create({
+      data: {
+        projectId: project.id,
+        epicId: savedEpics.body[0].id,
+        epicStepId: savedEpics.body[0].steps[0].id,
+        epicName: "Törlendő epik",
+        title: "Legacy fixture one",
+        week,
+        day: 1,
+      },
     });
-    const issuedFromRemainingEpic = await prisma.task.findFirstOrThrow({
-      where: { projectId: project.id, epicName: "Megmaradó epik" },
+    const issuedFromRemainingEpic = await prisma.task.create({
+      data: {
+        projectId: project.id,
+        epicId: savedEpics.body[1].id,
+        epicStepId: savedEpics.body[1].steps[0].id,
+        epicName: "Megmaradó epik",
+        title: "Legacy fixture two",
+        week,
+        day: 1,
+      },
     });
 
     await request(app)
@@ -252,7 +240,7 @@ describe("board API", () => {
 
     const archived = await prisma.project.findUniqueOrThrow({ where: { id: project.id } });
     expect(archived.deletedAt).toBeTruthy();
-    expect(await prisma.task.findUnique({ where: { id: task.body.id } })).toBeTruthy();
+    expect(await prisma.task.findUnique({ where: { id: task.id } })).toBeTruthy();
 
     await prisma.task.deleteMany({ where: { projectId: project.id } });
     await prisma.project.delete({ where: { id: project.id } });
@@ -290,13 +278,25 @@ describe("board API", () => {
     expect(await prisma.task.count({ where: { projectId: project.id } })).toBe(0);
 
     await prisma.epicStep.update({ where: { id: undatedStep.id }, data: { planDate: new Date("2026-07-21") } });
-    const issued = await request(app).post(`/api/production/projects/${project.key}/schedule`).send({}).expect(200);
-    expect(issued.body).toMatchObject({ createdCount: 2, skippedExisting: 0, missingPlanDates: [] });
+    const blocked = await request(app).post(`/api/production/projects/${project.key}/schedule`).send({}).expect(409);
+    expect(blocked.body).toMatchObject({
+      error: "legacy_production_issue_blocked",
+      details: { mutation: "issue_project_session", projectId: project.id },
+    });
 
     const tasks = await prisma.task.findMany({ where: { projectId: project.id }, orderBy: { title: "asc" } });
-    expect(tasks).toHaveLength(2);
-    expect(tasks.find((task) => task.epicStepId === datedStep.id)).toMatchObject({ week: "2026-07-20", day: 0 });
-    expect(tasks.find((task) => task.epicStepId === undatedStep.id)).toMatchObject({ week: "2026-07-20", day: 1 });
+    expect(tasks).toHaveLength(0);
+
+    await prisma.task.create({
+      data: { projectId: project.id, epicId: epic.id, epicStepId: datedStep.id, epicName: epic.name, title: "Existing dated step", week, day: 0 },
+    });
+    await request(app).post(`/api/production/projects/${project.key}/schedule`).send({}).expect(409);
+    expect(await prisma.task.count({ where: { projectId: project.id } })).toBe(1);
+    await prisma.task.create({
+      data: { projectId: project.id, epicId: epic.id, epicStepId: undatedStep.id, epicName: epic.name, title: "Existing second step", week, day: 1 },
+    });
+    const noOp = await request(app).post(`/api/production/projects/${project.key}/schedule`).send({}).expect(200);
+    expect(noOp.body).toMatchObject({ createdCount: 0, skippedExisting: 2, missingPlanDates: [] });
 
     await prisma.task.deleteMany({ where: { projectId: project.id } });
     await prisma.project.delete({ where: { id: project.id } });
@@ -304,44 +304,29 @@ describe("board API", () => {
 
   it("groups every station task by status in Kanban regardless of its week", async () => {
     const [openTask, completedTask, assignedTask, poolTask, futureTask] = await Promise.all([
-      request(app)
-        .post("/api/production/tasks")
-        .send({ title: "Régi, nyitott CNC feladat", station: "CNC", week: previousWeekKey, day: 4 })
-        .expect(201),
-      request(app)
-        .post("/api/production/tasks")
-        .send({ title: "Régi, kész CNC feladat", station: "CNC", week: previousWeekKey, day: 4 })
-        .expect(201),
-      request(app)
-        .post("/api/production/tasks")
-        .send({ title: "Régi, még fel nem vett CNC feladat", station: "CNC", week: previousWeekKey, day: 4 })
-        .expect(201),
-      request(app)
-        .post("/api/production/tasks")
-        .send({ title: "Régi, szabad feladat", week: previousWeekKey, day: 4 })
-        .expect(201),
-      request(app)
-        .post("/api/production/tasks")
-        .send({ title: "Jövő heti, folyamatban lévő CNC feladat", station: "CNC", week: nextWeekKey, day: 1 })
-        .expect(201),
+      prisma.task.create({ data: { title: "Régi, nyitott CNC feladat", station: "CNC", week: previousWeekKey, day: 4 } }),
+      prisma.task.create({ data: { title: "Régi, kész CNC feladat", station: "CNC", week: previousWeekKey, day: 4 } }),
+      prisma.task.create({ data: { title: "Régi, még fel nem vett CNC feladat", station: "CNC", week: previousWeekKey, day: 4 } }),
+      prisma.task.create({ data: { title: "Régi, szabad feladat", week: previousWeekKey, day: 4 } }),
+      prisma.task.create({ data: { title: "Jövő heti, folyamatban lévő CNC feladat", station: "CNC", week: nextWeekKey, day: 1 } }),
     ]);
 
-    await request(app).patch(`/api/production/tasks/${openTask.body.id}`).send({ acknowledged: true, stepIndex: 1 }).expect(200);
-    await request(app).patch(`/api/production/tasks/${completedTask.body.id}`).send({ acknowledged: true, stepIndex: 2 }).expect(200);
-    await request(app).patch(`/api/production/tasks/${futureTask.body.id}`).send({ acknowledged: true, stepIndex: 1 }).expect(200);
+    await request(app).patch(`/api/production/tasks/${openTask.id}`).send({ acknowledged: true, stepIndex: 1 }).expect(200);
+    await request(app).patch(`/api/production/tasks/${completedTask.id}`).send({ acknowledged: true, stepIndex: 2 }).expect(200);
+    await request(app).patch(`/api/production/tasks/${futureTask.id}`).send({ acknowledged: true, stepIndex: 1 }).expect(200);
 
     const kanban = await request(app).get(`/api/production/kanban?station=CNC&week=${week}`).expect(200);
     const visibleIds = kanban.body.columns.flatMap((column: { tasks: Array<{ id: string }> }) => column.tasks.map((task) => task.id));
 
-    expect(visibleIds).toContain(openTask.body.id);
-    expect(visibleIds).toContain(completedTask.body.id);
-    expect(visibleIds).toContain(futureTask.body.id);
-    expect(kanban.body.assigned.map((task: { id: string }) => task.id)).toContain(assignedTask.body.id);
-    expect(kanban.body.pool.map((task: { id: string }) => task.id)).toContain(poolTask.body.id);
+    expect(visibleIds).toContain(openTask.id);
+    expect(visibleIds).toContain(completedTask.id);
+    expect(visibleIds).toContain(futureTask.id);
+    expect(kanban.body.assigned.map((task: { id: string }) => task.id)).toContain(assignedTask.id);
+    expect(kanban.body.pool.map((task: { id: string }) => task.id)).toContain(poolTask.id);
     expect(kanban.body).not.toHaveProperty("carriedOverCount");
   });
 
-  it("issues and revokes a single step without breaking its dependency chain", async () => {
+  it("keeps predecessor and idempotent no-op semantics while blocking every new step Task", async () => {
     const suffix = `single-step-${Date.now()}`;
     const project = await prisma.project.create({ data: { key: suffix, name: "Egyedi kiadás teszt" } });
     const epic = await prisma.epic.create({ data: { projectId: project.id, name: "Tok" } });
@@ -350,14 +335,36 @@ describe("board API", () => {
       prisma.epicStep.create({ data: { epicId: epic.id, name: "Marás", station: "CNC", planDate: new Date("2026-08-04"), position: 1 } }),
     ]);
 
-    await request(app).post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(409);
-    const firstIssue = await request(app).post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(201);
-    expect(firstIssue.body).toMatchObject({ outcome: "issued" });
-    await request(app).post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(200);
+    const predecessorBlocked = await request(app)
+      .post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`)
+      .expect(409);
+    expect(predecessorBlocked.body.error).toBe("predecessor_not_issued");
+    const firstBlocked = await request(app)
+      .post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`)
+      .expect(409);
+    expect(firstBlocked.body).toMatchObject({
+      error: "legacy_production_issue_blocked",
+      details: { mutation: "issue_project_step", projectId: project.id },
+    });
+    expect(await prisma.task.count({ where: { projectId: project.id } })).toBe(0);
 
-    const secondIssue = await request(app).post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(201);
-    await request(app).delete(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(409);
-    await request(app).delete(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(204);
+    const existingFirst = await prisma.task.create({
+      data: {
+        projectId: project.id,
+        epicId: epic.id,
+        epicStepId: firstStep.id,
+        epicName: epic.name,
+        title: "Existing issued first step",
+        week,
+        day: 0,
+      },
+    });
+    const noOp = await request(app)
+      .post(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`)
+      .expect(200);
+    expect(noOp.body).toEqual({ outcome: "already_issued", taskId: existingFirst.id });
+    await request(app).post(`/api/production/projects/${project.key}/steps/${secondStep.id}/issue`).expect(409);
+    expect(await prisma.task.count({ where: { projectId: project.id } })).toBe(1);
     await request(app).delete(`/api/production/projects/${project.key}/steps/${firstStep.id}/issue`).expect(204);
 
     const freeTask = await prisma.task.create({ data: { projectId: project.id, title: "Epik nélküli", week, day: 2 } });
@@ -366,6 +373,5 @@ describe("board API", () => {
 
     await prisma.task.deleteMany({ where: { projectId: project.id } });
     await prisma.project.delete({ where: { id: project.id } });
-    expect(secondIssue.body).toMatchObject({ outcome: "issued" });
   });
 });

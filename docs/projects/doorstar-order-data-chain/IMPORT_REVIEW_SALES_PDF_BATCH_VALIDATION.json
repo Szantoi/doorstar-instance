@@ -1,0 +1,1741 @@
+{
+  "databaseWrite": false,
+  "findings": [
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[9]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[10]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[3]/_Archiv/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[4]/_Archiv/25161 - SAVIL/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[4]/_Archiv/25161 - SAVIL/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[4]/_Archiv/25161 - SAVIL/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[5]/_Archiv/25161 - SAVIL/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[5]/_Archiv/25161 - SAVIL/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[5]/_Archiv/25161 - SAVIL/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[6]/_Archiv/25181 - Saincaize-Prauda Orsolya/Archiv/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[6]/_Archiv/25181 - Saincaize-Prauda Orsolya/Archiv/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[6]/_Archiv/25181 - Saincaize-Prauda Orsolya/Archiv/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[7]/_Archiv/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[7]/_Archiv/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[7]/_Archiv/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[7]",
+      "message": "openingWidthMm, openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[9]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[10]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[11]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[12]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[13]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[8]/_Archiv/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[14]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[9]/_Archiv/DSMR 24170 Koza Petra Gyártásmegrendelés/DSMR 24170 Koza Petra Gyártásmegrendelés.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[10]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[10]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[10]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[10]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[10]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[11]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[11]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[11]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[11]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[11]/_Archiv/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[12]/_Archiv/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS/DSMR 25143 Tilki Lábazati szegőléc GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "openingWidthMm, openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[14]/_Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[17]/_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[17]/_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[8]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[18]/_Archiv/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD. 2.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[22]/_Archiv/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "sales_workNumber_missing",
+      "locator": "document[26]/_Archiv/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+      "message": "Sales PDF has no extracted workNumber",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[27]/_Archiv/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[27]/_Archiv/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[28]/_Archiv/DSMR 26114 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[29]/_Archiv/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[31]/_Archiv/DSMR 26118 LFA Ingatlan Kft. (Toma Ferenc-Bejárati ajtó panel)/DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[32]/_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[32]/_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[34]/_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[34]/_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[34]/_Archiv/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[35]/_Archiv/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[35]/_Archiv/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[36]/_Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[36]/_Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[2]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[36]/_Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[36]/_Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[3]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[37]/_Archiv/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[39]/_Archiv/DSMR 26128 Dotkom Invest Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[39]/_Archiv/DSMR 26128 Dotkom Invest Kft. GYÁRTÁSMEGRENDELÉS/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[43]/_Archiv/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[43]/_Archiv/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[47]/_Archiv/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[49]/_Archiv/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[49]/_Archiv/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[49]/_Archiv/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[51]/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[51]/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[51]/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[51]/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[51]/DSMR 26141 Aelan Beauty Kft. (Lantos Péter)/DSMR 26141 Aelan Beauty Kft. (Lantos Péter) GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[52]/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS/DSMR 26148 Séfer Kft. (Offenbächer Ferenc) GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[53]/DSMR 26151 Dr. Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS/DSMR 26151 Powell Miriam Előzetes GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[7]",
+      "message": "openingWidthMm, openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[9]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[10]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[11]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[12]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[13]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[54]/01_Január/22124 - Borsi Ilona Mod.4/DSMR 22124 Borsi Ilona Gyártásmegrendelés MÓD.4. 15-ös ajtó újragyártás.pdf/position[14]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[55]/01_Január/25152 - Gremlin Club Kft. Keszi Zsolt/DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[55]/01_Január/25152 - Gremlin Club Kft. Keszi Zsolt/DSMR 25152 Gremlin Club Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[58]/01_Január/25174 - Szvitek László_BLENDE/DSMR 25174 Szvitek László BLENDE Gyártásmegrendelés.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[59]/01_Január/25178 - Dienes Testvérek Kft/DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[59]/01_Január/25178 - Dienes Testvérek Kft/DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[59]/01_Január/25178 - Dienes Testvérek Kft/DSMR 25178 Dienes Testvérek Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingWidthMm, openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[10]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[12]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[12]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[13]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[60]/01_Január/25219 - Swiss Luxury Kft/Archiv/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[4]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[2]",
+      "message": "openingWidthMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[4]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[10]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[11]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[12]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[12]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/position[13]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[61]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD. 2!.pdf/supplementary[4]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[2]",
+      "message": "openingWidthMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[4]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[10]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[11]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[12]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[12]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/position[13]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[62]/01_Január/25219 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS MÓD.2! I. ÜTEM!.pdf/supplementary[4]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[63]/02_Február/25180 - Jákó Kft Babati Éva/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD. 2.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[64]/02_Február/25180 - Jákó Kft Babati Éva/Felmérés/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[64]/02_Február/25180 - Jákó Kft Babati Éva/Felmérés/DSMR 25180 Jákó Kft. (Babati Éva) GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[8]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[66]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[66]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[66]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[66]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[66]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/25118 - Propellant_1/Archiv/25118_Propellant Kft/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[67]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[67]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[67]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[67]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[67]/02_Február/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS/DSMR 25118 Propellant Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[9]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[10]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[68]/03_Március/25136 - Heves Ádám/DSMR 25136 Heves Ádám GYÁRTÁSMEGRENDELÉS.pdf/position[11]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[69]/03_Március/25161 - SAVIL sro/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[69]/03_Március/25161 - SAVIL sro/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[69]/03_Március/25161 - SAVIL sro/Archiv/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[70]/03_Március/25161 - SAVIL sro/Felmérés/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS_színkóddal.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[70]/03_Március/25161 - SAVIL sro/Felmérés/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS_színkóddal.pdf/position[1]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[70]/03_Március/25161 - SAVIL sro/Felmérés/DSMR 25161 SAVIL GYÁRTÁSMEGRENDELÉS_színkóddal.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[71]/03_Március/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[71]/03_Március/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[71]/03_Március/25181 - Saincaize-Prauda Orsolya/DSMR 25181 Saincaize-Prauda Orsolya GYÁRTÁSMEGRENDELÉS MÓD.2..pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[75]/03_Március/26106 - Sipőcz András/DSMR 26106 Sipőcz András GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "sales_workNumber_missing",
+      "locator": "document[79]/03_Március/26111 - West Invest Company Kft/DSMR 26111 West Invest Company Kft. Gyártásmegrendelés.pdf",
+      "message": "Sales PDF has no extracted workNumber",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[81]/04_Április/25163 - Megépít plusz Kft/Archiv/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS.pdf/position[10]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[81]/04_Április/25163 - Megépít plusz Kft/Archiv/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS.pdf/position[15]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[81]/04_Április/25163 - Megépít plusz Kft/Archiv/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS.pdf/position[16]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[82]/04_Április/25163 - Megépít plusz Kft/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS mód. 02.12!!!.pdf/position[10]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[82]/04_Április/25163 - Megépít plusz Kft/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS mód. 02.12!!!.pdf/position[15]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[82]/04_Április/25163 - Megépít plusz Kft/DSMR 25163 Megépít Plusz Kft. (Raposa Iza) GYÁRTÁSMEGRENDELÉS mód. 02.12!!!.pdf/position[16]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[84]/04_Április/26116 - Dr. Majoros Árpád/DSMR 26116 Dr. Majoros Árpád GYÁRTÁSMEGRENDELÉS ÚJ!!!.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[86]/04_Április/26118 - LFA Ingatlan Kft/DSMR 26118 LFA Ingatlan Kft. Bejárati ajtó panel GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[87]/04_Április/26119 - Tormay zsolt/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[87]/04_Április/26119 - Tormay zsolt/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[87]/04_Április/26119 - Tormay zsolt/DSMR 26119 Tormay Zsolt GYÁRTÁSMEGRENDELÉS. mód_.pdf/supplementary[3]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[2]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[3]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[4]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[5]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[6]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/position[7]",
+      "message": "openingWidthMm, openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[88]/05_Május/25159 - Swiss Luxury Kft/DSMR 25159 Swiss Luxury Kft. GYÁRTÁSMEGRENDELÉS II. ÜTEM.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[8]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[89]/05_Május/25177 - Tükörhegy Kft/25177 Tükörhegy Kft_Végleges megrendelés/DSMR 25177 Tükörhegy Kft. (Laskóy Noémi) GYÁRTÁSMEGRENDELÉS/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[4]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[7]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/position[8]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[90]/05_Május/25177 - Tükörhegy Kft/DSMR 25177 Tükörhegy Kft. GYÁRTÁSMEGRENDELÉS mód. (vakolóél méretekkel).pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[91]/05_Május/26112 - Derby Trans Kft/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[91]/05_Május/26112 - Derby Trans Kft/DSMR 26112 Derby Trans Kft. GYÁRTÁSMEGRENDELÉS.pdf/position[6]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[92]/05_Május/26114 - Gremlin_Club_Kft/DSMR 26114 Gremlin Club Kft. Gyártásmegrendelés.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[93]/05_Május/26122 - Szabadi Sándor/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[93]/05_Május/26122 - Szabadi Sándor/DSMR 26122 Szabadi Sándor GYÁRTÁSMEGRENDELÉS.pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[94]/05_Május/26123 - Korrekt Hungary Kft/Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[94]/05_Május/26123 - Korrekt Hungary Kft/Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[2]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[94]/05_Május/26123 - Korrekt Hungary Kft/Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[94]/05_Május/26123 - Korrekt Hungary Kft/Archiv/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.pdf/position[3]",
+      "message": "openingHeightMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[95]/05_Május/26123 - Korrekt Hungary Kft/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.2.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[95]/05_Május/26123 - Korrekt Hungary Kft/DSMR 26123 Korrekt Hungary Kft. GYÁRTÁSMEGRENDELÉS MÓD.2.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[96]/05_Május/26124 - Kovács Ákos/Archiv/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS.pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[97]/05_Május/26124 - Kovács Ákos/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS MÓD..pdf/position[3]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[97]/05_Május/26124 - Kovács Ákos/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS MÓD..pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[97]/05_Május/26124 - Kovács Ákos/DSMR 26124 Kovács Ákos GYÁRTÁSMEGRENDELÉS MÓD..pdf/supplementary[2]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[100]/05_Május/26128 - Dotkom Invest Kft/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf/position[5]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[100]/05_Május/26128 - Dotkom Invest Kft/DSMR 26128 Dotkom Invest Kft. Gyártásmegrendelés.pdf/position[6]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[103]/06_Június/26133 - Fehér László/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingHeightMm, openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_outside_review_range",
+      "locator": "document[103]/06_Június/26133 - Fehér László/DSMR 26133 Fehér László GYÁRTÁSMEGRENDELÉS.pdf/position[7]",
+      "message": "openingWidthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_quantity_missing_or_unverified",
+      "locator": "document[105]/07_Július/24170 - Koza Petra/DSMR 24170 Koza Petra Gyártásmegrendelés.pdf/position[1]",
+      "message": "source PDF has no verified positive position quantity; do not infer one",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[110]/07_Július/26144 - Aptermanné dr. Csoma Barbara/DSMR 26144 Aptermanné dr. Csoma Barbara GYÁRTÁSMEGRENDELÉS.pdf/position[5]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[111]/07_Július/26146 - Sipőcz András/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/position[1]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "position_opening_dimension_missing",
+      "locator": "document[111]/07_Július/26146 - Sipőcz András/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/position[2]",
+      "message": "openingDepthMm",
+      "severity": "WARNING"
+    },
+    {
+      "code": "supplementary_product_quantity_missing_or_unverified",
+      "locator": "document[111]/07_Július/26146 - Sipőcz András/DSMR 26146 Sipőcz András (Babos Gábor) Gyártásmegrendelés.pdf/supplementary[1]",
+      "message": "source PDF has no verified positive supplementary-product quantity; do not infer one",
+      "severity": "WARNING"
+    }
+  ],
+  "inputRecordCount": 111,
+  "macroExecution": false,
+  "mode": "validation-preview",
+  "summary": {
+    "errorCount": 0,
+    "passed": true,
+    "warningCount": 288
+  }
+}

@@ -14,6 +14,9 @@ import { logger } from "../logger.js";
 import { requireManager } from "../middleware/requester.js";
 import { findActiveProject } from "../services/projects.js";
 import { taskVM } from "./board.js";
+import {
+  LegacyProductionGuardError,
+} from "../services/legacyProductionGuard.js";
 
 export const projectsRouter = Router();
 
@@ -305,7 +308,15 @@ projectsRouter.post("/projects/:key/schedule", validateBody(scheduleSchema), asy
     res.status(404).json({ error: "not_found" });
     return;
   }
-  const result = await issueSession(project.id);
+  let result: Awaited<ReturnType<typeof issueSession>>;
+  try {
+    result = await issueSession(project.id);
+  } catch (error) {
+    if (error instanceof LegacyProductionGuardError) {
+      return void res.status(error.status).json({ error: error.code, details: error.details });
+    }
+    throw error;
+  }
   if (result.missingPlanDates.length) {
     logger.warn({ key: project.key, missingPlanDates: result.missingPlanDates }, "session issue rejected: planned date missing");
     res.status(409).json({ error: "missing_plan_dates", missingSteps: result.missingPlanDates });
@@ -326,6 +337,9 @@ projectsRouter.post("/projects/:key/steps/:stepId/issue", async (req, res) => {
     if (result.outcome === "predecessor_not_issued") return void res.status(409).json({ error: result.outcome, predecessorStepId: result.predecessorStepId });
     res.status(result.outcome === "issued" ? 201 : 200).json(result);
   } catch (error) {
+    if (error instanceof LegacyProductionGuardError) {
+      return void res.status(error.status).json({ error: error.code, details: error.details });
+    }
     if (error instanceof Error && error.message === "step_not_found") return void res.status(404).json({ error: "not_found" });
     throw error;
   }

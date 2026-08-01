@@ -1,0 +1,50 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "recordType": "ProductionSheetReview",
+  "source": {
+    "sourceRoot": "LEGACY_2026",
+    "relativePath": "03_Március/26107 - Pintér Mónika/Dokumentumok/26107 - 02 - Gyártóilap.pdf",
+    "page": 1,
+    "documentKind": "OTHER",
+    "reviewState": "REVIEW"
+  },
+  "positions": [
+    {
+      "code": "01",
+      "name": "WC",
+      "opening": { "widthMm": 750, "heightMm": 2080, "depthMm": 160, "rawValue": "FNY 75 × 208 × 16 cm" },
+      "doorLeaf": { "widthMm": 683, "heightMm": 2038, "rawValue": "LAP 68,3 × 203,8 cm", "targetFields": ["doorWidthMm", "doorHeightMm"] },
+      "unmappedComponentMeasurements": [
+        { "component": "BKM_FIX", "rawValue": "83 × 212 cm" },
+        { "component": "BKM_MOVING", "rawValue": "83 × 212 cm" }
+      ]
+    },
+    {
+      "code": "02",
+      "name": "Háló",
+      "opening": { "widthMm": 860, "heightMm": 2100, "depthMm": 130, "rawValue": "FNY 86 × 210 × 13 cm" },
+      "doorLeaf": { "widthMm": 777, "heightMm": 2050, "rawValue": "LAP 77,7 × 205 cm", "targetFields": ["doorWidthMm", "doorHeightMm"] },
+      "unmappedComponentMeasurements": [
+        { "component": "BKM_FIX", "rawValue": "90 × 212 cm" },
+        { "component": "BKM_MOVING", "rawValue": "94,8 × 214,4 cm" }
+      ]
+    },
+    {
+      "code": "03",
+      "name": "Fürdő",
+      "opening": { "widthMm": 860, "heightMm": 2100, "depthMm": 160, "rawValue": "FNY 86 × 210 × 16 cm" },
+      "doorLeaf": { "widthMm": 777, "heightMm": 2050, "rawValue": "LAP 77,7 × 205 cm", "targetFields": ["doorWidthMm", "doorHeightMm"] },
+      "unmappedComponentMeasurements": [
+        { "component": "BKM_FIX", "rawValue": "90 × 212 cm" },
+        { "component": "BKM_MOVING", "rawValue": "94,8 × 214,4 cm" }
+      ]
+    }
+  ],
+  "reviewReasons": [
+    "Production sheet confirms opening dimensions but does not by itself approve the revision.",
+    "Door-leaf width and height can be reviewed for existing OrderPosition fields.",
+    "BKM and TOK component measurements require a dedicated position manufacturing-specification model; do not coerce them into opening or door-leaf fields."
+  ]
+}

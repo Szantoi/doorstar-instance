@@ -141,3 +141,251 @@
   type, quantity and BLENDE evidence; five handles and five lock bodies too.
 - 26145 PDF: one skirting candidate, 5×2.4 fm = 12 fm, no delivery/installation.
   It needs a dedicated app model; it is not a door/panel/front item.
+## Full Sales-PDF batch index (2026-07-30)
+
+- `previewSalesOrderPdfBatch.py` completed read-only processing of all 111
+  matching GYÁRTÁSMEGRENDELÉS PDFs (53 Sales-folder + 58 2026-folder files).
+  Result: 604 door-position candidates, 244 supplementary-product candidates,
+  0 extraction failures, 53 literal work-number labels and 50 canonical numeric
+  work numbers.
+- Deduplication: 37 identical-content SHA-256 groups. They are references to be
+  linked/reviewed, not automatic duplicate projects.
+- Canonical-variant review: 25163 / 25163 mód., 26119 / 26119 mód., and 26125 /
+  26125 mód. The full source identifier is preserved; numeric grouping only
+  surfaces the decision and never merges projects or revisions.
+- The batch is deterministic and preview-only (`databaseWrite:false`,
+  `macroExecution:false`). `IMPORT_METHODS.md` now documents PDF-first,
+  selective OCR, reconciliation, template quarantine, versioning and test-import
+  methods.
+- `IMPORT_PROCESS.md` is the canonical repeatable procedure: source authority,
+  PDF-first extraction, reconciliation, quality gates and test-import boundary.
+
+## Validation and CAD baseline — 2026-07-30
+
+- Full Sales-PDF validation is green after correcting the quality rule: missing
+  source quantities are review warnings, never inferred as one piece. Blocking
+  errors remain reserved for unsafe/malformed preview data.
+- CAD metadata index: 83 records (73 DWG, 10 DXF), 76 filename work-number
+  candidates, 73 known DWG headers and 3 same-content groups. Geometry is not
+  imported from CAD without an approved temporary DXF conversion/parser and a
+  technical visual review.
+- DXF text pilot: 291 review evidence strings across 10 files; only 3 native
+  DIMENSION values. Source unit and entity scope remain unverified. 26114-folder
+  versus 21199-filename is a concrete document-link conflict.
+- CAD conversion preservation: original DWG/DXF files remain read-only, with
+  source SHA-256 checked before and after a converter run. Temporary DXF output
+  must stay outside source roots and the repository.
+- Sales-to-DRAFT preflight is now contract-tested with real 26135 evidence:
+  valid API shape, five positions, no database write. `contractValid` is not
+  approval. Multi-hash work numbers (for example 25129) must select a reviewed
+  document SHA before a draft preview can be made.
+- The same 26135 preflight validates all 50 field-level Sales evidence records
+  against the OrderPositionEvidence contract (0 errors). Future test imports
+  must create that evidence after the DRAFT returns its position/document IDs.
+- PDF parser feedback loop: 26109 exposed a one-cell table shift after the
+  position name. `SHIFTED_AFTER_NAME` now restores 800x2160x115 mm, direction,
+  product type and quantity only when its numeric pattern is present. Header
+  values that concatenate unrelated text are nulled rather than guessed.
+- Rebuilt Sales batch: 111 PDFs, 52 canonical work-number candidates, 0 hard
+  errors and 256 review warnings. Sales-only small-package review queue:
+  25164, 26107, 26135; all still need survey/deadline/CAD reconciliation.
+
+## 25164 PDF visual reconciliation — 2026-07-30
+
+- Visual evidence must be used to confirm a new parser pattern before data is
+  promoted. The Arador DSMR-25164 PDF displays 71x210x12.5 cm and
+  76x210x12 cm; the raw first width was `7 1`, not 7 cm.
+- The parser now rejoins digit-only whitespace-split cells before centimetre to
+  millimetre conversion. It does not remove whitespace from arbitrary text.
+- A conservative opening plausibility gate prevents dimensions such as 70 mm
+  width from becoming a readiness candidate. It is warning/review only, never
+  a guessed correction. Full rebuilt batch now has 288 review warnings and no
+  blocking validation errors.
+
+## Deadline numeric identifier lesson — 2026-07-30
+
+- Do not apply generic Excel serial-date formatting to an order/work-number
+  column. Numeric `25164` is a project identifier even though its numeric value
+  falls inside the Excel-date range.
+- DSMR-25164 deadline evidence is `Ütemterv.xlsx/ADAT!151`: contractual
+  2025-12-01, scheduled 2025-12-08, Sales order posted 2025-12-12 and a
+  December-first-half note. Keep each as an independent REVIEW observation;
+  none proves actual delivery or installation.
+
+## Customer-name collision lesson — 2026-07-30
+
+- A text/customer fallback can find historical rows for a different work
+  number. Surface those as `TEXT_FALLBACK` review evidence, but allow only
+  `WORK_NUMBER_EXACT` to propose a project link.
+- DSMR-26107 demonstrates both: ADAT!147 is the exact current source, while
+  ADAT!64 and Ütemterv!76 are 24158 records sharing the Pintér Mónika name.
+
+## Template quarantine regression — 2026-07-30
+
+- `ManufacturedItemCandidate` needs one structured, labelled source row with
+  width, height and positive quantity. Keyword hits or numbers elsewhere in a
+  panel/front template remain schema evidence only.
+- 26107 validates the rule: four macro containers, 437 keyword occurrences,
+  and correctly zero panel/front import candidates.
+
+## Production-sheet modelling lesson — 2026-07-30
+
+- Treat a Gyártóilap as a reviewed manufacturing derivation. Its FNY values
+  corroborate opening dimensions; explicitly labelled LAP width/height may
+  populate the existing reviewed door-leaf fields.
+- BKM fix/moving and TOK values need their own searchable component model with
+  evidence and review state. Never force them into door, opening or standalone
+  panel/front records.
+
+## Completion-evidence rule — 2026-07-30
+
+- An installation/hand-over document becomes an actual delivery or installation
+  event only with completed relevant rows plus signed/dated receipt or an
+  equivalent explicit completion fact. A blank template with default `Kész`
+  labels remains a document reference and `UNKNOWN` completion state.
+
+## SharePoint folder simulation lesson — 2026-07-30
+
+- Treat the current query-export spreadsheet as a point-in-time, read-only
+  metadata snapshot. It can faithfully simulate relative folder/document
+  navigation and candidate project packages, but cannot infer creation time,
+  version history, deletions or authoritative identity.
+- Filename/path work-number disagreement is a hard review state. Path-only
+  numbers help discovery but never establish a project relationship.
+- Keep a future live-source catalog separate from approved `OrderDocument`
+  revisions. A live read-only delta sync needs stable Graph IDs, version/etag,
+  timestamps and intentionally granted selected-library access.
+- Preserve explicit folder rows from the query export. In the current snapshot
+  they expose 2,974 folders, including empty ones; document paths add only 14
+  missing ancestors. Path-derived-only traversal would lose real structure.
+- Keep relevance and project-link state independent. All 105 single
+  filename/path conflicts and 4 multi-number rows remain visible; 76 belong to
+  the currently relevant PDF/DWG/XLSX/XLSM lane.
+- A five-digit token is not necessarily a Doorstar work number. Only explicit
+  DSMR filenames or canonical project-folder names form package candidates;
+  product, decor and hash-like numbers remain weak document-review evidence.
+- Fail closed on truncation, absolute/traversal paths, duplicate relative
+  document paths and input/output path equality. A preview must never silently
+  omit rows or overwrite its source.
+- Keep the immutable source snapshot fingerprint separate from the
+  transformation fingerprint. Parser/profile/config changes must create a new
+  catalog run key even when the source workbook bytes are unchanged.
+- Real Entra/OIDC authentication is a P0 gate. The temporary `X-Role` header
+  cannot protect a live source catalog, even if Graph access itself is read-only.
+
+## DSORD-03 technical catalog configuration (2026-07-30)
+
+- `technicalCatalog.json` is the versioned backend source of Doorstar door
+  types, finishes, glass, hardware, wall solutions, materials and machining
+  choices. It is exposed read-only at `/api/production/technical-catalog`.
+- `OrderPosition` stores the stable selection keys plus hardware/machining
+  arrays and a technical note. Server-side validation rejects unknown or
+  duplicated keys on sales intake, draft update and new-revision creation.
+- Selected keys derive legacy compatibility fields (product type, finish,
+  glazing and wall treatment); absent catalog keys preserve import/legacy
+  free-text values. The survey UI reads the API instead of embedding choices.
+- Verification: test-schema migration applied to Docker Postgres; production
+  service build and OpenAPI coverage (66 operations) pass; frontend build
+  passes; backend Vitest is green at 26 files / 91 tests with teardown.
+
+## Shared semantic mapping lesson — 2026-07-30
+
+- A downstream validator must not trust upstream semantic labels merely because
+  their enum and internal references are valid. Recompute relevance,
+  work-number resolution and package evidence from the raw filename, extension
+  and parent path through one shared pure function.
+- Keep evidence strength separate from link certainty. An explicit DSMR
+  filename is strong Sales-package evidence even if the path carries another
+  number, but that mismatch remains a mandatory human `CONFLICT` review.
+  Canonical-folder evidence alone is suppressed on conflict.
+- Require both object-exact and byte-exact golden replay after rule changes.
+  Current proof: `spcatalog_974bb607bd9c693017d1`, validation 0 errors,
+  backend build PASS, OpenAPI 78 operations, Vitest 32 files / 98 tests.
+
+## Session handoff checkpoint — 2026-07-30
+
+- The current durable working set is `CLAUDE.md` + `memory.md` + `state.md` +
+  `TODO.md`; every new import-discovery session must read all four before
+  processing source data.
+- The safe next milestone is the snapshot-backed, read-only Source Catalog and
+  its human review queues. Live Graph work remains stopped at the P0 auth,
+  selected-library, stable-identity/cursor and named-reviewer gates.
+- No source file, SharePoint item, production/public schema or deployed system
+  was changed while saving this checkpoint.
+
+## Exact-revision component lineage lesson — 2026-07-30
+
+- A component source relation identifies provenance, not data inheritance.
+  Never copy quantity, door/opening dimensions, material, finish, cutting size
+  or a cached legacy formula merely because a component row points to an order
+  position, manufactured item or supplementary item.
+- Physical side and construction role are orthogonal: `SIDE_A/SIDE_B` is the
+  stable spatial identity; `FIXED/ADJUSTABLE` describes a present casing in a
+  proven profile. Neither establishes hinge/strike jamb, handing or the other
+  axis.
+- Safe future RAG/profile evidence requires document version + relative path,
+  page/sheet/row/drawing locator, raw and normalized values, candidate
+  component key, calculator/BOM rule key and version, product-profile
+  fingerprint, review state and resolution.
+- Until Doorstar approves a versioned product profile, every such result is a
+  read-only candidate. Only the exact-revision office review and backend may
+  materialize an immutable `ComponentSnapshot`.
+- Backend evidence gates must be checked per source kind, not assumed from a
+  shared `VERIFIED` label. Supplementary and manufactured items now enforce
+  complete resolved evidence, and component materialization independently
+  rechecks source audit completeness.
+- Client-side eligibility is a useful fail-closed mitigation, not authority.
+  The calculator UI now checks non-empty/all-`RESOLVED` manufactured evidence
+  and `SOURCE_REVIEW` supplementary evidence, but a direct backend request must
+  be rejected by the same server-side invariant.
+- Final evidence authority never belongs to an import/RAG adapter. It may
+  capture raw/normalized values, locators and an open state; only the
+  role-protected backend review action may write resolution, reviewer and
+  timestamp. A `RESOLVED` label without the complete audit remains unusable.
+- Revision readiness must be calculated from every manufactured and
+  supplementary parent item in the exact revision, never from only the
+  selected component rows or outgoing payload. Otherwise omission would become
+  an audit bypass. The frontend now mirrors this full-parent invariant and the
+  backend remains the final authority.
+- A pure gate test is not the final UI proof. The route-level regression must
+  also demonstrate the user-visible count/audit link, absence of editor and
+  materialize controls, and zero create-mutation calls. This page-level proof
+  now exists for an open manufactured evidence row.
+- Shared route identity is part of the regression contract: application
+  registration, navigation links and tests must consume one route pattern/path
+  builder. To prove a specific audit is the sole blocker, assert the named
+  blocker region contains exactly one item with that expected reason.
+
+## Controlled Nexus RAG package lesson — 2026-07-31
+
+- A forrásleltár és a kereshető tudás két külön biztonsági réteg. A leltár
+  őrizheti a korlátozott relatív útvonalat, érzékenységet és kizárási döntést,
+  de egészében `ragIndexable:false`; Nexus csak PII- és rendelésadat-mentes
+  kanonikus állítást kaphat.
+- Minden kanonikus claim külön `VERIFIED`, `INFERENCE` vagy `OPEN` állapotot,
+  inventory source ID-t, teljes SHA-256-at és lokátort kap. Egy `OPEN` állítás
+  kereshető lehet, de nem válhat automatikus defaulttá vagy gyártási döntéssé.
+- Az offline manifest `targetIsland=doorstar`, `mode=dry-run`,
+  `nexusWrite=false`, `chromaWrite=false`; az indexelő és adatbázis-kliens
+  hiánya szándékos biztonsági tulajdonság.
+- Dokumentumkulcs: SHA-256 az id, verzió, kanonikus hash és policy-verzió
+  kombinációjából. Azonos id+verzió azonos hash mellett skip, eltérő hash
+  mellett blokkol. Offline Nexus-baseline nélkül a CREATE csak terv, nem írás.
+- A validátor újrahash-eli a teljes inventoryt és a kanonikus fájlokat,
+  ellenőrzi a claim-citációt, PII/rendelésszám mintákat, eval-hivatkozásokat és
+  determinisztikus chunkokat. A bevált golden eredmény: 6 dokumentum,
+  98 claim, 41 chunk, 35 eval, 0 hiba és 0 warning.
+- A dry-run és review után kötelező megállni. Emberi jóváhagyás nélkül nincs
+  Nexus/ChromaDB ingest; jóváhagyás után is külön baseline-összevetés és
+  kontrollált végrehajtási terv kell.
+- A dry-run outputját csak a package saját `DRY_RUN_REPORT.json` útjára szabad
+  atomikusan írni. A symlink/hardlink azonosságot minden manifest-, inventory-,
+  eval-, kanonikus és inventory-forrásfájllal szemben tiltani kell; különben
+  egy látszólag biztonságos report-út bemenetet írhatna felül.
+- Az eval forrása csak akkor érvényes, ha legalább egy elvárt dokumentum
+  manifest-forrása, és `EXCLUDE` forrás soha nem lehet elvárt találat.
+- Végső baseline: package
+  `34110af5a9ea4c129467034fa3d181cbba6c5601b908abd87be89d078fbae116`,
+  report
+  `c4e74c696495c96b3ee649d26003ef54fedbbacf28a8b7a2f5c1e320729e5cc2`;
+  12/12 validator unit, dupla bájtazonos dry-run, független QA PASS P0/P1=0.

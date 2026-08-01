@@ -4,15 +4,24 @@ import type { OrderChecklistItem, ProjectDetail, Task, UpdateTaskPatch } from ".
 
 const keys = {
   stations: ["production", "stations"] as const,
+  technicalCatalog: ["production", "technical-catalog"] as const,
+  componentCalculatorProfiles: ["production", "component-calculator-profiles"] as const,
   board: (week: string) => ["production", "board", week] as const,
   orders: ["production", "orders"] as const,
   kanban: (station: string) => ["production", "kanban", station] as const,
   load: (week: string) => ["production", "load", week] as const,
   projects: ["production", "projects"] as const,
   productionOrders: ["production", "production-orders"] as const,
+  importInbox: (page: number, pageSize: number) => ["production", "import-inbox", page, pageSize] as const,
+  importWorkNumberEvidence: (importRunId: string, workNumber: string) =>
+    ["production", "import-inbox", importRunId, workNumber, "evidence"] as const,
   importRuns: ["production", "import-runs"] as const,
   importRunEvidence: (importRunId: string) => ["production", "import-runs", importRunId, "evidence"] as const,
   productionOrder: (projectKey: string) => ["production", "production-order", projectKey] as const,
+  orderRevisionReadiness: (projectKey: string, revision: number) => ["production", "order-revision-readiness", projectKey, revision] as const,
+  projectWorkflow: (projectKey: string) => ["production", "project-workflow", projectKey] as const,
+  componentSnapshots: (projectKey: string, revision: number) => ["production", "component-snapshots", projectKey, revision] as const,
+  operationPlanSnapshots: (projectKey: string, revision: number) => ["production", "operation-plan-snapshots", projectKey, revision] as const,
   orderFeedback: (projectKey: string, revision: number) => ["production", "order-feedback", projectKey, revision] as const,
   project: (key: string) => ["production", "project", key] as const,
   epikRollup: (key: string) => ["production", "epikRollup", key] as const,
@@ -24,6 +33,64 @@ const keys = {
 
 export function useStations() {
   return useQuery({ queryKey: keys.stations, queryFn: productionApi.getStations, staleTime: Infinity });
+}
+
+export function useTechnicalCatalog() {
+  return useQuery({ queryKey: keys.technicalCatalog, queryFn: productionApi.getTechnicalCatalog, staleTime: Infinity });
+}
+
+export function useComponentCalculatorProfiles() {
+  return useQuery({
+    queryKey: keys.componentCalculatorProfiles,
+    queryFn: productionApi.getComponentCalculatorProfiles,
+    staleTime: 0,
+  });
+}
+
+export function useComponentSnapshots(projectKey: string, revision?: number) {
+  return useQuery({
+    queryKey: keys.componentSnapshots(projectKey, revision ?? 0),
+    queryFn: () => productionApi.getComponentSnapshots(projectKey, revision!),
+    enabled: !!projectKey && revision != null,
+  });
+}
+
+export function useOperationPlanSnapshots(projectKey: string, revision?: number) {
+  return useQuery({
+    queryKey: keys.operationPlanSnapshots(projectKey, revision ?? 0),
+    queryFn: () => productionApi.getOperationPlanSnapshots(projectKey, revision!),
+    enabled: !!projectKey && revision != null,
+    staleTime: 0,
+  });
+}
+
+export function useCreateComponentSnapshot(projectKey: string, revision?: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: import("./types").CreateComponentSnapshotInput) =>
+      productionApi.createComponentSnapshot(projectKey, revision!, input),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.componentSnapshots(projectKey, revision ?? 0) });
+      qc.invalidateQueries({ queryKey: keys.project(projectKey) });
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useReviewComponentSnapshot(projectKey: string, revision?: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ snapshotId, state, resolution }: {
+      snapshotId: string;
+      state: "VERIFIED" | "REJECTED";
+      resolution: string;
+    }) => productionApi.reviewComponentSnapshot(projectKey, revision!, snapshotId, state, resolution),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.componentSnapshots(projectKey, revision ?? 0) });
+      qc.invalidateQueries({ queryKey: keys.project(projectKey) });
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
 }
 
 export function useBoard(week: string) {
@@ -195,6 +262,34 @@ export function useProductionOrders() {
   return useQuery({ queryKey: keys.productionOrders, queryFn: productionApi.getProductionOrders });
 }
 
+export function useCreateSalesIntake() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: import("./types").SalesIntakeInput) => productionApi.createSalesIntake(input),
+    onSuccess: (_created, input) => {
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.productionOrders });
+      qc.invalidateQueries({ queryKey: keys.productionOrder(input.projectKey) });
+    },
+  });
+}
+
+export function useImportInbox(page: number, pageSize: number) {
+  return useQuery({
+    queryKey: keys.importInbox(page, pageSize),
+    queryFn: () => productionApi.getImportInbox(page, pageSize),
+    placeholderData: (previous) => previous,
+  });
+}
+
+export function useImportWorkNumberEvidence(importRunId: string, workNumber: string) {
+  return useQuery({
+    queryKey: keys.importWorkNumberEvidence(importRunId, workNumber),
+    queryFn: () => productionApi.getImportWorkNumberEvidence(importRunId, workNumber),
+    enabled: !!importRunId && !!workNumber,
+  });
+}
+
 export function useImportRuns() {
   return useQuery({ queryKey: keys.importRuns, queryFn: productionApi.getImportRuns });
 }
@@ -225,6 +320,24 @@ export function useApplyManufacturedItemCandidates(importRunId: string) {
 
 export function useProductionOrder(projectKey: string) {
   return useQuery({ queryKey: keys.productionOrder(projectKey), queryFn: () => productionApi.getProductionOrder(projectKey), enabled: !!projectKey });
+}
+
+export function useOrderRevisionReadiness(projectKey: string, revision: number | undefined) {
+  return useQuery({
+    queryKey: keys.orderRevisionReadiness(projectKey, revision ?? 0),
+    queryFn: () => productionApi.getOrderRevisionReadiness(projectKey, revision!),
+    enabled: !!projectKey && revision != null,
+    staleTime: 0,
+  });
+}
+
+export function useProjectWorkflow(projectKey: string, enabled = true) {
+  return useQuery({
+    queryKey: keys.projectWorkflow(projectKey),
+    queryFn: () => productionApi.getProjectWorkflow(projectKey),
+    enabled: !!projectKey && enabled,
+    staleTime: 0,
+  });
 }
 
 export function useOrderFeedback(projectKey: string, revision: number | undefined) {
@@ -259,6 +372,50 @@ export function useReviewManufacturedItem(projectKey: string, revision: number |
   });
 }
 
+export function useReviewManufacturedItemEvidence(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ itemId, evidenceId, reviewState, resolution }: {
+      itemId: string;
+      evidenceId: string;
+      reviewState: "RESOLVED" | "REJECTED";
+      resolution: string;
+    }) => productionApi.reviewManufacturedItemEvidence(projectKey, revision!, itemId, evidenceId, reviewState, resolution),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useCreateOrderSupplementaryItem(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: import("./types").OrderSupplementaryItemInput) =>
+      productionApi.createOrderSupplementaryItem(projectKey, revision!, input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useReviewOrderSupplementaryItem(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ itemId, state, resolution }: { itemId: string; state: "VERIFIED" | "REJECTED"; resolution: string }) =>
+      productionApi.reviewOrderSupplementaryItem(projectKey, revision!, itemId, state, resolution),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useReviewOrderSupplementaryItemEvidence(projectKey: string, revision: number | undefined) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ itemId, evidenceId, reviewState, resolution }: {
+      itemId: string;
+      evidenceId: string;
+      reviewState: "RESOLVED" | "REJECTED";
+      resolution: string;
+    }) => productionApi.reviewOrderSupplementaryItemEvidence(projectKey, revision!, itemId, evidenceId, reviewState, resolution),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
 export function useAdvanceOrderIntakeStage(projectKey: string) {
   const qc = useQueryClient();
   return useMutation({
@@ -288,6 +445,15 @@ export function useAddOrderDocument(projectKey: string) {
   return useMutation({
     mutationFn: ({ revision, input }: { revision: number; input: import("./types").OrderDocumentInput }) =>
       productionApi.addOrderDocument(projectKey, revision, input),
+    onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
+  });
+}
+
+export function useLinkOrderDocumentToPosition(projectKey: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ revision, documentId, orderPositionId }: { revision: number; documentId: string; orderPositionId: string }) =>
+      productionApi.linkOrderDocumentToPosition(projectKey, revision, documentId, orderPositionId),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.productionOrder(projectKey) }),
   });
 }
@@ -353,7 +519,11 @@ export function useSaveEpics(key: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (epics: ProjectDetail["epics"]) => productionApi.saveEpics(key, epics),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.epikRollup(key) });
+    },
   });
 }
 
@@ -422,7 +592,11 @@ export function useApplyEpikTemplate(key: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (name: string) => productionApi.applyEpikTemplate(name, key),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.epikRollup(key) });
+    },
   });
 }
 
@@ -439,7 +613,11 @@ export function useApplyTemplate(key: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (name: string) => productionApi.applyTemplate(name, key),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.project(key) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.project(key) });
+      qc.invalidateQueries({ queryKey: keys.projects });
+      qc.invalidateQueries({ queryKey: keys.epikRollup(key) });
+    },
   });
 }
 

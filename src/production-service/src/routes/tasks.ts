@@ -6,6 +6,10 @@ import { logger } from "../logger.js";
 import { loadWorkflows, taskVM } from "./board.js";
 import { getRequester, requireManager } from "../middleware/requester.js";
 import { findActiveProject } from "../services/projects.js";
+import {
+  LegacyProductionGuardError,
+  rejectLegacyProductionMutation,
+} from "../services/legacyProductionGuard.js";
 
 export const tasksRouter = Router();
 
@@ -45,6 +49,14 @@ tasksRouter.post("/tasks", validateBody(createTaskSchema), async (req, res) => {
   if (body.projectKey && !project) {
     res.status(404).json({ error: "project_not_found" });
     return;
+  }
+  try {
+    await rejectLegacyProductionMutation(project?.id ?? null, "create_task");
+  } catch (error) {
+    if (error instanceof LegacyProductionGuardError) {
+      return void res.status(error.status).json({ error: error.code, details: error.details });
+    }
+    throw error;
   }
   const task = await prisma.task.create({
     data: {
@@ -143,6 +155,20 @@ tasksRouter.patch("/tasks/:id", validateBody(updateTaskSchema), async (req, res)
     if (epicId === undefined && current.epicId && projectId !== current.epic?.projectId) {
       resolvedEpicId = null;
       epicName = null;
+    }
+  }
+
+  // A free board card cannot be turned into project production work through
+  // the PATCH back door. Any non-null project/epic attachment is subject to
+  // the same fail-closed lineage authority as direct creation and issuing.
+  if (typeof projectId === "string" && (projectKey !== undefined || epicId !== undefined)) {
+    try {
+      await rejectLegacyProductionMutation(projectId, "attach_task_to_project");
+    } catch (error) {
+      if (error instanceof LegacyProductionGuardError) {
+        return void res.status(error.status).json({ error: error.code, details: error.details });
+      }
+      throw error;
     }
   }
 

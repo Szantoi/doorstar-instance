@@ -1,0 +1,14 @@
+{
+  "configurationVersion": "doorstar-component-calculator-profiles/v1",
+  "profiles": [
+    {
+      "version": "doorstar-explicit-component-adapter/v1",
+      "label": "Ellenőrzött, explicit alkatrész-adapter v1",
+      "inputMode": "EXPLICIT_REVIEWED_OUTPUT",
+      "active": true,
+      "allowsFormulaExecution": false,
+      "allowsImplicitDefaults": false,
+      "cutPartDimensions": "FINISHED_AND_CUTTING_REQUIRED"
+    }
+  ]
+}

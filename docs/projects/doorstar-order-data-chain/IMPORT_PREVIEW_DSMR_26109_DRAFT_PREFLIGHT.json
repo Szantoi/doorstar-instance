@@ -1,0 +1,176 @@
+{
+  "mode": "preview",
+  "databaseWrite": false,
+  "macroExecution": false,
+  "profile": "sales-pdf-draft-preflight-v1",
+  "source": {
+    "previewArtifact": "docs/projects/doorstar-order-data-chain/IMPORT_PREVIEW_SALES_PDF_BATCH.json",
+    "previewSha256": "83a196e877e561911d6c9e5f1e9f7a86a85d1a0fa4f5b712520592fc3ff2364e",
+    "workNumber": "26109",
+    "documentRelativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+    "documentSha256": "f1150d81552514b39602076ccb3e1406f240a1d4806eb02e2fa5e2fb218a33ed",
+    "sameContentReferenceCount": 1
+  },
+  "contractValid": true,
+  "contractIssues": [],
+  "evidenceContractValid": true,
+  "evidenceContractIssues": [],
+  "databaseApplyAllowed": false,
+  "reviewReasons": [
+    "Sales technical fields remain unverified until survey/technical review.",
+    "Sales document reference requires review.",
+    "Position 1: requires_survey_or_technical_review"
+  ],
+  "draftPayload": {
+    "projectKey": "DSMR-26109",
+    "projectName": "DSMR-26109 — Luctor Bt. (Szilágyi Áron)",
+    "projectNum": "26109",
+    "customerName": "Luctor Bt. (Szilágyi Áron)",
+    "contactName": null,
+    "contactPhone": null,
+    "deliveryAddress": null,
+    "expectedDelivery": null,
+    "notes": "Sales-PDF preflight only. Source expected-delivery text: (missing)",
+    "positions": [
+      {
+        "code": "1",
+        "name": "Beltéri ajtó",
+        "quantity": 1,
+        "productType": "Tokbanyíló",
+        "openingDirection": "Bal be",
+        "openingWidthMm": 800,
+        "openingHeightMm": 2160,
+        "openingDepthMm": 115,
+        "doorWidthMm": null,
+        "doorHeightMm": null,
+        "doorThicknessMm": null,
+        "surface": null,
+        "wallTreatment": null,
+        "glazing": null,
+        "glazingSpecification": null,
+        "notes": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással"
+      }
+    ],
+    "documents": [
+      {
+        "source": "LEGACY_FOLDER",
+        "kind": "SALES_ORDER",
+        "displayName": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "contentSha256": "f1150d81552514b39602076ccb3e1406f240a1d4806eb02e2fa5e2fb218a33ed"
+      }
+    ]
+  },
+  "positionEvidence": [
+    {
+      "positionIndex": 1,
+      "source": {
+        "page": 1,
+        "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+        "row": 9,
+        "sourceRoot": "SALES_FOLDER"
+      },
+      "evidence": [
+        {
+          "confidence": 0.85,
+          "field": "CODE",
+          "normalizedValue": "1",
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NAME",
+          "normalizedValue": "Beltéri ajtó",
+          "page": 1,
+          "rawValue": "Beltéri ajtó",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "QUANTITY",
+          "normalizedValue": 1,
+          "page": 1,
+          "rawValue": "1",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "PRODUCT_TYPE",
+          "normalizedValue": "Tokbanyíló",
+          "page": 1,
+          "rawValue": "Tokbanyíló",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DIRECTION",
+          "normalizedValue": "Bal be",
+          "page": 1,
+          "rawValue": "Bal be",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_WIDTH_MM",
+          "normalizedValue": 800,
+          "page": 1,
+          "rawValue": "80",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_HEIGHT_MM",
+          "normalizedValue": 2160,
+          "page": 1,
+          "rawValue": "216",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "OPENING_DEPTH_MM",
+          "normalizedValue": 115,
+          "page": 1,
+          "rawValue": "11,5",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        },
+        {
+          "confidence": 0.85,
+          "field": "NOTES",
+          "normalizedValue": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással",
+          "page": 1,
+          "rawValue": "Bútorfrontba integrálva. Tokoldalon \"Stumpfos\" tokborítással",
+          "relativePath": "DSMR 26109 Luctor BT. Gyártásmegrendelés.pdf",
+          "reviewState": "REVIEW",
+          "row": 9,
+          "sourceRoot": "SALES_FOLDER"
+        }
+      ]
+    }
+  ]
+}

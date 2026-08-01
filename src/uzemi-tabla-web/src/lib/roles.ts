@@ -27,3 +27,15 @@ export function canApproveOrder(role: Role) {
 export function canApplyManufacturedItemImport(role: Role) {
   return includes(["technical_preparation", "order_approver", "administrator", "vezeto"], role);
 }
+
+export function canCreateComponentSnapshot(role: Role) {
+  return includes(["technical_preparation", "order_approver", "production_planner", "administrator", "vezeto"], role);
+}
+
+export function canReviewComponentSnapshot(role: Role) {
+  return includes(["order_approver", "production_planner", "administrator", "vezeto"], role);
+}
+
+export function canReviewSourceEvidence(role: Role) {
+  return includes(["technical_preparation", "order_approver", "administrator", "vezeto"], role);
+}

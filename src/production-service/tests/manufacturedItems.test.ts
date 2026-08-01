@@ -2,6 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import { createApp } from "../src/app.js";
 import { prisma } from "../src/db/client.js";
+import { attachSurveySource } from "./support/surveySource.js";
 
 const app = createApp();
 const projectKey = "DSMR-MANUFACTURED-ITEM-TEST";
@@ -12,7 +13,7 @@ describe("standalone wall-panel and furniture-front workflow", () => {
   afterAll(async () => { await prisma.$disconnect(); });
 
   it("keeps a front separate from door positions and blocks review until human verification", async () => {
-    await request(app)
+    const draft = await request(app)
       .post("/api/production/production-orders/sales-intake")
       .set("X-Role", "sales")
       .send({
@@ -27,13 +28,18 @@ describe("standalone wall-panel and furniture-front workflow", () => {
           openingDirection: "Bal be",
           openingWidthMm: 900,
           openingHeightMm: 2100,
+          openingDepthMm: 150,
           doorThicknessMm: 68,
           surface: "Festett",
           wallTreatment: "NONE",
           glazing: "NONE",
+          doorTypeKey: "interior-rebated",
+          wallSolutionKey: "none",
+          glassKey: "none",
         }],
       })
       .expect(201);
+    const positionId = draft.body.positions[0].id as string;
 
     const document = await request(app)
       .post(`/api/production/production-orders/${projectKey}/revisions/1/documents`)
@@ -96,6 +102,7 @@ describe("standalone wall-panel and furniture-front workflow", () => {
       .set("X-Role", "sales")
       .send({ stage: "SURVEY_PENDING" })
       .expect(200);
+    await attachSurveySource(app, projectKey, [positionId]);
     await request(app)
       .patch(`/api/production/production-orders/${projectKey}/revisions/1/intake-stage`)
       .set("X-Role", "technical_preparation")
@@ -112,6 +119,19 @@ describe("standalone wall-panel and furniture-front workflow", () => {
       .set("X-Role", "technical_preparation")
       .send({ note: "Műszaki ellenőrzés." })
       .expect(409);
+
+    const reviewedEvidence = await request(app)
+      .patch(`/api/production/production-orders/${projectKey}/revisions/1/manufactured-items/${created.body.id}/evidence/${created.body.evidence[0].id}/review`)
+      .set("X-Role", "technical_preparation")
+      .send({
+        reviewState: "RESOLVED",
+        resolution: "A forrássor mérete a dokumentumban ellenőrizve.",
+      })
+      .expect(200);
+    expect(reviewedEvidence.body).toMatchObject({
+      reviewState: "RESOLVED",
+      reviewedByRole: "technical_preparation",
+    });
 
     const verified = await request(app)
       .patch(`/api/production/production-orders/${projectKey}/revisions/1/manufactured-items/${created.body.id}/review`)

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "doorstar-nexus-rag-readonly-baseline.v1",
+  "targetIsland": "doorstar",
+  "targetCollection": "doorstar-knowledge",
+  "documents": [],
+  "chunks": []
+}

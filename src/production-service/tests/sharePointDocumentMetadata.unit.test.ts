@@ -19,15 +19,68 @@ describe("SharePoint document metadata preview", () => {
   it("keeps server-side modification metadata and excludes CAD lock files", () => {
     const root = mkdtempSync(join(tmpdir(), "doorstar-sharepoint-preview-"));
     try {
-      execFileSync("python", ["-c", fixture, root], { encoding: "utf8" });
-      const output = join(root, "result.json");
-      execFileSync("python", [previewer, "--input-xlsx", join(root, "metadata.xlsx"), "--output-json", output], { encoding: "utf8" });
+      const sourceRoot = join(root, "source");
+      const outputRoot = join(root, "output");
+      execFileSync("python", ["-c", fixture, sourceRoot], { encoding: "utf8" });
+      const input = join(sourceRoot, "metadata.xlsx");
+      const output = join(outputRoot, "result.json");
+      execFileSync("python", [previewer, "--input-xlsx", input, "--output-json", output], { encoding: "utf8" });
       const result = JSON.parse(readFileSync(output, "utf8"));
+      expect(result.profile).toBe("sharepoint-iqy-metadata-preview/v3");
+      expect(result.mappingRuleset).toBe("sharepoint-iqy-work-number-mapping/2026-07-30.2");
+      expect(result.sourceContainsVba).toBe(false);
       expect(result.databaseWrite).toBe(false);
       expect(result.summary.metadataRecordCount).toBe(1);
-      expect(result.summary.folderMetadataExcludedCount).toBe(1);
+      expect(result.summary.folderMetadataRecordCount).toBe(1);
+      expect(result.summary.folderMetadataExcludedFromDocumentCount).toBe(1);
+      expect(result.summary.sourceDataRowCount).toBe(3);
+      expect(result.summary.accountedSourceRowCount).toBe(3);
+      expect(result.summary.sourceRowAccountingMatches).toBe(true);
+      expect(result.summary.sourceExcelDateSystem).toBe("1900");
       expect(result.summary.excludedByExtension).toEqual({ ".dwl": 1 });
-      expect(result.records[0]).toMatchObject({ workNumberCandidate: "24170", sourceLastModifiedAt: "2026-07-29T12:00:00", relevance: "POTENTIAL_IMPORT_DOCUMENT" });
+      expect(result.folders).toEqual([expect.objectContaining({
+        recordType: "DocumentSourceFolderMetadata",
+        sourceRelativePath: "sites/Docs/2026/24170",
+        parentRelativePath: "sites/Docs/2026",
+        folderName: "24170",
+        sourceLastModifiedAt: "2026-07-29T12:00:00",
+        sourceLastModifiedTimezone: "UNKNOWN_EXPORT_TIMEZONE",
+      })]);
+      expect(result.records[0]).toMatchObject({
+        workNumberCandidate: "24170",
+        filenameWorkNumberCandidate: "24170",
+        pathWorkNumberCandidate: "11111",
+        filenameWorkNumberCandidates: ["24170"],
+        pathWorkNumberCandidates: ["11111"],
+        workNumberResolution: "CONFLICT",
+        projectPackageWorkNumberCandidate: "24170",
+        projectPackageEvidence: "FILENAME_DSMR",
+        sourceLastModifiedAt: "2026-07-29T12:00:00",
+        relevance: "POTENTIAL_IMPORT_DOCUMENT",
+      });
+      expect(result.summary.filenamePathWorkNumberConflictCount).toBe(1);
+      expect(result.summary.multipleWorkNumberCandidateCount).toBe(0);
+      expect(result.summary.candidateProjectPackageCount).toBe(1);
+      expect(result.summary.potentialImportProjectLinkCandidateCount).toBe(0);
+      expect(result.summary.potentialImportProjectLinkConflictCount).toBe(1);
+      expect(result.summary.potentialImportPathFallbackCount).toBe(0);
+      expect(result.summary.potentialImportUnresolvedCount).toBe(0);
+      expect(() => execFileSync("python", [
+        previewer,
+        "--input-xlsx", input,
+        "--output-json", join(outputRoot, "limited.json"),
+        "--max-rows", "1",
+      ], { encoding: "utf8", stdio: "pipe" })).toThrow();
+      expect(() => execFileSync("python", [
+        previewer,
+        "--input-xlsx", input,
+        "--output-json", input,
+      ], { encoding: "utf8", stdio: "pipe" })).toThrow();
+      expect(() => execFileSync("python", [
+        previewer,
+        "--input-xlsx", input,
+        "--output-json", join(sourceRoot, "other-name.json"),
+      ], { encoding: "utf8", stdio: "pipe" })).toThrow();
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
 });

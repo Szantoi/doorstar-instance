@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -24,7 +23,6 @@ ITEM_KINDS = {
     "WALL_PANEL": ("falpanel", "wall panel"),
     "FURNITURE_FRONT": ("butorfront", "bútorfront", "fiokelo", "fiókelő", "butorajto", "bútorajtó"),
 }
-NUMERIC_VALUE = re.compile(r"(?<![A-Za-z])\d+(?:[.,]\d+)?")
 DATA_SHEET_TERMS = ("keszmeret", "falpanel", "butorfront", "tetelek")
 CONFIG_SHEET_TERMS = ("valtozo", "parameter", "beallitas", "seged")
 
@@ -35,10 +33,6 @@ def item_kind(row: list[object]) -> str | None:
         if any(normalized(term) in source for term in terms):
             return kind
     return None
-
-
-def has_explicit_numeric_value(row: list[object]) -> bool:
-    return any(isinstance(value, (int, float)) and not isinstance(value, bool) or NUMERIC_VALUE.search(str(value)) for value in row if value not in (None, ""))
 
 
 def is_data_sheet(sheet_name: str) -> bool:
@@ -135,9 +129,12 @@ def scan_workbook(path: Path, root: Path, max_rows_per_sheet: int) -> tuple[list
                 "rawCells": cells,
             }
             evidence.append(record)
-            # Shared templates and parameter sheets contain defaults, not work items.
+            # Shared templates can contain product words and arbitrary numeric
+            # defaults. A candidate therefore needs a labelled width, height
+            # and quantity in the same source row; keyword evidence alone
+            # remains evidence only.
             measurements = structured_measurements(row, columns) if columns else None
-            if is_data_sheet(sheet["name"]) and (measurements is not None if columns else has_explicit_numeric_value(row)):
+            if is_data_sheet(sheet["name"]) and measurements is not None:
                 candidates.append({
                     **record,
                     "recordType": "ManufacturedItemCandidate",

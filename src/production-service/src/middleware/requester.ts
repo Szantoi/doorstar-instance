@@ -20,6 +20,16 @@ export function getRequester(req: Request): { role: RequestRole; station: string
   return { role, station: req.header("x-station") ?? "" };
 }
 
+/** Capture a stable declared actor identifier for audit rows. Real identity
+ * authentication is intentionally outside this transitional header boundary;
+ * callers without X-Principal receive an explicit compatibility identifier
+ * instead of a fabricated person name. */
+export function getRequesterPrincipal(req: Request): string {
+  const declared = req.header("x-principal")?.trim();
+  if (declared) return declared.slice(0, 200);
+  return `legacy-role:${getRequester(req).role}`;
+}
+
 /** Compatibility maps the historic leader header to administrator capability. */
 export function hasRole(req: Request, permitted: readonly DoorstarRole[]): boolean {
   const { role } = getRequester(req);

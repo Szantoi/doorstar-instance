@@ -16,7 +16,7 @@ with zipfile.ZipFile(os.path.join(root,'sample.xlsm'),'w') as z:
 `;
 
 describe("legacy manufactured-item scanner", () => {
-  it("reads cached XLSM data without macro execution and emits review-only candidates", () => {
+  it("reads cached XLSM data without macro execution and keeps unstructured template rows as evidence", () => {
     const root = mkdtempSync(join(tmpdir(), "doorstar-item-scan-"));
     try {
       execFileSync("python", ["-c", fixture, root], { encoding: "utf8" });
@@ -25,10 +25,11 @@ describe("legacy manufactured-item scanner", () => {
       const result = JSON.parse(readFileSync(output, "utf8"));
       expect(result.databaseWrite).toBe(false);
       expect(result.macroExecution).toBe(false);
-      expect(result.summary.reviewCandidateCount).toBe(2);
+      expect(result.summary.reviewCandidateCount).toBe(0);
       expect(result.macroContainersIgnored).toEqual(["sample.xlsm"]);
       expect(result.records.some((record: { itemKind: string }) => record.itemKind === "WALL_PANEL")).toBe(true);
       expect(result.records.some((record: { itemKind: string }) => record.itemKind === "FURNITURE_FRONT")).toBe(true);
+      expect(result.records.some((record: { recordType: string }) => record.recordType === "ManufacturedItemCandidate")).toBe(false);
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
 
