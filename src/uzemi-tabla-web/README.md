@@ -54,11 +54,19 @@ npm run dev   # http://localhost:4611
 
 ## Read-only demo build
 
-The normal build retains the product role selector. For the release demo use
-`npm run build:readonly-demo`. It sets `VITE_READ_ONLY_DEMO=true` itself and
-verifies a read-only marker in the built `index.html`. The profile fixes the
-browser UI to the reader role and replaces the selector with a visible
-read-only context; it does not replace server-side authorization.
+The normal build retains the product role selector and does not show an
+external Flow Lab link. For the release demo use `npm run build:readonly-demo`.
+It sets `VITE_READ_ONLY_DEMO=true` and
+`VITE_FLOW_LAB_READONLY_URL=https://doorstar.asztalostech.hu/flow-lab-demo/`
+itself, then verifies the read-only marker and configured URL in the built
+artifact. The profile fixes the browser UI to the reader role and replaces the
+selector with a visible read-only context; it does not replace server-side
+authorization.
+
+`VITE_FLOW_LAB_READONLY_URL` is optional within the read-only demo profile; it
+is ignored by normal builds. When set, it must be an absolute HTTPS URL without
+credentials; otherwise the Flow Lab workspace hides the external new-tab link.
+The app never embeds or proxies this URL.
 
 ## Known simplifications (v1)
 

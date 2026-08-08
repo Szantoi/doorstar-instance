@@ -4,6 +4,7 @@ import { FlowLabDeviationLog } from "@/components/projects/FlowLabDeviationLog";
 import { FlowLabMaterializationPanel } from "@/components/projects/FlowLabMaterializationPanel";
 import { FlowLabSnapshotEvidence } from "@/components/projects/FlowLabSnapshotEvidence";
 import { flowLabSnapshotStateLabel } from "@/lib/flowLab";
+import { getFlowLabReadonlyUrl } from "@/lib/readOnlyDemo";
 import {
   useFlowLabDeviations,
   useFlowLabMaterializedWorksheet,
@@ -22,6 +23,7 @@ function formatDateTime(value: string): string {
  * keeps the historical worksheet editor isolated on its own locked route. */
 export function FlowLabWorkspacePage() {
   const { key = "" } = useParams();
+  const flowLabReadonlyUrl = getFlowLabReadonlyUrl();
   const snapshotsQuery = useFlowLabPlanSnapshots(key);
   const materializedWorksheetQuery = useFlowLabMaterializedWorksheet(key);
   const deviationsQuery = useFlowLabDeviations(key);
@@ -53,7 +55,16 @@ export function FlowLabWorkspacePage() {
           <h1>Munkaterv áttekintése</h1>
           <p>Itt látható, melyik tervverzió ellenőrzött, mi jutott már el az üzemi táblára, és milyen sorrendben következnek a munkalépések.</p>
         </div>
-        <Link to={`/projects/${encodeURIComponent(key)}`}>Vissza a projekthez</Link>
+        <div className="flow-lab-workspace-actions">
+          {flowLabReadonlyUrl ? <a
+            href={flowLabReadonlyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Külön Flow Lab-bemutató megnyitása új lapon
+          </a> : null}
+          <Link to={`/projects/${encodeURIComponent(key)}`}>Vissza a projekthez</Link>
+        </div>
       </header>
 
       <aside className="flow-lab-boundary" aria-label="Flow Lab munkatér határa">

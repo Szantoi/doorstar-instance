@@ -34,6 +34,16 @@ tasks:
       - "The default view explains the plan, its state, board handoff and work sequence in plain Hungarian."
       - "Technical provenance and audit data remain available only through collapsed details."
       - "The GET-only, no-browser-identity and no-mutation boundaries remain unchanged."
+  - id: DSFLB-14
+    name: Standalone synthetic Flow Lab UI link
+    status: in_progress
+    depends_on: [DSFLB-10, DSFLB-11, DSFLB-13]
+    design: DSFLB-14-STANDALONE-UI-LINK.md
+    scope: "A new-tab link joins the Doorstar demo to a separately deployed, synthetic Flow Lab office UI without iframe, credentials or authority transfer."
+    acceptance:
+      - "The read-only demo build has one configured HTTPS link; a normal build has none."
+      - "The target app is Basic-Auth protected, synthetic and GET/HEAD-only."
+      - "The target can roll back independently from the Doorstar board demo."
   - id: DSFLB-10
     name: Password-protected read-only hosted demo
     status: completed

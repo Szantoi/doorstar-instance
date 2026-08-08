@@ -131,6 +131,7 @@ function renderPage() {
 
 describe("FlowLabWorkspacePage", () => {
   beforeEach(() => {
+    vi.stubEnv("VITE_FLOW_LAB_READONLY_URL", "");
     fetchNextPage.mockReset();
     vi.mocked(useFlowLabPlanSnapshots).mockReturnValue(queryResult({ snapshots: [verifiedSnapshot, rejectedSnapshot] }) as unknown as ReturnType<typeof useFlowLabPlanSnapshots>);
     vi.mocked(useFlowLabMaterializedWorksheet).mockReturnValue(queryResult(materializedProject) as unknown as ReturnType<typeof useFlowLabMaterializedWorksheet>);
@@ -143,6 +144,7 @@ describe("FlowLabWorkspacePage", () => {
   afterEach(() => {
     cleanup();
     vi.clearAllMocks();
+    vi.unstubAllEnvs();
   });
 
   it("shows a plain-language plan, board handoff and ordered workflow without mutation controls", () => {
@@ -168,6 +170,32 @@ describe("FlowLabWorkspacePage", () => {
     expect(screen.queryByRole("button", { name: /materializálás indítása/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /módosítás|szerkesztés|jóváhagyás|gyártásba kiadás/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+  });
+
+  it("shows a configured Flow Lab demo only as a protected new-tab link", () => {
+    vi.stubEnv("VITE_READ_ONLY_DEMO", "true");
+    vi.stubEnv("VITE_FLOW_LAB_READONLY_URL", "https://doorstar.asztalostech.hu/flow-lab-demo/");
+    renderPage();
+
+    const demoLink = screen.getByRole("link", { name: "Külön Flow Lab-bemutató megnyitása új lapon" });
+    expect(demoLink).toHaveAttribute("href", "https://doorstar.asztalostech.hu/flow-lab-demo/");
+    expect(demoLink).toHaveAttribute("target", "_blank");
+    expect(demoLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+  });
+
+  it("hides the external Flow Lab demo link without a valid configuration", () => {
+    vi.stubEnv("VITE_READ_ONLY_DEMO", "true");
+    renderPage();
+
+    expect(screen.queryByRole("link", { name: "Külön Flow Lab-bemutató megnyitása új lapon" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the demo link out of the normal product profile", () => {
+    vi.stubEnv("VITE_FLOW_LAB_READONLY_URL", "https://doorstar.asztalostech.hu/flow-lab-demo/");
+    renderPage();
+
+    expect(screen.queryByRole("link", { name: "Külön Flow Lab-bemutató megnyitása új lapon" })).not.toBeInTheDocument();
   });
 
   it("keeps technical identifiers and raw evidence collapsed", () => {
