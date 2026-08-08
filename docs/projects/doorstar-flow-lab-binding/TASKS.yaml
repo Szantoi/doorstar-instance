@@ -36,9 +36,11 @@ tasks:
       - "The GET-only, no-browser-identity and no-mutation boundaries remain unchanged."
   - id: DSFLB-14
     name: Standalone synthetic Flow Lab UI link
-    status: in_progress
+    status: deployed_pending_authenticated_browser_smoke
     depends_on: [DSFLB-10, DSFLB-11, DSFLB-13]
     design: DSFLB-14-STANDALONE-UI-LINK.md
+    evidence: evidence/DSFLB-14-STANDALONE-UI-LINK-20260808.md
+    deployed_url: "https://doorstar.asztalostech.hu/flow-lab-demo/"
     scope: "A new-tab link joins the Doorstar demo to a separately deployed, synthetic Flow Lab office UI without iframe, credentials or authority transfer."
     acceptance:
       - "The read-only demo build has one configured HTTPS link; a normal build has none."

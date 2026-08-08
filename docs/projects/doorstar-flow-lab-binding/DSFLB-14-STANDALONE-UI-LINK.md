@@ -1,7 +1,7 @@
 # DSFLB-14 — Önálló Flow Lab felület belépési pontja
 
-**Állapot:** folyamatban  
-**Gazdák:** Flow Lab (szintetikus web/API) + Üzemi Tábla (belépési pont)  
+**Állapot:** telepítve; hitelesített böngészős elfogadásra vár
+**Gazdák:** Flow Lab (szintetikus web/API) + Üzemi Tábla (belépési pont)
 **Kapcsolódik:** DSFLB-10, DSFLB-11, DSFLB-13
 
 ## Cél
@@ -40,6 +40,21 @@ gyártási authority.
 - A link új tabon megnyitja a Flow Lab szintetikus felületét.
 - Anonymous kérés 401, hitelesített GET 200, hitelesített író metódus 405.
 - A két felület bármelyike visszaállítható a másik módosítása nélkül.
+
+## Kiadási állapot (2026-08-08)
+
+- A Doorstar read-only demo `ff82448` commitja a VPS-en ki van építve a
+  determinisztikus `build:readonly-demo` paranccsal.
+- A különálló Flow Lab API `127.0.0.1:4622`-n fut; az nginx publikus útvonalai
+  névtelen GET-re `401`-et, minden író metódusra `405`-öt adnak.
+- A kiadási csomag és a proxy mögötti olvasó végpontok ellenőrzöttek; valós
+  workbook, adatbázis és termelési authority nincs a bemutatóban.
+- A Basic Auth hitelesítő adatát nem olvastuk, nem rögzítettük és nem
+  változtattuk meg. Emiatt egyetlen elfogadási lépés maradt: egy meglévő,
+  jogosult felhasználói böngészőben a négy magyar nézet betöltésének igazolása.
+
+Részletes, nem titkos kiadási bizonyíték:
+[DSFLB-14 standalone UI link evidence](evidence/DSFLB-14-STANDALONE-UI-LINK-20260808.md).
 
 ## Következő termékes lépés
 

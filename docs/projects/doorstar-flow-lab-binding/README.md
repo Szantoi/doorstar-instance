@@ -39,3 +39,11 @@ identifiers in collapsed technical details.
 The shared demo credential is deliberately held only in the VPS root-owned
 credential file, not in Git or this document. The dated deployment evidence is
 [DSFLB-DEMO-RELEASE-20260808.md](evidence/DSFLB-DEMO-RELEASE-20260808.md).
+
+### Különálló Flow Lab irodai bemutató
+
+A Flow Lab saját, szintetikus és csak megtekinthető felülete külön lapon érhető
+el: `https://doorstar.asztalostech.hu/flow-lab-demo/`. A Doorstar Flow Lab
+munkatérből erre konfigurált új-lapos hivatkozás vezet; nincs iframe,
+credential- vagy identity-header átadás. A kiadási határ és az aktuális
+elfogadási állapot: [DSFLB-14](DSFLB-14-STANDALONE-UI-LINK.md).
