@@ -26,3 +26,11 @@ the board into a second scheduler or create work packages automatically.
 The operational procedure and rollback boundary are in
 [DEMO-RELEASE.md](DEMO-RELEASE.md). Machine-readable delivery state is in
 [TASKS.yaml](TASKS.yaml).
+
+## Current hosted demo
+
+The synthetic, password-protected demo is published at
+`https://doorstar.asztalostech.hu/projects/UX-REFERENCE-RETROFIT-001/flow-lab`.
+The shared demo credential is deliberately held only in the VPS root-owned
+credential file, not in Git or this document. The dated deployment evidence is
+[DSFLB-DEMO-RELEASE-20260808.md](evidence/DSFLB-DEMO-RELEASE-20260808.md).

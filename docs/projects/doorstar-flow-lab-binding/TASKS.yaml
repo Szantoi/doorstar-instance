@@ -24,8 +24,9 @@ tasks:
       - "No Flow Lab mutation UI is rendered."
   - id: DSFLB-10
     name: Password-protected read-only hosted demo
-    status: in_progress
+    status: completed
     depends_on: [DSFLB-01, DSFLB-02, DSFLB-03, DSFLB-07, DSFLB-11]
+    evidence: evidence/DSFLB-DEMO-RELEASE-20260808.md
     acceptance:
       - "Only HTTPS plus Basic Auth exposes the demo; no IP allowlist."
       - "Only GET/HEAD reaches /api/production/ and nginx supplies reader context."
@@ -33,7 +34,8 @@ tasks:
       - "The service is loopback-only and can be rolled back to the prior vhost."
   - id: DSFLB-11
     name: Hosted synthetic-data boundary and rollback record
-    status: in_progress
+    status: completed
+    evidence: evidence/DSFLB-DEMO-RELEASE-20260808.md
     resource_names:
       database: doorstar_production
       schema: doorstar_flow_lab_demo
