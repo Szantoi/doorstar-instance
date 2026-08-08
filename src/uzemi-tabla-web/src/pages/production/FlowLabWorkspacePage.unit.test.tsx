@@ -35,18 +35,32 @@ const verifiedSnapshot: FlowLabPlanSnapshotRead = {
   sourceSetKey: "26133",
   materializationKey,
   pins,
-  operations: [{
-    id: "summary-1",
-    correlationKey: "26133/DOOR_LEAF/GyV-L.08",
-    workflowGroup: "Ajtólap összegző kapu",
-    sourceOperationKey: "GyV-L.08",
-    quantityUnit: "db",
-    operationType: "Summary",
-    station: null,
-    boardProjection: { quantity: 0, unitHours: 0 },
-    relativePosition: 8,
-    predecessors: [{ correlationKey: "26133/DOOR_LEAF/GyV-L.07", type: "FS", lagMinutes: 0, partialRelease: null }],
-  }],
+  operations: [
+    {
+      id: "cutting-1",
+      correlationKey: "26133/DOOR_LEAF/GyV-L.07",
+      workflowGroup: "Szintetikus Lapszabás",
+      sourceOperationKey: "GyV-L.07",
+      quantityUnit: "db",
+      operationType: "ActiveWork",
+      station: "Szabászat",
+      boardProjection: { quantity: 2, unitHours: 0.5 },
+      relativePosition: 7,
+      predecessors: [],
+    },
+    {
+      id: "summary-1",
+      correlationKey: "26133/DOOR_LEAF/GyV-L.08",
+      workflowGroup: "Ajtólap összegző kapu",
+      sourceOperationKey: "GyV-L.08",
+      quantityUnit: "db",
+      operationType: "Summary",
+      station: null,
+      boardProjection: { quantity: 0, unitHours: 0 },
+      relativePosition: 8,
+      predecessors: [{ correlationKey: "26133/DOOR_LEAF/GyV-L.07", type: "FS", lagMinutes: 0, partialRelease: null }],
+    },
+  ],
   readiness: { ready: true, blockers: [], allowedActions: [] },
   createdAt: "2026-08-08T08:00:00.000Z",
   reviewResolution: "A pontos projektkötés ellenőrizve.",
@@ -75,7 +89,7 @@ const rejectedSnapshot: FlowLabPlanSnapshotRead = {
   id: "snapshot-rejected",
   state: "REJECTED",
   sourceSetKey: "26133-rejected",
-  readiness: { ready: false, blockers: [{ code: "flow_lab_plan_snapshot_not_verified", message: "A snapshot nem ellenőrzött." }], allowedActions: [] },
+  readiness: { ready: false, blockers: [{ code: "flow_lab_plan_snapshot_not_verified", message: "A tervverzió még nincs ellenőrizve." }], allowedActions: [] },
 };
 
 const materializedProject: ProjectDetail = {
@@ -131,30 +145,96 @@ describe("FlowLabWorkspacePage", () => {
     vi.clearAllMocks();
   });
 
-  it("renders immutable snapshots, explicit provenance, Summary 0/0 and typed cursor evidence without mutation UI", () => {
+  it("shows a plain-language plan, board handoff and ordered workflow without mutation controls", () => {
     renderPage();
 
-    expect(screen.getByRole("heading", { level: 1, name: "Flow Lab evidence" })).toBeVisible();
-    expect(screen.getByText(/Nincs fájlfeltöltés, Task-lánc, naptári ütemezés vagy üzemi kiadás/)).toBeVisible();
-    expect(screen.getByText("Epic/EpicStep projekció provenance-a")).toBeVisible();
-    expect(screen.getAllByText("1 db", { selector: "dd" })).toHaveLength(3);
+    expect(screen.getByRole("heading", { level: 1, name: "Munkaterv áttekintése" })).toBeVisible();
+    expect(screen.getByText("Bemutató · csak megtekintés · mintaadat")).toBeVisible();
+    expect(screen.getByText("Ellenőrzött és használható")).toBeVisible();
+    expect(screen.getByText("A terv átvétele")).toBeVisible();
+    expect(screen.getByText("Ez jutott el az üzemi táblára")).toBeVisible();
+    expect(screen.getByRole("heading", { level: 3, name: "Munkalépések sorrendben" })).toBeVisible();
+    const cutting = screen.getByRole("heading", { level: 4, name: "Lapszabás" }).closest("li");
+    expect(cutting).toHaveTextContent("Szabászat");
+    expect(cutting).toHaveTextContent("2 db");
+    expect(cutting).toHaveTextContent("0,5 óra");
     const summary = screen.getByRole("heading", { level: 4, name: "Ajtólap összegző kapu" }).closest("li");
     expect(summary).toHaveTextContent("0 db");
-    expect(summary).toHaveTextContent("0 óra/egység");
-    expect(screen.getByText("CATALOG_INFO")).toBeVisible();
-    expect(screen.getByText("QUANTITY_CHANGED")).toBeVisible();
-    expect(screen.getByText("quantityBefore")).toBeVisible();
+    expect(summary).toHaveTextContent("0 óra");
+    expect(summary).toHaveTextContent("Előző lépés");
+    expect(summary).toHaveTextContent("Lapszabás befejezése után kezdhető.");
+    expect(screen.getByRole("heading", { level: 3, name: "Mennyiség változott" })).toBeVisible();
+    expect(screen.queryByRole("heading", { level: 4, name: "Szintetikus Lapszabás" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /materializálás indítása/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /snapshot felülvizsgálata/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /módosítás|szerkesztés|jóváhagyás|gyártásba kiadás/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });
 
-  it("keeps a rejected snapshot inspectable and visibly read-only", () => {
+  it("keeps technical identifiers and raw evidence collapsed", () => {
     renderPage();
-    fireEvent.click(screen.getByRole("button", { name: /Elutasított.*26133-rejected/i }));
 
-    expect(screen.getByRole("status")).toHaveTextContent("Ez a snapshot elutasított");
-    expect(screen.getByText("flow_lab_plan_snapshot_not_verified")).toBeVisible();
+    const technicalDetails = screen.getAllByText("Technikai ellenőrzési adatok", { selector: "summary" })
+      .map((summary) => summary.closest("details"));
+    expect(technicalDetails).toHaveLength(3);
+    technicalDetails.forEach((details) => expect(details).not.toHaveAttribute("open"));
+    expect(screen.getByText("CATALOG_INFO").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("Szintetikus Lapszabás").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("QUANTITY_CHANGED").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("quantityBefore").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("a7f2f8d5-34aa-4cbb-8dd6-3f4ac6dc61be").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getAllByText("26133", { selector: "code" })).not.toHaveLength(0);
+    screen.getAllByText("26133", { selector: "code" }).forEach((sourceSetKey) => {
+      expect(sourceSetKey.closest("details")).not.toHaveAttribute("open");
+    });
+  });
+
+  it("never substitutes a technical operation key for a human-facing step name", () => {
+    vi.mocked(useFlowLabPlanSnapshots).mockReturnValue(queryResult({
+      snapshots: [{
+        ...verifiedSnapshot,
+        operations: [{
+          ...verifiedSnapshot.operations[0]!,
+          workflowGroup: undefined,
+          sourceOperationKey: "26133/INTERNAL/STEP-07",
+        }],
+      }],
+    }) as unknown as ReturnType<typeof useFlowLabPlanSnapshots>);
+
+    renderPage();
+
+    expect(screen.getByRole("heading", { level: 4, name: "Megnevezetlen munkalépés" })).toBeVisible();
+  });
+
+  it("translates a blocked plan for the operator and keeps the server message technical", () => {
+    vi.mocked(useFlowLabPlanSnapshots).mockReturnValue(queryResult({
+      snapshots: [{
+        ...verifiedSnapshot,
+        state: "REVIEW",
+        readiness: {
+          ready: false,
+          blockers: [{
+            code: "flow_lab_resource_mapping_stale",
+            message: "The Flow Lab station mapping is no longer the current Doorstar mapping.",
+          }],
+          allowedActions: [],
+        },
+      }],
+    }) as unknown as ReturnType<typeof useFlowLabPlanSnapshots>);
+
+    renderPage();
+
+    expect(screen.getByText("Az állomások beállítása megváltozott. A tervet újra kell ellenőrizni.")).toBeVisible();
+    expect(screen.getByText("The Flow Lab station mapping is no longer the current Doorstar mapping.").closest("details")).not.toHaveAttribute("open");
+  });
+
+  it("keeps a rejected plan version inspectable and visibly read-only", () => {
+    renderPage();
+    fireEvent.click(screen.getByRole("button", { name: /2\. tervverzió.*Elutasított/i }));
+
+    expect(screen.getByRole("status")).toHaveTextContent("Ezt a tervverziót nem fogadták el");
+    expect(screen.getByText("A terv még nem kapott független ellenőrzést.")).toBeVisible();
+    expect(screen.getByText("A tervverzió még nincs ellenőrizve.").closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("flow_lab_plan_snapshot_not_verified").closest("details")).not.toHaveAttribute("open");
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });
 
@@ -163,14 +243,14 @@ describe("FlowLabWorkspacePage", () => {
     vi.mocked(useFlowLabDeviations).mockReturnValue(queryResult(undefined, { isLoading: false, isError: true, hasNextPage: false, isFetchingNextPage: false, fetchNextPage }) as unknown as ReturnType<typeof useFlowLabDeviations>);
     renderPage();
 
-    expect(screen.getByText("Ehhez a projekthez nincs elérhető Flow Lab snapshot.")).toBeVisible();
-    expect(screen.getByRole("alert")).toHaveTextContent("Az eltérésnapló most nem érhető el");
+    expect(screen.getByText("Ehhez a projekthez még nincs megtekinthető tervverzió.")).toBeVisible();
+    expect(screen.getByRole("alert")).toHaveTextContent("A rögzített változások most nem érhetők el");
     expect(screen.queryByText(/http:|token|stack/i)).not.toBeInTheDocument();
   });
 
   it("loads the next immutable cursor page without providing a record mutation", () => {
     renderPage();
-    fireEvent.click(screen.getByRole("button", { name: "Korábbi eltérések betöltése" }));
+    fireEvent.click(screen.getByRole("button", { name: "Korábbi bejegyzések betöltése" }));
     expect(fetchNextPage).toHaveBeenCalledTimes(1);
   });
 });

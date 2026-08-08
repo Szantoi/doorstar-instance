@@ -25,7 +25,8 @@ the board into a second scheduler or create work packages automatically.
 
 The operational procedure and rollback boundary are in
 [DEMO-RELEASE.md](DEMO-RELEASE.md). Machine-readable delivery state is in
-[TASKS.yaml](TASKS.yaml).
+[TASKS.yaml](TASKS.yaml). The operator-facing presentation rules are in
+[DSFLB-13-OPERATOR-UX-PROMOTION.md](DSFLB-13-OPERATOR-UX-PROMOTION.md).
 
 ## Current hosted demo
 

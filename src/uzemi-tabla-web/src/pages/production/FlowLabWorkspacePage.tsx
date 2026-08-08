@@ -46,58 +46,61 @@ export function FlowLabWorkspacePage() {
 
   return <main className="flow-lab-workspace-page">
     <div className="flow-lab-workspace-content">
-      <div className="order-intake-breadcrumb"><Link to={`/projects/${encodeURIComponent(key)}`}>Projekt</Link> / {key} / Flow Lab</div>
+      <div className="order-intake-breadcrumb"><Link to={`/projects/${encodeURIComponent(key)}`}>Projekt</Link> / {key} / Munkaterv</div>
       <header className="flow-lab-workspace-hero">
         <div>
-          <span>Projektkötött operátori munkatér</span>
-          <h1>Flow Lab evidence</h1>
-          <p>Snapshotok, változatlan pinek, readiness és append-only eltérések egy elkülönített, csak olvasható nézetben.</p>
+          <span>Gyártási munkaterv</span>
+          <h1>Munkaterv áttekintése</h1>
+          <p>Itt látható, melyik tervverzió ellenőrzött, mi jutott már el az üzemi táblára, és milyen sorrendben következnek a munkalépések.</p>
         </div>
         <Link to={`/projects/${encodeURIComponent(key)}`}>Vissza a projekthez</Link>
       </header>
 
       <aside className="flow-lab-boundary" aria-label="Flow Lab munkatér határa">
-        <strong>Szándékos határ</strong>
-        <p>Nincs fájlfeltöltés, Task-lánc, naptári ütemezés vagy üzemi kiadás. Review, materializáció és board-parancs sem indítható innen; a szerver- és session-policy marad az authority.</p>
+        <strong>Bemutató · csak megtekintés · mintaadat</strong>
+        <p>Ezen az oldalon a tervet lehet megnézni. Nem lehet itt tervet módosítani, feltölteni, jóváhagyni vagy kiadni a gyártásba.</p>
       </aside>
 
       <section className="flow-lab-snapshot-list" aria-labelledby="flow-lab-snapshot-list-heading">
         <header>
           <div>
-            <span>Snapshot lista</span>
-            <h2 id="flow-lab-snapshot-list-heading">Elérhető Flow Lab tervsnapshotok</h2>
+            <span>Tervverziók</span>
+            <h2 id="flow-lab-snapshot-list-heading">Válasszon egy munkatervet</h2>
           </div>
         </header>
-        {snapshotsQuery.isLoading ? <p className="flow-lab-inline-status" role="status">A Flow Lab snapshotok betöltődnek…</p>
-          : snapshotsQuery.isError ? <p className="flow-lab-inline-error" role="alert">A Flow Lab snapshotok most nem érhetők el. A hiba részleteit biztonsági okból nem jelenítjük meg.</p>
-            : !snapshots.length ? <p className="flow-lab-empty-state">Ehhez a projekthez nincs elérhető Flow Lab snapshot.</p>
-              : <div className="flow-lab-snapshot-selector" aria-label="Flow Lab snapshotok">
-                {snapshots.map((snapshot) => {
+        {snapshotsQuery.isLoading ? <p className="flow-lab-inline-status" role="status">A tervverziók betöltődnek…</p>
+          : snapshotsQuery.isError ? <p className="flow-lab-inline-error" role="alert">A tervverziók most nem érhetők el. A hiba részleteit biztonsági okból nem jelenítjük meg.</p>
+            : !snapshots.length ? <p className="flow-lab-empty-state">Ehhez a projekthez még nincs megtekinthető tervverzió.</p>
+              : <div className="flow-lab-snapshot-selector" aria-label="Munkaterv verziók">
+                {snapshots.map((snapshot, index) => {
                   const selected = snapshot.id === selectedSnapshot?.id;
+                  const stateLabel = flowLabSnapshotStateLabel(snapshot.state);
                   return <button
                     key={snapshot.id}
                     type="button"
                     aria-pressed={selected}
+                    aria-label={`${index + 1}. tervverzió: ${stateLabel}, rögzítve ${formatDateTime(snapshot.createdAt)}`}
                     className={selected ? "is-selected" : undefined}
                     onClick={() => setSelectedSnapshotId(snapshot.id)}
                   >
-                    <span className={`flow-lab-status is-${snapshot.state.toLowerCase()}`}>{flowLabSnapshotStateLabel(snapshot.state)}</span>
-                    <strong>{snapshot.sourceSetKey}</strong>
-                    <small>{formatDateTime(snapshot.createdAt)}</small>
-                    <small>Creator: {snapshot.createdByRole ?? "nincs audit"} · Reviewer: {snapshot.reviewedByRole ?? "nincs"}</small>
+                    <span className={`flow-lab-status is-${snapshot.state.toLowerCase()}`}>{stateLabel}</span>
+                    <strong>{index + 1}. tervverzió</strong>
+                    <small>Rögzítve: {formatDateTime(snapshot.createdAt)}</small>
+                    <small>{snapshot.operations.length} munkalépés</small>
                   </button>;
                 })}
               </div>}
       </section>
 
       {selectedSnapshot && <>
-        <FlowLabMaterializationPanel
-          snapshot={selectedSnapshot}
-          project={materializedWorksheetQuery.data}
-          isLoading={materializedWorksheetQuery.isLoading}
-          isError={materializedWorksheetQuery.isError}
-        />
-        <FlowLabSnapshotEvidence snapshot={selectedSnapshot} />
+        <FlowLabSnapshotEvidence snapshot={selectedSnapshot}>
+          <FlowLabMaterializationPanel
+            snapshot={selectedSnapshot}
+            project={materializedWorksheetQuery.data}
+            isLoading={materializedWorksheetQuery.isLoading}
+            isError={materializedWorksheetQuery.isError}
+          />
+        </FlowLabSnapshotEvidence>
       </>}
 
       <FlowLabDeviationLog

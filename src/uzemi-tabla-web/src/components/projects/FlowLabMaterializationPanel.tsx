@@ -8,7 +8,7 @@ export interface FlowLabMaterializationSummary {
   activeWorkStepCount: number;
 }
 
-/** Narrow the legacy project read projection to immutable Flow Lab provenance.
+/** Narrow the legacy project read projection to the read-only Flow Lab rows.
  * No worksheet input or mutation state crosses this component boundary. */
 export function summarizeFlowLabMaterialization(
   project: ProjectDetail | undefined,
@@ -43,22 +43,27 @@ export function FlowLabMaterializationPanel({
   return <section className="flow-lab-materialization" aria-labelledby="flow-lab-materialization-heading">
     <header>
       <div>
-        <span>Materializációs állapot</span>
-        <h2 id="flow-lab-materialization-heading">Epic/EpicStep projekció provenance-a</h2>
-        <p>A rendszer meglévő, csak olvasható projektprojekcióját ellenőrizzük. Ez nem a régi munkalap-szerkesztő, és nincs Materializálás gomb.</p>
+        <span>A terv átvétele</span>
+        <h2 id="flow-lab-materialization-heading">Ez jutott el az üzemi táblára</h2>
+        <p>Az itt látható munkaszakaszok és lépések már megjelentek az üzemi táblán. Ezen az oldalon csak meg lehet nézni őket.</p>
       </div>
-      <b>Csak olvasható</b>
+      <b>Csak megtekintés</b>
     </header>
-    {isLoading ? <p className="flow-lab-inline-status" role="status">A materializált munkalapsorok provenance-a betöltődik…</p>
-      : isError ? <p className="flow-lab-inline-error" role="alert">A materializált munkalap-projekció most nem ellenőrizhető. A snapshot evidence nem változott.</p>
-        : !summary ? <p className="flow-lab-empty-state">Ehhez a snapshothoz a projekt read modellje nem adott vissza Flow Lab Epic/EpicStep projekciót. Ez nem indít automatikus materializálást.</p>
+    {isLoading ? <p className="flow-lab-inline-status" role="status">Az üzemi tábla adatai betöltődnek…</p>
+      : isError ? <p className="flow-lab-inline-error" role="alert">Most nem tudjuk ellenőrizni, mi jutott el az üzemi táblára. A tervverzió nem változott.</p>
+        : !summary ? <p className="flow-lab-empty-state">Ez a terv még nem jelent meg az üzemi táblán.</p>
           : <dl className="flow-lab-materialization-grid">
-            <div><dt>Flow Lab epic</dt><dd>{summary.epicCount} db</dd></div>
-            <div><dt>Flow Lab lépés</dt><dd>{summary.stepCount} db</dd></div>
-            <div><dt>Összegző kapu</dt><dd>{summary.summaryStepCount} db</dd></div>
-            <div><dt>Munkalépés</dt><dd>{summary.activeWorkStepCount} db</dd></div>
-            <div><dt>Forráskészlet</dt><dd><code>{snapshot.sourceSetKey}</code></dd></div>
-            <div><dt>Materialization key</dt><dd><code>{snapshot.materializationKey}</code></dd></div>
+            <div><dt>Munkaszakasz</dt><dd>{summary.epicCount} db</dd></div>
+            <div><dt>Lépés</dt><dd>{summary.stepCount} db</dd></div>
+            <div><dt>Ellenőrző pont</dt><dd>{summary.summaryStepCount} db</dd></div>
+            <div><dt>Végrehajtható munkalépés</dt><dd>{summary.activeWorkStepCount} db</dd></div>
           </dl>}
+    <details className="flow-lab-technical-details">
+      <summary>Technikai ellenőrzési adatok</summary>
+      <dl className="flow-lab-metadata-grid">
+        <div><dt>Forráskészlet</dt><dd><code>{snapshot.sourceSetKey}</code></dd></div>
+        <div><dt>Átvételi kulcs</dt><dd><code>{snapshot.materializationKey}</code></dd></div>
+      </dl>
+    </details>
   </section>;
 }

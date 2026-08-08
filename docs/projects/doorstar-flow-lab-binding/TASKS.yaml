@@ -22,6 +22,16 @@ tasks:
     acceptance:
       - "No browser principal or role headers are emitted by Flow Lab GET clients."
       - "No Flow Lab mutation UI is rendered."
+  - id: DSFLB-13
+    name: Operator-friendly Flow Lab demo workspace
+    status: in_progress
+    depends_on: [DSFLB-07]
+    design: DSFLB-13-OPERATOR-UX-PROMOTION.md
+    scope: "Promote the Flow Lab office information architecture into the Doorstar project read-only workspace without changing authority."
+    acceptance:
+      - "The default view explains the plan, its state, board handoff and work sequence in plain Hungarian."
+      - "Technical provenance and audit data remain available only through collapsed details."
+      - "The GET-only, no-browser-identity and no-mutation boundaries remain unchanged."
   - id: DSFLB-10
     name: Password-protected read-only hosted demo
     status: completed

@@ -198,10 +198,10 @@ export function ProjectDetailPage() {
 
         <section className="project-office-workspaces" aria-label="Projekt munkaterek">
           <article className="project-office-flow-lab">
-            <span>Elkülönített evidence munkatér</span>
-            <h2>Flow Lab snapshotok és eltérések</h2>
-            <p>Az importált Flow Lab terv pinjei, readiness-e, relatív gráfja és append-only eltérésnaplója külön, csak olvasható operátori nézetben marad.</p>
-            <Link to={`/projects/${encodeURIComponent(key)}/flow-lab`}>Flow Lab evidence megnyitása →</Link>
+            <span>Bemutató munkatér</span>
+            <h2>Gyártási terv és változások</h2>
+            <p>Itt a bemutató terv lépései, állapota és az esetleges változások láthatók. Ebben a nézetben adat nem módosítható.</p>
+            <Link to={`/projects/${encodeURIComponent(key)}/flow-lab`}>Gyártási terv megnyitása →</Link>
           </article>
           <article className="project-office-legacy">
             <span>Elkülönített segédfelület</span>

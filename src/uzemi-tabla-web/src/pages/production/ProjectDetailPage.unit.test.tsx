@@ -98,10 +98,10 @@ describe("ProjectDetailPage accessibility and mutation authority", () => {
     expect(projectsLink.parentElement).not.toHaveTextContent("Projektek / 26148");
   });
 
-  it("links to the dedicated read-only Flow Lab evidence workspace", () => {
+  it("links to the plainly named read-only production-plan workspace", () => {
     renderPage();
 
-    expect(screen.getByRole("link", { name: "Flow Lab evidence megnyitása →" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Gyártási terv megnyitása →" })).toHaveAttribute(
       "href",
       "/projects/dsmr-26148/flow-lab",
     );
