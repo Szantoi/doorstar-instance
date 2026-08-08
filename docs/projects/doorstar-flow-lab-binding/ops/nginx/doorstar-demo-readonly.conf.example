@@ -10,7 +10,11 @@ server {
         root /var/www/html;
     }
 
-    return 308 https://doorstar.asztalostech.hu$request_uri;
+    # Keep certificate renewal reachable; redirect every other HTTP request to
+    # the fixed canonical HTTPS host rather than reflecting an arbitrary Host.
+    location / {
+        return 308 https://doorstar.asztalostech.hu$request_uri;
+    }
 }
 
 server {
