@@ -1,4 +1,5 @@
 import { apiFetch } from "../apiClient";
+import { parseFlowLabDeviationList, parseFlowLabPlanSnapshotList } from "@/lib/flowLab";
 import { PRODUCTION_API_BASE as BASE } from "./config";
 import type {
   BoardResponse,
@@ -114,6 +115,28 @@ export const productionApi = {
     apiFetch<OrderRevisionReadiness>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/readiness`),
   getProjectWorkflow: (projectKey: string) =>
     apiFetch<ProjectWorkflow>(`${BASE}/projects/${encodeURIComponent(projectKey)}/workflow`),
+  /**
+   * Flow Lab is a session-only read surface. Browser-selected role/station
+   * state is deliberately not forwarded as an authority header.
+   */
+  getFlowLabPlanSnapshots: (projectKey: string) =>
+    apiFetch<unknown>(`${BASE}/flow-lab/projects/${encodeURIComponent(projectKey)}/plan-snapshots`, {
+      identityHeaders: "omit",
+      cache: "no-store",
+    }).then(parseFlowLabPlanSnapshotList),
+  getFlowLabDeviations: (projectKey: string, cursor?: string) =>
+    apiFetch<unknown>(`${BASE}/flow-lab/projects/${encodeURIComponent(projectKey)}/deviations`, {
+      identityHeaders: "omit",
+      cache: "no-store",
+      query: { ...(cursor ? { cursor } : {}), limit: 50 },
+    }).then(parseFlowLabDeviationList),
+  /** Existing project data is read only to report Flow Lab provenance; this
+   * never instantiates the legacy worksheet editor. */
+  getFlowLabMaterializedWorksheet: (projectKey: string) =>
+    apiFetch<ProjectDetail>(`${BASE}/projects/${encodeURIComponent(projectKey)}`, {
+      identityHeaders: "omit",
+      cache: "no-store",
+    }),
   getComponentSnapshots: (projectKey: string, revision: number) =>
     apiFetch<ComponentSnapshot[]>(`${BASE}/production-orders/${encodeURIComponent(projectKey)}/revisions/${revision}/component-snapshots`),
   getOperationPlanSnapshots: (projectKey: string, revision: number) =>

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Prisma } from "@prisma/client";
 import { prisma } from "../db/client.js";
 import { validateBody } from "../middleware/validate.js";
 import {
@@ -17,8 +18,25 @@ import { taskVM } from "./board.js";
 import {
   LegacyProductionGuardError,
 } from "../services/legacyProductionGuard.js";
+import { projectFlowLabStep } from "../services/flowLabReadProjection.js";
 
 export const projectsRouter = Router();
+
+class FlowLabWorksheetMutationError extends Error {
+  readonly status = 409 as const;
+  readonly code = "flow_lab_materialized_rows_require_dedicated_commands" as const;
+}
+
+async function assertNoFlowLabWorksheetMaterialization(
+  tx: Prisma.TransactionClient,
+  projectId: string,
+) {
+  const materialization = await tx.flowLabPlanMaterialization.findFirst({
+    where: { projectId },
+    select: { id: true },
+  });
+  if (materialization) throw new FlowLabWorksheetMutationError();
+}
 
 /** GET /api/production/projects — card grid with per-project progress rollup. */
 projectsRouter.get("/projects", async (_req, res) => {
@@ -116,7 +134,20 @@ projectsRouter.get("/projects/:key", async (req, res) => {
     include: {
       epics: {
         orderBy: { position: "asc" },
-        include: { steps: { orderBy: { position: "asc" }, include: { tasks: true } } },
+        include: {
+          flowLabProvenance: {
+            include: { materialization: { include: { flowLabPlanSnapshot: true } } },
+          },
+          steps: {
+            orderBy: { position: "asc" },
+            include: {
+              tasks: true,
+              flowLabProvenance: {
+                include: { materialization: { include: { flowLabPlanSnapshot: true } } },
+              },
+            },
+          },
+        },
       },
       sheets: true,
     },
@@ -126,13 +157,55 @@ projectsRouter.get("/projects/:key", async (req, res) => {
     return;
   }
   const workflows = new Map((await prisma.stationWorkflow.findMany()).map((row) => [row.station, row.steps as string[]]));
-  const withTaskViews = await Promise.all(project.epics.map(async (epic) => ({
-    ...epic,
-    steps: await Promise.all(epic.steps.map(async (step) => ({
-      ...step,
-      tasks: await Promise.all(step.tasks.map((task) => taskVM(task, workflows))),
-    }))),
-  })));
+  const withTaskViews = await Promise.all(project.epics.map(async (epic) => {
+    const { flowLabProvenance: epicFlowLabProvenance, ...epicRecord } = epic;
+    const epicSnapshot = epicFlowLabProvenance?.materialization.flowLabPlanSnapshot;
+    const epicFlowLab = epicSnapshot
+      ? {
+        origin: "FLOW_LAB" as const,
+        sourceSetKey: epicSnapshot.sourceSetKey,
+        materializationKey: epicSnapshot.materializationKey,
+        pins: {
+          catalogRevision: epicSnapshot.catalogRevision,
+          catalogHash: epicSnapshot.catalogHash,
+          planHash: epicSnapshot.planHash,
+          engineIdentity: epicSnapshot.engineIdentity,
+        },
+      }
+      : {};
+    return {
+      ...epicRecord,
+      ...epicFlowLab,
+      steps: await Promise.all(epic.steps.map(async (step) => {
+        const { flowLabProvenance: stepFlowLabProvenance, ...stepRecord } = step;
+        const stepSnapshot = stepFlowLabProvenance?.materialization.flowLabPlanSnapshot ?? epicSnapshot;
+        const flowLabStep = stepFlowLabProvenance
+          ? projectFlowLabStep(stepFlowLabProvenance.materialization.flowLabPlanSnapshot, stepFlowLabProvenance.correlationKey)
+          : null;
+        return {
+          ...stepRecord,
+          ...epicFlowLab,
+          ...(flowLabStep ?? (stepSnapshot
+            ? {
+              origin: "FLOW_LAB" as const,
+              sourceSetKey: stepSnapshot.sourceSetKey,
+              materializationKey: stepSnapshot.materializationKey,
+              pins: {
+                catalogRevision: stepSnapshot.catalogRevision,
+                catalogHash: stepSnapshot.catalogHash,
+                planHash: stepSnapshot.planHash,
+                engineIdentity: stepSnapshot.engineIdentity,
+              },
+              operationType: "Manual",
+              relativePosition: stepRecord.position,
+              predecessors: [],
+            }
+            : {})),
+          tasks: await Promise.all(step.tasks.map((task) => taskVM(task, workflows))),
+        };
+      })),
+    };
+  }));
   const unepicTasks = await Promise.all((await prisma.task.findMany({
     where: { projectId: project.id, epicId: null }, orderBy: [{ week: "asc" }, { day: "asc" }], include: { project: { select: { num: true } } },
   })).map((task) => taskVM(task, workflows)));
@@ -193,83 +266,92 @@ projectsRouter.put("/projects/:key/epics", validateBody(saveEpicsSchema), async 
     return;
   }
 
-  await prisma.$transaction(async (tx) => {
-    const currentEpics = await tx.epic.findMany({
-      where: { projectId: project.id },
-      include: { steps: { select: { id: true } } },
-    });
-    const currentById = new Map(currentEpics.map((epic) => [epic.id, epic]));
-    const retainedEpicIds = new Set<string>();
-
-    for (const [epicIndex, epic] of epics.entries()) {
-      const epicData = {
-        name: epic.name,
-        quantityLabel: epic.quantityLabel ?? null,
-        disabled: epic.disabled ?? false,
-        position: epicIndex,
-      };
-      const currentEpic = epic.id ? currentById.get(epic.id) : undefined;
-
-      if (!currentEpic) {
-        const createdEpic = await tx.epic.create({
-          data: {
-            projectId: project.id,
-            ...epicData,
-            steps: {
-              create: epic.steps.map((step, stepIndex) => ({
-                name: step.name,
-                station: step.station ?? null,
-                quantity: step.quantity ?? null,
-                unitHours: step.unitHours ?? null,
-                planDate: step.planDate ? new Date(step.planDate) : null,
-                planLocked: step.planLocked ?? false,
-                disabled: step.disabled ?? false,
-                position: stepIndex,
-              })),
-            },
-          },
-        });
-        retainedEpicIds.add(createdEpic.id);
-        continue;
-      }
-
-      retainedEpicIds.add(currentEpic.id);
-      await tx.epic.update({ where: { id: currentEpic.id }, data: epicData });
-      const currentStepIds = new Set(currentEpic.steps.map((step) => step.id));
-      const retainedStepIds = new Set(
-        epic.steps.flatMap((step) => (step.id && currentStepIds.has(step.id) ? [step.id] : []))
-      );
-      await tx.epicStep.deleteMany({
-        where: retainedStepIds.size
-          ? { epicId: currentEpic.id, id: { notIn: Array.from(retainedStepIds) } }
-          : { epicId: currentEpic.id },
+  try {
+    await prisma.$transaction(async (tx) => {
+      await assertNoFlowLabWorksheetMaterialization(tx, project.id);
+      const currentEpics = await tx.epic.findMany({
+        where: { projectId: project.id },
+        include: { steps: { select: { id: true } } },
       });
+      const currentById = new Map(currentEpics.map((epic) => [epic.id, epic]));
+      const retainedEpicIds = new Set<string>();
 
-      for (const [stepIndex, step] of epic.steps.entries()) {
-        const stepData = {
-          name: step.name,
-          station: step.station ?? null,
-          quantity: step.quantity ?? null,
-          unitHours: step.unitHours ?? null,
-          planDate: step.planDate ? new Date(step.planDate) : null,
-          planLocked: step.planLocked ?? false,
-          disabled: step.disabled ?? false,
-          position: stepIndex,
+      for (const [epicIndex, epic] of epics.entries()) {
+        const epicData = {
+          name: epic.name,
+          quantityLabel: epic.quantityLabel ?? null,
+          disabled: epic.disabled ?? false,
+          position: epicIndex,
         };
-        if (step.id && currentStepIds.has(step.id)) {
-          await tx.epicStep.update({ where: { id: step.id }, data: stepData });
-        } else {
-          await tx.epicStep.create({ data: { epicId: currentEpic.id, ...stepData } });
+        const currentEpic = epic.id ? currentById.get(epic.id) : undefined;
+
+        if (!currentEpic) {
+          const createdEpic = await tx.epic.create({
+            data: {
+              projectId: project.id,
+              ...epicData,
+              steps: {
+                create: epic.steps.map((step, stepIndex) => ({
+                  name: step.name,
+                  station: step.station ?? null,
+                  quantity: step.quantity ?? null,
+                  unitHours: step.unitHours ?? null,
+                  planDate: step.planDate ? new Date(step.planDate) : null,
+                  planLocked: step.planLocked ?? false,
+                  disabled: step.disabled ?? false,
+                  position: stepIndex,
+                })),
+              },
+            },
+          });
+          retainedEpicIds.add(createdEpic.id);
+          continue;
+        }
+
+        retainedEpicIds.add(currentEpic.id);
+        await tx.epic.update({ where: { id: currentEpic.id }, data: epicData });
+        const currentStepIds = new Set(currentEpic.steps.map((step) => step.id));
+        const retainedStepIds = new Set(
+          epic.steps.flatMap((step) => (step.id && currentStepIds.has(step.id) ? [step.id] : []))
+        );
+        await tx.epicStep.deleteMany({
+          where: retainedStepIds.size
+            ? { epicId: currentEpic.id, id: { notIn: Array.from(retainedStepIds) } }
+            : { epicId: currentEpic.id },
+        });
+
+        for (const [stepIndex, step] of epic.steps.entries()) {
+          const stepData = {
+            name: step.name,
+            station: step.station ?? null,
+            quantity: step.quantity ?? null,
+            unitHours: step.unitHours ?? null,
+            planDate: step.planDate ? new Date(step.planDate) : null,
+            planLocked: step.planLocked ?? false,
+            disabled: step.disabled ?? false,
+            position: stepIndex,
+          };
+          if (step.id && currentStepIds.has(step.id)) {
+            await tx.epicStep.update({ where: { id: step.id }, data: stepData });
+          } else {
+            await tx.epicStep.create({ data: { epicId: currentEpic.id, ...stepData } });
+          }
         }
       }
-    }
 
-    await tx.epic.deleteMany({
-      where: retainedEpicIds.size
-        ? { projectId: project.id, id: { notIn: Array.from(retainedEpicIds) } }
-        : { projectId: project.id },
+        await tx.epic.deleteMany({
+          where: retainedEpicIds.size
+            ? { projectId: project.id, id: { notIn: Array.from(retainedEpicIds) } }
+            : { projectId: project.id },
+        });
+
     });
-  });
+  } catch (error) {
+    if (error instanceof FlowLabWorksheetMutationError) {
+      return void res.status(error.status).json({ error: error.code });
+    }
+    throw error;
+  }
 
   const saved = await prisma.epic.findMany({
     where: { projectId: project.id },
@@ -294,7 +376,17 @@ projectsRouter.delete("/projects/:key/epics/:epicId", async (req, res) => {
     res.status(404).json({ error: "not_found" });
     return;
   }
-  await prisma.epic.delete({ where: { id: epic.id } });
+  try {
+    await prisma.$transaction(async (tx) => {
+      await assertNoFlowLabWorksheetMaterialization(tx, project.id);
+      await tx.epic.delete({ where: { id: epic.id } });
+    });
+  } catch (error) {
+    if (error instanceof FlowLabWorksheetMutationError) {
+      return void res.status(error.status).json({ error: error.code });
+    }
+    throw error;
+  }
   logger.info({ key: project.key, epicId: epic.id }, "project epic deleted");
   res.status(204).end();
 });

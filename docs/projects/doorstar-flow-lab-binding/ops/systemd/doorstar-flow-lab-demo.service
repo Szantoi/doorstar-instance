@@ -1,0 +1,20 @@
+[Unit]
+Description=Doorstar Flow Lab read-only demonstration API
+After=network.target docker.service
+
+[Service]
+Type=simple
+User=gabor
+Group=gabor
+WorkingDirectory=/opt/doorstar-flow-lab-demo/src/production-service
+EnvironmentFile=/etc/doorstar/doorstar-flow-lab-demo.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node dist/server.js
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

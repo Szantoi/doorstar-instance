@@ -14,6 +14,7 @@ const LoadPage = lazy(() => import("./pages/production/LoadPage").then(({ LoadPa
 const ProjectsPage = lazy(() => import("./pages/production/ProjectsPage").then(({ ProjectsPage }) => ({ default: ProjectsPage })));
 const ProjectDetailPage = lazy(() => import("./pages/production/ProjectDetailPage").then(({ ProjectDetailPage }) => ({ default: ProjectDetailPage })));
 const ProjectWorkSessionPage = lazy(() => import("./pages/production/ProjectWorkSessionPage").then(({ ProjectWorkSessionPage }) => ({ default: ProjectWorkSessionPage })));
+const FlowLabWorkspacePage = lazy(() => import("./pages/production/FlowLabWorkspacePage").then(({ FlowLabWorkspacePage }) => ({ default: FlowLabWorkspacePage })));
 const OrderIntakePage = lazy(() => import("./pages/production/OrderIntakePage").then(({ OrderIntakePage }) => ({ default: OrderIntakePage })));
 const SurveyPage = lazy(() => import("./pages/production/SurveyPage").then(({ SurveyPage }) => ({ default: SurveyPage })));
 const ImportInboxPage = lazy(() => import("./pages/production/ImportInboxPage").then(({ ImportInboxPage }) => ({ default: ImportInboxPage })));
@@ -48,6 +49,7 @@ export function App() {
         <Route path={componentWorkspaceRoutePattern} element={<LeafRoute><ComponentWorkspacePage /></LeafRoute>} />
         <Route path={operationWorkspaceRoutePattern} element={<LeafRoute><OperationWorkspacePage /></LeafRoute>} />
         <Route path="projects" element={<LeafRoute><ProjectsPage /></LeafRoute>} />
+        <Route path="projects/:key/flow-lab" element={<LeafRoute><FlowLabWorkspacePage /></LeafRoute>} />
         <Route path="projects/:key" element={<LeafRoute><ProjectDetailPage /></LeafRoute>} />
         <Route path="projects/:key/work-session" element={<LeafRoute><ProjectWorkSessionPage /></LeafRoute>} />
         <Route path="orders/new" element={<LeafRoute><OrderIntakePage /></LeafRoute>} />

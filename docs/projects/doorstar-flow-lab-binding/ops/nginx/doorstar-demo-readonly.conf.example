@@ -1,0 +1,66 @@
+# Merge this into the existing Doorstar 80/443 vhost; do not enable a second
+# server block with the same server_name. Keep the deployed certificate paths.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name doorstar.asztalostech.hu doorstar.joinerytech.hu;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
+
+    return 308 https://doorstar.asztalostech.hu$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name doorstar.asztalostech.hu doorstar.joinerytech.hu;
+
+    ssl_certificate /etc/letsencrypt/live/joinerytech.hu/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/joinerytech.hu/privkey.pem;
+
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    auth_basic "Doorstar demo";
+    auth_basic_user_file /etc/doorstar/doorstar-demo.htpasswd;
+
+    root /opt/doorstar-flow-lab-demo/src/uzemi-tabla-web/dist;
+    index index.html;
+
+    location ^~ /api/production/ {
+        if ($request_method !~ ^(GET|HEAD)$) { return 405; }
+
+        proxy_http_version 1.1;
+        proxy_pass http://127.0.0.1:4612;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization "";
+        proxy_set_header X-Role reader;
+        proxy_set_header X-Station "";
+        proxy_set_header X-Principal "";
+        proxy_read_timeout 30s;
+    }
+
+    # Keep backend diagnostics and all non-production APIs private.
+    location ^~ /api/ { return 404; }
+    location = /api { return 404; }
+    location = /healthz { return 404; }
+    location = /readyz { return 404; }
+    location = /openapi.json { return 404; }
+
+    location /assets/ {
+        try_files $uri =404;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        try_files $uri /index.html;
+    }
+}

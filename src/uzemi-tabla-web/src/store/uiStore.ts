@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { monday, shiftWeek } from "@/lib/dates";
+import { isReadOnlyDemo } from "@/lib/readOnlyDemo";
 
 /** Temporary UI-selected role until real identity/Entra group resolution. */
 export type Role = "vezeto" | "allomas" | "sales" | "technical_preparation" | "order_approver" | "production_planner" | "shop_floor" | "installer" | "warehouse_dispatch" | "administrator" | "reader";
@@ -17,10 +18,10 @@ interface UiState {
 }
 
 export const useUiStore = create<UiState>((set) => ({
-  role: "vezeto",
+  role: isReadOnlyDemo ? "reader" : "vezeto",
   myStation: "CNC",
   week: monday(new Date()),
-  setRole: (role) => set({ role }),
+  setRole: (role) => set({ role: isReadOnlyDemo ? "reader" : role }),
   setMyStation: (myStation) => set({ myStation }),
   prevWeek: () => set((s) => ({ week: shiftWeek(s.week, -1) })),
   nextWeek: () => set((s) => ({ week: shiftWeek(s.week, 1) })),

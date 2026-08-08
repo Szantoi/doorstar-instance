@@ -121,6 +121,36 @@ enum OperationPlanSnapshotState {
   REJECTED
 }
 
+/// File-handoff plan evidence from Doorstar Flow Lab. It deliberately remains
+/// separate from OperationPlanSnapshot: Flow Lab evidence cannot satisfy the
+/// incumbent explicit-operation authority or production-release gates.
+enum FlowLabPlanSnapshotState {
+  REVIEW
+  VERIFIED
+  REJECTED
+}
+
+/// Closed observation vocabulary exported back to Flow Lab. Records are
+/// append-only evidence; a reversal is represented by a new record.
+enum FlowLabDeviationKind {
+  QUANTITY_CHANGED
+  UNIT_HOURS_CHANGED
+  STEP_DISABLED
+  STEP_ENABLED
+  STEP_REORDERED
+  STATION_CHANGED
+  PLAN_LOCKED
+  PLAN_UNLOCKED
+  STEP_ADDED_BY_HAND
+  TASK_PROBLEM_FLAGGED
+}
+
+enum FlowLabDeviationOutboxState {
+  PENDING
+  PUBLISHED
+  FAILED
+}
+
 enum OrderRevisionAuditAction {
   REVIEW_REQUESTED
   APPROVED
@@ -245,10 +275,13 @@ model Project {
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 
-  epics  Epic[]
-  tasks  Task[]
-  sheets ProjectSheet[]
-  order  ProductionOrder?
+  epics                       Epic[]
+  flowLabPlanSnapshots        FlowLabPlanSnapshot[]
+  flowLabPlanMaterializations FlowLabPlanMaterialization[]
+  flowLabDeviationRecords     FlowLabDeviationRecord[]
+  tasks                       Task[]
+  sheets                      ProjectSheet[]
+  order                       ProductionOrder?
 
   @@index([deletedAt])
 }
@@ -296,6 +329,7 @@ model OrderRevision {
   supplementaryItems        OrderSupplementaryItem[]
   componentSnapshots        ComponentSnapshot[]
   operationPlanSnapshots    OperationPlanSnapshot[]
+  flowLabPlanSnapshots      FlowLabPlanSnapshot[]
   createdAt                 DateTime                        @default(now())
   updatedAt                 DateTime                        @updatedAt
 
@@ -701,6 +735,7 @@ model ComponentSnapshot {
   reviewedAt                   DateTime?
   requirements                 ComponentRequirement[]
   operationPlanSnapshots       OperationPlanSnapshot[]
+  flowLabPlanSnapshots         FlowLabPlanSnapshot[]
   createdAt                    DateTime                @default(now())
 
   @@unique([orderRevisionId, calculatorProfileVersion])
@@ -774,6 +809,141 @@ model OperationPlanSnapshot {
   @@index([componentSnapshotId, createdAt])
 }
 
+/// Immutable Flow Lab file-handoff evidence bound explicitly to one board
+/// project, exact order revision and exact component snapshot. Its
+/// productionAuthority is permanently false; REVIEW/VERIFIED is an evidence
+/// review gate only and is never read by legacy production-release authority.
+model FlowLabPlanSnapshot {
+  id                          String                   @id @default(cuid())
+  projectId                   String
+  project                     Project                  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  orderRevisionId             String
+  orderRevision               OrderRevision            @relation(fields: [orderRevisionId], references: [id], onDelete: Restrict)
+  componentSnapshotId         String
+  componentSnapshot           ComponentSnapshot        @relation(fields: [componentSnapshotId], references: [id], onDelete: Restrict)
+  state                       FlowLabPlanSnapshotState @default(REVIEW)
+  schemaVersion               String
+  sourceSetKey                String
+  materializationKey          String
+  contentHash                 String                   @db.Char(64)
+  fileSha256                  String                   @db.Char(64)
+  fileName                    String
+  catalogRevision             String
+  catalogHash                 String                   @db.Char(64)
+  planHash                    String                   @db.Char(64)
+  engineIdentity              String
+  resourceMappingVersion      String
+  resourceMappingFingerprint  String                   @db.Char(64)
+  boundOrderContentHash       String                   @db.Char(64)
+  boundComponentOutputHash    String                   @db.Char(64)
+  operations                  Json
+  dependencies                Json
+  relativeSchedule            Json
+  unresolved                  Json
+  absentMembers               Json
+  findings                    Json
+  productionAuthority         Boolean                  @default(false)
+  reviewNote                  String
+  createdByRole               String
+  createdByPrincipal          String
+  reviewResolution            String?
+  reviewedByRole              String?
+  reviewedByPrincipal         String?
+  reviewedAt                  DateTime?
+  materialization             FlowLabPlanMaterialization?
+  deviationRecords            FlowLabDeviationRecord[]
+  createdAt                   DateTime                 @default(now())
+
+  @@unique([projectId, materializationKey])
+  @@index([orderRevisionId, createdAt])
+  @@index([componentSnapshotId, createdAt])
+  @@index([sourceSetKey, planHash])
+}
+
+/// One verified Flow Lab snapshot may create one immutable board worksheet
+/// projection. Rows retain separate provenance so later manual changes can be
+/// reported without overwriting the issued plan evidence.
+model FlowLabPlanMaterialization {
+  id                         String                     @id @default(cuid())
+  flowLabPlanSnapshotId      String                     @unique
+  flowLabPlanSnapshot        FlowLabPlanSnapshot        @relation(fields: [flowLabPlanSnapshotId], references: [id], onDelete: Restrict)
+  projectId                  String
+  project                    Project                    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  resourceMappingVersion     String
+  resourceMappingFingerprint String                     @db.Char(64)
+  createdByRole              String
+  createdByPrincipal         String
+  createdAt                  DateTime                   @default(now())
+  epicProvenance             FlowLabEpicProvenance[]
+  stepProvenance             FlowLabEpicStepProvenance[]
+  deviationRecords           FlowLabDeviationRecord[]
+  deviationOutbox            FlowLabDeviationOutbox?
+
+  @@index([projectId, createdAt])
+}
+
+model FlowLabEpicProvenance {
+  id                String                     @id @default(cuid())
+  materializationId String
+  materialization   FlowLabPlanMaterialization @relation(fields: [materializationId], references: [id], onDelete: Cascade)
+  epicId            String                     @unique
+  epic              Epic                       @relation(fields: [epicId], references: [id], onDelete: Restrict)
+  familyKey         String
+
+  @@unique([materializationId, familyKey])
+}
+
+model FlowLabEpicStepProvenance {
+  id                String                     @id @default(cuid())
+  materializationId String
+  materialization   FlowLabPlanMaterialization @relation(fields: [materializationId], references: [id], onDelete: Cascade)
+  epicStepId        String                     @unique
+  epicStep          EpicStep                   @relation(fields: [epicStepId], references: [id], onDelete: Restrict)
+  correlationKey    String
+  baseline          Json
+
+  @@unique([materializationId, correlationKey])
+  @@index([correlationKey])
+}
+
+/// Immutable typed board evidence. API code may insert it only alongside the
+/// board mutation it observes; there are intentionally no mutable columns.
+model FlowLabDeviationRecord {
+  id                    String                     @id @default(uuid())
+  projectId             String
+  project               Project                    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  flowLabPlanSnapshotId String
+  flowLabPlanSnapshot   FlowLabPlanSnapshot        @relation(fields: [flowLabPlanSnapshotId], references: [id], onDelete: Restrict)
+  materializationId     String
+  materialization       FlowLabPlanMaterialization @relation(fields: [materializationId], references: [id], onDelete: Restrict)
+  correlationKey        String?
+  kind                  FlowLabDeviationKind
+  actorRole             String
+  actorPrincipal        String
+  payload               Json
+  occurredAt            DateTime                   @default(now())
+
+  @@index([projectId, occurredAt, id])
+  @@index([materializationId, occurredAt, id])
+}
+
+/// Retryable publication marker. File bytes are regenerated from immutable
+/// records; no output path, file body or credentials are persisted here.
+model FlowLabDeviationOutbox {
+  id                String                     @id @default(cuid())
+  materializationId String                     @unique
+  materialization   FlowLabPlanMaterialization @relation(fields: [materializationId], references: [id], onDelete: Cascade)
+  state             FlowLabDeviationOutboxState @default(PENDING)
+  generation        Int                        @default(1)
+  /// Stable enqueue anchor for health. It changes only when a PUBLISHED or
+  /// human-requeued FAILED outbox enters PENDING, never for another append.
+  pendingSince      DateTime?
+  lastPublishedAt   DateTime?
+  lastError         String?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+}
+
 /// One manufactured component within a project's work-order sheet
 /// (e.g. "Tok 22-es", "Ajtólap 5-ös") — a row group on the munkalap.
 model Epic {
@@ -789,6 +959,7 @@ model Epic {
   /// Free-standing board tasks can belong directly to an epic without
   /// pretending to be one of the work-sheet's manufacturing steps.
   tasks Task[]
+  flowLabProvenance FlowLabEpicProvenance?
 
   @@index([projectId])
 }
@@ -811,6 +982,7 @@ model EpicStep {
   position   Int       @default(0)
 
   tasks Task[]
+  flowLabProvenance FlowLabEpicStepProvenance?
 
   @@index([epicId])
 }

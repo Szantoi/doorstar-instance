@@ -98,6 +98,15 @@ describe("ProjectDetailPage accessibility and mutation authority", () => {
     expect(projectsLink.parentElement).not.toHaveTextContent("Projektek / 26148");
   });
 
+  it("links to the dedicated read-only Flow Lab evidence workspace", () => {
+    renderPage();
+
+    expect(screen.getByRole("link", { name: "Flow Lab evidence megnyitása →" })).toHaveAttribute(
+      "href",
+      "/projects/dsmr-26148/flow-lab",
+    );
+  });
+
   it("disables every project mutation and calls no mutation while project data refetches", () => {
     vi.mocked(useProject).mockReturnValue(queryResult(project, { isFetching: true }) as unknown as ReturnType<typeof useProject>);
 

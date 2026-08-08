@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Toast } from "@/components/ui/Toast";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { isReadOnlyDemo } from "@/lib/readOnlyDemo";
 import { useUiStore, type Role } from "@/store/uiStore";
 
 type ProductTheme = "light" | "dark";
@@ -94,7 +95,9 @@ function ThemeAndRoleControls({ theme, nextTheme, role, setTheme, setRole, phone
     <button className="doorstar-theme-toggle" type="button" onClick={() => setTheme(nextTheme)} aria-label={`${nextTheme} mód bekapcsolása`}>
       {theme === "light" ? "Sötét mód" : "Világos mód"}
     </button>
-    <label className="doorstar-role-picker"><span>Szerep</span><select value={role} onChange={(event) => setRole(event.target.value as Role)}>{officeRoles.map((entry) => <option key={entry.value} value={entry.value}>{entry.label}</option>)}</select></label>
+    {isReadOnlyDemo
+      ? <span className="doorstar-readonly-demo" role="status">Olvasó · csak olvasható demó</span>
+      : <label className="doorstar-role-picker"><span>Szerep</span><select value={role} onChange={(event) => setRole(event.target.value as Role)}>{officeRoles.map((entry) => <option key={entry.value} value={entry.value}>{entry.label}</option>)}</select></label>}
   </div>;
 }
 

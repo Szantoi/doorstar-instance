@@ -52,6 +52,14 @@ npm install
 npm run dev   # http://localhost:4611
 ```
 
+## Read-only demo build
+
+The normal build retains the product role selector. For the release demo use
+`npm run build:readonly-demo`. It sets `VITE_READ_ONLY_DEMO=true` itself and
+verifies a read-only marker in the built `index.html`. The profile fixes the
+browser UI to the reader role and replaces the selector with a visible
+read-only context; it does not replace server-side authorization.
+
 ## Known simplifications (v1)
 
 - The work-order sheet (`ProjectDetailPage`) edits the epic/step grid locally

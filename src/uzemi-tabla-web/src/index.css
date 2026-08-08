@@ -1493,6 +1493,7 @@ a:hover {
 
 .doorstar-role-picker { display: flex; align-items: center; gap: 6px; color: var(--ds-muted, #7a7566); font-family: "IBM Plex Mono", monospace; font-size: 10px; text-transform: uppercase; }
 .doorstar-role-picker select { max-width: 170px; border: 1px solid var(--ds-rule, #c9c2b2); padding: 6px 8px; background: transparent; color: inherit; font: inherit; text-transform: none; }
+.doorstar-readonly-demo { display: inline-flex; min-height: 28px; align-items: center; border: 1px solid var(--ds-rule, #c9c2b2); padding: 0 8px; color: var(--ds-muted, #7a7566); font: 800 9px/1 "IBM Plex Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
 
 .orders-page {
   flex: 1;

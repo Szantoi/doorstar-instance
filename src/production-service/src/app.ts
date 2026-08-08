@@ -17,6 +17,7 @@ import { technicalCatalogRouter } from "./routes/technicalCatalog.js";
 import { supplementaryItemsRouter } from "./routes/supplementaryItems.js";
 import { componentSnapshotsRouter } from "./routes/componentSnapshots.js";
 import { operationPlanSnapshotsRouter } from "./routes/operationPlanSnapshots.js";
+import { flowLabRouter } from "./routes/flowLab.js";
 import { readinessRouter } from "./routes/readiness.js";
 import { productionServiceOpenApi } from "./openapi.js";
 import { prisma } from "./db/client.js";
@@ -66,6 +67,7 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
   api.use(supplementaryItemsRouter);
   api.use(componentSnapshotsRouter);
   api.use(operationPlanSnapshotsRouter);
+  api.use(flowLabRouter);
   api.use(readinessRouter);
   api.use(technicalCatalogRouter);
   api.use(importRunsRouter);

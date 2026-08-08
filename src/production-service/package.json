@@ -15,6 +15,8 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
     "seed:ux-reference": "tsx scripts/seedUxReferenceProject.ts",
+    "seed:flow-lab-local-demo": "tsx scripts/seedFlowLabLocalDemo.ts",
+    "flow-lab:import-plan": "tsx scripts/importFlowLabPlanMaterialization.ts",
     "test": "vitest run",
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "test:watch": "vitest",

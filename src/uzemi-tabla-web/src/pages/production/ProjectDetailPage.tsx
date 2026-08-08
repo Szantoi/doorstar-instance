@@ -197,6 +197,12 @@ export function ProjectDetailPage() {
         />
 
         <section className="project-office-workspaces" aria-label="Projekt munkaterek">
+          <article className="project-office-flow-lab">
+            <span>Elkülönített evidence munkatér</span>
+            <h2>Flow Lab snapshotok és eltérések</h2>
+            <p>Az importált Flow Lab terv pinjei, readiness-e, relatív gráfja és append-only eltérésnaplója külön, csak olvasható operátori nézetben marad.</p>
+            <Link to={`/projects/${encodeURIComponent(key)}/flow-lab`}>Flow Lab evidence megnyitása →</Link>
+          </article>
           <article className="project-office-legacy">
             <span>Elkülönített segédfelület</span>
             <h2>Örökölt munkalap és mennyiségi lapok</h2>

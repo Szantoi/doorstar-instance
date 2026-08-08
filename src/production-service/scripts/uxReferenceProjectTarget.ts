@@ -1,5 +1,8 @@
 export const UX_REFERENCE_PROJECT_KEY = "UX-REFERENCE-RETROFIT-001";
 export const UX_REFERENCE_SCHEMA = "doorstar_ux_reference";
+/** Dedicated synthetic Flow Lab demo schema. This is intentionally a fixed
+ * allowlist entry, not a caller-selected schema. */
+export const FLOW_LAB_DEMO_SCHEMA = "doorstar_flow_lab_demo";
 export const UX_REFERENCE_DATABASE_NAME = "doorstar_production";
 
 const generatedVitestSchema = /^doorstar_test_vitest_[a-z0-9_]+$/;
@@ -52,13 +55,13 @@ export function assertUxReferenceTarget(input: {
   if (!schema) {
     throw new Error("DATABASE_URL must select an explicit schema");
   }
-  const isolatedUxSchema = schema === UX_REFERENCE_SCHEMA;
+  const isolatedDemoSchema = schema === UX_REFERENCE_SCHEMA || schema === FLOW_LAB_DEMO_SCHEMA;
   const localPublic = schema === "public"
     && input.arguments.includes("--confirm-local-development-database");
   const vitestSchema = input.nodeEnv === "test" && generatedVitestSchema.test(schema);
-  if (!isolatedUxSchema && !localPublic && !vitestSchema) {
+  if (!isolatedDemoSchema && !localPublic && !vitestSchema) {
     throw new Error(
-      `UX reference seed refused schema '${schema}'; use ${UX_REFERENCE_SCHEMA}, a generated Vitest schema, or explicitly confirm the local public development schema`,
+      `UX reference seed refused schema '${schema}'; use ${UX_REFERENCE_SCHEMA}, ${FLOW_LAB_DEMO_SCHEMA}, a generated Vitest schema, or explicitly confirm the local public development schema`,
     );
   }
 

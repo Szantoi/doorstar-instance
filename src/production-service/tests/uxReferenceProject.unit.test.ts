@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   assertUxReferenceTarget,
+  FLOW_LAB_DEMO_SCHEMA,
   UX_REFERENCE_DATABASE_NAME,
   UX_REFERENCE_SCHEMA,
 } from "../scripts/uxReferenceProjectTarget.js";
@@ -15,6 +16,17 @@ describe("UX reference seed target guard", () => {
     });
     expect(target.databaseName).toBe(UX_REFERENCE_DATABASE_NAME);
     expect(target.schema).toBe(UX_REFERENCE_SCHEMA);
+  });
+
+  it("accepts only the named synthetic Flow Lab demo schema", () => {
+    const target = assertUxReferenceTarget({
+      databaseUrl: `postgresql://doorstar:doorstar@127.0.0.1:5462/doorstar_production?schema=${FLOW_LAB_DEMO_SCHEMA}`,
+      arguments: confirmation,
+    });
+    expect(target).toMatchObject({
+      databaseName: UX_REFERENCE_DATABASE_NAME,
+      schema: FLOW_LAB_DEMO_SCHEMA,
+    });
   });
 
   it("requires a second explicit confirmation for the local public development schema", () => {

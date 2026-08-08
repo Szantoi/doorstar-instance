@@ -26,6 +26,7 @@ import {
   validateOperationCandidates,
   type OperationPlanBlocker,
 } from "./operationPlanValidation.js";
+import { projectFlowLabPlanSnapshot } from "./flowLabReadProjection.js";
 
 export { OperationPlanError } from "./operationPlanReadiness.js";
 
@@ -73,15 +74,27 @@ export async function listOperationPlanSnapshots(orderRevisionId: string, db: Da
     where: { orderRevisionId },
     orderBy: [{ createdAt: "asc" }, { id: "asc" }],
   });
+  // Flow Lab evidence is a separate aggregate and never participates in the
+  // incumbent create/review/release authority. It is included only as an
+  // explicitly marked read-only origin for the shared operation workspace.
+  const flowLabSnapshots = await db.flowLabPlanSnapshot.findMany({
+    where: { orderRevisionId },
+    orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+  });
+  const projectedSnapshots = await Promise.all(
+    snapshots.map((snapshot) => projectOperationPlanSnapshot(db, snapshot)),
+  );
+  const projectedFlowLabSnapshots = await Promise.all(
+    flowLabSnapshots.map((snapshot) => projectFlowLabPlanSnapshot(db, snapshot)),
+  );
   return {
     readiness: {
       ready: createBlockers.length === 0,
       blockers: createBlockers,
       allowedActions: createBlockers.length === 0 ? ["CREATE_OPERATION_PLAN_SNAPSHOT"] : [],
     },
-    snapshots: await Promise.all(
-      snapshots.map((snapshot) => projectOperationPlanSnapshot(db, snapshot)),
-    ),
+    snapshots: [...projectedSnapshots, ...projectedFlowLabSnapshots]
+      .sort((left, right) => left.createdAt.getTime() - right.createdAt.getTime() || left.id.localeCompare(right.id)),
   };
 }
 

@@ -13,10 +13,18 @@ export class ApiError extends Error {
   }
 }
 
-interface ApiFetchOptions {
+export interface ApiFetchOptions {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   query?: Record<string, string | number | boolean | undefined>;
   body?: unknown;
+  /**
+   * Flow Lab's read workspace must not promote browser-selected role or
+   * station state into an authority header. A gateway session may still add
+   * authenticated context outside this client.
+   */
+  identityHeaders?: "default" | "omit";
+  /** The Flow Lab contract is independently versioned, so read it fresh. */
+  cache?: RequestCache;
 }
 
 function buildQuery(query?: ApiFetchOptions["query"]): string {
@@ -30,20 +38,21 @@ function buildQuery(query?: ApiFetchOptions["query"]): string {
 }
 
 export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
-  // Sent so the backend can apply the same "Vezető vs. Állomás" restriction
-  // the UI does. This is not real auth — a shop-floor tool with no login —
-  // just a safety rail against the app itself letting a station touch
-  // another station's work; a direct API call could still spoof these.
+  // Default requests retain the legacy UI safety rail. Flow Lab GETs opt out:
+  // the local picker is never browser-side identity or authorization.
   const { role, myStation } = useUiStore.getState();
+  const identityHeaders: Record<string, string> = options.identityHeaders === "omit"
+    ? {}
+    : { "X-Role": role, "X-Station": myStation };
 
   const res = await fetch(`${path}${buildQuery(options.query)}`, {
     method: options.method ?? "GET",
+    cache: options.cache,
     headers: {
-      ...(options.body ? { "Content-Type": "application/json" } : {}),
-      "X-Role": role,
-      "X-Station": myStation,
+      ...(options.body !== undefined ? { "Content-Type": "application/json" } : {}),
+      ...identityHeaders,
     },
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   });
 
   if (!res.ok) {

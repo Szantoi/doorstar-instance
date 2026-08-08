@@ -212,5 +212,48 @@ describe("OpenAPI contract endpoint", () => {
       },
       additionalProperties: false,
     });
+    expect(response.body.components.schemas.FlowLabPlanSnapshot.required).toContain("evidence");
+    expect(response.body.components.schemas.FlowLabPlanSnapshot.properties.evidence)
+      .toEqual({ $ref: "#/components/schemas/FlowLabArtifactEvidence" });
+    expect(response.body.components.schemas.FlowLabReadiness.properties.blockers)
+      .toEqual({ type: "array", items: { $ref: "#/components/schemas/FlowLabReadinessBlocker" } });
+    expect(response.body.components.schemas.FlowLabReadinessBlocker).toMatchObject({
+      type: "object",
+      required: ["code", "message"],
+      properties: {
+        code: { type: "string" },
+        message: { type: "string" },
+        entityId: { type: "string" },
+      },
+      additionalProperties: false,
+    });
+    expect(response.body.components.schemas.FlowLabArtifactEvidence).toMatchObject({
+      type: "object",
+      required: ["findings", "unresolved", "absentMembers", "productionAuthority"],
+      properties: {
+        findings: { type: "array", items: { $ref: "#/components/schemas/FlowLabFinding" } },
+        unresolved: { type: "array", items: { $ref: "#/components/schemas/FlowLabUnresolved" } },
+        absentMembers: { type: "array", items: { $ref: "#/components/schemas/FlowLabAbsentMember" } },
+        productionAuthority: { const: false },
+      },
+      additionalProperties: false,
+    });
+    expect(response.body.components.schemas.FlowLabPlanSnapshot.required).toEqual(expect.arrayContaining([
+      "generatorProfileFingerprint",
+      "resourceMappingFingerprint",
+      "orderContentHash",
+      "componentOutputHash",
+      "createdByPrincipal",
+      "reviewResolution",
+      "reviewedByRole",
+      "reviewedByPrincipal",
+      "reviewedAt",
+    ]));
+    expect(response.body.components.schemas.FlowLabDeviationRecord.properties.pins)
+      .toEqual({ $ref: "#/components/schemas/FlowLabDeviationPins" });
+    expect(response.body.components.schemas.FlowLabDeviationPins).toMatchObject({
+      required: ["sourceSetKey", "materializationKey", "catalogRevision", "catalogHash", "planHash", "engineIdentity"],
+      additionalProperties: false,
+    });
   });
 });

@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:readonly-demo": "node scripts/buildReadonlyDemo.mjs",
     "preview": "vite preview --port 4611",
     "test": "vitest run --config vitest.unit.config.ts",
     "test:unit": "npm run test",

@@ -42,6 +42,31 @@ export function requireRole(req: Request, res: Response, permitted: readonly Doo
   return false;
 }
 
+/**
+ * Require an explicitly declared canonical role without changing the legacy
+ * requester fallback used by the rest of the login-less application.
+ *
+ * This is a transitional DEV transport guard, not authentication. Routes that
+ * need a real principal must remain closed until their OIDC boundary exists.
+ */
+export function requireExplicitRole(
+  req: Request,
+  res: Response,
+  permitted: readonly DoorstarRole[],
+  missingRoleError: string,
+): boolean {
+  const declaredRole = req.header("x-role")?.trim();
+  if (!declaredRole) {
+    res.status(401).json({ error: missingRoleError });
+    return false;
+  }
+  if (!permitted.includes(declaredRole as DoorstarRole)) {
+    res.status(403).json({ error: "role_not_permitted" });
+    return false;
+  }
+  return true;
+}
+
 /** Return false after producing the standard response for a manager-only
  * action requested by an operator account. */
 export function requireManager(req: Request, res: Response): boolean {

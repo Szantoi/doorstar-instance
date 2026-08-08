@@ -1,0 +1,23 @@
+{
+  "version": "doorstar.flow-lab.station-mapping/v1",
+  "families": [
+    { "key": "PREPARATION", "name": "Előkészítés", "position": 0 },
+    { "key": "DOOR_LEAF", "name": "Ajtólap", "position": 1 },
+    { "key": "JAMB_CORE", "name": "Tokmag", "position": 2 },
+    { "key": "CASING", "name": "Takaróléc", "position": 3 }
+  ],
+  "stations": [
+    { "source": "Gyártás Iroda", "board": "Egyéb" },
+    { "source": "Műszaki tervezés", "board": "Egyéb" },
+    { "source": "Asztalos", "board": "Asztalos" },
+    { "source": "CNC", "board": "CNC" },
+    { "source": "Összeszerelő", "board": "Asztalos" },
+    { "source": "Fóliázó", "board": "Csiszoló" },
+    { "source": "Körfűrész", "board": "Körfűrész" },
+    { "source": "Bürkle", "board": "Bürkle" },
+    { "source": "Csiszoló", "board": "Csiszoló" },
+    { "source": "Fújó", "board": "Fújó" },
+    { "source": "Egyéb", "board": "Egyéb" },
+    { "source": "Száll./Kész", "board": "Száll./Kész" }
+  ]
+}

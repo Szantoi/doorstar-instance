@@ -1,0 +1,44 @@
+-- Run once as the PostgreSQL administrator for doorstar_production.
+-- Replace <generated-password-on-vps> before execution. Do not retain a copy
+-- containing that password. This creates only the explicitly named demo role
+-- and schema; it does not migrate or alter the public schema.
+
+CREATE ROLE doorstar_flow_lab_demo_app
+  LOGIN
+  NOSUPERUSER
+  NOCREATEDB
+  NOCREATEROLE
+  NOINHERIT
+  PASSWORD '<generated-password-on-vps>';
+
+GRANT CONNECT ON DATABASE doorstar_production TO doorstar_flow_lab_demo_app;
+CREATE SCHEMA doorstar_flow_lab_demo AUTHORIZATION doorstar_flow_lab_demo_app;
+
+-- The app owns the demo schema and receives no direct public-schema grants.
+REVOKE ALL ON SCHEMA public FROM doorstar_flow_lab_demo_app;
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM doorstar_flow_lab_demo_app;
+REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM doorstar_flow_lab_demo_app;
+ALTER ROLE doorstar_flow_lab_demo_app IN DATABASE doorstar_production
+  SET search_path = doorstar_flow_lab_demo;
+
+-- Run this verification before migration and retain only its non-secret output
+-- in the release evidence. All *_public values must be false or zero.
+SELECT
+  rolname,
+  rolsuper,
+  rolcreatedb,
+  rolcreaterole,
+  has_schema_privilege(rolname, 'doorstar_flow_lab_demo', 'USAGE') AS demo_usage,
+  has_schema_privilege(rolname, 'doorstar_flow_lab_demo', 'CREATE') AS demo_create,
+  has_schema_privilege(rolname, 'public', 'CREATE') AS public_create
+FROM pg_roles
+WHERE rolname = 'doorstar_flow_lab_demo_app';
+
+SELECT count(*) AS writable_public_tables
+FROM pg_tables
+WHERE schemaname = 'public'
+  AND (
+    has_table_privilege('doorstar_flow_lab_demo_app', format('%I.%I', schemaname, tablename), 'INSERT')
+    OR has_table_privilege('doorstar_flow_lab_demo_app', format('%I.%I', schemaname, tablename), 'UPDATE')
+    OR has_table_privilege('doorstar_flow_lab_demo_app', format('%I.%I', schemaname, tablename), 'DELETE')
+  );

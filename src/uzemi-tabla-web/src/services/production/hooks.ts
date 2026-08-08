@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { productionApi } from "./api";
 import type { OrderChecklistItem, ProjectDetail, Task, UpdateTaskPatch } from "./types";
 
@@ -20,6 +20,9 @@ const keys = {
   productionOrder: (projectKey: string) => ["production", "production-order", projectKey] as const,
   orderRevisionReadiness: (projectKey: string, revision: number) => ["production", "order-revision-readiness", projectKey, revision] as const,
   projectWorkflow: (projectKey: string) => ["production", "project-workflow", projectKey] as const,
+  flowLabPlanSnapshots: (projectKey: string) => ["production", "flow-lab", projectKey, "plan-snapshots"] as const,
+  flowLabDeviations: (projectKey: string) => ["production", "flow-lab", projectKey, "deviations"] as const,
+  flowLabMaterializedWorksheet: (projectKey: string) => ["production", "flow-lab", projectKey, "materialized-worksheet"] as const,
   componentSnapshots: (projectKey: string, revision: number) => ["production", "component-snapshots", projectKey, revision] as const,
   operationPlanSnapshots: (projectKey: string, revision: number) => ["production", "operation-plan-snapshots", projectKey, revision] as const,
   orderFeedback: (projectKey: string, revision: number) => ["production", "order-feedback", projectKey, revision] as const,
@@ -336,6 +339,44 @@ export function useProjectWorkflow(projectKey: string, enabled = true) {
     queryKey: keys.projectWorkflow(projectKey),
     queryFn: () => productionApi.getProjectWorkflow(projectKey),
     enabled: !!projectKey && enabled,
+    staleTime: 0,
+  });
+}
+
+/** Session-only, GET-only Flow Lab evidence. The API client omits browser
+ * role/station headers so a later gateway session remains the policy source. */
+export function useFlowLabPlanSnapshots(projectKey: string) {
+  return useQuery({
+    queryKey: keys.flowLabPlanSnapshots(projectKey),
+    queryFn: () => productionApi.getFlowLabPlanSnapshots(projectKey),
+    enabled: !!projectKey,
+    staleTime: 0,
+  });
+}
+
+/** Cursor pagination keeps immutable pages in the query cache; there is no
+ * browser mutation hook for an observed Flow Lab record. */
+export function useFlowLabDeviations(projectKey: string) {
+  return useInfiniteQuery({
+    queryKey: keys.flowLabDeviations(projectKey),
+    queryFn: ({ pageParam }) => productionApi.getFlowLabDeviations(
+      projectKey,
+      typeof pageParam === "string" ? pageParam : undefined,
+    ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    enabled: !!projectKey,
+    staleTime: 0,
+  });
+}
+
+/** Existing project data is narrowed by the UI to immutable Flow Lab
+ * provenance, never passed into the editable legacy worksheet. */
+export function useFlowLabMaterializedWorksheet(projectKey: string) {
+  return useQuery({
+    queryKey: keys.flowLabMaterializedWorksheet(projectKey),
+    queryFn: () => productionApi.getFlowLabMaterializedWorksheet(projectKey),
+    enabled: !!projectKey,
     staleTime: 0,
   });
 }

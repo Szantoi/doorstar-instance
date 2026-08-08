@@ -1125,6 +1125,24 @@ export interface ProjectWorkflow {
   nextAction: ReadinessNextAction;
 }
 
+/** Immutable pins copied from a reviewed Flow Lab materialization. They are
+ * provenance only; neither the browser nor the board derives a schedule from
+ * them. */
+export interface FlowLabPins {
+  catalogRevision: string;
+  catalogHash: string;
+  planHash: string;
+  engineIdentity: string;
+}
+
+/** A preserved plan-graph edge, exposed read-only for a materialized step. */
+export interface FlowLabPredecessor {
+  correlationKey: string;
+  type: "FS" | "SS" | "FF" | "SF";
+  lagMinutes: number;
+  partialRelease?: string | null;
+}
+
 export interface EpicStep {
   id: string;
   name: string;
@@ -1135,6 +1153,15 @@ export interface EpicStep {
   planLocked: boolean;
   disabled: boolean;
   tasks?: Task[];
+  /** Optional immutable Flow Lab materialization provenance. */
+  origin?: "FLOW_LAB";
+  sourceSetKey?: string;
+  materializationKey?: string;
+  pins?: FlowLabPins;
+  correlationKey?: string;
+  operationType?: "ActiveWork" | "Summary" | string;
+  relativePosition?: number;
+  predecessors?: FlowLabPredecessor[];
 }
 
 export interface Epic {
@@ -1143,6 +1170,10 @@ export interface Epic {
   quantityLabel: string | null;
   disabled: boolean;
   steps: EpicStep[];
+  origin?: "FLOW_LAB";
+  sourceSetKey?: string;
+  materializationKey?: string;
+  pins?: FlowLabPins;
 }
 
 export interface ProjectDetail {

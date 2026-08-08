@@ -1,0 +1,60 @@
+version: "1.0"
+project: doorstar-flow-lab-binding
+updated: "2026-08-08"
+
+tasks:
+  - id: DSFLB-01
+    name: Flow Lab plan snapshot import
+    status: ready_for_demo_release
+    scope: "Durable FlowLabPlanSnapshot aggregate; file import remains outside the demo proxy."
+  - id: DSFLB-02
+    name: Verified snapshot materialization
+    status: ready_for_demo_release
+    scope: "Flow Lab Epic/EpicStep provenance is shown read-only in the demo."
+  - id: DSFLB-03
+    name: Append-only deviation feed
+    status: ready_for_demo_release
+    scope: "Read projection is available; feed dispatch remains an authenticated operations flow."
+  - id: DSFLB-07
+    name: Read-only operator workspace
+    status: ready_for_demo_release
+    route: "/projects/UX-REFERENCE-RETROFIT-001/flow-lab"
+    acceptance:
+      - "No browser principal or role headers are emitted by Flow Lab GET clients."
+      - "No Flow Lab mutation UI is rendered."
+  - id: DSFLB-10
+    name: Password-protected read-only hosted demo
+    status: in_progress
+    depends_on: [DSFLB-01, DSFLB-02, DSFLB-03, DSFLB-07, DSFLB-11]
+    acceptance:
+      - "Only HTTPS plus Basic Auth exposes the demo; no IP allowlist."
+      - "Only GET/HEAD reaches /api/production/ and nginx supplies reader context."
+      - "The published frontend is built with VITE_READ_ONLY_DEMO=true."
+      - "The service is loopback-only and can be rolled back to the prior vhost."
+  - id: DSFLB-11
+    name: Hosted synthetic-data boundary and rollback record
+    status: in_progress
+    resource_names:
+      database: doorstar_production
+      schema: doorstar_flow_lab_demo
+      role: doorstar_flow_lab_demo_app
+    acceptance:
+      - "The dedicated schema and role cannot modify public-schema data."
+      - "The fixture is synthetic and reproducible from the release commit."
+      - "Schema reset/reseed and nginx/service rollback are demonstrated."
+  - id: DSFLB-06
+    name: Authenticated Flow Lab control plane
+    status: blocked
+    blocked_by: [DSORD-18, DSCONV-03]
+    note: "OIDC/JWT and named reviewer policy replace the temporary demo reader context."
+
+next_product_increment:
+  id: DSFLB-12
+  name: Authenticated Flow Lab review and materialization control plane
+  status: pending
+  depends_on: [DSFLB-06]
+  scope:
+    - "Exchange nginx Basic Auth/fixed reader context for authenticated gateway claims."
+    - "Open only narrow review/materialize/deviation mutation controls."
+    - "Keep importer/creator distinct from named reviewer."
+    - "Add snapshot supersede/compare decision before permitting a second materialization."
