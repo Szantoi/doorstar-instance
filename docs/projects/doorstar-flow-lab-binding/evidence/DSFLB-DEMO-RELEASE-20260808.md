@@ -57,6 +57,7 @@ VPS deployment validation:
 | Anonymous HTTPS request | `401` |
 | Authenticated HTTPS SPA request | `200` |
 | Authenticated Flow Lab GET with client `X-Role: vezeto` | `200`, proving nginx replaced it with `reader` |
+| Workspace's three GETs (snapshots, deviations, project provenance) | PASS: `1` / `0` / `4` Flow Lab epics |
 | Authenticated Flow Lab POST | `405` |
 | Native public hostname route | `200` |
 | nginx vhost declarations for Doorstar hosts | exactly two (80 and 443) |
