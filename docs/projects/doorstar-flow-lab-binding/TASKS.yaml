@@ -24,9 +24,11 @@ tasks:
       - "No Flow Lab mutation UI is rendered."
   - id: DSFLB-13
     name: Operator-friendly Flow Lab demo workspace
-    status: in_progress
+    status: completed
     depends_on: [DSFLB-07]
     design: DSFLB-13-OPERATOR-UX-PROMOTION.md
+    evidence: evidence/DSFLB-13-OPERATOR-UX-20260808.md
+    released_commit: 98b65ca
     scope: "Promote the Flow Lab office information architecture into the Doorstar project read-only workspace without changing authority."
     acceptance:
       - "The default view explains the plan, its state, board handoff and work sequence in plain Hungarian."

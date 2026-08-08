@@ -47,10 +47,16 @@ in the run record.
    directly over loopback and confirm the listener PID belongs to the unit.
 5. Build the static frontend with `npm run build:readonly-demo`. The command
    sets the profile itself and fails unless the built `index.html` contains the
-   deterministic read-only marker. Then verify that `www-data` can traverse
-   the release path and read `dist/index.html`. A normal frontend build is not
-   an acceptable hosted-demo artifact because it leaves the legacy role picker
-   in the presentation.
+   deterministic read-only marker. Vite may create build output readable only
+   by the deploy user, so after every build run:
+
+   ```bash
+   sudo chmod -R o+rX /opt/doorstar-flow-lab-demo/src/uzemi-tabla-web/dist
+   sudo -u www-data sh -c 'cd /tmp && test -x /opt/doorstar-flow-lab-demo/src/uzemi-tabla-web/dist/assets && test -r /opt/doorstar-flow-lab-demo/src/uzemi-tabla-web/dist/index.html'
+   ```
+
+   A normal frontend build is not an acceptable hosted-demo artifact because it
+   leaves the legacy role picker in the presentation.
 6. Create the Basic Auth file with `htpasswd -B -C 12` interactively on the
    VPS. Do not put the password in a command line, environment file or history.
 7. Back up the active nginx Doorstar vhost, then merge/replace its single

@@ -32,6 +32,8 @@ The operational procedure and rollback boundary are in
 
 The synthetic, password-protected demo is published at
 `https://doorstar.asztalostech.hu/projects/UX-REFERENCE-RETROFIT-001/flow-lab`.
+Its default Flow Lab view uses operator-facing Hungarian copy and keeps audit
+identifiers in collapsed technical details.
 The shared demo credential is deliberately held only in the VPS root-owned
 credential file, not in Git or this document. The dated deployment evidence is
 [DSFLB-DEMO-RELEASE-20260808.md](evidence/DSFLB-DEMO-RELEASE-20260808.md).
