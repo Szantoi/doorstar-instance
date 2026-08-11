@@ -122,7 +122,7 @@ export const DOORSTAR_WOODWORKING_CARDS: readonly TenantWoodworkingKnowledgeCard
   {
     id: "felulet-elokeszites",
     title: "Felület-előkészítés",
-    section: "3. Felület-előkészítés",
+    section: "Felületkezelés előkészítése",
     text:
       "Felületkezelés előtt a felület legyen egyenletes, pormentes és a hibák szempontjából ellenőrzött. A csiszolási nyom, élletörés, ragasztómaradvány és sérülés később láthatóvá válhat, ezért javításukat még a bevonat felhordása előtt kell elvégezni.",
     keywords: ["felület-előkészítés", "csiszolás", "poreltávolítás", "élletörés", "ragasztó", "hiba"],
@@ -130,7 +130,7 @@ export const DOORSTAR_WOODWORKING_CARDS: readonly TenantWoodworkingKnowledgeCard
   {
     id: "feluletkezeles",
     title: "Felületkezelés",
-    section: "4. Felületkezelés",
+    section: "3. Felületkezelés",
     text:
       "A felületkezelési tételhez rögzíteni kell a választott színt, bevonatrendszert és az ellenőrzött próbadarabot. A rétegek között csak a meghatározott állapotban szabad továbblépni; színeltérés, folyás vagy elégtelen fedés esetén a tételt el kell különíteni.",
     keywords: ["felületkezelés", "szín", "bevonat", "próbadarab", "réteg", "fedés"],
@@ -138,7 +138,7 @@ export const DOORSTAR_WOODWORKING_CARDS: readonly TenantWoodworkingKnowledgeCard
   {
     id: "osszeszereles",
     title: "Összeszerelés",
-    section: "5. Összeszerelés",
+    section: "4. Összeszerelés",
     text:
       "Összeszereléskor a szárazpróbával ellenőrizni kell az illesztéseket, az átlókat és a vasalat működését. A ragasztás, kötőelem és vasalat csak a jóváhagyott rajz szerint kerüljön be; a kész egységet működési próbával kell átvenni.",
     keywords: ["összeszerelés", "szárazpróba", "illesztés", "átló", "ragasztás", "vasalat"],
@@ -146,10 +146,18 @@ export const DOORSTAR_WOODWORKING_CARDS: readonly TenantWoodworkingKnowledgeCard
   {
     id: "csomagolas",
     title: "Csomagolás",
-    section: "6. Csomagolás",
+    section: "5. Csomagolás",
     text:
       "Csomagolás előtt ellenőrizni kell a termékazonosítót, darabszámot, látható felületet és tartozékokat. Az éleket és sarkokat a szállítás várható igénybevételéhez kell védeni, a csomagon pedig a munkalaphoz köthető jelölés maradjon olvasható.",
     keywords: ["csomagolás", "élvédelem", "sarokvédelem", "tartozék", "termékazonosító", "szállítás"],
+  },
+  {
+    id: "kiszallithato",
+    title: "Kiszállítható",
+    section: "6. Kiszállítható",
+    text:
+      "A tétel csak lezárt csomagolás és dokumentált végellenőrzés után jelölhető kiszállíthatónak. Átadás előtt egyeztesd a munkalaphoz kötött azonosítót, a darabszámot, a csomagolási állapotot és a szükséges átadási dokumentációt.",
+    keywords: ["kiszállítható", "kiszállítás", "átadás", "végellenőrzés", "csomagolás", "munkalap"],
   },
   {
     id: "minoseg-es-eredet",

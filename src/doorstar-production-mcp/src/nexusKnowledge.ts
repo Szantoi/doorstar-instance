@@ -1,9 +1,18 @@
 import { execFile } from "node:child_process";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { z } from "zod";
+import { loadKnowledgeCorpus, searchKnowledge, type KnowledgeCorpus, type KnowledgeSearchResult } from "./knowledge.js";
+import { tenantWoodworkingDocuments, type TenantWoodworkingDocument } from "./tenantWoodworkingKnowledge.js";
 
-export const DEFAULT_NEXUS_MCP_URL = "http://100.82.133.87:3466/mcp";
-export const DEFAULT_NEXUS_PRINCIPAL = "doorstar-root-codex";
+/**
+ * Dedicated, tailnet-only Doorstar tenant endpoint. It is intentionally not
+ * the broad Nexus-dev corpus on port 3466: this service owns exactly the
+ * `doorstar-woodworking` corpus.
+ */
+export const DEFAULT_NEXUS_MCP_URL = "http://100.82.133.87:3467/mcp";
+export const DOORSTAR_WOODWORKING_COLLECTION = "doorstar-woodworking";
+export const DOORSTAR_WOODWORKING_SCOPE = "woodworking";
 
 /**
  * Nexus principals are deliberately mapped to a fixed token-variable name.
@@ -26,16 +35,161 @@ const DEFAULT_TIMEOUT_MS = 12_000;
 const MAX_RESPONSE_BYTES = 512 * 1024;
 const MIN_TOKEN_LENGTH = 32;
 
-const resultMetadataSchema = z.object({
-  source: z.string().max(1_000).optional(),
-  page: z.union([z.string(), z.number()]).optional(),
-  doc: z.string().max(1_000).optional(),
-  file_sha256: z.string().max(256).optional(),
-  domain: z.string().max(500).optional(),
-  title: z.string().max(2_000).optional(),
-  category: z.string().max(500).optional(),
-  chunk_index: z.number().int().nonnegative().optional(),
-});
+const cardIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{0,127}$/);
+const sha256Schema = z.string().regex(/^[a-f0-9]{64}$/);
+const corpusFingerprintSchema = z.string().regex(/^doorstar-woodworking-v1-[a-f0-9]{16}$/);
+
+interface TrustedTenantCard {
+  readonly id: string;
+  readonly source: string;
+  readonly title: string;
+  readonly section: string;
+  readonly text: string;
+  readonly sha256: string;
+}
+
+interface TrustedTenantManifest {
+  readonly corpus: KnowledgeCorpus;
+  readonly corpusFingerprint: string;
+  readonly documentCount: number;
+  readonly cardsById: ReadonlyMap<string, TrustedTenantCard>;
+}
+
+function sha256(value: string): string {
+  return createHash("sha256").update(value, "utf8").digest("hex");
+}
+
+function tenantCardSource(cardId: string): string {
+  return `tenant:doorstar;scope:woodworking;card:${cardId}`;
+}
+
+/**
+ * This value is derived from the checked-in static tenant manifest, not from
+ * anything the remote service says. A tenant that was reconfigured to point
+ * at a broader corpus therefore cannot satisfy the bridge merely by using a
+ * similarly shaped fingerprint.
+ */
+export const DOORSTAR_WOODWORKING_CORPUS_FINGERPRINT = `doorstar-woodworking-v1-${sha256(
+  tenantWoodworkingDocuments.map((document) => `${tenantCardSource(document.id)}:${document.sha256}`).join("\n")
+).slice(0, 16)}`;
+
+function staticTenantConfigurationError(): never {
+  throw new NexusKnowledgeError("configuration");
+}
+
+function trustedCardFromDocument(document: TenantWoodworkingDocument): TrustedTenantCard {
+  if (
+    !cardIdSchema.safeParse(document.id).success ||
+    document.domain !== DOORSTAR_WOODWORKING_SCOPE ||
+    document.tenantId !== "doorstar" ||
+    document.scope !== DOORSTAR_WOODWORKING_SCOPE ||
+    document.provenance !== "doorstar-tenant-curated-static" ||
+    !sha256Schema.safeParse(document.sha256).success
+  ) {
+    staticTenantConfigurationError();
+  }
+  return Object.freeze({
+    id: document.id,
+    source: tenantCardSource(document.id),
+    title: document.title,
+    section: document.section,
+    text: document.text,
+    sha256: document.sha256,
+  });
+}
+
+/**
+ * Build the local trust root once. The remote tenant remains useful for
+ * identity and MCP transport, but it is not authoritative for corpus
+ * membership, provenance, text, or versioning.
+ */
+async function loadTrustedTenantManifest(): Promise<TrustedTenantManifest> {
+  if (tenantWoodworkingDocuments.length === 0) staticTenantConfigurationError();
+
+  const cardsById = new Map<string, TrustedTenantCard>();
+  for (const document of tenantWoodworkingDocuments) {
+    const card = trustedCardFromDocument(document);
+    if (cardsById.has(card.id)) staticTenantConfigurationError();
+    cardsById.set(card.id, card);
+  }
+
+  const corpus = await loadKnowledgeCorpus();
+  if (
+    corpus.corpusVersion !== DOORSTAR_WOODWORKING_CORPUS_FINGERPRINT ||
+    corpus.documentCount !== tenantWoodworkingDocuments.length ||
+    corpus.chunkCount !== tenantWoodworkingDocuments.length ||
+    corpus.sources.length !== tenantWoodworkingDocuments.length ||
+    corpus.chunks.length !== tenantWoodworkingDocuments.length ||
+    corpus.tenantId !== "doorstar" ||
+    corpus.scope !== DOORSTAR_WOODWORKING_SCOPE ||
+    corpus.provenance !== "doorstar-tenant-curated-static"
+  ) {
+    staticTenantConfigurationError();
+  }
+
+  for (const card of cardsById.values()) {
+    const sources = corpus.sources.filter((source) => source.path === card.source);
+    const chunks = corpus.chunks.filter((chunk) => chunk.source.path === card.source);
+    const source = sources[0];
+    const chunk = chunks[0];
+    if (
+      sources.length !== 1 ||
+      chunks.length !== 1 ||
+      !source ||
+      !chunk ||
+      source.title !== card.title ||
+      source.sha256 !== card.sha256 ||
+      source.tenantId !== "doorstar" ||
+      source.scope !== DOORSTAR_WOODWORKING_SCOPE ||
+      source.provenance !== "doorstar-tenant-curated-static" ||
+      chunk.section !== card.section ||
+      chunk.text !== card.text ||
+      chunk.source !== source
+    ) {
+      staticTenantConfigurationError();
+    }
+  }
+
+  return Object.freeze({
+    corpus,
+    corpusFingerprint: DOORSTAR_WOODWORKING_CORPUS_FINGERPRINT,
+    documentCount: tenantWoodworkingDocuments.length,
+    cardsById,
+  });
+}
+
+let trustedTenantManifestPromise: Promise<TrustedTenantManifest> | undefined;
+
+function trustedTenantManifest(): Promise<TrustedTenantManifest> {
+  trustedTenantManifestPromise ??= loadTrustedTenantManifest();
+  return trustedTenantManifestPromise;
+}
+
+/**
+ * The upstream tenant returns a deliberately small, synthetic provenance
+ * shape. Rejecting all book/page/filesystem fields makes an accidental return
+ * from the former broad development corpus fail closed.
+ */
+const resultMetadataSchema = z
+  .object({
+    source: z.string().regex(/^tenant:doorstar;scope:woodworking;card:[a-z0-9][a-z0-9-]{0,127}$/),
+    cardId: cardIdSchema,
+    title: z.string().min(1).max(2_000),
+    section: z.string().min(1).max(500),
+    domain: z.literal(DOORSTAR_WOODWORKING_SCOPE),
+    tenantId: z.literal("doorstar"),
+    scope: z.literal(DOORSTAR_WOODWORKING_SCOPE),
+    provenance: z.literal("doorstar-tenant-curated-static"),
+    sha256: sha256Schema,
+  })
+  .superRefine((metadata, context) => {
+    if (!metadata.source.endsWith(`card:${metadata.cardId}`)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "The synthetic source does not match its card identifier.",
+      });
+    }
+  });
 
 const searchResultSchema = z.object({
   text: z.string().max(128_000),
@@ -48,6 +202,10 @@ const searchPayloadSchema = z
     query: z.string(),
     limit: z.number().int().min(1).max(10),
     island: z.literal("doorstar"),
+    domain: z.literal(DOORSTAR_WOODWORKING_SCOPE),
+    collection: z.literal(DOORSTAR_WOODWORKING_COLLECTION),
+    scope: z.literal(DOORSTAR_WOODWORKING_SCOPE),
+    corpusFingerprint: corpusFingerprintSchema,
     count: z.number().int().nonnegative().max(10),
     results: z.array(searchResultSchema).max(10),
   })
@@ -59,6 +217,16 @@ const searchPayloadSchema = z
       });
     }
   });
+
+const healthPayloadSchema = z.object({
+  status: z.literal("ok"),
+  collectionName: z.literal(DOORSTAR_WOODWORKING_COLLECTION),
+  tenantId: z.literal("doorstar"),
+  scope: z.literal(DOORSTAR_WOODWORKING_SCOPE),
+  corpusFingerprint: corpusFingerprintSchema,
+  documents: z.number().int().min(1).max(500),
+  port: z.literal(3467),
+});
 
 const jsonRpcResponseSchema = z.object({
   jsonrpc: z.literal("2.0"),
@@ -122,10 +290,12 @@ export function tokenEnvironmentForPrincipal(principal: string): NexusTokenEnvir
  */
 export async function resolveNexusToken(options: NexusTokenResolutionOptions = {}): Promise<string | undefined> {
   const environment = options.environment ?? process.env;
-  const principal = (options.principal ?? environment.DOORSTAR_NEXUS_PRINCIPAL ?? DEFAULT_NEXUS_PRINCIPAL).trim();
+  const requestedPrincipal = options.principal ?? environment.DOORSTAR_NEXUS_PRINCIPAL;
+  if (typeof requestedPrincipal !== "string") return undefined;
+  const principal = requestedPrincipal.trim();
   const tokenEnvironment = tokenEnvironmentForPrincipal(principal);
-  // A configured but unknown principal must never fall back to the shared
-  // compatibility credential.
+  // A missing or unknown principal must never become an implicit root/default
+  // identity. Every bridge is explicitly bound in its Codex configuration.
   if (!tokenEnvironment) return undefined;
 
   const inherited = environment[tokenEnvironment];
@@ -184,6 +354,7 @@ export function parseWindowsUserEnvironmentToken(
  */
 export class NexusKnowledgeClient {
   private readonly endpoint: URL;
+  private readonly healthEndpoint: URL;
   private readonly token: string;
   private readonly fetchImplementation: NexusFetch;
   private readonly timeoutMs: number;
@@ -199,10 +370,12 @@ export class NexusKnowledgeClient {
       (this.endpoint.protocol !== "http:" && this.endpoint.protocol !== "https:") ||
       this.endpoint.username ||
       this.endpoint.password ||
-      this.endpoint.hash
+      this.endpoint.hash ||
+      this.endpoint.pathname !== "/mcp"
     ) {
       throw new NexusKnowledgeError("configuration");
     }
+    this.healthEndpoint = new URL("/health", this.endpoint);
 
     const token = options.token;
     if (!token || token.length < MIN_TOKEN_LENGTH || /\s/.test(token)) {
@@ -218,13 +391,25 @@ export class NexusKnowledgeClient {
 
   async search(query: string, limit = 5): Promise<NexusKnowledgeSearch> {
     const normalizedQuery = query.trim();
-    if (normalizedQuery.length < 2 || normalizedQuery.length > 500 || !Number.isInteger(limit) || limit < 1 || limit > 10) {
+    if (
+      normalizedQuery.length < 2 ||
+      normalizedQuery.length > 500 ||
+      /[\u0000-\u001f\u007f]/.test(normalizedQuery) ||
+      !Number.isInteger(limit) ||
+      limit < 1 ||
+      limit > 10
+    ) {
       throw new NexusKnowledgeError("invalid_request");
     }
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), this.timeoutMs);
     try {
+      // Establish the checked-in corpus as the trust root before sending a
+      // request. This does not read the user-provided book directory or any
+      // repository content; it builds only the static tenant cards.
+      const trustedManifest = await trustedTenantManifest();
+      await this.verifyTenantHealth(controller.signal, trustedManifest);
       const response = await this.fetchImplementation(this.endpoint, {
         method: "POST",
         redirect: "error",
@@ -239,7 +424,9 @@ export class NexusKnowledgeClient {
           method: "tools/call",
           params: {
             name: "search_knowledge",
-            arguments: { query: normalizedQuery, limit },
+            // The agent never controls this filter. The dedicated collection
+            // is authoritative; this is a second, server-enforced guard.
+            arguments: { query: normalizedQuery, limit, domain: DOORSTAR_WOODWORKING_SCOPE },
           },
         }),
         signal: controller.signal,
@@ -273,6 +460,7 @@ export class NexusKnowledgeClient {
       if (payload.query !== normalizedQuery || payload.limit !== limit) {
         throw new NexusKnowledgeError("invalid_response");
       }
+      this.verifyTrustedSearchPayload(payload, normalizedQuery, limit, trustedManifest);
       return payload;
     } catch (error) {
       if (error instanceof NexusKnowledgeError) throw error;
@@ -280,6 +468,93 @@ export class NexusKnowledgeClient {
     } finally {
       // Keep the deadline active through the complete, size-bounded body read.
       clearTimeout(timeout);
+    }
+  }
+
+  private verifyTrustedSearchPayload(
+    payload: NexusKnowledgeSearch,
+    query: string,
+    limit: number,
+    trustedManifest: TrustedTenantManifest
+  ): void {
+    if (payload.corpusFingerprint !== trustedManifest.corpusFingerprint) {
+      throw new NexusKnowledgeError("invalid_response");
+    }
+
+    // The remote tenant must return exactly the bounded static search result
+    // selected by the same pinned corpus. In particular, a valid-looking
+    // card ID cannot be used to smuggle source-book text, code, or a result
+    // from another chunk.
+    const expectedResults = searchKnowledge(trustedManifest.corpus, query, limit);
+    if (payload.results.length !== expectedResults.length) {
+      throw new NexusKnowledgeError("invalid_response");
+    }
+    for (let index = 0; index < expectedResults.length; index += 1) {
+      const expected = expectedResults[index];
+      const received = payload.results[index];
+      if (!expected || !received || !this.isTrustedResult(received, expected, trustedManifest)) {
+        throw new NexusKnowledgeError("invalid_response");
+      }
+    }
+  }
+
+  private isTrustedResult(
+    result: NexusKnowledgeSearch["results"][number],
+    expected: KnowledgeSearchResult,
+    trustedManifest: TrustedTenantManifest
+  ): boolean {
+    const card = trustedManifest.cardsById.get(result.metadata.cardId);
+    if (!card || expected.source.path !== card.source) return false;
+    if (
+      result.metadata.source !== card.source ||
+      result.metadata.title !== card.title ||
+      result.metadata.section !== card.section ||
+      result.metadata.sha256 !== card.sha256
+    ) {
+      return false;
+    }
+    // Scores can influence how an agent weighs evidence. When the tenant
+    // returns one, it must be the score recomputed from the pinned corpus;
+    // scoreless responses remain compatible with the narrow MCP contract.
+    if (result.score !== undefined && result.score !== expected.score) return false;
+
+    // The server's excerpt function is deterministic over the same pinned
+    // static chunk. Requiring its exact output prevents a valid card label
+    // from carrying arbitrary source-book or development text.
+    return result.text === expected.excerpt;
+  }
+
+  private async verifyTenantHealth(signal: AbortSignal, trustedManifest: TrustedTenantManifest): Promise<void> {
+    const response = await this.fetchImplementation(this.healthEndpoint, {
+      method: "GET",
+      redirect: "error",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      signal,
+    });
+    if (response.status === 401 || response.status === 403) {
+      throw new NexusKnowledgeError("unauthorized");
+    }
+    if (!response.ok) {
+      throw new NexusKnowledgeError("unavailable");
+    }
+    const contentType = response.headers.get("content-type")?.toLowerCase();
+    if (!contentType?.includes("application/json")) {
+      throw new NexusKnowledgeError("invalid_response");
+    }
+    try {
+      const health = healthPayloadSchema.parse(JSON.parse(await readBoundedResponse(response)));
+      if (
+        health.corpusFingerprint !== trustedManifest.corpusFingerprint ||
+        health.documents !== trustedManifest.documentCount
+      ) {
+        throw new NexusKnowledgeError("invalid_response");
+      }
+    } catch (error) {
+      if (error instanceof NexusKnowledgeError) throw error;
+      throw new NexusKnowledgeError("invalid_response");
     }
   }
 }

@@ -5,7 +5,12 @@ import { pathToFileURL } from "node:url";
 import { z } from "zod";
 import { NexusKnowledgeClient, NexusKnowledgeError, resolveNexusToken } from "./nexusKnowledge.js";
 
-const KNOWLEDGE_QUERY = z.string().trim().min(2).max(500);
+const KNOWLEDGE_QUERY = z
+  .string()
+  .trim()
+  .min(2)
+  .max(500)
+  .refine((query) => !/[\u0000-\u001f\u007f]/.test(query), "A keresési kifejezés nem tartalmazhat vezérlőkaraktert.");
 const RESULT_LIMIT = z.number().int().min(1).max(10).optional().default(5);
 const MAX_RESULT_BYTES = 512 * 1024;
 
@@ -52,7 +57,7 @@ export function createNexusKnowledgeServer(client: NexusKnowledgeClient) {
     { name: "doorstar-nexus-knowledge", version: "0.1.0" },
     {
       instructions:
-        "Csak olvasható Doorstar faipari RAG. A szigetet és a gyűjteményt a Nexus a hitelesített klienshez rendeli; az agent ezeket nem választhatja meg.",
+        "Csak olvasható, zárt Doorstar-faipari RAG. A bridge a rögzített Tailnet tenantot és statikus kártyamanifesztet ellenőrzi; az agent sem végpontot, sem gyűjteményt nem választhat.",
     }
   );
 
@@ -61,7 +66,7 @@ export function createNexusKnowledgeServer(client: NexusKnowledgeClient) {
     {
       title: "Doorstar faipari tudástár keresése",
       description:
-        "Szemantikus keresés a Nexus által a Doorstar szigethez rendelt faipari tudásanyagban. Forrást, oldalt és hasonlósági pontszámot ad vissza, ha ezek elérhetők.",
+        "Keresés a rögzített Doorstar-faipari tenant eredeti, statikus tudáskártyáiban. Csak szintetikus kártyahivatkozást, rövid kivonatot és ellenőrzött metaadatot ad vissza.",
       inputSchema: {
         query: KNOWLEDGE_QUERY.describe("Faipari kérdés vagy keresőkifejezés."),
         limit: RESULT_LIMIT.describe("Találatok száma 1 és 10 között; alapérték 5."),
@@ -70,7 +75,7 @@ export function createNexusKnowledgeServer(client: NexusKnowledgeClient) {
         readOnlyHint: true,
         destructiveHint: false,
         idempotentHint: true,
-        openWorldHint: true,
+        openWorldHint: false,
       },
     },
     async ({ query, limit }) => {
