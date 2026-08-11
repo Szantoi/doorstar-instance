@@ -3,10 +3,10 @@
 Read-only, local `stdio` MCP adapters for Doorstar. The package contains two
 separate processes and capability surfaces:
 
-- `dist/index.js`: the Doorstar Üzemi Tábla production API and the curated
-  repository documentation corpus;
-- `dist/nexusBridge.js`: one narrow `search_knowledge` proxy to the
-  server-scoped Doorstar Nexus island.
+- `dist/index.js`: the Doorstar Üzemi Tábla production API and a static,
+  tenant-scoped woodworking-card corpus;
+- `dist/nexusBridge.js`: one narrow `search_knowledge` proxy to the dedicated,
+  Tailnet-only Doorstar woodworking tenant.
 
 Neither process exposes a write operation, generic HTTP method, database
 driver, credential value, or caller-selectable island/collection.
@@ -15,7 +15,7 @@ driver, credential value, or caller-selectable island/collection.
 
 The adapter has seven live-production tools backed by fixed `GET` calls to the
 local Production Service (`http://127.0.0.1:4610/api/production` by default),
-plus two local RAG tools over a curated Doorstar documentation corpus. The
+plus two local RAG tools over static Doorstar woodworking cards. The
 separate Nexus process exposes one additional tool over the indexed woodworking
 corpus:
 
@@ -28,29 +28,32 @@ corpus:
 | `get_kanban` | `GET /kanban?station=...&week=...` |
 | `get_load` | `GET /load?week=...` |
 | `get_task` | `GET /tasks/:id` |
-| `search_knowledge` | Curated local Markdown retrieval (BM25-style) |
-| `corpus_status` | Curated local corpus provenance/status |
+| `search_knowledge` | Static Doorstar woodworking-card retrieval (BM25-style) |
+| `corpus_status` | Tenant corpus provenance/status |
 
 | Nexus MCP tool | Fixed upstream operation |
 | --- | --- |
-| `search_knowledge` | Authenticated `tools/call` to the server-assigned `doorstar` island |
+| `search_knowledge` | Authenticated `tools/call` to the fixed `doorstar-woodworking` tenant |
 
 There is no generic HTTP tool, no write method, no database driver, or
-credential literal in the package. The RAG corpus is an explicit Markdown allowlist;
-it excludes configuration, source code, untracked/modified documents, large
-or binary files, symlinks, and documents matching secret patterns. Each
-retrieval result contains its path, section, hash and excerpt. Tool errors
-deliberately do not expose connection details or response bodies. MCP protocol
-data is written only to `stdout`; diagnostics go to `stderr`.
+credential literal in the package. The local RAG corpus is a deterministic
+in-memory tenant manifest: it reads neither the repository nor an external
+drive at request time. Its original, concise cards contain no book, scan, OCR
+export, source title, page number, or filesystem location. Results expose only
+a synthetic card reference, section, hash, and excerpt.
 
-The Nexus bridge uses the fixed shared Nexus endpoint. A strict principal
-allowlist maps each Doorstar Codex role to exactly one Windows user-environment
-credential name; an unknown principal or missing role credential fails closed
-and never falls back to the compatibility identity. The tool accepts only a
-trimmed query and a result limit from 1 to 10. It rejects redirects, oversized
-or malformed responses, mismatched JSON-RPC IDs, and every response that does
-not explicitly confirm `island: "doorstar"`. Unknown upstream fields are
-stripped. Credentials are never stored in this repository or emitted in errors.
+The Nexus bridge pins `http://100.82.133.87:3467/mcp`, never the broad `:3466`
+corpus. Before every search it verifies the authenticated `/health` attestation
+for `doorstar-woodworking`, the `doorstar` tenant, `woodworking` scope, a
+non-empty corpus, port 3467, and the local corpus fingerprint. It sends only
+the fixed `domain: "woodworking"` filter. The response must reproduce the
+local manifest card order, metadata, deterministic excerpt, and (when present)
+score; otherwise it fails closed. There is no fallback to `:3466`.
+
+A strict principal allowlist maps each Doorstar Codex role to exactly one
+Windows user-environment credential name; unknown principals and missing role
+credentials fail closed. Credentials are never stored in this repository or
+emitted in errors.
 
 ## Installation and local run
 
@@ -60,6 +63,7 @@ directory, install and build it:
 ```powershell
 npm install
 npm run build
+npm run build:tenant-runtime
 ```
 
 The Production Service must be running locally on port `4610`. Then configure
@@ -110,11 +114,40 @@ $env:DOORSTAR_NEXUS_PRINCIPAL = "doorstar-frontend-codex"
 npm run start:nexus
 ```
 
+## Private tenant runtime
+
+`npm run build:tenant-runtime` creates the dependency-free ESM deployment
+closure in `dist/tenant-woodworking-runtime/`: the tenant server, static corpus,
+and a minimal `package.json`. It intentionally excludes `agents.json` and every
+credential. The VPS service template is
+`deploy/nexus-dev-doorstar-woodworking.service`; it binds only
+`100.82.133.87:3467` and must not receive an nginx site, public DNS route, or
+public UFW rule.
+
+For the first VPS installation, run only from the Doorstar Windows-user
+context:
+
+```powershell
+.\scripts\installTenantWoodworkingRuntime.ps1
+.\scripts\provisionTenantWoodworkingCredentials.ps1
+```
+
+The installer builds and checks the exact closure, verifies copied SHA-256
+values, creates the `doorstar-rag` system user/group, installs a
+`root:doorstar-rag` `0750` runtime with `root:root` `0644` code, and validates
+the systemd unit. It requires a disabled, credential-free tenant state and
+never transfers a credential. The provisioner then creates six tenant-only values, keeps a
+root-only rollback copy until the live six-principal attestation passes, and
+restores the prior configuration/state on failure. Never copy the old `:3466`
+credentials. Open a new Codex task after success so its bridge inventory reads
+the rotated values.
+
 ## Verification
 
 ```powershell
 npm test
 npm run build
+npm run build:tenant-runtime
 npm run verify:nexus-identities
 npm audit --omit=dev --audit-level=high
 ```
@@ -124,13 +157,12 @@ The official SDK still recommends v1.x for production while v2 remains
 pre-alpha. The implementation uses the standard `StdioServerTransport` and
 declares every tool with `readOnlyHint: true`.
 
-The six server-side role identities all resolve to the `doorstar` island and
-therefore to the `doorstar-knowledge` collection. Nexus also enforces their
-knowledge-only profile: `tools/list` contains exactly `search_knowledge`, while
-explicit-list, formerly global, and unlisted/default tool calls all return 403.
-The retired shared `doorstar-codex` identity has no live token or island
-mapping. `npm run verify:nexus-identities` proves the complete live role matrix
-without printing credential values.
+The six server-side role identities resolve only to the `doorstar` tenant and
+`doorstar-woodworking` corpus. The tenant exposes exactly `search_knowledge`;
+unlisted/default tool calls return 403. The retired shared `doorstar-codex`
+identity has no live token or tenant mapping. `npm run verify:nexus-identities`
+proves the live role matrix, health attestation, and woodworking-only response
+contract without printing credential values.
 
 This MCP is a development assistant capability; it is not a browser UI/backend
 contract. RAG excerpts are advisory evidence and must not become dimensions,

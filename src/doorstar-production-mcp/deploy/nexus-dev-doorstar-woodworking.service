@@ -1,0 +1,36 @@
+[Unit]
+Description=Doorstar woodworking RAG tenant (Nexus-dev, Tailnet-only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=doorstar-rag
+Group=doorstar-rag
+WorkingDirectory=/opt/doorstar-woodworking-rag
+Environment=NODE_ENV=production
+Environment=DOORSTAR_TENANT_WOODWORKING_RAG_CONFIG_FILE=/opt/doorstar-woodworking-rag/agents.json
+Environment=DOORSTAR_TENANT_WOODWORKING_RAG_PORT=3467
+Environment=DOORSTAR_TENANT_WOODWORKING_RAG_HOST=100.82.133.87
+ExecStart=/usr/bin/node /opt/doorstar-woodworking-rag/tenantWoodworkingRagServer.js
+Restart=on-failure
+RestartSec=5s
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+LimitNOFILE=1024
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

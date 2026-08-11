@@ -10,7 +10,7 @@
 **Név:** Doorstar
 **Szerep:** Customer-specific Implementation
 **Ügyfél:** Doorstar Kft. (ajtógyártó)
-**Port range:** 3460-3461
+**Port range:** 3460-3461; private woodworking RAG tenant: 3467 (Tailnet-only)
 **tmux prefix:** ds-
 
 ---
@@ -107,6 +107,7 @@ Cabinet VPS (partner)
 | Service | Port | Leírás |
 |---------|------|--------|
 | Knowledge Service | 3460 | MCP API (frozen) |
+| Doorstar woodworking RAG tenant | 3467 | Tailnet-only, private MCP (`search_knowledge` only); no nginx/UFW exposure |
 | Üzemi Tábla (uzemi-tabla-web) | 4611 | Production whiteboard UI |
 
 > Port 3461 (`config/federation.yaml`'s `datahaven` slot) marad szabadon a
@@ -150,7 +151,7 @@ sudo nginx -t && sudo systemctl reload nginx
 Doorstarnak MÉG NINCS nginx site-ja — ezt kell létrehozni.
 
 ### Port-választás
-Foglalt: 22, 80, 443, 3000, 3456, 3458, 3460, 3466, 5050, 5173, 5174,
+Foglalt: 22, 80, 443, 3000, 3456, 3458, 3460, 3466, 3467, 5050, 5173, 5174,
 5432, 5433, 6379, 8001, 8080, 9000, 9001, 11434, 49222.
 Ellenőrzés indítás előtt:
 ```bash

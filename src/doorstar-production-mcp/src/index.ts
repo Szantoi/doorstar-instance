@@ -1,7 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
 import { z } from "zod";
 import { ProductionApi, ProductionApiError, currentMonday } from "./api.js";
 import { loadKnowledgeCorpus, searchKnowledge } from "./knowledge.js";
@@ -23,9 +21,6 @@ const IDENTIFIER = z.string().trim().min(1).max(200);
 const KNOWLEDGE_QUERY = z.string().trim().min(2).max(500);
 const RESULT_LIMIT = z.number().int().min(1).max(10).optional().default(5);
 const MAX_RESULT_BYTES = 512_000;
-// Do not make the corpus root configurable: this adapter must never become a
-// generic clean-repository reader through an environment-variable override.
-const repositoryRoot = path.resolve(fileURLToPath(new URL(".", import.meta.url)), "../../..");
 
 const server = new McpServer(
   { name: "doorstar-production", version: "0.1.0" },
@@ -147,7 +142,7 @@ server.registerTool(
   "search_knowledge",
   {
     title: "Doorstar projekt-tudástár keresése",
-    description: "A kurált Doorstar dokumentációból keres bizonyítható forrással és rövid kivonattal. Nem keres konfigurációban, titokban vagy nem commitolt anyagban.",
+    description: "Keresés a statikus, csak faipari Doorstar tudáskártyákban. Nem olvas repót, konfigurációt, titkot vagy külső forrást.",
     inputSchema: {
       query: KNOWLEDGE_QUERY.describe("Keresési kérdés vagy kulcsszavak."),
       limit: RESULT_LIMIT.describe("Visszaadott találatok száma, 1 és 10 között; alapérték 5."),
@@ -156,7 +151,7 @@ server.registerTool(
   },
   async ({ query, limit }) =>
     readResult(async () => {
-      const corpus = await loadKnowledgeCorpus(repositoryRoot);
+      const corpus = await loadKnowledgeCorpus();
       const results = searchKnowledge(corpus, query, limit);
       return { query, corpusVersion: corpus.corpusVersion, count: results.length, results };
     })
@@ -166,12 +161,12 @@ server.registerTool(
   "corpus_status",
   {
     title: "Doorstar tudástár állapota",
-    description: "A kurált, csak olvasható Doorstar RAG-korpusz állapota és forrásjegyzéke.",
+    description: "A statikus, csak faipari Doorstar tenant-korpusz állapota és szintetikus forrásjegyzéke.",
     annotations: { readOnlyHint: true },
   },
   async () =>
     readResult(async () => {
-      const corpus = await loadKnowledgeCorpus(repositoryRoot);
+      const corpus = await loadKnowledgeCorpus();
       return {
         corpusVersion: corpus.corpusVersion,
         indexedAt: corpus.indexedAt,
