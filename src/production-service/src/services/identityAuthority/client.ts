@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { performance } from "node:perf_hooks";
 import { snapshotIdentityAuthorityConfig, type IdentityAuthorityConfig, type IdentityAuthorityEnabledConfig } from "./config.js";
 import { createPrivateKeyJwt, loadIdentityAuthorityPrivateKey, type PrivateKeyJwtDependencies } from "./privateKeyJwt.js";
 import { parseIdentityAuthorityResolveRequest, parseIdentityAuthorityState, type IdentityAuthorityState } from "./contract.js";
@@ -27,6 +28,8 @@ interface IdentityAuthorityClientTestDependencies extends PrivateKeyJwtDependenc
   readonly loadPrivateKey?: typeof loadIdentityAuthorityPrivateKey;
   readonly environment?: NodeJS.ProcessEnv;
   readonly execArguments?: readonly string[];
+  /** Test seam only; production always uses the process monotonic clock. */
+  readonly monotonicNow?: () => number;
 }
 
 /** Creates a server-only client. Nothing invokes this factory until a later composition slice wires it. */
@@ -66,6 +69,7 @@ async function createIdentityAuthorityResolverClientWithDependencies(
     privateKey,
     dependencies.fetch ?? globalThis.fetch,
     dependencies,
+    dependencies.monotonicNow ?? performance.now.bind(performance),
   );
 }
 
@@ -81,6 +85,7 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
     private readonly privateKey: Awaited<ReturnType<typeof loadIdentityAuthorityPrivateKey>>,
     private readonly fetchImplementation: typeof globalThis.fetch,
     private readonly assertionDependencies: PrivateKeyJwtDependencies,
+    private readonly monotonicNow: () => number,
   ) {}
 
   public async resolve(value: unknown): Promise<IdentityAuthorityResolution> {
@@ -91,9 +96,16 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
       return { kind: "unavailable", reason: "invalid_request" };
     }
 
+    let deadline: ResolveDeadline;
+    try {
+      deadline = createResolveDeadline(this.monotonicNow);
+    } catch {
+      return { kind: "unavailable", reason: "resolver_unavailable" };
+    }
+
     let accessToken: string;
     try {
-      accessToken = await this.exchangeServiceToken();
+      accessToken = await this.exchangeServiceToken(deadline);
     } catch {
       return { kind: "unavailable", reason: "token_exchange_failed" };
     }
@@ -109,12 +121,13 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
           authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({ subject: request.subject, tenantId: request.tenantId }),
-      });
+      }, deadline);
     } catch {
       return { kind: "unavailable", reason: "resolver_unavailable" };
     }
 
     try {
+      if (deadlineResponse.expired()) return { kind: "unavailable", reason: "resolver_unavailable" };
       const response = deadlineResponse.response;
       if (response.status === 404) {
         deadlineResponse.abort();
@@ -126,6 +139,7 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
       }
       requireJsonContentType(response);
       const state = parseIdentityAuthorityState(await readBoundedJsonResponseText(response));
+      if (deadlineResponse.expired()) return { kind: "unavailable", reason: "resolver_unavailable" };
       if (state.subject !== request.subject || state.tenantId !== request.tenantId) {
         return { kind: "unavailable", reason: "resolver_contract_invalid" };
       }
@@ -134,7 +148,7 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
     } catch (error) {
       return {
         kind: "unavailable",
-        reason: deadlineResponse.timedOut() || !isProtocolFailure(error)
+        reason: deadlineResponse.expired() || !isProtocolFailure(error)
           ? "resolver_unavailable"
           : "resolver_contract_invalid",
       };
@@ -144,7 +158,7 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
     }
   }
 
-  private async exchangeServiceToken(): Promise<string> {
+  private async exchangeServiceToken(deadline: ResolveDeadline): Promise<string> {
     const clientAssertion = createPrivateKeyJwt(this.config, this.privateKey, this.assertionDependencies);
     const body = new URLSearchParams({
       grant_type: "client_credentials",
@@ -161,9 +175,10 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
         "content-type": "application/x-www-form-urlencoded",
       },
       body,
-    });
+    }, deadline);
 
     try {
+      if (deadlineResponse.expired()) throw new Error("identity_authority_deadline_exceeded");
       const response = deadlineResponse.response;
       if (response.status !== 200) {
         deadlineResponse.abort();
@@ -171,7 +186,7 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
       }
       requireJsonContentType(response);
       const parsed = tokenResponseSchema.safeParse(parseStrictJsonObject(await readBoundedJsonResponseText(response)));
-      if (!parsed.success) throw new Error("identity_authority_token_response_invalid");
+      if (deadlineResponse.expired() || !parsed.success) throw new Error("identity_authority_token_response_invalid");
       return parsed.data.access_token;
     } finally {
       deadlineResponse.abort();
@@ -183,8 +198,30 @@ class EnabledIdentityAuthorityResolverClient implements IdentityAuthorityResolve
 interface DeadlineResponse {
   readonly response: Response;
   abort(): void;
-  timedOut(): boolean;
+  expired(): boolean;
   finish(): void;
+}
+
+/** A resolve call receives one monotonic budget across token exchange and resolver response parsing. */
+interface ResolveDeadline {
+  remainingMilliseconds(): number;
+}
+
+function createResolveDeadline(monotonicNow: () => number): ResolveDeadline {
+  const startedAt = monotonicNow();
+  if (!Number.isFinite(startedAt)) throw new Error("identity_authority_monotonic_clock_invalid");
+  const expiresAt = startedAt + REQUEST_TIMEOUT_MILLISECONDS;
+  return Object.freeze({
+    remainingMilliseconds: () => {
+      const now = monotonicNow();
+      if (!Number.isFinite(now)) return 0;
+      return Math.max(0, expiresAt - now);
+    },
+  });
+}
+
+function isDeadlineExpired(deadline: ResolveDeadline): boolean {
+  return Math.floor(deadline.remainingMilliseconds()) < 1;
 }
 
 /** Rejects process-wide switches that could silently downgrade or redirect service-token transport. */
@@ -207,19 +244,27 @@ async function fetchWithDeadline(
   fetchImplementation: typeof globalThis.fetch,
   input: string,
   init: RequestInit,
+  deadline: ResolveDeadline,
 ): Promise<DeadlineResponse> {
+  // Round down so timer granularity can only shorten, never extend, the shared budget.
+  const remainingMilliseconds = Math.floor(deadline.remainingMilliseconds());
+  if (remainingMilliseconds < 1) throw new Error("identity_authority_deadline_exceeded");
   const controller = new AbortController();
   let timedOut = false;
   const timeout = setTimeout(() => {
     timedOut = true;
     controller.abort();
-  }, REQUEST_TIMEOUT_MILLISECONDS);
+  }, remainingMilliseconds);
   try {
     const response = await fetchImplementation(input, { ...init, signal: controller.signal });
+    if (timedOut || isDeadlineExpired(deadline)) {
+      controller.abort();
+      throw new Error("identity_authority_deadline_exceeded");
+    }
     return {
       response,
       abort: () => controller.abort(),
-      timedOut: () => timedOut,
+      expired: () => timedOut || isDeadlineExpired(deadline),
       finish: () => clearTimeout(timeout),
     };
   } catch (error) {

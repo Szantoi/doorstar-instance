@@ -1,5 +1,5 @@
 import { generateKeyPairSync, type KeyObject } from "node:crypto";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { loadIdentityAuthorityConfig, type IdentityAuthorityEnabledConfig } from "../src/services/identityAuthority/config.js";
 import { createIdentityAuthorityResolverClient, createIdentityAuthorityResolverClientForTest } from "../src/services/identityAuthority/client.js";
 import { compareCanonicalUtcInstants, parseCanonicalUtcInstant } from "../src/services/identityAuthority/contract.js";
@@ -165,6 +165,90 @@ describe("IdentityAuthorityResolverClient", () => {
     expect(resolverSignal?.aborted).toBe(true);
   });
 
+  it("does not start the resolver request after token exchange consumes the shared deadline", async () => {
+    const transport = queuedFetch([
+      jsonResponse({ access_token: m2mAccessToken, token_type: "Bearer", expires_in: 300 }),
+    ]);
+    // The token phase checks the shared budget before/after transport and
+    // response parsing. Only the next, resolver-start check sees expiry.
+    const client = await createClient(transport.fetch, scriptedMonotonicNow([0, 0, 0, 0, 0, 2_000]));
+
+    await expect(client.resolve({ subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "resolver_unavailable",
+    });
+    expect(transport.calls).toHaveLength(1);
+  });
+
+  it("uses only the resolver phase's remaining shared deadline", async () => {
+    vi.useFakeTimers();
+    try {
+      let resolverSignal: AbortSignal | null | undefined;
+      let resolveResolverStarted: (() => void) | undefined;
+      const resolverStarted = new Promise<void>((resolve) => {
+        resolveResolverStarted = resolve;
+      });
+      let requestCount = 0;
+      const fetch: typeof globalThis.fetch = async (_input, init) => {
+        requestCount += 1;
+        if (requestCount === 1) return jsonResponse({ access_token: m2mAccessToken, token_type: "Bearer", expires_in: 300 });
+        resolverSignal = init?.signal;
+        resolveResolverStarted?.();
+        return abortAwarePendingJsonResponse(resolverSignal!);
+      };
+      const client = await createClient(fetch, scriptedMonotonicNow([0, 0, 1_500]));
+      const result = client.resolve({ subject, tenantId });
+
+      await resolverStarted;
+      expect(resolverSignal?.aborted).toBe(false);
+      await vi.advanceTimersByTimeAsync(499);
+      expect(resolverSignal?.aborted).toBe(false);
+      await vi.advanceTimersByTimeAsync(1);
+      await expect(result).resolves.toEqual({
+        kind: "unavailable",
+        reason: "resolver_unavailable",
+      });
+      expect(resolverSignal?.aborted).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("fails closed when a resolver transport returns only after the shared deadline", async () => {
+    let monotonicTime = 0;
+    let requestCount = 0;
+    const fetch: typeof globalThis.fetch = async () => {
+      requestCount += 1;
+      if (requestCount === 1) return jsonResponse({ access_token: m2mAccessToken, token_type: "Bearer", expires_in: 300 });
+      monotonicTime = 2_000;
+      return jsonResponse(activeState());
+    };
+    const client = await createClient(fetch, () => monotonicTime);
+
+    await expect(client.resolve({ subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "resolver_unavailable",
+    });
+  });
+
+  it("fails closed when a resolver response body crosses the shared deadline", async () => {
+    let monotonicTime = 0;
+    let requestCount = 0;
+    const fetch: typeof globalThis.fetch = async () => {
+      requestCount += 1;
+      if (requestCount === 1) return jsonResponse({ access_token: m2mAccessToken, token_type: "Bearer", expires_in: 300 });
+      return jsonResponseAfter(() => {
+        monotonicTime = 2_000;
+      }, activeState());
+    };
+    const client = await createClient(fetch, () => monotonicTime);
+
+    await expect(client.resolve({ subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "resolver_unavailable",
+    });
+  });
+
   it.each([
     ["bad request", new Response(null, { status: 400 })],
     ["unauthorized", new Response(null, { status: 401 })],
@@ -287,7 +371,7 @@ function enabledConfig(): IdentityAuthorityEnabledConfig {
   return config;
 }
 
-async function createClient(fetch: typeof globalThis.fetch) {
+async function createClient(fetch: typeof globalThis.fetch, monotonicNow?: () => number) {
   const { privateKey } = generateKeyPairSync("rsa", { modulusLength: 2_048 });
   return createIdentityAuthorityResolverClientForTest(enabledConfig(), {
     fetch,
@@ -295,6 +379,7 @@ async function createClient(fetch: typeof globalThis.fetch) {
     loadPrivateKey: async (): Promise<KeyObject> => privateKey,
     now: () => new Date("2026-08-25T12:34:56.000Z"),
     randomUuid: () => "123e4567-e89b-42d3-a456-426614174000",
+    monotonicNow,
   });
 }
 
@@ -327,4 +412,26 @@ function queuedFetch(responses: Array<Response | Error>): { fetch: typeof global
 function decodeJwtPayload(assertion: string): Record<string, unknown> {
   const payload = assertion.split(".")[1];
   return JSON.parse(Buffer.from(payload!, "base64url").toString("utf8")) as Record<string, unknown>;
+}
+
+function jsonResponseAfter(beforeBodyRead: () => void, value: unknown): Response {
+  const encoded = new TextEncoder().encode(JSON.stringify(value));
+  let emitted = false;
+  const body = new ReadableStream<Uint8Array>({
+    pull(controller) {
+      if (emitted) {
+        controller.close();
+        return;
+      }
+      emitted = true;
+      beforeBodyRead();
+      controller.enqueue(encoded);
+    },
+  });
+  return new Response(body, { status: 200, headers: { "content-type": "application/json" } });
+}
+
+function scriptedMonotonicNow(values: readonly number[]): () => number {
+  const remainingValues = [...values];
+  return () => remainingValues.shift() ?? values.at(-1) ?? 0;
 }
