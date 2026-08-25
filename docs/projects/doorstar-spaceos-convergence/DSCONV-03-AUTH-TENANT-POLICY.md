@@ -94,6 +94,27 @@ A platform hostingot tilos lokálisan lemásolni vagy módosítani.
   VPS-, credential-, adatbázis- vagy deploy-művelet; shared próbaüzem továbbra
   nem indítható az M1–M3 és Kernel release-gate-ek előtt.
 
+### 2026-08-25 — M1 control-plane terv (végső review lezárva)
+
+- Elkészült a tiszta, külön M1 döntési dokumentum: egy dedikált Doorstar
+  instance egy aktív Kernel tenant bindinggel, tokenmentes resolver-evidence és
+  opaque session alap. A teljes legacy üzleti gráf, RLS-migráció és headeres UI
+  nem része ennek a slice-nak.
+- A terv explicit tiltja a humán/M2M token perzisztálását, naplózását vagy
+  böngészőnek/legacy adapternek történő továbbítását, a legacy authority
+  adapter extractját, valamint a böngészői tenant/role/station/consumer
+  választást. Az M0 memóriában tartott M2M bearerét kizárólag a fix Kernel
+  resolver `Authorization` fejlécében küldheti. A perzisztencia csak resolved
+  evidence-et fogad.
+- A security-, architektúra- és adatmodell-review után P0/P1 nem maradt. A terv
+  kötelezővé teszi a minden védett kérés előtti resolver revalidációt, a
+  binding disable tranzakciós session-revoke-ját, az egyszeri DB revoke
+  állapotgépet, a binding-evidence kompozit FK-t, valamint a `__Host`
+  cookie/CSRF/origin/duplicate-cookie fail-closed szerződését.
+- Még nincs Prisma schema, migration, cookie, BFF route vagy konfiguráció;
+  Keycloak-, Kernel-, DB-, VPS- és deploy-művelet nem történt. M1 kód tiszta,
+  külön implementation slice-on indulhat.
+
 ## Átadási bizonyíték
 
 _Platform contract verzió, migration, negative-path és RLS tesztek._

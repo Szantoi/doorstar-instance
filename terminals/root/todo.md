@@ -20,10 +20,13 @@
 - [x] DSCONV-03 M0 — tiszta baseline-os, default-off identity-authority M2M
       kliens: strict config/assertion/response contract, 48/48 fókuszált unit,
       build és OpenAPI zöld. Nem BFF, nem route és nem próbaüzemi aktiválás.
-- [ ] P0 — DSCONV-03 M1: külön terveztetett és reviewzott, keskeny
-      control-plane/evidence/session foundation; a legacy 66-táblás RLS
-      migráció nem emelhető át. Kötelező az eldobható PostgreSQL migrate + RLS
-      negatív smoke és a raw human access-token perzisztencia felszámolása.
+- [x] P0 — DSCONV-03 M1 terv: független security-, architektúra- és
+      adatmodell-review lezárva, P0/P1 nélkül. A legacy 66-táblás RLS migráció
+      nem emelhető át.
+- [ ] P0 — DSCONV-03 M1 implementáció: tiszta control-plane/evidence/session
+      source slice és eldobható PostgreSQL `migrate deploy` +
+      binding/constraint/trigger smoke. Raw human access-token perzisztencia
+      kizárt; ez még nem üzleti multi-tenant RLS proof.
 - [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
       teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
       session storage-ba nem kerülhet.

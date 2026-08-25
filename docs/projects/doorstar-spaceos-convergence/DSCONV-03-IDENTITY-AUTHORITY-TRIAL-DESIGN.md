@@ -173,8 +173,16 @@ adatbázis-migráció vagy runtime-konfiguráció.
 Külön tervezett és reviewzott slice hozza létre a szükséges Doorstar-oldali
 evidence/session adatmodellt és BFF határt. Nem használja újra a 66 táblás
 legacy RLS migrációt. Elfogadásához eldobható PostgreSQL-en `prisma migrate
-deploy`, a friss schema, RLS/tenant negatív smoke és a raw access-token
-perzisztencia megszüntetése szükséges.
+deploy`, a friss schema, tenant-binding/constraint negatív smoke és a raw
+access-token perzisztencia megszüntetése szükséges. Az első, dedikált
+Doorstar-instance binding nem állíthat üzleti multi-tenant RLS készültséget;
+annak ADR-062 szerinti, nem-owner PostgreSQL bizonyítéka külön későbbi slice.
+
+Az M1 részletes, még implementáció előtti döntése a
+[DSCONV-03-M1-CONTROL-PLANE-DESIGN.md](DSCONV-03-M1-CONTROL-PLANE-DESIGN.md).
+Az első trialhoz szándékosan egy Doorstar instance–egy aktív Kernel tenant
+bindinget választ; ez nem állít kész multi-tenant üzleti RLS-t és nem módosítja
+a jelenlegi headeres üzemi route-okat.
 
 ### M2 — BFF, route és helyi ellenőrzési kapu
 
@@ -188,6 +196,22 @@ Kötelező bizonyíték:
 - stale/revoked humán token, hibás tenant, nem engedett grant-set és
   projection-verzió eltérés tesztek;
 - `prisma generate`, TypeScript build, fókuszált Vitest és OpenAPI drift gate.
+- minden védett üzleti kérés előtt új M0 resolver-feloldás; a trialban nincs
+  authority cache/grace window. Inaktív binding, verzió-/cutoff-eltérés vagy
+  resolver unavailable fail-closed.
+- a BFF session cookie csak `__Host-doorstar-session` lehet (`Secure`,
+  `HttpOnly`, `SameSite=Strict`, `Path=/`, Domain nélkül); a state-changing
+  művelet külön CSRF cookie+header, exact Origin és duplicate-cookie elutasítás
+  mellett futhat.
+- M2 előtt minden production route `legacy-only`, `bff-only` vagy
+  `public-operational` manifestbesorolást kap. BFF-only route-on a legacy
+  `getRequester`/`X-Role`/`X-Station` guard és minden authority header tiltott;
+  nincs session→header fallback, és egy resource mutation útjai atomikusan
+  váltanak át.
+- Evidence-, session-verifier- és CSRF-MAC kizárólag domain-separated,
+  length-prefixed HMAC-SHA-256 lehet explicit keyVersionnel. A kulcs csak named
+  deployment secret providerből tölthető; mismatch/unknown key revoke+deny,
+  current+egy explicit previous kulcsrotációs ablakkal.
 
 ### M3 — eldobható lokális integráció
 
@@ -198,16 +222,21 @@ test-only tervének előbb bizonyítania kell a teljes
 identity registryt, az aktív tenantot és membershipet, a
 `doorstar-portal` consumer projectiont, továbbá a NodeAuth key-lifecycle és
 authority-reader/RLS korlátait. Külön, nem perzisztens stack szükséges: local
-CA/TLS, friss Keycloak realm, RS256 kulcsok, két demó tenant és semmilyen
-production volume, port vagy credential újrahasználata nélkül. A meglévő
+CA/TLS, friss Keycloak realm, RS256 kulcsok, egy elsődleges demó tenant és
+semmilyen production volume, port vagy credential újrahasználata nélkül. Egy
+második demó tenant csak cross-tenant deny-teszthez használható; egyetlen
+Doorstar test instance-ben soha nincs két aktív binding. Két pozitív tenant
+próbához két külön, eldobható Doorstar instance kell. A meglévő
 `docker-compose.yml` `doorstar-production-db` szolgáltatása erre tiltott.
 
 ### M4 — E2E bizonyíték és takarítás
 
-Két tenantos PKCE + M2M resolver próba: happy path, hibás géptoken,
-deaktiválás/revoke, rossz tenant, stale humán token és kulcsrotáció. A futás után
-a realm, konténerek, eldobható adatbázis és test-kulcsok takarítása, majd a
-parancsok és eredmények tasklogba rögzítése kötelező.
+PKCE + M2M resolver próba egy aktív bindinggel: happy path, hibás géptoken,
+deaktiválás/revoke, egy második tenant cross-tenant deny-je, stale humán token
+és kulcsrotáció. Két tenant pozitív path-ja csak két külön eldobható Doorstar
+instance-ben futtatható. A futás után a realm, konténerek, eldobható adatbázis
+és test-kulcsok takarítása, majd a parancsok és eredmények tasklogba rögzítése
+kötelező.
 
 ## Stop feltételek
 

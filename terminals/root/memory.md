@@ -411,3 +411,25 @@
   átírni.
 - Próbaüzem előtt még külön M1 control-plane/BFF, Kernel snapshot reconciliation
   és release-attestation, majd emberileg engedélyezett eldobható local stack kell.
+
+## 2026-08-25 — M1 control-plane tartós tervdöntés
+
+- Az első Doorstar trial nem fogja a nem tenantolt üzleti táblákat „félig"
+  multi-tenanttá tenni. Egy dedikált instance-ben pontosan egy aktív Kernel
+  tenant binding, tokenmentes resolved evidence és rövid opaque session az új
+  varrat; ez nem RLS-készültségi állítás.
+- A persisted evidence/session nem tartalmaz humán bearer/access/refresh tokent,
+  M2M tokent/assertiont, privát kulcsot, `jti`-t, `consumerId`-t, role-t vagy
+  stationt. Csak exact identity/version/grant/cutoff snapshot és HMAC-olt
+  cookie/CSRF lookup maradhat szerveroldalon.
+- A Kernel authorityt a trialban minden védett üzleti kérés előtt újra kell
+  feloldani. 404/lifecycle/version/cutoff/grant mismatch deny; timeout/429/5xx
+  és szerződéshiba unavailable/fail-closed. Authority cache nincs.
+- A tenant binding SQL-szinten immutable/disable-only; disable tranzakciósan
+  revoke-olja az élő sessionöket. A `__Host` session/CSRF cookie és exact Origin
+  későbbi M2 szerződés, jelenleg semmilyen cookie vagy BFF route nem fut.
+- A végső security-, architektúra- és adatmodell-review után nincs P0/P1. A
+  session revoke DB-szinten egyszeri, a session→evidence kapcsolat kompozit
+  binding FK-val védett, az authority-mezőket pedig session-state MAC fedi.
+  Két tenantos pozitív E2E csak két külön Doorstar instance-ben futhat; egy
+  instance-ben legfeljebb egy aktív binding lehet.

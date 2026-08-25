@@ -713,3 +713,20 @@
   control-plane/evidence/session alap, M2 BFF, Kernel snapshot reconciliation
   + release attestation, majd explicit jóváhagyott, eldobható local E2E stack.
 - Keycloak-, VPS-, credential-, adatbázis- és deploy-művelet nem történt.
+
+## 2026-08-25 — Doorstar M1 control-plane terv: végső review lezárva
+
+- A `DSCONV-03-M1-CONTROL-PLANE-DESIGN.md` külön, tiszta branch-en rögzíti a
+  három új control-plane modellt (instance tenant binding, resolved evidence,
+  opaque session) és a szándékos nem-célokat. Kód, Prisma migration, route,
+  OpenAPI és runtime config változatlan.
+- A döntés az első trialhoz instance-szintű izolációt használ; nem állítja, hogy
+  a jelenlegi 33 üzleti modell tenantolt vagy ADR-062 szerinti RLS-proof zöld.
+- A security-, architektúra- és adatmodell-review után nincs P0/P1. A kötelező
+  invariánsok: minden védett kérés M0 revalidációja, immutable/disable-only
+  binding + tranzakciós revoke, egyszeri DB revoke state machine, session→evidence
+  kompozit FK + state-MAC, exact `__Host` cookie, CSRF, Origin és
+  duplicate-cookie fail-closed szerződés.
+- Kód, adatbázis, Keycloak, VPS és deploy továbbra sem indult. Következhet a
+  tiszta, source-only M1 implementation slice; shared/local integrációhoz
+  továbbra is külön emberi jóváhagyás kell.
