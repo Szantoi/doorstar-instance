@@ -28,7 +28,7 @@ verifyRuntimeExports().catch((error) => {
 async function verifyRuntimeExports() {
   const module = await import(pathToFileURL(verifierPath).href);
   const runtimeExports = Object.keys(module).sort();
-  const expectedExports = ["createDoorstarHumanJwtVerifier"];
+  const expectedExports = ["createDoorstarHumanJwtVerifier", "verifyDoorstarHumanJwtAndConsume"];
   if (runtimeExports.length !== expectedExports.length
     || runtimeExports.some((value, index) => value !== expectedExports[index])) {
     throw new Error(`Unexpected compiled human JWT verifier exports: ${runtimeExports.join(", ")}`);

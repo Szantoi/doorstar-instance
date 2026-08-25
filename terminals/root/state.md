@@ -892,3 +892,26 @@
 - Nem történt DB proof/migration, route-mount, cookie/session issuance,
   Keycloak/Kernel call, frontend/cutover, VPS vagy deploy. Próbaüzem még nem
   indítható; az explicit külső gate-ek változatlanok.
+
+## 2026-08-25 — Doorstar M2B zárt identity-boundary és issuance source kész
+
+- Az `evidence.ts` egyetlen exportált `createDoorstarIdentityBoundary(...)`
+  composition rootja lezárja a genuine PKCE delivery → code-exchange → strict
+  JWT → private proof/evidence + fresh resolver → opaque issuance commit utat.
+  A caller csak statikus completiont kap; nyers OIDC-, session- és CSRF-anyag
+  nem távozik a callback-local határból.
+- Az új `bff/controlPlaneRepository.ts` csak a teljes binding snapshotot tölti
+  be, majd valódi opaque commit esetén interactive tranzakcióban evidence-et és
+  sessiont ír. A session create hibája rollbackeli az evidence-et. Nincs generic
+  writer, session-read, validate vagy revoke API.
+- A JWT verifier, production resolver és issuance consumer mind runtime
+  capability bridge mögött van; strukturális fake és test-only resolver nem
+  használható authority bypassra. Független security végső review GO, P0/P1=0.
+- Ellenőrzés: releváns identity suite 106/106 PASS; build PASS; OpenAPI 3.1,
+  85/85 runtime operation PASS; `git diff --check` PASS. Full unit 404/406,
+  kizárólag a meglévő planning SHA-pin és RAG dry-run validator drift hibázik.
+- Nem történt DB proof/migration, DB-kapcsolat, Keycloak/Kernel HTTP hívás,
+  route-mount, cookie HTTP response, frontend/cutover, VPS vagy deploy. A
+  próbaüzem továbbra sem indítható a release-pinnelt OIDC HTTP adapter,
+  disposable proofok, runtime-principal preflight, canonical edge, audit actor,
+  Kernel attestation és explicit izolált E2E jóváhagyása nélkül.

@@ -7,6 +7,7 @@ import { readBoundedJsonResponseText, requireJsonContentType, parseStrictJsonObj
 
 const REQUEST_TIMEOUT_MILLISECONDS = 2_000;
 const CLIENT_ASSERTION_TYPE = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+const resolverClientOperations = new WeakMap<object, (value: unknown) => Promise<IdentityAuthorityResolution>>();
 
 const tokenResponseSchema = z.object({
   access_token: z.string().min(1).max(16_384),
@@ -36,23 +37,55 @@ interface IdentityAuthorityClientTestDependencies extends PrivateKeyJwtDependenc
 export async function createIdentityAuthorityResolverClient(
   config: IdentityAuthorityConfig,
 ): Promise<IdentityAuthorityResolverClient> {
-  return createIdentityAuthorityResolverClientWithDependencies(config, {
+  const client = await createIdentityAuthorityResolverClientWithDependencies(config, {
     fetch: globalThis.fetch,
     loadPrivateKey: loadIdentityAuthorityPrivateKey,
     environment: process.env,
     execArguments: process.execArgv,
   });
+  return registerIdentityAuthorityResolverClient(client);
 }
 
 /**
  * Test seam only. Production composition must use createIdentityAuthorityResolverClient,
  * which owns the process transport and cannot receive caller-controlled security context.
+ * Test-created clients deliberately are not registered for the BFF authority
+ * bridge below.
  */
 export async function createIdentityAuthorityResolverClientForTest(
   config: IdentityAuthorityConfig,
   dependencies: IdentityAuthorityClientTestDependencies = {},
 ): Promise<IdentityAuthorityResolverClient> {
   return createIdentityAuthorityResolverClientWithDependencies(config, dependencies);
+}
+
+/**
+ * Calls only a client produced by one of this module's factories. The BFF
+ * evidence boundary uses this operation rather than a caller-provided
+ * structural `resolve` method, so an injected look-alike cannot bypass the
+ * mandatory fresh Kernel authority revalidation.
+ */
+export async function resolveIdentityAuthorityClient(
+  client: unknown,
+  value: unknown,
+): Promise<IdentityAuthorityResolution> {
+  if (typeof client !== "object" || client === null) {
+    return { kind: "unavailable", reason: "resolver_unavailable" };
+  }
+  const resolve = resolverClientOperations.get(client);
+  if (resolve === undefined) return { kind: "unavailable", reason: "resolver_unavailable" };
+  try {
+    return await resolve(value);
+  } catch {
+    return { kind: "unavailable", reason: "resolver_unavailable" };
+  }
+}
+
+function registerIdentityAuthorityResolverClient(client: IdentityAuthorityResolverClient): IdentityAuthorityResolverClient {
+  const resolve = client.resolve.bind(client);
+  Object.freeze(client);
+  resolverClientOperations.set(client, resolve);
+  return client;
 }
 
 async function createIdentityAuthorityResolverClientWithDependencies(

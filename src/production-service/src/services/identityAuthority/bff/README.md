@@ -48,6 +48,11 @@ composition exists here and module loading opens no database connection.
   It accepts raw JWKS bytes only through the profile-bound source port and
   delivers token-free access authority facts once, in a callback-local opaque
   capability.
+- **controlPlaneRepository.ts** — narrow injected-Prisma issuance adapter.
+  It can only load the complete binding snapshot and, after the evidence
+  boundary unlocks a genuine opaque commit, write preallocated immutable
+  evidence and its session in one interactive transaction. It deliberately has
+  no session read, validation, revoke or generic persistence operation.
 
 A decision that is safe to log contains only a kind field. Opaque state, nonce,
 PKCE verifier, authorization code, session selector/verifier and CSRF values
@@ -57,18 +62,25 @@ secret snapshot before a trusted consumer runs.
 
 ## Activation boundary
 
-A later reviewed composition root in the evidence module will compose the
-PKCE callback, this profile-bound code-exchange source port, strict human OIDC
-token validation, M0 resolver revalidation and the typed session repository.
-An `accepted` source-port completion proves only that the trusted callback
-consumed its one token delivery; it never means identity validation or session
-issuance succeeded. The actual profile-pinned HTTP adapter remains absent: its
-exact client-auth, form, response/error/refresh grammar needs the release-pinned
-human OIDC artifact first. Nothing in this directory fetches, caches, mounts or
-issues cookies. That work is also blocked by the canonical public host, M1B
-disposable migration proof, runtime-principal preflight, native audit-actor
-decision, Kernel release attestation, and explicit approval for an isolated
-integration stack.
+`evidence.ts:createDoorstarIdentityBoundary(...)` now composes the PKCE
+callback, this profile-bound code-exchange source port, strict human OIDC token
+validation, M0 resolver revalidation and this typed issuance repository. Its
+only authority-bearing input is a genuine post-CAS claimed delivery. The JWT
+verifier, production resolver and issuance commit are each guarded by
+module-owned runtime capabilities, so a structural test double cannot become an
+authority source or generic persistence DTO. An `accepted` source-port
+completion still proves only that the trusted callback consumed its one token
+delivery; it never by itself means identity validation or session issuance
+succeeded.
+
+The actual profile-pinned HTTP adapter remains absent: its exact client-auth,
+form, response/error/refresh grammar needs the release-pinned human OIDC
+artifact first. Nothing in this directory fetches, caches, mounts or directly
+issues browser cookies. The boundary merely hands cookie header plans to a
+future injected HTTP boundary after the transaction has committed. Activation
+is also blocked by the canonical public host, M1B/M2B disposable migration
+proof, runtime-principal preflight, native audit-actor decision, Kernel release
+attestation, and explicit approval for an isolated integration stack.
 
 The OIDC transaction migration has its own stronger disposable proof command:
 `npm run test:migration:m2b-oidc`. It refuses the earlier M1B approval token,
@@ -77,4 +89,5 @@ deliberately unrun until its exact new approval and loopback target exist.
 
 See DSCONV-03-M2B-BFF-SESSION-AND-CUTOVER-DESIGN.md,
 DSCONV-03-M2B-HUMAN-JWT-JWKS-VALIDATION-DESIGN.md and
-DSCONV-03-M2B-OIDC-CODE-EXCHANGE-PORT-DESIGN.md for the full contract.
+DSCONV-03-M2B-OIDC-CODE-EXCHANGE-PORT-DESIGN.md, and
+DSCONV-03-M2B-IDENTITY-BOUNDARY-AND-ISSUANCE-DESIGN.md for the full contract.

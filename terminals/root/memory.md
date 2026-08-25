@@ -657,3 +657,30 @@
   `/auth/*` edge/host, privát evidence/session composition, native audit actor,
   atomikus resource cutover, Kernel attestation és külön jóváhagyott izolált
   E2E szükséges.
+
+## 2026-08-25 — M2B identity boundary és evidence/session issuance source checkpoint
+
+- Elkészült az egyetlen `createDoorstarIdentityBoundary(...)` composition root:
+  genuine PKCE claimed delivery → profile-bound code-exchange source → strict
+  JWT capability bridge → private human proof/evidence assembler + friss
+  production resolver bridge → opaque one-use issuance commit. A completion
+  token- és secretmentes; a header terv csak sikeres perzisztálás után jut a
+  későbbi HTTP boundaryhez.
+- A JWT verifier, resolver és issuance writer strukturális look-alike
+  megkerülését module-owned runtime bridge/WeakMap zárja. A production resolver
+  factory fagyasztott, eredetileg bindolt `resolve` műveletet regisztrál; a
+  dependency-injektált test factory szándékosan nem authority-forrás.
+- Új keskeny, injektált Prisma issuance adapter csak bindingot olvas és a
+  preallocated evidence UUID-hoz kötött immutable evidence + session sort írja
+  egy interactive tranzakcióban. Session-hiba evidence rollback; session
+  read/validate/revoke nincs, mert annak database-owned auditidő migrationje
+  külön gate.
+- Bizonyíték: releváns identity adversarial suite 106/106 PASS; build és
+  OpenAPI 3.1/85 PASS; `git diff --check` PASS; független security review GO,
+  P0/P1 = 0. Full unit 404/406: kizárólag a korábbi planning-input-pack SHA-pin
+  és RAG candidate dry-run validator drift hibázik.
+- Nem futott DB proof/migration, DB-kapcsolat, Keycloak/Kernel HTTP hívás,
+  Express route, browser cookie emission, frontend/cutover, VPS vagy deploy.
+  A trialhoz továbbra is release-pinnelt OIDC artifact+HTTP adapter, M1B/M2B
+  disposable proof, runtime least-privilege principal, canonical edge, native
+  audit actor, Kernel attestation és külön jóváhagyott izolált E2E kell.

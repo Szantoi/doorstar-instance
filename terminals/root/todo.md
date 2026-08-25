@@ -80,9 +80,17 @@
       és callback-hiba static fail-closed; nincs fetch, Keycloak-, DB-, route-
       vagy cookie-művelet. A tényleges HTTP/JSON/client-auth adapter továbbra
       is release-artifact-gate mögött van.
-- [ ] P0 — DSCONV-03 M2B integration/cutover: bounded code-exchange transport,
-      privileged evidence/session repository, fresh resolver, native audit
-      actor, frontend BFF kliens és a négy component-snapshot operation atomikus
+- [x] P0 — DSCONV-03 M2B zárt identity-boundary és issuance source: a genuine
+      PKCE claimed deliveryből a profile-bound code-exchange, registered JWT- és
+      production-resolver bridge, private proof/evidence és opaque one-use
+      commit fut. Az injektált Prisma adapter a tokenmentes evidence+sessiont
+      egy interactive tranzakcióban írja; strukturális fake nem indíthat DB
+      írást. Nincs runtime DB-kapcsolat, route, HTTP token-adapter vagy közvetlen
+      cookie-emisszió.
+- [ ] P0 — DSCONV-03 M2B activation/cutover: release-pinnelt bounded HTTP
+      code-exchange transport, M1B/M2B disposable DB proof, runtime
+      least-privilege principal, canonical `/auth/*` edge, native audit actor,
+      frontend BFF kliens és a négy component-snapshot operation atomikus
       bff-only cutoverje. Humán bearer Kernel felé vagy session storage-ba nem
       kerülhet; legacy requester guard/fallback tilos.
 - [ ] DSCONV-03 M3/M4: csak Kernel snapshot reconciliation + release

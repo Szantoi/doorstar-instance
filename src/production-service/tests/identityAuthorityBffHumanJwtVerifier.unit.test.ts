@@ -6,7 +6,10 @@ import {
   snapshotDoorstarHumanOidcValidationProfile,
 } from "../src/services/identityAuthority/bff/humanOidcProfile.js";
 import { createDoorstarHumanJwksTextSource } from "../src/services/identityAuthority/bff/humanJwksPort.js";
-import { createDoorstarHumanJwtVerifier } from "../src/services/identityAuthority/bff/humanJwtVerifier.js";
+import {
+  createDoorstarHumanJwtVerifier,
+  verifyDoorstarHumanJwtAndConsume,
+} from "../src/services/identityAuthority/bff/humanJwtVerifier.js";
 
 const issuer = "https://identity.example.test/realms/doorstar";
 const tenantId = "11111111-1111-1111-1111-111111111111";
@@ -20,7 +23,23 @@ describe("Doorstar M2B strict human JWT/JWKS verifier", () => {
   it("has no runtime decoder, JWK, raw-token or proof-mint export", async () => {
     const module = await import("../src/services/identityAuthority/bff/humanJwtVerifier.js");
 
-    expect(Object.keys(module)).toEqual(["createDoorstarHumanJwtVerifier"]);
+    expect(Object.keys(module).sort()).toEqual([
+      "createDoorstarHumanJwtVerifier",
+      "verifyDoorstarHumanJwtAndConsume",
+    ]);
+  });
+
+  it("does not accept a structural look-alike verifier through the boundary bridge", async () => {
+    const fake = Object.freeze({
+      async verifyAndConsume() {
+        throw new Error("must not run");
+      },
+    });
+
+    await expect(verifyDoorstarHumanJwtAndConsume(fake, tokenInput(), () => undefined)).resolves.toEqual({
+      kind: "denied",
+      code: "doorstar_human_jwt_input_invalid",
+    });
   });
 
   it("accepts a release-pinned RS256 access/ID pair and delivers only token-free access authority facts", async () => {

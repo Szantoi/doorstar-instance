@@ -1,6 +1,6 @@
 # DSCONV-03 — M2B BFF session, PKCE és atomikus cutover terv
 
-- **Állapot:** tervezett, source-only előkészítés; nem BFF-aktiválás
+- **Állapot:** részben elkészült, source-only security foundation; nem BFF-aktiválás
 - **Dátum:** 2026-08-25
 - **Előfeltétel:** M0 resolver source, M1A/B control-plane source, M2 logging
   redaction és M2A HTTP/route-manifest kapu
@@ -42,8 +42,9 @@ teljesülése után, egy külön atomikus cutover commitban történhet.
 5. **Kernel snapshot/release attestation és a külön jóváhagyott disposable
    Keycloak–Kernel–Doorstar E2E hiányzik.**
 
-Ezért az M2B első implementációs lépése csak tiszta domain- és adapter-port.
-Nincs environmentből betöltött, automatikusan aktiváló BFF-konfiguráció.
+Ezért az M2B megvalósított része továbbra is tiszta domain- és adapter-port.
+Nincs environmentből betöltött, automatikusan aktiváló BFF-konfiguráció vagy
+route-mount.
 
 ## Szerződés és adatfolyam
 
@@ -73,20 +74,27 @@ plusz a saját service Authorization header.
 ### Trusted proof és evidence határ
 
 Az evidence.ts szándékosan nem exportál proof-mint vagy assembler construction
-capabilityt. M2B ezt megtartja: a jövőbeli, egyetlen exportált
-createDoorstarIdentityBoundary(...) high-level composition root ugyanebben az
-evidence module-határban él, így használhatja a private mintet és assemblert,
-de proofot, assembler factoryt vagy raw tokent nem ad ki. A boundary runtime
-export/import tesztje külön rögzíti, hogy más bff modul nem importálhat
-privileged mintelőt. A boundary lesz képes:
+capabilityt. Ezt az elkészült, egyetlen exportált
+`createDoorstarIdentityBoundary(...)` high-level composition root is megtartja:
+ugyanebben az evidence module-határban él, így használhatja a private mintet és
+assemblert, de proofot, assembler factoryt vagy raw tokent nem ad ki. A
+boundary runtime export/import tesztje külön rögzíti, hogy más BFF modul nem
+importálhat privileged mintelőt. A source-only boundary:
 
 1. a strict human-token verifier eredményét fogadni;
 2. az opaque M1 VerifiedHumanIdentityProofot belül képezni;
 3. M0 resolver és M1 evidence assembler hívására;
-4. az evidence/session atomikus repository-írására.
+4. az evidence/session atomikus repository-írására;
+5. csak sikeres perzisztálás után adja át a kész cookie-header tervet az
+   injektált, későbbi HTTP Set-Cookie határnak.
 
 Express handler, teszt fixture, repository, böngésző input vagy caller-supplied
-dependency nem mintelhet proofot. Per-request freshnesshez nem kell nyers human
+dependency nem mintelhet proofot. A boundary a JWT-verifiert és a production
+resolver klienst külön runtime capability-bridge-en keresztül hívja: egy
+strukturális `{ verifyAndConsume() {} }` vagy `{ resolve() {} }` look-alike
+nem lehet authority-forrás. A production resolver factory rögzített, fagyasztott
+bound műveletet regisztrál; a dependency-injektált teszt factory szándékosan
+nem használható ezen a bridge-en. Per-request freshnesshez nem kell nyers human
 JWT: az immutable evidence subject, tenant, verzió, grant, issue/expiry adatait
 hasonlítjuk a friss resolver-state-hez. A session soha nem élhet tovább a
 validált human token expirynál.
@@ -230,8 +238,21 @@ migrationnek DB-szinten is ki kell kényszerítenie.
 
 ## Repository és request-döntések
 
-A jövőbeli typed repository az egyetlen Prisma/SQL consumer. Transactional
-műveletei:
+A megvalósított keskeny typed Prisma adapter az egyetlen source-only
+evidence/session issuance consumer. A boundary per példánya opaque, WeakMap
+kapun kiadott commit-consumert ad neki; sem strukturális commit DTO, sem
+look-alike consumer nem indíthat írást. Az adapter a tokenmentes HMAC- és
+expiry-snapshotot a tranzakción kívül kapja meg, majd egy interactive
+tranzakcióban előbb az előre kiosztott evidence UUID-ját, utána az arra kötött
+sessiont írja. A session hiba ezért az evidence sort is visszagörgeti.
+
+Ebben a slice-ban csak a binding betöltése és az accepted evidence/session
+együttes kiadása létezik. A binding lekérdezése szándékosan nem szűr `ACTIVE`-ra:
+az assembler különbözteti meg a hiányzó és a disabled kötést. Per-request
+session read/validate/revoke még nincs: a `lastValidatedAt`, illetve a revoke
+auditidő database-owned szerződése ehhez további forward-only migrationt igényel.
+
+A teljes, későbbi typed repository transactional műveletei:
 
 - OIDC login transaction begin/claim;
 - accepted evidence és session együttes perzisztálása;
@@ -325,15 +346,23 @@ A runtime OpenAPI verifierhez külön BFF registry/topology kell.
    felelősség.
    `bff/humanOidcCodeExchangeClient.ts` csak a release-pinnelt OIDC artifact
    után készülhet el. Mindet csak későbbi reviewed composition root konfigurálja.
-6. bff/boundary.ts: closure-only proof/evidence/session orchestration és fresh
-   resolver revalidation, csak in-memory fake-ekkel.
+6. `evidence.ts:createDoorstarIdentityBoundary(...)` és
+   `bff/controlPlaneRepository.ts`: elkészült source-only, zárt composition.
+   A genuine PKCE claimed deliveryből profile-bound code exchange, registered
+   strict JWT bridge, registered production resolver bridge, private proof és
+   evidence assembler, majd opaque one-use issuance commit következik. A Prisma
+   adapter bindingot olvas, és evidence+session sort egy interactive
+   tranzakcióban ír. A commit nem szerkezeti DTO; a teszt-resolver factory nem
+   használható production bridge-ként. Nincs DB-kapcsolat-nyitás, HTTP adapter,
+   route vagy közvetlen cookie-emisszió.
 7. `bff/oidcTransactionRepository.ts` + M2B Prisma modell és forward-only
    migration: elkészült source-only adapter, külön explicit M2B eldobható-DB
    proof parancssal. Nem nyit DB-kapcsolatot, nem mountol route-ot és nem
    konfigurál runtime principalt.
-8. A tényleges DB deploy, runtime-principal preflight és route-cutover külön
-   reviewed slice a bizonyított M1B/M2B disposable migration proof, valamint
-   exact human OIDC/canonical-host döntés után.
+8. A tényleges DB deploy, runtime-principal preflight, profile-pinnelt HTTP
+   token-exchange adapter és route-cutover külön reviewed slice a bizonyított
+   M1B/M2B disposable migration proof, valamint exact human
+   OIDC/canonical-host döntés után.
 
 ## Kötelező negatív evidence
 

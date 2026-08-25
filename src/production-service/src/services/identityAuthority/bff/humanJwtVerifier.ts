@@ -62,6 +62,7 @@ const MINIMUM_RSA_MODULUS_LENGTH = 2_048;
 const MAXIMUM_RSA_MODULUS_LENGTH = 8_192;
 const RSA_PUBLIC_EXPONENT = 65_537n;
 const verifiedFacts = new WeakMap<object, DoorstarValidatedHumanOidcFacts>();
+const verifierInstances = new WeakSet<object>();
 
 declare const doorstarValidatedHumanOidcIdentityBrand: unique symbol;
 
@@ -127,7 +128,7 @@ export function createDoorstarHumanJwtVerifier(value: unknown): DoorstarHumanJwt
   const dependencies = snapshotDependencies(value);
   if (dependencies === undefined) return undefined;
 
-  return Object.freeze({
+  const verifier: DoorstarHumanJwtVerifier = Object.freeze({
     async verifyAndConsume(input: unknown, onValidated: (delivery: DoorstarValidatedHumanOidcDelivery) => Promise<void> | void) {
       const tokens = snapshotTokenInput(input);
       if (tokens === undefined || typeof onValidated !== "function") return denied("doorstar_human_jwt_input_invalid");
@@ -178,6 +179,29 @@ export function createDoorstarHumanJwtVerifier(value: unknown): DoorstarHumanJwt
       }
     },
   });
+  verifierInstances.add(verifier);
+  return verifier;
+}
+
+/**
+ * Consumes only a verifier created by this module. The evidence composition
+ * root must call this bridge instead of invoking a structurally supplied
+ * `verifyAndConsume` method, so a caller cannot mint validated facts with a
+ * look-alike object.
+ */
+export async function verifyDoorstarHumanJwtAndConsume(
+  verifier: unknown,
+  input: unknown,
+  onValidated: (delivery: DoorstarValidatedHumanOidcDelivery) => Promise<void> | void,
+): Promise<DoorstarHumanJwtVerificationCompletion> {
+  if (typeof verifier !== "object" || verifier === null || !verifierInstances.has(verifier) || typeof onValidated !== "function") {
+    return denied("doorstar_human_jwt_input_invalid");
+  }
+  try {
+    return await (verifier as DoorstarHumanJwtVerifier).verifyAndConsume(input, onValidated);
+  } catch {
+    return unavailable("doorstar_human_jwt_delivery_failed");
+  }
 }
 
 function snapshotDependencies(value: unknown): VerifierDependencies | undefined {

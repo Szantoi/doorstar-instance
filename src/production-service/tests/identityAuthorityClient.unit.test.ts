@@ -1,7 +1,11 @@
 import { generateKeyPairSync, type KeyObject } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
 import { loadIdentityAuthorityConfig, type IdentityAuthorityEnabledConfig } from "../src/services/identityAuthority/config.js";
-import { createIdentityAuthorityResolverClient, createIdentityAuthorityResolverClientForTest } from "../src/services/identityAuthority/client.js";
+import {
+  createIdentityAuthorityResolverClient,
+  createIdentityAuthorityResolverClientForTest,
+  resolveIdentityAuthorityClient,
+} from "../src/services/identityAuthority/client.js";
 import { compareCanonicalUtcInstants, parseCanonicalUtcInstant } from "../src/services/identityAuthority/contract.js";
 
 const subject = "oidc|doorstar-worker-001";
@@ -9,6 +13,39 @@ const tenantId = "40000000-0000-0000-0000-000000000004";
 const m2mAccessToken = "m2m-access-token-value";
 
 describe("IdentityAuthorityResolverClient", () => {
+  it("does not call a structural look-alike through the trusted resolver bridge", async () => {
+    const fake = Object.freeze({
+      async resolve() {
+        throw new Error("must not run");
+      },
+    });
+
+    await expect(resolveIdentityAuthorityClient(fake, { subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "resolver_unavailable",
+    });
+  });
+
+  it("uses the factory-captured resolver operation even if a caller tries to replace the public method", async () => {
+    const client = await createIdentityAuthorityResolverClient({ mode: "disabled" });
+    expect(Object.isFrozen(client)).toBe(true);
+    expect(() => {
+      (client as unknown as { resolve: unknown }).resolve = async () => ({ kind: "resolved" });
+    }).toThrow();
+    await expect(resolveIdentityAuthorityClient(client, { subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "disabled",
+    });
+  });
+
+  it("does not register dependency-injected test clients for the BFF resolver bridge", async () => {
+    const client = await createIdentityAuthorityResolverClientForTest({ mode: "disabled" }, { environment: {} });
+    await expect(resolveIdentityAuthorityClient(client, { subject, tenantId })).resolves.toEqual({
+      kind: "unavailable",
+      reason: "resolver_unavailable",
+    });
+  });
+
   it("stays default-off without reading a key or making a network request", async () => {
     const transport = queuedFetch([]);
     let keyRead = false;
