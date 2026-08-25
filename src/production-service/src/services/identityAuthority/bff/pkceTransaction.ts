@@ -36,6 +36,7 @@ const TRANSACTION_FIELDS = Object.freeze([
   "issuedAt",
   "expiresAt",
 ] as const);
+const claimedCallbackDeliveries = new WeakMap<object, DoorstarOidcClaimedCallbackDeliveryState>();
 
 export interface DoorstarOidcLoginTransaction {
   readonly selector: string;
@@ -87,6 +88,16 @@ export interface DoorstarOidcClaimedCallbackSecrets {
   readonly profile: DoorstarHumanOidcValidationProfileSnapshot;
 }
 
+declare const doorstarOidcClaimedCallbackDeliveryBrand: unique symbol;
+
+/**
+ * Opaque, one-use post-CAS capability. Raw callback secrets are available only
+ * to a trusted consumer while it consumes this exact factory-created value.
+ */
+export interface DoorstarOidcClaimedCallbackDelivery {
+  readonly [doorstarOidcClaimedCallbackDeliveryBrand]: never;
+}
+
 export type DoorstarOidcAuthorizationStart =
   | { readonly kind: "accepted" }
   | {
@@ -115,6 +126,7 @@ export type DoorstarOidcCallbackCompletion =
         | "doorstar_oidc_transaction_state_rejected"
         | "doorstar_oidc_transaction_not_claimed"
         | "doorstar_oidc_transaction_repository_unavailable"
+        | "doorstar_oidc_claim_delivery_unconsumed"
         | "doorstar_oidc_claim_delivery_failed";
     };
 
@@ -132,15 +144,16 @@ export interface DoorstarOidcTransactionBoundary {
   }): Promise<DoorstarOidcAuthorizationStart>;
 
   /**
-   * Resolves code/verifier/nonce only after a conditional one-time claim. The
-   * callback must be implemented by the later evidence composition root.
+   * Delivers an opaque one-use code/verifier/nonce capability only after a
+   * conditional one-time claim. The callback must be implemented by the later
+   * evidence composition root and consume the delivery exactly once.
    */
   complete(input: {
     readonly repository: DoorstarOidcTransactionRepository;
     readonly rawQuery: unknown;
     readonly transactionCookieSelector: unknown;
     readonly now: unknown;
-    readonly onClaimed: (secrets: DoorstarOidcClaimedCallbackSecrets) => Promise<void> | void;
+    readonly onClaimed: (delivery: DoorstarOidcClaimedCallbackDelivery) => Promise<void> | void;
   }): Promise<DoorstarOidcCallbackCompletion>;
 }
 
@@ -225,23 +238,62 @@ export function createDoorstarOidcTransactionBoundary(input: {
       }
       if (claimed !== "claimed") return rejectedCallbackCompletion("doorstar_oidc_transaction_not_claimed");
 
+      const delivery = createClaimedCallbackDelivery({
+        authorizationCode: callback.authorizationCode,
+        codeVerifier: preclaim.codeVerifier,
+        nonce: preclaim.nonce,
+        profile: cloneValidationProfile(profile),
+      });
+      let callbackFailed = false;
       try {
-        await completeInput.onClaimed(Object.freeze({
-          authorizationCode: callback.authorizationCode,
-          codeVerifier: preclaim.codeVerifier,
-          nonce: preclaim.nonce,
-          profile: cloneValidationProfile(profile),
-        }));
+        await completeInput.onClaimed(delivery);
       } catch {
-        return rejectedCallbackCompletion("doorstar_oidc_claim_delivery_failed");
+        callbackFailed = true;
       }
-      return acceptedCallbackCompletion();
+      try {
+        const deliveryState = claimedCallbackDeliveries.get(delivery);
+        if (deliveryState?.consumption === undefined) {
+          return rejectedCallbackCompletion(callbackFailed
+            ? "doorstar_oidc_claim_delivery_failed"
+            : "doorstar_oidc_claim_delivery_unconsumed");
+        }
+        const consumptionSucceeded = await deliveryState.consumption;
+        if (callbackFailed || !consumptionSucceeded) {
+          return rejectedCallbackCompletion("doorstar_oidc_claim_delivery_failed");
+        }
+        return acceptedCallbackCompletion();
+      } finally {
+        claimedCallbackDeliveries.delete(delivery);
+      }
     },
   });
 }
 
 export function createDoorstarOidcTransactionCookieClearHeader(): string {
   return doorstarBffOidcTransactionCookieName + "=; Path=/; Max-Age=0; Secure; HttpOnly; SameSite=Lax";
+}
+
+/**
+ * Consumes one genuine post-CAS delivery. A foreign, replayed or malformed
+ * delivery never invokes the consumer. The secret snapshot is removed before
+ * the consumer runs, so a throw cannot re-open the authorization-code path.
+ * The boundary also awaits a started consumption if its callback accidentally
+ * returns before awaiting it. Consumer failures resolve false rather than
+ * leaking a rejected fire-and-forget promise into the Node process.
+ */
+export async function consumeDoorstarOidcClaimedCallbackDelivery(
+  value: unknown,
+  consumer: (secrets: DoorstarOidcClaimedCallbackSecrets) => Promise<void> | void,
+): Promise<boolean> {
+  if (typeof value !== "object" || value === null || typeof consumer !== "function") return false;
+  const delivery = claimedCallbackDeliveries.get(value);
+  if (delivery === undefined || delivery.secrets === undefined || delivery.consumption !== undefined) return false;
+  const secrets = delivery.secrets;
+  delivery.secrets = undefined;
+  delivery.consumption = Promise.resolve()
+    .then(() => consumer(cloneClaimedCallbackSecrets(secrets)))
+    .then(() => true, () => false);
+  return await delivery.consumption;
 }
 
 type AuthorizationMaterial = {
@@ -616,6 +668,29 @@ function cloneValidationProfile(profile: DoorstarHumanOidcValidationProfileSnaps
     clockSkewSeconds: profile.clockSkewSeconds,
     profileDigest: profile.profileDigest,
   });
+}
+
+function createClaimedCallbackDelivery(value: DoorstarOidcClaimedCallbackSecrets): DoorstarOidcClaimedCallbackDelivery {
+  const delivery = Object.freeze({}) as DoorstarOidcClaimedCallbackDelivery;
+  claimedCallbackDeliveries.set(delivery, {
+    secrets: cloneClaimedCallbackSecrets(value),
+    consumption: undefined,
+  });
+  return delivery;
+}
+
+function cloneClaimedCallbackSecrets(value: DoorstarOidcClaimedCallbackSecrets): DoorstarOidcClaimedCallbackSecrets {
+  return Object.freeze({
+    authorizationCode: value.authorizationCode,
+    codeVerifier: value.codeVerifier,
+    nonce: value.nonce,
+    profile: cloneValidationProfile(value.profile),
+  });
+}
+
+interface DoorstarOidcClaimedCallbackDeliveryState {
+  secrets: DoorstarOidcClaimedCallbackSecrets | undefined;
+  consumption: Promise<boolean> | undefined;
 }
 
 function randomOpaqueSelector(randomBytes: DoorstarRandomBytes): string {

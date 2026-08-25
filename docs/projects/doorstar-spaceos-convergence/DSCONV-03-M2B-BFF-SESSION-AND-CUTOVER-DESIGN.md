@@ -178,11 +178,23 @@ validálás után azonnal eldobandók. JWT header/payload és JWKS parsernek tel
 rejectálnia kell a duplicate JSON keyt; a jelenlegi csak root-szintet fedő
 strict parser erre nem használható változtatás nélkül.
 
-A humanOidcCodeExchangeClient külön, csak a boundary által hívható port:
-fix canonical token endpoint, public-PKCE form, redirect:error, TLS/proxy
-deny, teljes response-bodyra érvényes bounded shared deadline és strict token
-response parser. A raw authorization code és a tokenek csak e port és a
-validator közötti rövid memóriában élhetnek.
+Az elkészült `humanOidcCodeExchangePort.ts` nem HTTP kliens, hanem a PKCE CAS
+után kapott callback-secretek és a későbbi transzport közti, teljes opaque
+profile-hoz kötött source port. Egyetlen 2 s / 64 KiB korlátos loader-handoffot
+enged; a loader csak a release/issuer/token endpoint/client/redirect/digest,
+`authorization_code`, code és verifier mezőket kapja. A nonce, state, scope,
+refresh token és minden caller-választott endpoint kizárt. Sikeres exact
+access-token + ID-token pár csak egyszer használható, callback-local deliveryn
+keresztül jut tovább, a completionbe soha.
+
+A valódi `humanOidcCodeExchangeClient` továbbra is külön, csak a boundary által
+hívható adapter: fix canonical token endpoint, release-artifactban rögzített
+public-PKCE client-auth/form, `redirect:error`, TLS/proxy deny, teljes
+response-bodyra érvényes bounded shared deadline és strict token response
+parser. A raw authorization code és a tokenek csak e port és a validator közötti
+rövid memóriában élhetnek. Mivel a release-pinnelt artifact még nem rögzíti az
+exact success/error JSON és refresh policy szerződést, fetch-adaptert nem szabad
+bevezetni.
 
 ## Session és MAC szerződés
 
@@ -296,12 +308,23 @@ A runtime OpenAPI verifierhez külön BFF registry/topology kell.
    kiadás-pinnelés továbbra is külön trial gate.
 4. bff/pkceTransaction.ts: selectorből levezetett state/verifier/nonce,
    strict raw callback parser, start-before-redirect repository port, és CAS
-   utáni closure-only secret callback. Nincs public decision-to-secret accessor.
+   utáni opaque one-use claimed delivery. A guarded consumer a secretet a
+   consumer indulása előtt lezárja; a boundary a megkezdett consumptiont akkor
+   is megvárja, ha a hívó nem awaitelte. Nincs decision-to-secret return
+   accessor.
 5. bff/humanJwtVerifier.ts: strict profile parser/validator adapter teljes
    mélységű duplicate-JSON scannerrel; a nyers parser/JWK/claim pipeline
-   module-local, ezért nem importálható megkerülési API. A
-   bff/humanOidcCodeExchangeClient.ts külön bounded transport port. Mindet csak
-   későbbi reviewed composition root konfigurálja.
+   module-local, ezért nem importálható megkerülési API.
+5a. bff/humanOidcCodeExchangePort.ts: profile-bound, nem HTTP source port a
+   PKCE CAS callback és a future strict adapter között. Exact két-token
+   projectiont és one-use callback-local deliveryt ad, de sem token HTTP/JSON
+   grammar, sem client authentication, sem fetch nincs benne. Az `accepted`
+   eredményhez a megkezdett token-delivery consumer completionja is szükséges;
+   fire-and-forget consumer hiba static `delivery_failed`, nem unhandled
+   rejection. A validator és a session kiadása ettől külön composition-root
+   felelősség.
+   `bff/humanOidcCodeExchangeClient.ts` csak a release-pinnelt OIDC artifact
+   után készülhet el. Mindet csak későbbi reviewed composition root konfigurálja.
 6. bff/boundary.ts: closure-only proof/evidence/session orchestration és fresh
    resolver revalidation, csak in-memory fake-ekkel.
 7. `bff/oidcTransactionRepository.ts` + M2B Prisma modell és forward-only

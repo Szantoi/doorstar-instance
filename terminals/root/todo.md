@@ -57,7 +57,9 @@
 - [x] P0 — DSCONV-03 M2B source foundation: current+previous MAC ring,
       pairwise distinct opaque session/CSRF, access+ID+maximum expiry, opaque
       full human-OIDC profile fingerprint, exact `openid + productScope` PKCE
-      authorization URI, valamint CAS utáni closure-only raw-secret átadás.
+      authorization URI, valamint CAS utáni opaque, one-use claimed-delivery.
+      A guarded consumption a secretet az első await előtt lezárja, és a
+      boundary a megkezdett consumptiont callback-hiba esetén is kivárja.
       Nem route, DB adapter, cookie-kibocsátás vagy Keycloak/Kernel hívás.
 - [x] P0 — DSCONV-03 M2B strict human JWT/JWKS source: profile-pinnelt RS256
       access+ID validátor, full-depth duplicate-JSON/claim/JWK gate, opaque
@@ -71,6 +73,13 @@
       generated Prisma-client-kompatibilis repository adapter. Az M1B/M2B
       disposable migration proof külön konfigurációt és explicit approvalt
       igényel; nem futott DB-n és nem jelent runtime aktiválást.
+- [x] P0 — DSCONV-03 M2B OIDC code-exchange source port: a genuine PKCE
+      claimed-deliveryt pontosan egyszer fogyasztó, profile-pinnelt, 2 s / 64
+      KiB korlátos loader-handoff és exact access+ID compact-JWS pair
+      callback-local delivery. Konkurens reuse, fire-and-forget consumer-hiba
+      és callback-hiba static fail-closed; nincs fetch, Keycloak-, DB-, route-
+      vagy cookie-művelet. A tényleges HTTP/JSON/client-auth adapter továbbra
+      is release-artifact-gate mögött van.
 - [ ] P0 — DSCONV-03 M2B integration/cutover: bounded code-exchange transport,
       privileged evidence/session repository, fresh resolver, native audit
       actor, frontend BFF kliens és a négy component-snapshot operation atomikus

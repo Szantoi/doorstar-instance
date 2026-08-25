@@ -874,3 +874,21 @@
   least privilege, release-pinnelt OIDC/edge, code exchange +
   evidence/session integration, atomikus BFF cutover, Kernel attestation és
   külön engedélyezett izolált E2E.
+
+## 2026-08-25 — Doorstar M2B profile-bound OIDC code-exchange source kész
+
+- Új source-only `humanOidcCodeExchangePort.ts`: opaque PKCE claimed-delivery
+  → exact profile-bound loader request → callback-local access/ID compact-JWS
+  delivery. A loader only canonical endpoint/client/redirect/code/verifier,
+  abort signal és 64 KiB cap mezőt kap; nonce/state/scope/refresh/client secret
+  nem. Nincs fetch vagy runtime activation.
+- A PKCE post-CAS delivery és a token delivery is one-use, WeakMap/state-alapú
+  és non-rejecting. Konkurens reuse 0 második loader-hívást kap; fire-and-forget
+  és callback-throw esetén a határ kivárja a megkezdett fogyasztást, majd
+  static fail-closed eredményt ad.
+- Független security + architektúra final review GO, P0/P1=0. Célzott 29/29,
+  build, OpenAPI 3.1/85 PASS. Full unit 390/392; kizárólag a korábbi planning
+  SHA-pin és RAG dry-run validator drift baseline hiba maradt.
+- Nem történt DB proof/migration, route-mount, cookie/session issuance,
+  Keycloak/Kernel call, frontend/cutover, VPS vagy deploy. Próbaüzem még nem
+  indítható; az explicit külső gate-ek változatlanok.

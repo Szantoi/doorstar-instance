@@ -8,10 +8,12 @@
 ## Goal and non-goals
 
 The existing PKCE boundary creates an immutable transaction before it sends an
-authorization redirect, and it exposes code/verifier/nonce only after a
-one-time compare-and-swap claim. This slice gives that boundary a typed,
-forward-only PostgreSQL record and a narrow repository adapter without mounting
-a route, setting a cookie, calling an OIDC endpoint, or running a migration.
+authorization redirect, then supplies an opaque, one-use post-CAS delivery.
+Its guarded consumer exposes code/verifier/nonce only while consuming that
+genuine delivery; a second consumer cannot retry the code. This slice gives
+that boundary a typed, forward-only PostgreSQL record and a narrow repository
+adapter without mounting a route, setting a cookie, calling an OIDC endpoint,
+or running a migration.
 
 It is not a login implementation. It does not store an authorization code,
 state value, nonce, PKCE verifier, access token, ID token, refresh token,

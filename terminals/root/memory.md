@@ -629,3 +629,31 @@
   proof, runtime least-privilege preflight, release-pinnelt OIDC/edge döntés,
   code exchange/evidence/session integration, atomikus BFF cutover, Kernel
   attestation és jóváhagyott izolált E2E még külön kapu.
+
+## 2026-08-25 — M2B profile-bound OIDC code-exchange source checkpoint
+
+- Elkészült a nem aktivált `humanOidcCodeExchangePort.ts`: csak genuine,
+  PKCE-CAS utáni opaque claimed-deliveryt fogyaszt, a teljes factory-issued
+  OIDC profilehoz köti a loader-kérést, és egyszeri 2 s / 64 KiB handoffban
+  enged át exact access+ID compact-JWS párt a callback-local token deliverynek.
+  Fetch, Express, Prisma, session, cookie, route, Keycloak- és Kernel-hívás
+  nincs benne.
+- A PKCE raw-secrets strukturális átadása megszűnt. WeakMap-alapú one-use
+  capability zárja a code/verifier/nonce snapshotot még az első await előtt;
+  versengő azonos deliveryből pontosan egy loader indul. A claimed és token
+  consumption egyaránt non-rejecting outcome, így fire-and-forget hibából nincs
+  unhandled rejection vagy háttérben továbbfutó secret/token oldali munka.
+- Callback-hiba után mindkét boundary megvárja a már elindult consumptiont, és
+  csak azután ad static `*_delivery_failed` eredményt. Az `accepted` továbbra
+  is kizárólag sikeres token-átadást jelent, nem JWT-validációt, M0 resolver
+  egyezést, evidence-írást vagy session-kiadást.
+- Bizonyíték: PKCE + code-exchange adversarial unit 29/29 PASS; build PASS;
+  OpenAPI 3.1/85 runtime 85, legacy 82 PASS; security és architektúra final
+  review GO, P0/P1=0. Full unit 390/392: csak a változatlan planning-input-pack
+  SHA-pin és RAG candidate dry-run validator drift hibázik.
+- A trial továbbra sem indítható: a valódi HTTP token adaptert a release-pinnelt
+  OIDC artifact (client-auth, strict response/error/refresh contract) blokkolja;
+  ezen felül M1B/M2B disposable DB proof, runtime role preflight, canonical
+  `/auth/*` edge/host, privát evidence/session composition, native audit actor,
+  atomikus resource cutover, Kernel attestation és külön jóváhagyott izolált
+  E2E szükséges.

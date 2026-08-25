@@ -4,6 +4,7 @@ import { parseCanonicalUtcInstant } from "../src/services/identityAuthority/cont
 import { createDoorstarHumanOidcProfile } from "../src/services/identityAuthority/bff/humanOidcProfile.js";
 import * as pkceTransaction from "../src/services/identityAuthority/bff/pkceTransaction.js";
 import {
+  consumeDoorstarOidcClaimedCallbackDelivery,
   createDoorstarOidcTransactionBoundary,
   createDoorstarOidcTransactionCookieClearHeader,
   type DoorstarOidcLoginTransaction,
@@ -53,7 +54,7 @@ describe("Doorstar M2B PKCE transaction boundary", () => {
     expect(fixture.repository.started[0]!.expiresAt.wireValue).toBe("2026-08-25T12:05:00Z");
   });
 
-  it("releases code, verifier, and nonce only after the one-time CAS claim", async () => {
+  it("releases code, verifier, and nonce only through a one-use delivery after the one-time CAS claim", async () => {
     const fixture = createFixture();
     const plan = await begin(fixture);
     const transaction = fixture.repository.started[0]!;
@@ -64,17 +65,20 @@ describe("Doorstar M2B PKCE transaction boundary", () => {
       rawQuery: "code=authorization-code-123&state=" + stateOf(plan),
       transactionCookieSelector: transaction.selector,
       now: instant("2026-08-25T12:01:00Z"),
-      onClaimed(secrets) {
+      async onClaimed(delivery) {
         expect(fixture.repository.claims).toHaveLength(1);
-        observed.push({
-          authorizationCode: secrets.authorizationCode,
-          codeVerifier: secrets.codeVerifier,
-          nonce: secrets.nonce,
-        });
-        expect(secrets.profile.profileDigest).toBe(transaction.profileDigest);
-        expect(secrets.profile.tokenEndpoint).toBe(
-          "https://identity.example.test/realms/doorstar/protocol/openid-connect/token",
-        );
+        await expect(consumeDoorstarOidcClaimedCallbackDelivery(delivery, (secrets) => {
+          observed.push({
+            authorizationCode: secrets.authorizationCode,
+            codeVerifier: secrets.codeVerifier,
+            nonce: secrets.nonce,
+          });
+          expect(secrets.profile.profileDigest).toBe(transaction.profileDigest);
+          expect(secrets.profile.tokenEndpoint).toBe(
+            "https://identity.example.test/realms/doorstar/protocol/openid-connect/token",
+          );
+        })).resolves.toBe(true);
+        await expect(consumeDoorstarOidcClaimedCallbackDelivery(delivery, () => undefined)).resolves.toBe(false);
       },
     });
     const replay = await fixture.boundary.complete({
@@ -98,6 +102,126 @@ describe("Doorstar M2B PKCE transaction boundary", () => {
     expect(observed[0]!.codeVerifier).not.toBe(challengeOf(plan));
     expect(replay).toEqual({ kind: "rejected", code: "doorstar_oidc_transaction_not_claimed" });
     expect(fixture.repository.claims).toHaveLength(2);
+  });
+
+  it("fails closed when a post-CAS callback does not consume its opaque delivery", async () => {
+    const fixture = createFixture();
+    const plan = await begin(fixture);
+    const transaction = fixture.repository.started[0]!;
+
+    await expect(fixture.boundary.complete({
+      repository: fixture.repository,
+      rawQuery: "code=authorization-code-123&state=" + stateOf(plan),
+      transactionCookieSelector: transaction.selector,
+      now: instant("2026-08-25T12:01:00Z"),
+      onClaimed() {
+        return undefined;
+      },
+    })).resolves.toEqual({
+      kind: "rejected",
+      code: "doorstar_oidc_claim_delivery_unconsumed",
+    });
+  });
+
+  it("awaits a started claimed-delivery consumption even when the callback forgets to await it", async () => {
+    const fixture = createFixture();
+    const plan = await begin(fixture);
+    const transaction = fixture.repository.started[0]!;
+    let signalConsumerStarted: (() => void) | undefined;
+    const consumerStarted = new Promise<void>((resolve) => {
+      signalConsumerStarted = resolve;
+    });
+    let releaseConsumer: (() => void) | undefined;
+    const consumerRelease = new Promise<void>((resolve) => {
+      releaseConsumer = resolve;
+    });
+
+    const pending = fixture.boundary.complete({
+      repository: fixture.repository,
+      rawQuery: "code=authorization-code-123&state=" + stateOf(plan),
+      transactionCookieSelector: transaction.selector,
+      now: instant("2026-08-25T12:01:00Z"),
+      onClaimed(delivery) {
+        void consumeDoorstarOidcClaimedCallbackDelivery(delivery, async () => {
+          signalConsumerStarted?.();
+          await consumerRelease;
+        });
+      },
+    });
+    await consumerStarted;
+    let settled = false;
+    void pending.then(() => {
+      settled = true;
+    });
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    releaseConsumer?.();
+    await expect(pending).resolves.toEqual({ kind: "accepted" });
+  });
+
+  it("contains a fire-and-forget claimed-delivery consumer failure without a rejected promise", async () => {
+    const fixture = createFixture();
+    const plan = await begin(fixture);
+    const transaction = fixture.repository.started[0]!;
+    let consumption: Promise<boolean> | undefined;
+
+    const completion = await fixture.boundary.complete({
+      repository: fixture.repository,
+      rawQuery: "code=authorization-code-123&state=" + stateOf(plan),
+      transactionCookieSelector: transaction.selector,
+      now: instant("2026-08-25T12:01:00Z"),
+      onClaimed(delivery) {
+        consumption = consumeDoorstarOidcClaimedCallbackDelivery(delivery, () => {
+          throw new Error("consumer failure must remain contained");
+        });
+      },
+    });
+
+    expect(completion).toEqual({
+      kind: "rejected",
+      code: "doorstar_oidc_claim_delivery_failed",
+    });
+    await expect(consumption).resolves.toBe(false);
+  });
+
+  it("waits for a started fire-and-forget consumption even when its callback throws", async () => {
+    const fixture = createFixture();
+    const plan = await begin(fixture);
+    const transaction = fixture.repository.started[0]!;
+    let signalConsumerStarted: (() => void) | undefined;
+    const consumerStarted = new Promise<void>((resolve) => {
+      signalConsumerStarted = resolve;
+    });
+    let releaseConsumer: (() => void) | undefined;
+    const consumerRelease = new Promise<void>((resolve) => {
+      releaseConsumer = resolve;
+    });
+
+    const pending = fixture.boundary.complete({
+      repository: fixture.repository,
+      rawQuery: "code=authorization-code-123&state=" + stateOf(plan),
+      transactionCookieSelector: transaction.selector,
+      now: instant("2026-08-25T12:01:00Z"),
+      onClaimed(delivery) {
+        void consumeDoorstarOidcClaimedCallbackDelivery(delivery, async () => {
+          signalConsumerStarted?.();
+          await consumerRelease;
+        });
+        throw new Error("callback failure must wait for started consumption");
+      },
+    });
+    await consumerStarted;
+    let settled = false;
+    void pending.then(() => {
+      settled = true;
+    });
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    releaseConsumer?.();
+    await expect(pending).resolves.toEqual({
+      kind: "rejected",
+      code: "doorstar_oidc_claim_delivery_failed",
+    });
   });
 
   it.each([
@@ -228,9 +352,10 @@ describe("Doorstar M2B PKCE transaction boundary", () => {
     );
   });
 
-  it("exports no decision-to-secret accessor outside the one PKCE boundary", () => {
+  it("exports only the guarded one-use claim consumer, not a decision-to-secret accessor", () => {
     expect(Object.keys(pkceTransaction).sort()).toEqual([
       "MAXIMUM_DOORSTAR_OIDC_TRANSACTION_LIFETIME_SECONDS",
+      "consumeDoorstarOidcClaimedCallbackDelivery",
       "createDoorstarOidcTransactionBoundary",
       "createDoorstarOidcTransactionCookieClearHeader",
       "doorstarBffOidcTransactionCookieName",
