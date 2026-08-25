@@ -730,3 +730,18 @@
 - Kód, adatbázis, Keycloak, VPS és deploy továbbra sem indult. Következhet a
   tiszta, source-only M1 implementation slice; shared/local integrációhoz
   továbbra is külön emberi jóváhagyás kell.
+
+## 2026-08-25 — Doorstar M1A control-plane source slice kész
+
+- A tiszta M1A source slice elkészült: instance-lifetime tenant-binding
+  validáció, safe descriptor snapshotok, opaque proof boundary és tokenmentes
+  evidence policy. Ez nem BFF, nem login és nem perzisztált session.
+- Az `evidence.ts` production runtime exportjai üresek; a korábbi tesztfactory
+  P1-et megszüntettük. A külön policy csak `{ kind: "accepted" }` vagy
+  `{ kind: "denied" }` döntést képez, authority artefaktumot nem.
+- Ellenőrzés: M0+M1 célzott Vitest 84/84 PASS; build PASS; teljes unit suite
+  158/160. A két failure a változatlan planning-input-pack SHA és RAG
+  dry-run-validator baseline drift, nem M1A regresszió.
+- Független security és domain review: P0/P1 nincs. Az M1B Prisma migration,
+  session state machine és egy explicit engedélyű eldobható PostgreSQL proof
+  nélkül a próbaüzem továbbra sem indítható.

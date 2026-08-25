@@ -23,10 +23,14 @@
 - [x] P0 — DSCONV-03 M1 terv: független security-, architektúra- és
       adatmodell-review lezárva, P0/P1 nélkül. A legacy 66-táblás RLS migráció
       nem emelhető át.
-- [ ] P0 — DSCONV-03 M1 implementáció: tiszta control-plane/evidence/session
-      source slice és eldobható PostgreSQL `migrate deploy` +
-      binding/constraint/trigger smoke. Raw human access-token perzisztencia
-      kizárt; ez még nem üzleti multi-tenant RLS proof.
+- [x] P0 — DSCONV-03 M1A: tiszta control-plane binding/evidence-policy source
+      alap, opaque proof boundary, runtime factory-mentes exportfelület és
+      descriptor-snapshot fail-closed unit proof. Nem BFF, nem session és nem
+      üzleti multi-tenant/RLS proof.
+- [ ] P0 — DSCONV-03 M1B: Prisma control-plane/evidence/session modellek és
+      forward-only migration, majd külön emberi jóváhagyással eldobható
+      PostgreSQL `migrate deploy` + binding/constraint/trigger smoke. Raw human
+      access-token perzisztencia kizárt; ez még nem üzleti multi-tenant RLS proof.
 - [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
       teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
       session storage-ba nem kerülhet.

@@ -80,6 +80,11 @@ export function parseIdentityAuthorityResolveRequest(value: unknown): IdentityAu
   return parsed.data;
 }
 
+/** Shared v1 tenant grammar for trusted M1 control-plane snapshots. */
+export function isAllowedCanonicalTenantId(value: string): boolean {
+  return LOWERCASE_GUID.test(value) && !RESERVED_TENANT_IDS.has(value);
+}
+
 /** Parses the exact ten-field Kernel response without normalising an invalid value. */
 export function parseIdentityAuthorityState(text: string): IdentityAuthorityState {
   const parsed = stateSchema.safeParse(parseStrictJsonObject(text));

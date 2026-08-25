@@ -433,3 +433,24 @@
   binding FK-val védett, az authority-mezőket pedig session-state MAC fedi.
   Két tenantos pozitív E2E csak két külön Doorstar instance-ben futhat; egy
   instance-ben legfeljebb egy aktív binding lehet.
+
+## 2026-08-25 — M1A source-only control-plane alapréteg
+
+- Elkészült a Doorstar instance teljes élettartamára szóló, egyetlen
+  immutable/disable-only tenant-binding tiszta domainvalidációja. A binding
+  csak `ACTIVE` v1-ként indulhat, `ACTIVE → DISABLED` tranzíciója pontosan egy
+  verziólépés, rebind/delete pedig a későbbi DB-invariánsban is tiltott.
+- A binding-, proof-, resolver-state- és időértékek descriptor-snapshotból
+  validálódnak: getter, setter, sparse/extra array, örökölt vagy nem kanonikus
+  mező fail-closed; nincs TOCTOU alapú capability-csere.
+- Az opaque proof brand és az evidence-összeállítás privát maradt. Az
+  `evidence.ts` futásidejű exportfelülete üres; a tesztelt `evidencePolicy`
+  csak authority-artefaktum nélküli `accepted`/`denied` döntést ad, nem tud
+  proofot, evidence-et, capabilityt vagy sessiont kiállítani.
+- Bizonyíték: M0+M1 célzott Vitest 84/84 PASS, TypeScript build PASS,
+  független security és domain review P0/P1 nélkül. A teljes unit suite
+  158/160: a két változatlan baseline hiba a planning input-pack SHA pin és a
+  RAG candidate dry-run validator driftje; M1A egyik artefacthoz sem nyúlt.
+- Prisma schema/migration, adatbázis, Keycloak, cookie, route, OpenAPI,
+  credential, VPS és deploy nem indult. Következő M1B: perzisztencia/migration
+  source, majd külön jóváhagyott eldobható PostgreSQL `migrate deploy` proof.
