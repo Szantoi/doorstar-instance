@@ -37,7 +37,7 @@ async function findRevision(projectKey: string, revisionValue: string) {
 
 function sendDomainError(error: unknown, res: Response) {
   if (!(error instanceof OperationPlanError)) {
-    logger.error({ err: error }, "operation plan request failed");
+    logger.error({ err: error, event: "operation_plan_request_failed" });
     res.status(500).json({ error: "internal_error" });
     return;
   }

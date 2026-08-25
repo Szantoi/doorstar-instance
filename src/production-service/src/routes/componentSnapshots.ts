@@ -51,7 +51,7 @@ async function findRevision(projectKey: string, revisionValue: string) {
 
 function sendDomainError(error: unknown, res: Response) {
   if (!(error instanceof ComponentSnapshotError)) {
-    logger.error({ err: error }, "component snapshot request failed");
+    logger.error({ err: error, event: "component_snapshot_request_failed" });
     res.status(500).json({ error: "internal_error" });
     return;
   }

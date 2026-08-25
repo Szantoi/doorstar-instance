@@ -40,6 +40,12 @@
       bizonyítani a nem-owner/non-superuser BFF szerepet, a `PUBLIC`/untrusted
       schema-`CREATE` tiltását, és a bindingra kizárólag lockhoz szükséges
       column-level `UPDATE(id)` least-privilege grantot.
+- [x] P0 — DSCONV-03 M2 előfeltétel: HTTP- és operációs Pino-logok
+      allowlist-alapú redakciója. Cookie/header/query/body/response-header,
+      raw Error message/stack/cause és Pino automatikus Error→`msg` útja
+      kizárt; statikus `event` mező megmarad a diagnosztikához. Célzott
+      lifecycle és globális-logger negatív teszt, build és független security
+      review zöld.
 - [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
       teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
       session storage-ba nem kerülhet.

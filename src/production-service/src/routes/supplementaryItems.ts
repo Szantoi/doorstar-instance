@@ -32,7 +32,7 @@ async function findRevision(projectKey: string, revisionValue: string) {
 
 function sendReviewError(error: unknown, res: Response) {
   if (!(error instanceof SupplementaryReviewError)) {
-    logger.error({ err: error }, "supplementary review request failed");
+    logger.error({ err: error, event: "supplementary_review_request_failed" });
     res.status(500).json({ error: "internal_error" });
     return;
   }

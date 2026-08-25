@@ -489,3 +489,26 @@
   identity 92/92, migration target guard 8/8, build és OpenAPI 85 operation
   zöld. Full unit: 166/168, azonos két régi baseline failure (planning SHA pin,
   RAG dry-run validator drift), M1B scope nem érintette őket.
+
+## 2026-08-25 — M2 HTTP/operációs napló-redakciós checkpoint
+
+- A BFF előtti naplózási rés lezárult. A pino-http lifecycle serializer csak
+  request ID-t, HTTP metódust, query/fragment nélküli pathot, response státuszt
+  és generic error-típust enged. Request/response header, cookie, CSRF,
+  authorization, query, body, callback-kód, Location/Set-Cookie és raw Error
+  adat nem kerülhet logba.
+- A globális application logger ugyanezt az `err` serializer-t és egy
+  `logMethod` hookot használ. A hook a direct `logger.error(error)`, a
+  message nélküli `{ err }`, illetve explicit üzenetes `{ err }, msg` Pino
+  alakokat is fix `redacted error` üzenetre normalizálja, ezért az Error
+  message/cause/stack nem csúszhat át a Pino automatikus `msg` kényelmi útján.
+- A meglévő öt error-log statikus allowlistelt `event` kulcsot kapott, így a
+  redakció nem teszi diagnosztizálhatatlanná a hibacsoportot. Új BFF kód nem
+  tehet untrusted adatot `event`-be vagy logüzenetbe.
+- Bizonyíték: célzott Vitest 2/2, TypeScript build és OpenAPI 3.1/85 PASS;
+  két független adverzárius review végül GO. A teljes unit suite továbbra is
+  csak a már ismert planning-input-pack SHA és RAG dry-run baseline hibával
+  tér el (168/170 zöld); ez a slice nem érinti őket.
+- Adatbázis, Keycloak, cookie-kiadás, BFF route, VPS és deploy továbbra sem
+  indult. Következő forrás slice: M2 strict cookie/header/origin szerződés és
+  a teljes OpenAPI route-manifest, még BFF-only route-promóció nélkül.

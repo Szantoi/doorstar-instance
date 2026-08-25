@@ -31,7 +31,7 @@ async function findRevision(projectKey: string, revisionValue: string) {
 
 function sendManufacturedItemError(error: unknown, res: Response) {
   if (!(error instanceof ManufacturedItemReviewError)) {
-    logger.error({ err: error }, "manufactured item request failed");
+    logger.error({ err: error, event: "manufactured_item_request_failed" });
     res.status(500).json({ error: "internal_error" });
     return;
   }

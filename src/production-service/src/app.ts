@@ -1,7 +1,13 @@
 import express from "express";
 import cors from "cors";
 import { pinoHttp } from "pino-http";
+import type { Logger } from "pino";
 import { logger } from "./logger.js";
+import {
+  serializeSafeError,
+  serializeSafeHttpRequest,
+  serializeSafeHttpResponse,
+} from "./observability/httpLogSerializers.js";
 import { boardRouter } from "./routes/board.js";
 import { tasksRouter } from "./routes/tasks.js";
 import { kanbanRouter } from "./routes/kanban.js";
@@ -25,6 +31,8 @@ import { isServiceReady } from "./services/readiness.js";
 export interface ProductionServiceDependencies {
   /** Test seam for the operational readiness probe; production uses Prisma. */
   runDatabaseProbe?: () => Promise<unknown>;
+  /** Test seam for capturing the already-redacted HTTP request lifecycle log. */
+  httpLogger?: Logger;
 }
 
 export function createApp(dependencies: ProductionServiceDependencies = {}) {
@@ -38,7 +46,17 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
   // Task photo attachments are compressed JPEG data URIs, comfortably over
   // the default 100kb body limit.
   app.use(express.json({ limit: "3mb" }));
-  app.use(pinoHttp({ logger }));
+  app.use(pinoHttp({
+    logger: dependencies.httpLogger ?? logger,
+    // pino-http currently defaults this to true; make the safety boundary
+    // explicit so serializer wrapping cannot silently drift with an upgrade.
+    wrapSerializers: true,
+    serializers: {
+      req: serializeSafeHttpRequest,
+      res: serializeSafeHttpResponse,
+      err: serializeSafeError,
+    },
+  }));
 
   app.get("/healthz", (_req, res) => res.json({ status: "ok" }));
   app.get("/readyz", async (req, res) => {
@@ -72,7 +90,7 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
   app.use("/api/production", api);
 
   app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    req.log?.error({ err }, "unhandled request error");
+    req.log?.error({ err, event: "unhandled_request_error" });
     if (res.headersSent) return;
     res.status(500).json({ error: "internal_error" });
   });

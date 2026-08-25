@@ -776,3 +776,20 @@
 - Próbaüzem továbbra sem indítható: következő külön kapu az explicit emberi
   jóváhagyású, dedikált disposable PostgreSQL proof, majd a runtime-role
   preflight és az M2 BFF/Keycloak/Kernel attestation szelet.
+
+## 2026-08-25 — Doorstar M2 naplózási security gate kész
+
+- Elkészült az allowlist-alapú HTTP lifecycle és közvetlen operációs Pino
+  log-redakció. Nem logolható cookie, Authorization/CSRF/egyéb header, query,
+  request/response body, response header, callback-kód, nyers Error message,
+  stack vagy cause.
+- A Pino automatikus `Error → msg` útja külön `logMethod` hookkal zárt;
+  direct Error, message nélküli `{ err }` és explicit érzékeny üzenetes hívás
+  is fix redaktált üzenetre esik. A jelenlegi hibautak statikus `event`
+  azonosítóval maradtak diagnosztizálhatók.
+- Ellenőrzés: security lifecycle + global logger test 2/2, build, OpenAPI
+  3.1/85 és diff-check zöld; független adversarial review GO. Teljes unit
+  168/170, a két ismert, scope-on kívüli baseline hiba változatlan.
+- A próbaüzem még nem indítható: sem DB migration proof, sem runtime-principal
+  preflight, sem PKCE/BFF/Kernel E2E nem történt. Következő source-only M2
+  lépés a strict HTTP security contract és a 85 műveletes route-manifest.
