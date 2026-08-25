@@ -27,6 +27,11 @@ import { readinessRouter } from "./routes/readiness.js";
 import { productionServiceOpenApi } from "./openapi.js";
 import { prisma } from "./db/client.js";
 import { isServiceReady } from "./services/readiness.js";
+import {
+  legacyProductionRouteGroup,
+  operationalRouteDefinitions,
+  type LegacyProductionRouteSourceFile,
+} from "./httpRouteTopology.js";
 
 export interface ProductionServiceDependencies {
   /** Test seam for the operational readiness probe; production uses Prisma. */
@@ -58,8 +63,8 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
     },
   }));
 
-  app.get("/healthz", (_req, res) => res.json({ status: "ok" }));
-  app.get("/readyz", async (req, res) => {
+  app.get(operationalRouteDefinitions.health.pathTemplate, (_req, res) => res.json({ status: "ok" }));
+  app.get(operationalRouteDefinitions.readiness.pathTemplate, async (req, res) => {
     const ready = await isServiceReady(dependencies.runDatabaseProbe ?? (() => prisma.$queryRaw`SELECT 1`));
     if (!ready) {
       req.log?.error("readiness probe failed");
@@ -68,26 +73,31 @@ export function createApp(dependencies: ProductionServiceDependencies = {}) {
     }
     res.json({ status: "ready" });
   });
-  app.get("/openapi.json", (_req, res) => res.type("application/json").send(productionServiceOpenApi));
+  app.get(operationalRouteDefinitions.openApi.pathTemplate, (_req, res) => res.type("application/json").send(productionServiceOpenApi));
 
   const api = express.Router();
-  api.use(boardRouter);
-  api.use(tasksRouter);
-  api.use(kanbanRouter);
-  api.use(loadRouter);
-  api.use(projectsRouter);
-  api.use(templatesRouter);
-  api.use(overviewRouter);
-  api.use(productionOrdersRouter);
-  api.use(orderPositionEvidenceRouter);
-  api.use(manufacturedItemsRouter);
-  api.use(supplementaryItemsRouter);
-  api.use(componentSnapshotsRouter);
-  api.use(operationPlanSnapshotsRouter);
-  api.use(readinessRouter);
-  api.use(technicalCatalogRouter);
-  api.use(importRunsRouter);
-  app.use("/api/production", api);
+  const legacyProductionRouters: Readonly<Record<LegacyProductionRouteSourceFile, express.Router>> = {
+    "board.ts": boardRouter,
+    "tasks.ts": tasksRouter,
+    "kanban.ts": kanbanRouter,
+    "load.ts": loadRouter,
+    "projects.ts": projectsRouter,
+    "templates.ts": templatesRouter,
+    "overview.ts": overviewRouter,
+    "productionOrders.ts": productionOrdersRouter,
+    "orderPositionEvidence.ts": orderPositionEvidenceRouter,
+    "manufacturedItems.ts": manufacturedItemsRouter,
+    "supplementaryItems.ts": supplementaryItemsRouter,
+    "componentSnapshots.ts": componentSnapshotsRouter,
+    "operationPlanSnapshots.ts": operationPlanSnapshotsRouter,
+    "readiness.ts": readinessRouter,
+    "technicalCatalog.ts": technicalCatalogRouter,
+    "importRuns.ts": importRunsRouter,
+  };
+  for (const sourceFile of legacyProductionRouteGroup.sourceFiles) {
+    api.use(legacyProductionRouters[sourceFile]);
+  }
+  app.use(legacyProductionRouteGroup.mountPath, api);
 
   app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
     req.log?.error({ err, event: "unhandled_request_error" });

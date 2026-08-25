@@ -793,3 +793,22 @@
 - A próbaüzem még nem indítható: sem DB migration proof, sem runtime-principal
   preflight, sem PKCE/BFF/Kernel E2E nem történt. Következő source-only M2
   lépés a strict HTTP security contract és a 85 műveletes route-manifest.
+
+## 2026-08-25 — Doorstar M2A strict HTTP + route-manifest kész
+
+- Passzív, nem mountolt BFF transport contract készült: composition-owned
+  canonical HTTPS origin closure, raw-header/cookie parsing, GET/HEAD-safe
+  method policy, mutation CSRF+Origin gate, authority-header fail-closed és
+  nem-szerializálható accepted secret carrier. Browser origin, bearer/tenant/
+  role/station/principal/consumer selector nem lehet authority input.
+- A route-manifest 85/85 explicit: 82 legacy-only, 3 public-operational,
+  bff-only 0. A régi `/api/production` viselkedés nincs BFF mögé téve.
+- `verify:openapi` most az élő `createApp()` Express runtime-stacket is
+  inventarizálja (85 route), mellette 16 source file AST-regisztere 82 legacy
+  route-ot igazol. Extra scoped/dinamikus middleware, TRACE/egyéb nem
+  dokumentált metódus és duplikált runtime route fail-closed.
+- A compiled OpenAPI asset dist-only proof a `npm run build` része. Független
+  security és manifest review végső GO; build, `verify:openapi` PASS.
+- Full unit: 251/253, kizárólag a régi planning SHA-pin és RAG dry-run drift
+  bukik. DB, Keycloak, cookie, BFF route, frontend/CORS, VPS és deploy továbbra
+  sem történt; a próbaüzem emiatt még nem indítható.

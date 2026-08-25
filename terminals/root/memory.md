@@ -512,3 +512,33 @@
 - Adatbázis, Keycloak, cookie-kiadás, BFF route, VPS és deploy továbbra sem
   indult. Következő forrás slice: M2 strict cookie/header/origin szerződés és
   a teljes OpenAPI route-manifest, még BFF-only route-promóció nélkül.
+
+## 2026-08-25 — M2A passzív HTTP-határ és route-manifest lezárva
+
+- A jövőbeli BFF strict transport kapuja elkészült, de nincs mountolva:
+  a canonical origin kizárólag a composition-factory által validált,
+  closure-ben tartott konfiguráció lehet; request nem adhat át originértéket.
+  Csak `GET`/`HEAD` olvasás, minden más támogatott metódus CSRF-köteles
+  mutáció. Olvasás hiányzó sessionnel `401`, mutáció hiányzó
+  session/CSRF/origin esetén M1-konform `403`.
+- A preflight kizárólag nyers Node `rawHeaders`-t olvas, fail-closed cookie- és
+  header-duplikációra, és tilt minden authority-fragmentet tartalmazó header
+  nevet (`role`, `station`, `principal`, `tenant`, `consumer`, beleértve az
+  `X-DoorstarTenant` aliasokat). Accepted eredményből sem szerializálható
+  session selector vagy CSRF secret: ezek module-private `WeakMap`-ben maradnak.
+- Az explicit manifest mind a 85 OpenAPI műveletet lefedi: 82 `legacy-only`,
+  3 `public-operational`, 0 `bff-only`. A legacy source registry 16 forrásból
+  AST-val 82 route-ot olvas; a `verify:openapi` ezen felül a tényleges,
+  adatbázis-kérés nélküli `createApp()` Express-stackből 85 runtime route-ot
+  bont ki és exact összeveti az OpenAPI-val. Scoped/dinamikus mount,
+  ismeretlen metódus és duplikált runtime route fail-closed.
+- A lefordított OpenAPI asset útvonala javítva: a build dist-only ideiglenes
+  csomagból is importálja, source-checkout fallback nélkül. Két független
+  HTTP/manifest review végső GO-t adott.
+- Ellenőrzés: build és OpenAPI `85 runtime / 82 legacy source` PASS; a teljes
+  unit suite 251/253. A két változatlan baseline failure a planning input-pack
+  SHA pin és a RAG dry-run validator driftje, nem M2A regresszió.
+- Adatbázis, Keycloak, cookie-kiadás, BFF route, frontend/CORS-váltás, VPS és
+  deploy továbbra sem történt. Következő érdemi kapuk: M1B disposable DB proof
+  + runtime-principal preflight, majd külön M2 BFF/PKCE/resolver cutover és
+  explicit izolált E2E-jóváhagyás.

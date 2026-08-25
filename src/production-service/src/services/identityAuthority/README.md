@@ -31,6 +31,21 @@ deadline, and TLS/proxy fail-closed checks are intentional. A later BFF slice
 must compare the parsed authority state with server-derived, tokenless evidence
 before issuing a Doorstar session.
 
+## M2A passive HTTP boundary
+
+`httpSecurity.ts` and `routeManifest.ts` remain source-only: neither is
+imported or mounted by `app.ts` as a BFF route. A future composition layer must
+create the preflight once from `DOORSTAR_BFF_CANONICAL_ORIGIN`; its closure then
+accepts only raw Node headers and the actual request method. It never trusts
+browser authority headers, normalized duplicate headers, a caller-selected
+read/mutation label, or a request-supplied origin.
+
+Accepted preflight decisions deliberately contain no enumerable cookie values.
+The session selector and optional CSRF value are held privately until an
+explicit server-side consumer callback uses them. The current route manifest
+classifies all 85 OpenAPI operations (82 legacy-only, 3 public operational,
+0 BFF-only), so no legacy endpoint has been switched.
+
 ## Verification and activation
 
 Run the three `identityAuthority*.unit.test.ts` files through `npm run test:unit`

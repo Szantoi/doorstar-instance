@@ -46,9 +46,15 @@
       kizárt; statikus `event` mező megmarad a diagnosztikához. Célzott
       lifecycle és globális-logger negatív teszt, build és független security
       review zöld.
-- [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
-      teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
-      session storage-ba nem kerülhet.
+- [x] P0 — DSCONV-03 M2A: strict, nem mountolt raw-header/cookie/CSRF/Origin
+      transport contract, nem-szerializálható accepted selector-carrier, 85-as
+      explicit route-manifest és valós Express runtime-stack/OpenAPI gate.
+      82 legacy-only, 3 public-operational, 0 bff-only; nincs cookie-kiadás,
+      BFF route vagy legacy cutover.
+- [ ] P0 — DSCONV-03 M2B: a tokenmentes evidence-et használó PKCE/session/
+      resolver BFF és egy atomikus, natív bff-only route-csoport teljes negatív
+      contract-gate-je. Humán bearer Kernel felé vagy session storage-ba nem
+      kerülhet; legacy requester guard/fallback tilos.
 - [ ] DSCONV-03 M3/M4: csak Kernel snapshot reconciliation + release
       attestation, valamint külön emberi jóváhagyás után eldobható local
       Keycloak–Kernel–Doorstar integráció és két-tenantos E2E bizonyíték.
