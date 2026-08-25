@@ -1,6 +1,6 @@
 # DSCONV-03 M1 — Doorstar identity-authority control-plane terv
 
-- **Állapot:** `PROPOSED — independent security, architecture and data review complete; no P0/P1 remains`
+- **Állapot:** `IMPLEMENTATION IN PROGRESS — M1A source-only foundation independently reviewed; no P0/P1 remains`
 - **Dátum:** 2026-08-25
 - **Kiindulás:** Doorstar M0 `6589fb7` (`codex/doorstar-identity-authority-m2m`)
 - **Kapcsolt Kernel candidate:** `9fa208e` — nem release-artifact
@@ -48,25 +48,27 @@ magáról multi-tenant/RLS készültséget.
 
 ## Döntés: egy-instance tenant binding
 
-Az M1 egy Doorstar adatbázisban egyetlen aktív, explicit tenant-bindinget
-enged. A M2 által már signature-validated humán identity által adott `tenantId`
-csak akkor használható, ha pontosan egyezik ezzel a bindinggel; query, cookie,
-`X-*` header vagy böngésző-state nem választ tenantot.
+Az M1 egy Doorstar adatbázis teljes élettartamára pontosan egy, explicit
+tenant-bindinget enged: az első sor `ACTIVE`, majd egyszer, véglegesen
+`DISABLED` lehet. Második binding, delete vagy ugyanabban az instance DB-ben
+rebind nincs. A M2 által már signature-validated humán identity által adott
+`tenantId` csak akkor használható, ha pontosan egyezik ezzel a bindinggel;
+query, cookie, `X-*` header vagy böngésző-state nem választ tenantot.
 
 Ez szándékosan kisebb, mint a teljes multi-tenant átállás:
 
 | Kérdés | M1 döntés |
 |---|---|
 | Meglévő 33 üzleti tábla | változatlan, nem tenantolt |
-| Első trial izolációja | dedikált instance DB + egy aktív Kernel tenant binding |
+| Első trial izolációja | dedikált instance DB + egy instance-lifetime Kernel tenant binding |
 | RLS állítás | nincs; későbbi tenantizálási külön migration és nem-superuser PG proof kell |
 | Humán auth | M2 PKCE/JWT-validáció, M1 csak a belső proof szerződését készíti elő |
 | Kernel hívás | csak az M0 saját M2M service tokenével |
 
 Ha a binding deaktiválódik vagy a belső proof tenantja eltér, a login fail-closed
-és a hozzá tartozó sessionök visszavonódnak. Tenantváltás nem update: a trial
-instance-et újra kell provisionálni vagy külön, auditált binding-change döntés
-szükséges.
+és a hozzá tartozó sessionök visszavonódnak. Tenantváltás nem update és nem
+új binding egy deaktivált adatbázisban: friss Doorstar instance-et kell
+provisionálni. Egy későbbi, külön auditált schema/process dönthet másról.
 
 ## Belső evidence szerződés
 
@@ -82,7 +84,7 @@ Az M2 humán token-ellenőrzése után *kizárólag szerveroldalon* képzett
   permissions: readonly CanonicalGrant[];
   enabledModules: readonly CanonicalModuleId[];
   tokenIssuedAt: CanonicalUtcInstant;
-  tokenExpiresAt: Date;
+  tokenExpiresAt: CanonicalUtcInstant;
 }
 ```
 
@@ -90,6 +92,18 @@ Ez nem JWT és nem tartalmaz JWT-nyersanyagot. A `subject`, tenant, verziók,
 grantok, `iat` és `exp` a signature-validated humán tokenből vagy a rögzített
 platform identity-contractból származnak. Route-paraméter, cookie, query vagy
 hitelesítetlen header ezek közül semmit sem írhat felül.
+
+A proof opaque, capability-bearing belső érték: M1-ben nincs production
+mint- vagy caller-injektálható composition-függvénye, és nincs runtime
+test-factory sem. Az M2 humán JWT-validátora és belső composition root-ja fogja
+signature-ellenőrzés után, a saját M0 resolverével, binding providerével és
+szerver-owned órájával létrehozni. A nyers `proof`/`resolution`/`now`
+összerakó és az elfogadott evidence-képzés nem exportált. A külön
+`evidencePolicy` csak normalizált tényekre adott, authority-artefaktum nélküli
+`accepted`/`denied` döntést ad; nem képezhet proofot, evidence-et, capabilityt
+vagy sessiont. Minden binding-, proof-, resolver-state- és instant-mező
+egyszeri, only-own data descriptor snapshotból validálódik; getter/proxy
+értékcsere fail-closed.
 
 Az M0 `resolved` állapota csak akkor válik `ResolvedIdentityAuthorityEvidence`
 értékké, ha egyszerre teljesül:
@@ -131,16 +145,17 @@ leírt invariánsok kötelezőek.
 
 | Mező | Típus / szabály |
 |---|---|
-| `id` | saját technikai kulcs; singleton/aktív-binding invariant védi |
+| `id` | saját technikai kulcs; instance-lifetime singleton invariant védi |
 | `tenantId` | PostgreSQL `uuid`, input csak lowercase D-GUID lehet |
 | `status` | `ACTIVE` vagy `DISABLED` |
 | `bindingVersion` | `bigint`, kizárólag admin/provisioning auditáltan növelheti |
 | `createdAt`, `disabledAt`, `disabledReason` | audit- és lifecycle mezők |
 
-Az adatbázisban részleges unique index vagy egyenértékű singleton constraint
-biztosítja, hogy legfeljebb egy `ACTIVE` binding legyen. A `tenantId` nem
-származhat environmentből és az alkalmazás nem upsertelheti automatikusan.
-Az SQL trigger `tenantId`-módosítást, valamint `DISABLED → ACTIVE` átmenetet
+Az adatbázisban globális singleton constraint (PostgreSQL expression unique
+index `ON ((1))`) biztosítja, hogy összesen egy binding sor legyen, ne csak
+egyetlen `ACTIVE` sor. A `tenantId` nem származhat environmentből és az
+alkalmazás nem upsertelheti automatikusan. Az SQL trigger `tenantId`-
+módosítást, minden delete-et, valamint `DISABLED → ACTIVE` átmenetet
 elutasít. Az egyetlen engedett lifecycle-változás az `ACTIVE → DISABLED`;
 ennek ugyanabban a tranzakcióban növelnie kell a `bindingVersion`-t és vissza
 kell vonnia minden még élő, hozzá tartozó sessiont.
@@ -245,7 +260,7 @@ route-hoz kötelezőek.
   ORM-konvencióból „immutable”.
 - `DoorstarSession.expiresAt > issuedAt`, a nanoszekundum `0..999999999`, a
   selector/verifier/CSRF/state HMAC-formátum, a hozzájuk tartozó key-version
-  és az aktív-binding singleton mind DB constraint/index is.
+  és az instance-lifetime binding singleton mind DB constraint/index is.
 - Binding deaktiválásakor a DB trigger tranzakciósan beállítja a függő sessionök
   `revokedAt`/`revokeReason` értékét; a végleges migration test ezt és a tiltott
   binding-módosításokat is bizonyítja.
@@ -330,6 +345,11 @@ bejelentkezés; rotációs pozitív és negatív teszt kötelező.
   CSRF/origin/header eltérés és resolver-unavailable mind fail-closed;
 - minden védett üzleti kérés authority revalidációja kötelező; revoke,
   lifecycle-, version- vagy cutoff-változás az első következő kérésnél deny;
+- nincs caller-injektálható production assembler vagy runtime proof-/assembler-
+  factory; az `evidence.ts` export-surface ezt külön tesztben rögzíti. Az
+  `evidencePolicy` csak authority-artefaktum nélküli döntést ad. Unbranded
+  proof, getter/proxy snapshot vagy második binding-insert fail-closed, külön
+  negatív unit teszttel;
 - HMAC-SHA-256 domain/key-version/preimage/constant-time/rotation teszt, és
   ismeretlen vagy hibás state-/verifier-/CSRF-MAC → revoke + deny; nyers kulcs
   repository/log/DB scanje üres;
@@ -338,7 +358,7 @@ bejelentkezés; rotációs pozitív és negatív teszt kötelező.
   minden mutation capabilityje kizárólag current evidence-ből ered;
 - nincs raw token a TypeScript DTO-kban, Prisma modellben, log eventben vagy
   HTTP-válaszban; statikus secret/header-redaction teszt;
-- egy aktív binding, unique HMAC, evidence immutability és session revoke
+- egyetlen instance-lifetime binding, unique HMAC, evidence immutability és session revoke
   eldobható PostgreSQL `migrate deploy` + constraint/trigger smoke-ban;
 - `prisma generate`, célzott Vitest, TypeScript build, OpenAPI drift gate és
   `git diff --check`;
@@ -365,5 +385,6 @@ bejelentkezés; rotációs pozitív és negatív teszt kötelező.
 - shared/VPS/production adatbázis, Keycloak vagy credential érintése;
 - független security/architecture review nélküli implementation commit.
 
-Ez a dokumentum kizárólag az M1 tervezési döntése. Még nem hoz létre táblát,
-cookie-t, route-ot, sessiont vagy tesztkörnyezetet.
+Ez a dokumentum az M1 tervezési döntését és a megvalósult M1A source-only
+alaprétegét rögzíti. Még nem hoz létre Prisma táblát vagy migrationt, cookie-t,
+route-ot, perzisztált sessiont, adatbázist vagy tesztkörnyezetet.
