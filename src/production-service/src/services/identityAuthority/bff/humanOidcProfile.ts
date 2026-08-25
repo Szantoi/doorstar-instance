@@ -16,15 +16,27 @@ const PROFILE_FIELDS = Object.freeze([
   "accessTokenAuthorizedParty",
   "idTokenAudiences",
   "idTokenAuthorizedParty",
+  "accessTokenJoseType",
+  "accessTokenPayloadType",
+  "idTokenJoseType",
+  "accessTokenMaximumLifetimeSeconds",
+  "idTokenMaximumLifetimeSeconds",
+  "authorityProjectionContract",
+  "idTokenAuthorityClaims",
   "clockSkewSeconds",
 ] as const);
+const VALIDATION_SNAPSHOT_FIELDS = Object.freeze([...PROFILE_FIELDS, "scopes", "profileDigest"] as const);
 
 const canonicalReleaseId = /^[a-z0-9][a-z0-9._-]{0,127}$/u;
 const canonicalClientId = /^[A-Za-z0-9._-]{1,128}$/u;
 const canonicalScope = /^[A-Za-z][A-Za-z0-9._:-]{0,127}$/u;
 const canonicalAudience = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/u;
+const canonicalJoseType = /^[A-Za-z][A-Za-z0-9._+-]{0,31}$/u;
 const forbiddenNonProductScopes = new Set(["offline_access", "profile", "email", "address", "phone"]);
 const MAXIMUM_URL_LENGTH = 2_048;
+const MAXIMUM_TOKEN_LIFETIME_SECONDS = 3_600;
+const DOORSTAR_AUTHORITY_PROJECTION_CONTRACT = "spaceos-v1-nested-single-tenant";
+const ID_TOKEN_AUTHORITY_CLAIMS_FORBIDDEN = "forbidden";
 const profileSnapshots = new WeakMap<object, DoorstarHumanOidcProfileSnapshot>();
 
 declare const doorstarHumanOidcProfileBrand: unique symbol;
@@ -62,6 +74,13 @@ export interface DoorstarHumanOidcValidationProfileSnapshot extends DoorstarOidc
   readonly accessTokenAuthorizedParty: string;
   readonly idTokenAudiences: readonly string[];
   readonly idTokenAuthorizedParty: string;
+  readonly accessTokenJoseType: string;
+  readonly accessTokenPayloadType: string;
+  readonly idTokenJoseType: string;
+  readonly accessTokenMaximumLifetimeSeconds: number;
+  readonly idTokenMaximumLifetimeSeconds: number;
+  readonly authorityProjectionContract: typeof DOORSTAR_AUTHORITY_PROJECTION_CONTRACT;
+  readonly idTokenAuthorityClaims: typeof ID_TOKEN_AUTHORITY_CLAIMS_FORBIDDEN;
   readonly clockSkewSeconds: number;
 }
 
@@ -89,6 +108,13 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
   const accessTokenAuthorizedParty = fields.get("accessTokenAuthorizedParty");
   const idTokenAudiences = snapshotCanonicalStringArray(fields.get("idTokenAudiences"), 8);
   const idTokenAuthorizedParty = fields.get("idTokenAuthorizedParty");
+  const accessTokenJoseType = fields.get("accessTokenJoseType");
+  const accessTokenPayloadType = fields.get("accessTokenPayloadType");
+  const idTokenJoseType = fields.get("idTokenJoseType");
+  const accessTokenMaximumLifetimeSeconds = fields.get("accessTokenMaximumLifetimeSeconds");
+  const idTokenMaximumLifetimeSeconds = fields.get("idTokenMaximumLifetimeSeconds");
+  const authorityProjectionContract = fields.get("authorityProjectionContract");
+  const idTokenAuthorityClaims = fields.get("idTokenAuthorityClaims");
   const clockSkewSeconds = fields.get("clockSkewSeconds");
 
   if (typeof releaseId !== "string"
@@ -101,6 +127,13 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
     || typeof productScope !== "string"
     || typeof accessTokenAuthorizedParty !== "string"
     || typeof idTokenAuthorizedParty !== "string"
+    || typeof accessTokenJoseType !== "string"
+    || typeof accessTokenPayloadType !== "string"
+    || typeof idTokenJoseType !== "string"
+    || typeof accessTokenMaximumLifetimeSeconds !== "number"
+    || typeof idTokenMaximumLifetimeSeconds !== "number"
+    || typeof authorityProjectionContract !== "string"
+    || typeof idTokenAuthorityClaims !== "string"
     || typeof clockSkewSeconds !== "number"
     || !canonicalReleaseId.test(releaseId)
     || !isCanonicalIssuer(issuer)
@@ -117,6 +150,13 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
     || accessTokenAuthorizedParty !== clientId
     || idTokenAuthorizedParty !== clientId
     || !idTokenAudiences.includes(clientId)
+    || !canonicalJoseType.test(accessTokenJoseType)
+    || !canonicalJoseType.test(accessTokenPayloadType)
+    || !canonicalJoseType.test(idTokenJoseType)
+    || !isTokenLifetime(accessTokenMaximumLifetimeSeconds)
+    || !isTokenLifetime(idTokenMaximumLifetimeSeconds)
+    || authorityProjectionContract !== DOORSTAR_AUTHORITY_PROJECTION_CONTRACT
+    || idTokenAuthorityClaims !== ID_TOKEN_AUTHORITY_CLAIMS_FORBIDDEN
     || !Number.isSafeInteger(clockSkewSeconds)
     || clockSkewSeconds < 0
     || clockSkewSeconds > 300) {
@@ -124,7 +164,7 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
   }
   const scopes = createCanonicalScopeSet(productScope);
 
-  const snapshotWithoutDigest = {
+  const snapshotWithoutDigest: Omit<DoorstarHumanOidcProfileSnapshot, "profileDigest"> = {
     releaseId,
     issuer,
     authorizationEndpoint,
@@ -138,6 +178,13 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
     accessTokenAuthorizedParty,
     idTokenAudiences,
     idTokenAuthorizedParty,
+    accessTokenJoseType,
+    accessTokenPayloadType,
+    idTokenJoseType,
+    accessTokenMaximumLifetimeSeconds,
+    idTokenMaximumLifetimeSeconds,
+    authorityProjectionContract: DOORSTAR_AUTHORITY_PROJECTION_CONTRACT,
+    idTokenAuthorityClaims: ID_TOKEN_AUTHORITY_CLAIMS_FORBIDDEN,
     clockSkewSeconds,
   };
   const profileDigest = createProfileDigest(snapshotWithoutDigest);
@@ -147,6 +194,13 @@ export function createDoorstarHumanOidcProfile(value: unknown): DoorstarHumanOid
     scopes: Object.freeze([...scopes]),
     accessTokenAudiences: Object.freeze([...accessTokenAudiences]),
     idTokenAudiences: Object.freeze([...idTokenAudiences]),
+    accessTokenJoseType,
+    accessTokenPayloadType,
+    idTokenJoseType,
+    accessTokenMaximumLifetimeSeconds,
+    idTokenMaximumLifetimeSeconds,
+    authorityProjectionContract: DOORSTAR_AUTHORITY_PROJECTION_CONTRACT,
+    idTokenAuthorityClaims: ID_TOKEN_AUTHORITY_CLAIMS_FORBIDDEN,
     profileDigest,
   }));
   return profile;
@@ -200,9 +254,42 @@ export function snapshotDoorstarHumanOidcValidationProfile(value: unknown): Door
     accessTokenAuthorizedParty: snapshot.accessTokenAuthorizedParty,
     idTokenAudiences: Object.freeze([...snapshot.idTokenAudiences]),
     idTokenAuthorizedParty: snapshot.idTokenAuthorizedParty,
+    accessTokenJoseType: snapshot.accessTokenJoseType,
+    accessTokenPayloadType: snapshot.accessTokenPayloadType,
+    idTokenJoseType: snapshot.idTokenJoseType,
+    accessTokenMaximumLifetimeSeconds: snapshot.accessTokenMaximumLifetimeSeconds,
+    idTokenMaximumLifetimeSeconds: snapshot.idTokenMaximumLifetimeSeconds,
+    authorityProjectionContract: snapshot.authorityProjectionContract,
+    idTokenAuthorityClaims: snapshot.idTokenAuthorityClaims,
     clockSkewSeconds: snapshot.clockSkewSeconds,
     profileDigest: snapshot.profileDigest,
   });
+}
+
+/**
+ * Confirms that a structural profile snapshot received from the claimed PKCE
+ * transaction is exactly the profile capability captured by the verifier.
+ */
+export function matchesDoorstarHumanOidcValidationProfileSnapshot(
+  value: unknown,
+  expectedProfile: unknown,
+): boolean {
+  const expected = snapshotDoorstarHumanOidcValidationProfile(expectedProfile);
+  const fields = readExactOwnDataFields(value, VALIDATION_SNAPSHOT_FIELDS);
+  if (expected === undefined || fields === undefined) return false;
+
+  const candidateInput: Record<string, unknown> = {};
+  for (const field of PROFILE_FIELDS) candidateInput[field] = fields.get(field);
+  const candidate = createDoorstarHumanOidcProfile(candidateInput);
+  const candidateSnapshot = snapshotDoorstarHumanOidcValidationProfile(candidate);
+  const suppliedScopes = snapshotCanonicalStringArray(fields.get("scopes"), 2);
+  const suppliedDigest = fields.get("profileDigest");
+  return candidateSnapshot !== undefined
+    && suppliedScopes !== undefined
+    && typeof suppliedDigest === "string"
+    && suppliedDigest === candidateSnapshot.profileDigest
+    && sameValidationSnapshot(candidateSnapshot, expected)
+    && sameStringSequence(suppliedScopes, candidateSnapshot.scopes);
 }
 
 function createProfileDigest(value: Omit<DoorstarHumanOidcProfileSnapshot, "profileDigest">): string {
@@ -221,6 +308,13 @@ function createProfileDigest(value: Omit<DoorstarHumanOidcProfileSnapshot, "prof
     value.accessTokenAuthorizedParty,
     ...lengthPrefixedArray(value.idTokenAudiences),
     value.idTokenAuthorizedParty,
+    value.accessTokenJoseType,
+    value.accessTokenPayloadType,
+    value.idTokenJoseType,
+    value.accessTokenMaximumLifetimeSeconds.toString(10),
+    value.idTokenMaximumLifetimeSeconds.toString(10),
+    value.authorityProjectionContract,
+    value.idTokenAuthorityClaims,
     value.clockSkewSeconds.toString(10),
   ];
   const encoded = fields.map(encodeLengthPrefixedUtf8);
@@ -253,6 +347,42 @@ function isCanonicalAudienceSet(value: readonly string[] | undefined): value is 
     && value.length >= 1
     && value.every((item) => canonicalAudience.test(item))
     && isSortedUnique(value);
+}
+
+function isTokenLifetime(value: number): boolean {
+  return Number.isSafeInteger(value) && value >= 1 && value <= MAXIMUM_TOKEN_LIFETIME_SECONDS;
+}
+
+function sameValidationSnapshot(
+  left: DoorstarHumanOidcValidationProfileSnapshot,
+  right: DoorstarHumanOidcValidationProfileSnapshot,
+): boolean {
+  return left.releaseId === right.releaseId
+    && left.issuer === right.issuer
+    && left.authorizationEndpoint === right.authorizationEndpoint
+    && left.tokenEndpoint === right.tokenEndpoint
+    && left.jwksUri === right.jwksUri
+    && left.clientId === right.clientId
+    && left.redirectUri === right.redirectUri
+    && left.productScope === right.productScope
+    && sameStringSequence(left.scopes, right.scopes)
+    && sameStringSequence(left.accessTokenAudiences, right.accessTokenAudiences)
+    && left.accessTokenAuthorizedParty === right.accessTokenAuthorizedParty
+    && sameStringSequence(left.idTokenAudiences, right.idTokenAudiences)
+    && left.idTokenAuthorizedParty === right.idTokenAuthorizedParty
+    && left.accessTokenJoseType === right.accessTokenJoseType
+    && left.accessTokenPayloadType === right.accessTokenPayloadType
+    && left.idTokenJoseType === right.idTokenJoseType
+    && left.accessTokenMaximumLifetimeSeconds === right.accessTokenMaximumLifetimeSeconds
+    && left.idTokenMaximumLifetimeSeconds === right.idTokenMaximumLifetimeSeconds
+    && left.authorityProjectionContract === right.authorityProjectionContract
+    && left.idTokenAuthorityClaims === right.idTokenAuthorityClaims
+    && left.clockSkewSeconds === right.clockSkewSeconds
+    && left.profileDigest === right.profileDigest;
+}
+
+function sameStringSequence(left: readonly string[], right: readonly string[]): boolean {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
 }
 
 function isSortedUnique(values: readonly string[]): boolean {

@@ -834,3 +834,21 @@
   Doorstar OIDC/canonical host, strict JWT/JWKS + code-exchange + privileged
   evidence/session repository, native audit actor, atomikus component-snapshot
   BFF cutover, Kernel attestation és explicit izolált E2E approval.
+
+## 2026-08-25 — Doorstar M2B strict JWT/JWKS source validation kész
+
+- Elkészült a nem mountolt, profile-pinnelt RS256 access+ID token validátor:
+  full-depth duplicate-JSON védelem, canonical NumericDate/claims/JWKS
+  grammar, one-tenant access authority, ID-token nonce-kötés és static
+  fail-closed denied/unavailable outcomeok.
+- A JWKS source ugyanahhoz az opaque profile-hoz kötött, 2 s abort-race és
+  64 KiB válaszkap mellett. A PKCE closure profile-snapshotja exact ellenőrzést
+  kap; a validált facts kizárólag egyszer használható callback-local delivery.
+- A nyers pre-verification parser factory törölve; a parser module-local. A
+  build exact `dist`-clean + compiled export/stale-artifact gate-tel garantálja,
+  hogy csak a verifier factory kerül runtime artifactba.
+- Független architektúra és security re-review GO, P0/P1 nincs. Célzott 70/70,
+  build és OpenAPI PASS; teljes unit 355/357, a két ismert scope-on kívüli
+  baseline failure változatlan.
+- Nem történt runtime aktiválás, adatbázis-, Keycloak-, Kernel-, cookie-,
+  route-, CORS-, VPS- vagy deployművelet. A próbaüzem még nem indítható.

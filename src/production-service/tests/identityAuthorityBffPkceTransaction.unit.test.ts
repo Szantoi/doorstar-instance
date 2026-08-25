@@ -278,6 +278,13 @@ function profileInput() {
     accessTokenAuthorizedParty: "doorstar-bff",
     idTokenAudiences: ["doorstar-bff"],
     idTokenAuthorizedParty: "doorstar-bff",
+    accessTokenJoseType: "JWT",
+    accessTokenPayloadType: "Bearer",
+    idTokenJoseType: "JWT",
+    accessTokenMaximumLifetimeSeconds: 300,
+    idTokenMaximumLifetimeSeconds: 300,
+    authorityProjectionContract: "spaceos-v1-nested-single-tenant",
+    idTokenAuthorityClaims: "forbidden",
     clockSkewSeconds: 60,
   };
 }

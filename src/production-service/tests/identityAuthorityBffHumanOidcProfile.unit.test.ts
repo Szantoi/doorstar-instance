@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   createDoorstarHumanOidcProfile,
+  matchesDoorstarHumanOidcValidationProfileSnapshot,
   snapshotDoorstarHumanOidcTransactionProfile,
+  snapshotDoorstarHumanOidcValidationProfile,
 } from "../src/services/identityAuthority/bff/humanOidcProfile.js";
 
 describe("Doorstar M2B complete human OIDC profile", () => {
@@ -23,6 +25,8 @@ describe("Doorstar M2B complete human OIDC profile", () => {
     ["different JWKS endpoint", { jwksUri: "https://identity.example.test/realms/doorstar/protocol/openid-connect/certs-next" }],
     ["different product scope", { productScope: "doorstar-api-next" }],
     ["different access audience", { accessTokenAudiences: ["doorstar-api-next"] }],
+    ["different access maximum lifetime", { accessTokenMaximumLifetimeSeconds: 301 }],
+    ["different access payload type", { accessTokenPayloadType: "DoorstarBearer" }],
     ["different clock skew", { clockSkewSeconds: 61 }],
   ])("changes the fingerprint when the complete profile changes: %s", (_name, change) => {
     const baseline = createDoorstarHumanOidcProfile(profileInput());
@@ -41,6 +45,9 @@ describe("Doorstar M2B complete human OIDC profile", () => {
     ["foreign endpoint origin", { tokenEndpoint: "https://other.example.test/token" }],
     ["wrong authorized party", { accessTokenAuthorizedParty: "other-client" }],
     ["ID audience lacks client", { idTokenAudiences: ["other-client"] }],
+    ["unsafe access token lifetime", { accessTokenMaximumLifetimeSeconds: 3_601 }],
+    ["unknown authority projection contract", { authorityProjectionContract: "flat-v1" }],
+    ["ID authority claims must be forbidden", { idTokenAuthorityClaims: "allowed" }],
   ])("fails closed for an incomplete or noncanonical profile: %s", (_name, change) => {
     expect(createDoorstarHumanOidcProfile({ ...profileInput(), ...change })).toBeUndefined();
   });
@@ -52,6 +59,19 @@ describe("Doorstar M2B complete human OIDC profile", () => {
       redirectUri: "https://doorstar.example.test/auth/callback",
       profileDigest: "A".repeat(43),
     })).toBeUndefined();
+  });
+
+  it("binds a claimed PKCE validation snapshot to the exact factory profile fingerprint", () => {
+    const profile = createDoorstarHumanOidcProfile(profileInput());
+    if (profile === undefined) throw new Error("expected profile");
+    const snapshot = snapshotDoorstarHumanOidcValidationProfile(profile);
+    if (snapshot === undefined) throw new Error("expected profile snapshot");
+
+    expect(matchesDoorstarHumanOidcValidationProfileSnapshot(snapshot, profile)).toBe(true);
+    expect(matchesDoorstarHumanOidcValidationProfileSnapshot({
+      ...snapshot,
+      jwksUri: "https://identity.example.test/realms/doorstar/protocol/openid-connect/certs-next",
+    }, profile)).toBe(false);
   });
 });
 
@@ -70,6 +90,13 @@ function profileInput() {
     accessTokenAuthorizedParty: "doorstar-bff",
     idTokenAudiences: ["doorstar-bff"],
     idTokenAuthorizedParty: "doorstar-bff",
+    accessTokenJoseType: "JWT",
+    accessTokenPayloadType: "Bearer",
+    idTokenJoseType: "JWT",
+    accessTokenMaximumLifetimeSeconds: 300,
+    idTokenMaximumLifetimeSeconds: 300,
+    authorityProjectionContract: "spaceos-v1-nested-single-tenant",
+    idTokenAuthorityClaims: "forbidden",
     clockSkewSeconds: 60,
   };
 }

@@ -606,6 +606,13 @@ function cloneValidationProfile(profile: DoorstarHumanOidcValidationProfileSnaps
     accessTokenAuthorizedParty: profile.accessTokenAuthorizedParty,
     idTokenAudiences: Object.freeze([...profile.idTokenAudiences]),
     idTokenAuthorizedParty: profile.idTokenAuthorizedParty,
+    accessTokenJoseType: profile.accessTokenJoseType,
+    accessTokenPayloadType: profile.accessTokenPayloadType,
+    idTokenJoseType: profile.idTokenJoseType,
+    accessTokenMaximumLifetimeSeconds: profile.accessTokenMaximumLifetimeSeconds,
+    idTokenMaximumLifetimeSeconds: profile.idTokenMaximumLifetimeSeconds,
+    authorityProjectionContract: profile.authorityProjectionContract,
+    idTokenAuthorityClaims: profile.idTokenAuthorityClaims,
     clockSkewSeconds: profile.clockSkewSeconds,
     profileDigest: profile.profileDigest,
   });

@@ -576,3 +576,31 @@
   privileged evidence/session repository, native audit-actor döntés, atomikus
   négy-operation BFF cutover, Kernel attestation és külön jóváhagyott izolált
   Keycloak–Kernel–Doorstar E2E.
+
+## 2026-08-25 — M2B strict human JWT/JWKS source checkpoint
+
+- A nem aktivált BFF-alap immár profile-pinnelt, RS256 access+ID token pár
+  strict validátorát is tartalmazza. A teljes mélységű, fatal UTF-8 JSON
+  scanner duplikált decoded kulcsot, nem kanonikus NumericDate-et és idegen
+  claim/JWK alakot fail-closed elutasít; az authority kizárólag az exact,
+  egyszeres nested access-token tenant-projekcióból származhat.
+- A JWKS loader opaque, ugyanahhoz a profile-hoz kötött capability: a release,
+  issuer, URI és fingerprint rögzített; a betöltés 2 s abort-határidőt és 64
+  KiB pre-materializációs korlátot kap. A tényleges streaming transport
+  szándékosan még nincs implementálva és nem hív hálózatot.
+- A PKCE sikeres CAS closure-éből kapott teljes profile snapshotot a verifier
+  pontosan összeveti a factory-profile-lal. A facts csak egyszer használható,
+  callback-local opaque deliveryben jelenhetnek meg; nyers token, JWK, nonce
+  vagy authority DTO nincs runtime exportban.
+- A korábbi `humanOidcContract` pre-verification factory teljesen megszűnt.
+  A parser/JWK/claim pipeline `humanJwtVerifier.ts` module-local. A build az
+  exact projekt `dist` könyvtárat (symlinket elutasítva) előbb tisztítja, majd
+  artifact-szinten is bizonyítja a stale contract hiányát és az egyetlen
+  `createDoorstarHumanJwtVerifier` exportot.
+- Bizonyíték: célzott M2B suite 70/70 PASS; `npm run build` (compiled artifact
+  gate-tel) PASS; OpenAPI 3.1/85 PASS; full unit 355/357, kizárólag a korábbi
+  planning-input-pack SHA-pin és RAG dry-run-validator drift hibázik. Két
+  független végső review GO, P0/P1 = 0.
+- Nincs Express mount, route, cookie, DB/Prisma adapter, Keycloak/Kernel
+  transport, CORS-váltás, credential, VPS vagy deploy. A próbaüzem továbbra is
+  külön runtime-gate-ekhez és emberi jóváhagyáshoz kötött.

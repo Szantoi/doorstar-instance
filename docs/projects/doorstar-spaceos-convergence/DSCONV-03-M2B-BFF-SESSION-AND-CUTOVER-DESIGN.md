@@ -294,8 +294,9 @@ A runtime OpenAPI verifierhez külön BFF registry/topology kell.
 4. bff/pkceTransaction.ts: selectorből levezetett state/verifier/nonce,
    strict raw callback parser, start-before-redirect repository port, és CAS
    utáni closure-only secret callback. Nincs public decision-to-secret accessor.
-5. bff/humanOidcContract.ts és bff/humanJwtVerifier.ts: strict profile parser/
-   validator adapter, teljes mélységű duplicate-JSON scannerrel; a
+5. bff/humanJwtVerifier.ts: strict profile parser/validator adapter teljes
+   mélységű duplicate-JSON scannerrel; a nyers parser/JWK/claim pipeline
+   module-local, ezért nem importálható megkerülési API. A
    bff/humanOidcCodeExchangeClient.ts külön bounded transport port. Mindet csak
    későbbi reviewed composition root konfigurálja.
 6. bff/boundary.ts: closure-only proof/evidence/session orchestration és fresh

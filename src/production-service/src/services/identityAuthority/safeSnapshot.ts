@@ -37,7 +37,16 @@ export function hasExactFieldKeys(fields: ReadonlyMap<PropertyKey, unknown>, exp
 
 /** Takes a bounded, dense string-array copy without invoking indexed getters. */
 export function snapshotCanonicalStringArray(value: unknown, maximumLength: number): readonly string[] | undefined {
-  if (!Array.isArray(value)) return undefined;
+  const snapshot = snapshotDenseArray(value, maximumLength);
+  if (snapshot === undefined || !snapshot.every((item) => typeof item === "string")) return undefined;
+  return Object.freeze([...snapshot] as string[]);
+}
+
+/** Takes a bounded dense array copy without invoking indexed getters. */
+export function snapshotDenseArray(value: unknown, maximumLength: number): readonly unknown[] | undefined {
+  if (!Array.isArray(value)
+    || !Number.isSafeInteger(maximumLength)
+    || maximumLength < 0) return undefined;
 
   let descriptors: Record<PropertyKey, PropertyDescriptor>;
   try {
@@ -62,10 +71,10 @@ export function snapshotCanonicalStringArray(value: unknown, maximumLength: numb
     return undefined;
   }
 
-  const copied: string[] = [];
+  const copied: unknown[] = [];
   for (let index = 0; index < length; index += 1) {
     const descriptor = Object.getOwnPropertyDescriptor(descriptors, String(index))?.value;
-    if (!isEnumerableDataDescriptor(descriptor) || typeof descriptor.value !== "string") return undefined;
+    if (!isEnumerableDataDescriptor(descriptor)) return undefined;
     copied.push(descriptor.value);
   }
   return Object.freeze(copied);

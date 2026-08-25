@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseCanonicalUtcInstant } from "../src/services/identityAuthority/contract.js";
-import { readExactOwnDataFields, snapshotCanonicalStringArray, snapshotCanonicalUtcInstant } from "../src/services/identityAuthority/safeSnapshot.js";
+import { readExactOwnDataFields, snapshotCanonicalStringArray, snapshotCanonicalUtcInstant, snapshotDenseArray } from "../src/services/identityAuthority/safeSnapshot.js";
 
 describe("identity-authority safe snapshots", () => {
   it("rejects own getters instead of invoking them", () => {
@@ -39,6 +39,15 @@ describe("identity-authority safe snapshots", () => {
     source[0] = "joinerytech.door.admin";
     expect(snapshot).toEqual(["joinerytech.door.edit"]);
     expect(snapshotCanonicalStringArray(["joinerytech.door.edit", ,] as string[], 10)).toBeUndefined();
+  });
+
+  it("copies a bounded dense heterogeneous array for nested strict JSON snapshots", () => {
+    const source = [{ tenant_id: "11111111-1111-1111-1111-111111111111" }];
+    const snapshot = snapshotDenseArray(source, 1);
+
+    expect(snapshot).toEqual(source);
+    expect(Object.isFrozen(snapshot)).toBe(true);
+    expect(snapshotDenseArray([,] as unknown[], 1)).toBeUndefined();
   });
 
   it("re-parses the UTC wire value and rejects forged numeric fields", () => {

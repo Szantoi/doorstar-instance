@@ -15,10 +15,24 @@ Keycloak, call the Kernel, change CORS, or mount a route.
   nanosecond-preserving access-token/ID-token/maximum expiry minimum.
 - **humanOidcProfile.ts** — opaque factory for the complete static human OIDC
   profile and its canonical SHA-256 fingerprint; it derives exactly `openid`
-  plus one product scope and no caller supplies a digest.
+  plus one product scope, and fingerprints the JWT types, token lifetime caps,
+  nested authority contract and ID-token authority prohibition as well.
 - **pkceTransaction.ts** — one-time selector-derived S256 PKCE material,
   strict raw callback parsing, repository start/CAS ports, and one closure-only
   callback that receives code/verifier/nonce only after the CAS succeeds.
+- **strictJson.ts** — bounded fatal-UTF-8 parser that rejects duplicate decoded
+  JSON keys at every object depth and preserves root primitive lexemes for
+  canonical NumericDate checks.
+- **humanJwksPort.ts** — opaque JWKS source factory bound to one profile's
+  release/issuer/URI/digest. Its future loader receives an abort signal and
+  64 KiB streaming cap, and is cut off after two seconds.
+- **humanJwtVerifier.ts** — profile-pinned, no-cache RS256 access/ID pair
+  validator. Its compact-JWS, strict-claims and exact JWKS parser is module-local
+  (not an importable runtime API), deliberately stricter than a default Keycloak
+  mapper surface: one nested native tenant projection and no ID-token authority.
+  It accepts raw JWKS bytes only through the profile-bound source port and
+  delivers token-free access authority facts once, in a callback-local opaque
+  capability.
 
 A decision that is safe to log contains only a kind field. Opaque state, nonce,
 PKCE verifier, authorization code, session selector/verifier and CSRF values
@@ -28,10 +42,14 @@ boundary invokes its trusted callback only after a successful atomic claim.
 ## Activation boundary
 
 A later reviewed composition root in the evidence module will combine this
-foundation with strict human OIDC token validation, M0 resolver revalidation and
-the typed session repository. That work is blocked by the release-pinned human
-OIDC profile, canonical public host, M1B disposable migration proof,
-runtime-principal preflight, native audit-actor decision, Kernel release
-attestation, and explicit approval for an isolated integration stack.
+foundation with a bounded code-exchange transport, this strict human OIDC token
+validation, M0 resolver revalidation and the typed session repository. The
+current verifier does not fetch, cache or mount anything; a source port exists
+only for a future profile-pinned JWKS transport adapter. That work is blocked
+by the release-pinned human OIDC artifact, canonical public host, M1B disposable
+migration proof, runtime-principal preflight, native audit-actor decision,
+Kernel release attestation, and explicit approval for an isolated integration
+stack.
 
-See DSCONV-03-M2B-BFF-SESSION-AND-CUTOVER-DESIGN.md for the full contract.
+See DSCONV-03-M2B-BFF-SESSION-AND-CUTOVER-DESIGN.md and
+DSCONV-03-M2B-HUMAN-JWT-JWKS-VALIDATION-DESIGN.md for the full contract.

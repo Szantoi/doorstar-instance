@@ -59,11 +59,17 @@
       full human-OIDC profile fingerprint, exact `openid + productScope` PKCE
       authorization URI, valamint CAS utáni closure-only raw-secret átadás.
       Nem route, DB adapter, cookie-kibocsátás vagy Keycloak/Kernel hívás.
-- [ ] P0 — DSCONV-03 M2B integration/cutover: strict full-depth JWT/JWKS és
-      code-exchange, privileged evidence/session repository, fresh resolver,
-      native audit actor, frontend BFF kliens és a négy component-snapshot
-      operation atomikus bff-only cutoverje. Humán bearer Kernel felé vagy
-      session storage-ba nem kerülhet; legacy requester guard/fallback tilos.
+- [x] P0 — DSCONV-03 M2B strict human JWT/JWKS source: profile-pinnelt RS256
+      access+ID validátor, full-depth duplicate-JSON/claim/JWK gate, opaque
+      profile-bound 2 s / 64 KiB JWKS source port, PKCE profile-snapshot
+      egyeztetés és callback-local tokenmentes facts delivery. A raw parser
+      nem exportált; a build compiled-artifact export/stale-file gate-et futtat.
+      Nem fetch, transport, DB, route vagy cookie-kibocsátás.
+- [ ] P0 — DSCONV-03 M2B integration/cutover: bounded code-exchange transport,
+      privileged evidence/session repository, fresh resolver, native audit
+      actor, frontend BFF kliens és a négy component-snapshot operation atomikus
+      bff-only cutoverje. Humán bearer Kernel felé vagy session storage-ba nem
+      kerülhet; legacy requester guard/fallback tilos.
 - [ ] DSCONV-03 M3/M4: csak Kernel snapshot reconciliation + release
       attestation, valamint külön emberi jóváhagyás után eldobható local
       Keycloak–Kernel–Doorstar integráció és két-tenantos E2E bizonyíték.
