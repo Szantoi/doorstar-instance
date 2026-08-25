@@ -20,6 +20,9 @@
 - [x] DSCONV-03 M0 — tiszta baseline-os, default-off identity-authority M2M
       kliens: strict config/assertion/response contract, 48/48 fókuszált unit,
       build és OpenAPI zöld. Nem BFF, nem route és nem próbaüzemi aktiválás.
+- [x] DSCONV-03 M0 deadline — token exchange + resolver egyetlen monotonic 2 s
+      költségkerete; response/body/JSON utáni fail-closed ellenőrzéssel,
+      független review GO-val.
 - [x] P0 — DSCONV-03 M1 terv: független security-, architektúra- és
       adatmodell-review lezárva, P0/P1 nélkül. A legacy 66-táblás RLS migráció
       nem emelhető át.
@@ -51,10 +54,16 @@
       explicit route-manifest és valós Express runtime-stack/OpenAPI gate.
       82 legacy-only, 3 public-operational, 0 bff-only; nincs cookie-kiadás,
       BFF route vagy legacy cutover.
-- [ ] P0 — DSCONV-03 M2B: a tokenmentes evidence-et használó PKCE/session/
-      resolver BFF és egy atomikus, natív bff-only route-csoport teljes negatív
-      contract-gate-je. Humán bearer Kernel felé vagy session storage-ba nem
-      kerülhet; legacy requester guard/fallback tilos.
+- [x] P0 — DSCONV-03 M2B source foundation: current+previous MAC ring,
+      pairwise distinct opaque session/CSRF, access+ID+maximum expiry, opaque
+      full human-OIDC profile fingerprint, exact `openid + productScope` PKCE
+      authorization URI, valamint CAS utáni closure-only raw-secret átadás.
+      Nem route, DB adapter, cookie-kibocsátás vagy Keycloak/Kernel hívás.
+- [ ] P0 — DSCONV-03 M2B integration/cutover: strict full-depth JWT/JWKS és
+      code-exchange, privileged evidence/session repository, fresh resolver,
+      native audit actor, frontend BFF kliens és a négy component-snapshot
+      operation atomikus bff-only cutoverje. Humán bearer Kernel felé vagy
+      session storage-ba nem kerülhet; legacy requester guard/fallback tilos.
 - [ ] DSCONV-03 M3/M4: csak Kernel snapshot reconciliation + release
       attestation, valamint külön emberi jóváhagyás után eldobható local
       Keycloak–Kernel–Doorstar integráció és két-tenantos E2E bizonyíték.

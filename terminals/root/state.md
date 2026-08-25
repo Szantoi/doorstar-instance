@@ -812,3 +812,25 @@
 - Full unit: 251/253, kizárólag a régi planning SHA-pin és RAG dry-run drift
   bukik. DB, Keycloak, cookie, BFF route, frontend/CORS, VPS és deploy továbbra
   sem történt; a próbaüzem emiatt még nem indítható.
+
+## 2026-08-25 — Doorstar M0 deadline + M2B BFF foundation remediated
+
+- M0: a token exchange és a resolver már egy közös monotonic 2 s deadline-et
+  használ; response/body/JSON utáni késői túllépés is fail-closed. Független
+  review GO.
+- M2B: nem aktivált `bff/` source foundation készült: enforced current+previous
+  MAC ring, pairwise distinct opaque session tripla, access+ID+max expiry,
+  opaque full-profile factory, closed `openid + productScope` PKCE URI, és
+  begin → precheck → CAS → post-CAS raw-secret closure sequencing.
+- Nincs app/Express/OpenAPI/route mount, DB implementation, cookie response,
+  Keycloak/Kernel transport, CORS változás vagy deploy. A source-only boundary
+  nem dönt runtime OIDC profile-ról és nem indít próbaüzemet.
+- Ellenőrzés: identity M0+M2B 103/103 PASS, build PASS, OpenAPI 85/85 PASS,
+  diff-check PASS. Full suite 319/321, kizárólag a változatlan planning SHA pin
+  és RAG dry-run validator drift hibázik. Két friss független M2B review GO,
+  P0/P1 = 0.
+- Próbaüzem-blokkolók változatlanul: opt-in disposable M1B migration proof,
+  runtime DB principal least-privilege preflight, release-pinnelt tényleges
+  Doorstar OIDC/canonical host, strict JWT/JWKS + code-exchange + privileged
+  evidence/session repository, native audit actor, atomikus component-snapshot
+  BFF cutover, Kernel attestation és explicit izolált E2E approval.

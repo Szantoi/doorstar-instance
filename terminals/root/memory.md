@@ -542,3 +542,37 @@
   deploy továbbra sem történt. Következő érdemi kapuk: M1B disposable DB proof
   + runtime-principal preflight, majd külön M2 BFF/PKCE/resolver cutover és
   explicit izolált E2E-jóváhagyás.
+
+## 2026-08-25 — M0 közös határidő és M2B source-only BFF-alap
+
+- Az M0 IdentityAuthorityResolverClient token exchange + resolver hívása most
+  egyetlen monotonic 2 másodperces költségkeretet oszt. A válasz érkezése és a
+  body/JSON feldolgozása után is fail-closed lejárat-ellenőrzés fut; nincs két
+  egymás utáni 2 másodperces szakasz. Független review GO.
+- Az M2B alap továbbra sem route, Express mount, cookie-kibocsátás, Prisma/DB
+  adapter, Keycloak- vagy Kernel-hívás. Csak tiszta portok és domain-szerződés
+  készült a `bff/` alatt.
+- A MAC service konkrétan, nem provider-konvencióként csak current + pontosan
+  egy previous kulcsverziót fogad. A session selector/verifier/CSRF tripla
+  pairwise különböző; a session időtartama mechanikusan az authority-bearing
+  access token, a nonce-bound ID token és a konfigurált maximum exact minimuma.
+- A human OIDC profile factory opaque capabilityt ad, caller-provided digestet
+  nem fogad. A teljes canonical release-profile (issuer, auth/token/JWKS
+  endpoint, client/audience/azp, redirect, skew és product scope) SHA-256
+  fingerprintje a tranzakcióhoz kötött. Az authorization requestet a factory
+  endpointból, zárt paraméterlistával állítja elő, pontosan `openid +
+  productScope` scope-pal; `offline_access` és extra scope tiltott.
+- A PKCE flow sorrendje kódolt: immutable repository `begin` → redirect
+  delivery; callback parse → transaction/profile/state-MAC precheck → egyetlen
+  CAS claim → csak utána closure callback kapja meg a code/verifier/nonce
+  értékeket. Public decision-to-secret accessor nincs.
+- Bizonyíték: M0 + M2B célzott suite 103/103 PASS; build, OpenAPI 85/85 és
+  diff-check PASS. A teljes unit suite 319/321; a két változatlan baseline
+  hiba a planning-input-pack SHA pin és a RAG dry-run validator driftje.
+  Két friss M2B adverzárius review GO, P0/P1 nélkül.
+- A trial továbbra sem indítható. Kötelező hátralék: M1B disposable migration
+  proof és runtime-principal preflight, release-pinnelt tényleges Doorstar OIDC
+  artifact + canonical edge host, strict full-depth JWT/JWKS + code-exchange,
+  privileged evidence/session repository, native audit-actor döntés, atomikus
+  négy-operation BFF cutover, Kernel attestation és külön jóváhagyott izolált
+  Keycloak–Kernel–Doorstar E2E.
