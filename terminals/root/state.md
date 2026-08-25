@@ -852,3 +852,25 @@
   baseline failure változatlan.
 - Nem történt runtime aktiválás, adatbázis-, Keycloak-, Kernel-, cookie-,
   route-, CORS-, VPS- vagy deployművelet. A próbaüzem még nem indítható.
+
+## 2026-08-25 — Doorstar M2B OIDC-tranzakció perzisztencia source kész
+
+- Elkészült a tokenmentes, egyszer használható PKCE tranzakció modellje,
+  forward-only migrationje és keskeny Prisma repository adaptere. A tároló
+  csak a state-MAC-kal fedett selector/profil/idő snapshotot tartja; a nyers
+  callback- és tokenanyag továbbra sem perzisztálható.
+- A migration kanonikus 32-byte base64url selector/profile-digestet, exact
+  UTC wire/epoch/nanos tripletet és 1–600 s TTL-t ír elő. A sor immutable,
+  `consumedAt` egyszer és csak database-clockkal állítható; delete és TRUNCATE
+  tiltott, a triggerek `ENABLE ALWAYS` módban vannak.
+- M1B/M2B migration proof discovery és jóváhagyási cél elkülönül. M2B proofot,
+  valós DB-migrációt vagy DB-kapcsolatot nem futtattunk. A generált Prisma
+  client/transaction client kompatibilitást compile-only assert védi.
+- Ellenőrzés: célzott identity suite 91/91, Prisma validate/generate + index
+  diff, build és OpenAPI 85/85 PASS; független security/architektúra review
+  GO, P0/P1=0. Full unit 376/378, a két ismert scope-on kívüli baseline hiba
+  változatlan.
+- Próbaüzem-gate-ek: explicit M1B+M2B disposable proof, runtime DB principal
+  least privilege, release-pinnelt OIDC/edge, code exchange +
+  evidence/session integration, atomikus BFF cutover, Kernel attestation és
+  külön engedélyezett izolált E2E.

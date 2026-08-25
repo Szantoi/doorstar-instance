@@ -1,8 +1,10 @@
 # Doorstar M2B BFF foundation
 
 This directory is a source-only security foundation. It is not imported by the
-Express application and cannot issue a browser cookie, query PostgreSQL, call
-Keycloak, call the Kernel, change CORS, or mount a route.
+Express application and cannot by itself issue a browser cookie, call Keycloak
+or the Kernel, change CORS, or mount a route. Its typed transaction adapter
+accepts a future injected Prisma delegate, but no client/configuration/runtime
+composition exists here and module loading opens no database connection.
 
 ## Contents
 
@@ -20,6 +22,10 @@ Keycloak, call the Kernel, change CORS, or mount a route.
 - **pkceTransaction.ts** — one-time selector-derived S256 PKCE material,
   strict raw callback parsing, repository start/CAS ports, and one closure-only
   callback that receives code/verifier/nonce only after the CAS succeeds.
+- **oidcTransactionRepository.ts** — the narrow typed Prisma adapter for the
+  durable PKCE transaction record. It has insert-only start, unconsumed lookup
+  and one conditional expiry-aware CAS; it never stores callback or token
+  material and is not mounted by the application.
 - **strictJson.ts** — bounded fatal-UTF-8 parser that rejects duplicate decoded
   JSON keys at every object depth and preserves root primitive lexemes for
   canonical NumericDate checks.
@@ -50,6 +56,11 @@ by the release-pinned human OIDC artifact, canonical public host, M1B disposable
 migration proof, runtime-principal preflight, native audit-actor decision,
 Kernel release attestation, and explicit approval for an isolated integration
 stack.
+
+The OIDC transaction migration has its own stronger disposable proof command:
+`npm run test:migration:m2b-oidc`. It refuses the earlier M1B approval token,
+normal application database variables and persistent Docker port; it remains
+deliberately unrun until its exact new approval and loopback target exist.
 
 See DSCONV-03-M2B-BFF-SESSION-AND-CUTOVER-DESIGN.md and
 DSCONV-03-M2B-HUMAN-JWT-JWKS-VALIDATION-DESIGN.md for the full contract.

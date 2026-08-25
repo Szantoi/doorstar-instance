@@ -55,3 +55,8 @@ from `src/production-service`, followed by `npm run build` and
 Do not activate this client until the separately reviewed M1 control-plane/BFF
 foundation, Kernel snapshot reconciliation and release attestation, and an
 explicitly approved disposable local Keycloak/Kernel test stack are all ready.
+
+The later M2B OIDC login-transaction persistence migration has a separate,
+stronger opt-in proof command: `npm run test:migration:m2b-oidc`. It refuses
+the M1B approval token, ordinary database environment variables and persistent
+Docker port 5462; source changes alone do not run that migration.

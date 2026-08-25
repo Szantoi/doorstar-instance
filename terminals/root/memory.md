@@ -604,3 +604,28 @@
 - Nincs Express mount, route, cookie, DB/Prisma adapter, Keycloak/Kernel
   transport, CORS-váltás, credential, VPS vagy deploy. A próbaüzem továbbra is
   külön runtime-gate-ekhez és emberi jóváhagyáshoz kötött.
+
+## 2026-08-25 — M2B egyszer használható OIDC-tranzakció perzisztencia source checkpoint
+
+- Elkészült a nem aktivált `DoorstarOidcLoginTransaction` Prisma modell, a
+  forward-only M2B migration és a keskeny `oidcTransactionRepository` adapter.
+  A rekord csak kanonikus 32-byte base64url selectort/profile-digestet,
+  state-MAC snapshotot, profil- és exact UTC időtriple-eket tartalmaz; nincs
+  benne state, nonce, PKCE verifier, authorization code vagy tokenanyag.
+- A DB-szerződés 1–600 s pontos, nanoszekundum-megtartó TTL-t, immutable
+  snapshotot, egyetlen database-clockos `consumedAt` CAS-átmenetet,
+  `ENABLE ALWAYS` lifecycle/truncate guardot és delete-tiltást deklarál. A
+  generated Prisma client és transaction client adapter-kompatibilitását
+  compile-only assert védi.
+- Az M1B és M2B migration proof külön Vitest discovery/config és külön explicit
+  approval/loopback cél. A M2B `migrate deploy` proof, adatbázis-kapcsolat,
+  runtime principal, route, cookie, Keycloak/Kernel hívás, VPS és deploy nem
+  indult.
+- Bizonyíték: M2B célzott suite 91/91 PASS; Prisma validate/generate és
+  schema-index diff PASS; build PASS; OpenAPI 3.1/85 PASS; független security
+  és architektúra review GO, P0/P1 = 0. Full unit 376/378: kizárólag a régi
+  planning-input-pack SHA-pin és RAG dry-run-validator drift hibázik.
+- A próbaüzem továbbra sem indítható: az M1B és M2B explicit disposable DB
+  proof, runtime least-privilege preflight, release-pinnelt OIDC/edge döntés,
+  code exchange/evidence/session integration, atomikus BFF cutover, Kernel
+  attestation és jóváhagyott izolált E2E még külön kapu.

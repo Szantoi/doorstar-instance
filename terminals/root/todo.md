@@ -65,6 +65,12 @@
       egyeztetés és callback-local tokenmentes facts delivery. A raw parser
       nem exportált; a build compiled-artifact export/stale-file gate-et futtat.
       Nem fetch, transport, DB, route vagy cookie-kibocsátás.
+- [x] P0 — DSCONV-03 M2B OIDC-tranzakció perzisztencia source: tokenmentes
+      `DoorstarOidcLoginTransaction` modell, forward-only migration, immutable
+      one-time CAS lifecycle, kanonikus selector/profile digest és keskeny,
+      generated Prisma-client-kompatibilis repository adapter. Az M1B/M2B
+      disposable migration proof külön konfigurációt és explicit approvalt
+      igényel; nem futott DB-n és nem jelent runtime aktiválást.
 - [ ] P0 — DSCONV-03 M2B integration/cutover: bounded code-exchange transport,
       privileged evidence/session repository, fresh resolver, native audit
       actor, frontend BFF kliens és a négy component-snapshot operation atomikus

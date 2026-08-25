@@ -107,7 +107,8 @@ van, és callbackkor token exchange előtt atomi egyszeri claimet kap.
   a deployment secret provider külön HMAC domainjeiből determinisztikusan
   származnak. Így a process restart nem teszi szükségessé nyers PKCE verifier
   perzisztálását.
-- A jövőbeli DoorstarOidcTransaction sor csak selector, keyVersion, exact
+- A source-only M2B `DoorstarOidcLoginTransaction` modell és forward-only
+  migration már csak selector, keyVersion, exact
   issuer/client/redirect snapshot, issued/expires/consumed lifecycle adatot,
   továbbá explicit stateMacKeyVersion és stateMac értéket tárol. A state MAC
   domain-separated, length-prefixed selector/keyVersion/config-snapshot/time
@@ -123,10 +124,12 @@ van, és callbackkor token exchange előtt atomi egyszeri claimet kap.
   claimMatching(selector, expectedStateMac, configDigest, now) compare-and-set
   repository műveletet, amely unconsumed + unexpired + exact state feltétellel
   állít lifecycle-t. Hibás callback soha nem égethet el pending login sort.
-- A későbbi forward-only migration DB-szinten immutable-vé teszi a selector,
+- Az M2B forward-only migration forrása DB-szinten immutable-vé teszi a selector,
   derivation/state key version, profile snapshot, issued/expires és state MAC
   mezőket; csak a null -> consumed lifecycle átmenet engedett egyszer. A BFF
-  runtime role ezt nem resetelheti vagy módosíthatja.
+  runtime role ezt nem resetelheti vagy módosíthatja. A forrás nem volt
+  adatbázisra telepítve; a részletes bizonyítási szerződés:
+  [DSCONV-03-M2B-OIDC-TRANSACTION-PERSISTENCE-DESIGN.md](DSCONV-03-M2B-OIDC-TRANSACTION-PERSISTENCE-DESIGN.md).
 - Callback redirectje rögzített, config-owned belső út; nincs next, returnTo
   vagy host override. A válasz Cache-Control: no-store és
   Referrer-Policy: no-referrer.
@@ -301,8 +304,13 @@ A runtime OpenAPI verifierhez külön BFF registry/topology kell.
    későbbi reviewed composition root konfigurálja.
 6. bff/boundary.ts: closure-only proof/evidence/session orchestration és fresh
    resolver revalidation, csak in-memory fake-ekkel.
-7. Külön reviewed migration/repository/route-cutover slice a M1B proof,
-   runtime-principal preflight és exact human OIDC/canonical-host döntés után.
+7. `bff/oidcTransactionRepository.ts` + M2B Prisma modell és forward-only
+   migration: elkészült source-only adapter, külön explicit M2B eldobható-DB
+   proof parancssal. Nem nyit DB-kapcsolatot, nem mountol route-ot és nem
+   konfigurál runtime principalt.
+8. A tényleges DB deploy, runtime-principal preflight és route-cutover külön
+   reviewed slice a bizonyított M1B/M2B disposable migration proof, valamint
+   exact human OIDC/canonical-host döntés után.
 
 ## Kötelező negatív evidence
 

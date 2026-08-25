@@ -1043,3 +1043,28 @@ model DoorstarSession {
   @@unique([csrfMacKeyVersion, csrfMac])
   @@index([tenantBindingId, revokedAt, expiresAtEpochSeconds, expiresAtNanoseconds])
 }
+
+/// One immutable, opaque PKCE transaction. The database stores neither the
+/// browser state/nonce/verifier nor any authorization or token material; its
+/// sole mutable field is the database-owned one-time consumption audit time.
+model DoorstarOidcLoginTransaction {
+  id                        String    @id @default(cuid())
+  selector                  String    @unique
+  keyVersion                Int
+  stateMacKeyVersion        Int
+  stateMac                  Bytes
+  issuer                    String
+  clientId                  String
+  redirectUri               String
+  profileDigest             String
+  issuedAtWire              String
+  issuedAtEpochSeconds      BigInt
+  issuedAtNanoseconds       Int
+  expiresAtWire             String
+  expiresAtEpochSeconds     BigInt
+  expiresAtNanoseconds      Int
+  consumedAt                DateTime? @db.Timestamptz(6)
+  createdAt                 DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@index([consumedAt, expiresAtEpochSeconds, expiresAtNanoseconds], map: "DoorstarOidcLoginTransaction_consumedAt_expiresAt_idx")
+}
