@@ -1,0 +1,42 @@
+# Identity Authority M0 client
+
+This directory contains the **source-only** Doorstar client for the Kernel
+identity-authority resolver. It is deliberately not mounted by the application
+yet: no route, BFF composition, Prisma change, or runtime configuration has
+been added in M0.
+
+## Configuration boundary
+
+The client is disabled when all four values are absent. Supplying only some of
+them is an error; it must never silently fall back to a less privileged mode.
+
+- `SPACEOS_IDENTITY_AUTHORITY_ISSUER` — canonical HTTPS Keycloak realm base URL
+- `SPACEOS_IDENTITY_AUTHORITY_KERNEL_ORIGIN` — canonical HTTPS Kernel origin
+- `SPACEOS_IDENTITY_AUTHORITY_PRIVATE_KEY_PATH` — server-held RS256 private-key path
+- `SPACEOS_IDENTITY_AUTHORITY_PRIVATE_KEY_KID` — Keycloak client-key identifier
+
+Secrets and key material do not belong in this repository, `.env` files, logs,
+or browser responses.
+
+## Contract and security
+
+`client.ts` obtains an access token through `client_credentials` plus an RS256
+`private_key_jwt`, then calls only the fixed Kernel resolver path. It accepts
+only `{ subject, tenantId }`; a raw human bearer token is not part of the API.
+The public factory owns the process transport. Dependency injection exists only
+in `createIdentityAuthorityResolverClientForTest` for unit testing.
+
+The strict parser, bounded response body, no-redirect policy, two-second shared
+deadline, and TLS/proxy fail-closed checks are intentional. A later BFF slice
+must compare the parsed authority state with server-derived, tokenless evidence
+before issuing a Doorstar session.
+
+## Verification and activation
+
+Run the three `identityAuthority*.unit.test.ts` files through `npm run test:unit`
+from `src/production-service`, followed by `npm run build` and
+`npm run verify:openapi`.
+
+Do not activate this client until the separately reviewed M1 control-plane/BFF
+foundation, Kernel snapshot reconciliation and release attestation, and an
+explicitly approved disposable local Keycloak/Kernel test stack are all ready.

@@ -696,3 +696,20 @@
 - Alkalmazás-DB, production/public séma, OpenAPI implementáció, deploy és RAG
   nem változott. Következő terméklánc-feladat a DSORD-18 feloldása, majd a
   DSORD-17 read-only műszaki dokumentumcsomag UI adoptionja.
+
+## 2026-08-25 — Doorstar identity-authority M0 checkpoint
+
+- Elkészült a tiszta baseline-on a default-off, source-only M2M resolver
+  kliens és a hozzá tartozó konfiguráció-, assertion- és kliensunit teszt.
+  Nincs application wiring: route, BFF, Prisma, OpenAPI és runtime `.env`
+  változatlan.
+- Bizonyíték: fókuszált Vitest 48/48 PASS; `npm run build` PASS; OpenAPI
+  `3.1.0` / 85 művelet / teljes coverage PASS; `git diff --check` PASS.
+  Független security és quality review P0/P1 nélkül.
+- A teljes unit suite 122/124; a két változatlan baseline hiba a
+  `planningInputPack` fixture SHA és a `pythonImportTools` RAG dry-run
+  validator driftje. Ezek nem M0 regressziók és külön owner-döntést kérnek.
+- Próbaüzem állapota: még nem indítható. Következő kapuk: külön reviewzott M1
+  control-plane/evidence/session alap, M2 BFF, Kernel snapshot reconciliation
+  + release attestation, majd explicit jóváhagyott, eldobható local E2E stack.
+- Keycloak-, VPS-, credential-, adatbázis- és deploy-művelet nem történt.

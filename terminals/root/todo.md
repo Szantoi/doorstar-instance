@@ -17,6 +17,19 @@
       intake UI elkészítése: három eszközmód, normalizált egyedi pozíciókód,
       MONTH/structured-appearance fail-closed és production PII POST-zár.
       Teljes frontend 223/223, lint/build/browser és reviewer P0–P3 = 0.
+- [x] DSCONV-03 M0 — tiszta baseline-os, default-off identity-authority M2M
+      kliens: strict config/assertion/response contract, 48/48 fókuszált unit,
+      build és OpenAPI zöld. Nem BFF, nem route és nem próbaüzemi aktiválás.
+- [ ] P0 — DSCONV-03 M1: külön terveztetett és reviewzott, keskeny
+      control-plane/evidence/session foundation; a legacy 66-táblás RLS
+      migráció nem emelhető át. Kötelező az eldobható PostgreSQL migrate + RLS
+      negatív smoke és a raw human access-token perzisztencia felszámolása.
+- [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
+      teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
+      session storage-ba nem kerülhet.
+- [ ] DSCONV-03 M3/M4: csak Kernel snapshot reconciliation + release
+      attestation, valamint külön emberi jóváhagyás után eldobható local
+      Keycloak–Kernel–Doorstar integráció és két-tenantos E2E bizonyíték.
 - [ ] P0 — DSORD-18 backend/OpenAPI: hitelesített és idempotens Sales intake v2,
       delivery precision union, raw cm/conversion lineage, külön komponens-
       felületek, DB-unique pozíciókód és stabil concurrency/error envelope.

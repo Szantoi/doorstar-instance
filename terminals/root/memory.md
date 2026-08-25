@@ -394,3 +394,20 @@
   determinisztikus OCR/render vagy kétlépcsős emberi evidence lehet.
 - A mostani slice közvetlen PDF evidence-re épült; Nexus/RAG nem volt szükséges,
   és nem adott gyártási vagy jóváhagyási authorityt.
+
+## 2026-08-25 — Identity-authority M0 tartós döntés
+
+- A tiszta `origin/main`-re épített M0 kizárólag source-only, default-off M2M
+  resolver kliens. Nem route, nem BFF és nem próbaüzemi aktiválás.
+- A config négy kulcsa együtt engedélyez, teljes hiánynál disabled, részleges
+  állapotnál hiba. A production factory saját process-transportot használ;
+  humán bearer sem API-ban, sem Kernel-kérésben nincs.
+- A Kernel response v1 grant-grammatikája fogyasztói, véges allowlist; az
+  ismeretlen grant, nem kanonikus tenant/cutoff, proxy/TLS-insecure környezet,
+  túlméretes/hibás válasz és timeout mind fail-closed.
+- M0 bizonyíték: 48/48 célzott unit, build és OpenAPI 85/85 zöld; két független
+  security/quality review P0/P1 nélkül. A teljes suite két régi, scope-on kívüli
+  artifact/RAG hibát tartalmaz, ezért nem szabad a címkéit vagy pinjeit M0-ban
+  átírni.
+- Próbaüzem előtt még külön M1 control-plane/BFF, Kernel snapshot reconciliation
+  és release-attestation, majd emberileg engedélyezett eldobható local stack kell.
