@@ -17,6 +17,7 @@
     "seed:ux-reference": "tsx scripts/seedUxReferenceProject.ts",
     "test": "vitest run",
     "test:unit": "vitest run --config vitest.unit.config.ts",
+    "test:migration:m1b": "vitest run --config vitest.migration.config.ts",
     "test:watch": "vitest",
     "verify:planning-input-pack": "tsx scripts/verifyPlanningInputPack.ts",
     "verify:openapi": "tsx scripts/verifyOpenApi.ts"

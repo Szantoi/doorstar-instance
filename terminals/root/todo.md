@@ -27,10 +27,19 @@
       alap, opaque proof boundary, runtime factory-mentes exportfelület és
       descriptor-snapshot fail-closed unit proof. Nem BFF, nem session és nem
       üzleti multi-tenant/RLS proof.
-- [ ] P0 — DSCONV-03 M1B: Prisma control-plane/evidence/session modellek és
-      forward-only migration, majd külön emberi jóváhagyással eldobható
-      PostgreSQL `migrate deploy` + binding/constraint/trigger smoke. Raw human
-      access-token perzisztencia kizárt; ez még nem üzleti multi-tenant RLS proof.
+- [x] P0 — DSCONV-03 M1B source: Prisma control-plane/evidence/session modellek,
+      forward-only migration, append-only/revoke/truncate DB-guardok, exact UTC
+      triple-ek, valamint külön, defaultból kizárt migration-proof harness.
+      Raw human access-token perzisztencia kizárt; ez még nem üzleti
+      multi-tenant/RLS proof.
+- [ ] P0 — DSCONV-03 M1B runtime proof: csak külön emberi jóváhagyással,
+      dedikált eldobható loopback PostgreSQL célon futtatható `migrate deploy`
+      + binding/constraint/trigger smoke. Sem meglévő `DATABASE_URL`, sem a
+      persistent `5462` Docker-port nem lehet cél.
+- [ ] P0 — DSCONV-03 runtime-principal preflight: M2/trial előtt auditáltan
+      bizonyítani a nem-owner/non-superuser BFF szerepet, a `PUBLIC`/untrusted
+      schema-`CREATE` tiltását, és a bindingra kizárólag lockhoz szükséges
+      column-level `UPDATE(id)` least-privilege grantot.
 - [ ] P0 — DSCONV-03 M2: a tokenmentes evidence-et használó BFF/route és a
       teljes negatív contract-gate megvalósítása; humán bearer Kernel felé vagy
       session storage-ba nem kerülhet.

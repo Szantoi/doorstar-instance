@@ -454,3 +454,38 @@
 - Prisma schema/migration, adatbázis, Keycloak, cookie, route, OpenAPI,
   credential, VPS és deploy nem indult. Következő M1B: perzisztencia/migration
   source, majd külön jóváhagyott eldobható PostgreSQL `migrate deploy` proof.
+
+## 2026-08-25 — M1B perzisztencia és próbaüzemi kapuk
+
+- Az M1B source kizárólag három új control-plane táblát és egy forward-only
+  migrationt ad: `DoorstarInstanceTenantBinding`,
+  `IdentityAuthorityEvidence`, `DoorstarSession`. Nem tárolhat humán bearer,
+  refresh/M2M token, assertion, privát kulcs, role, station vagy consumer-id.
+- A binding az instance teljes élettartamára singleton; csak az inicializáló
+  `ACTIVE` v1 és egy auditált `ACTIVE → DISABLED` átmenet legális. Rebind,
+  delete, reactivation és `TRUNCATE` DB-szinten tiltott. Disable ugyanabban a
+  tranzakcióban revoke-olja az aktív sessionöket.
+- Evidence append-only, session state-machine-es. Exact wire/epoch/nanos
+  időtriple-ek és state/HMAC kulcsverziók adatbázisban ellenőrzöttek. A session
+  capabilityt a canonical immutable evidence grant-listájából a trigger vezeti
+  le, ezért nem jön létre külön, MAC nélküli authority drift.
+- Trigger-biztonság: `ENABLE ALWAYS` + `BEFORE TRUNCATE` guard, database-owned
+  `createdAt`, valamint `pg_catalog, <migration-schema>, pg_temp` trusted
+  search path; a migration proof hostile azonos nevű `clock_timestamp()` és
+  temporary binding table mellett is ezt bizonyítja.
+- A migration proof célguard csak a
+  `DOORSTAR_M1B_MIGRATION_PROOF=approved-disposable-postgres` explicit opt-in
+  és a `DOORSTAR_M1B_MIGRATION_TEST_URL` alapján működik. Nem olvas normál
+  adatbázis env-et, csak loopback/exact `doorstar_m1b_migration_test` DB-t és
+  generált sémát fogad el; a `5462` persistent port kizárt. A DB-proof még nem
+  futott, mert nincs hozzá külön emberi jóváhagyás.
+- Trial-gate: az admin/disposable migration executor nem bizonyítja a BFF
+  runtime role biztonságát. M2 előtt auditált preflight kell: runtime nem
+  owner/superuser, nincs `SET ROLE` ownerre, nincs `PUBLIC`/untrusted schema
+  `CREATE`, nincs DELETE/TRUNCATE/DDL út. A binding lockhoz szükséges PostgreSQL
+  `FOR SHARE` miatt legfeljebb immutable `binding.id` column-level UPDATE grant
+  adható; lifecycle update külön provisioning principal.
+- M1B statikus review P0/P1 tiszta. Ellenőrzés: Prisma validate/generate,
+  identity 92/92, migration target guard 8/8, build és OpenAPI 85 operation
+  zöld. Full unit: 166/168, azonos két régi baseline failure (planning SHA pin,
+  RAG dry-run validator drift), M1B scope nem érintette őket.

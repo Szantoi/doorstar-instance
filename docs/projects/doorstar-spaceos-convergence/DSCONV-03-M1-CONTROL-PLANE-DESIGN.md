@@ -282,6 +282,46 @@ route-hoz kötelezőek.
   be RLS-t a meglévő vagy új táblákon. Egy jövőbeli multi-tenant/RLS slice-nak
   külön kell bevezetnie a nem-owner runtime szerepet és az ADR-062 teljes proofját.
 
+### M1B runtime-principal hard gate
+
+A row- és `TRUNCATE`-guard triggerök `ENABLE ALWAYS` állapotúak, ezért egy
+normál alkalmazás-session nem kapcsolhatja ki őket `session_replication_role`
+segítségével. Ez csak defense-in-depth: PostgreSQL table/schema/function owner
+vagy superuser a DDL-lel továbbra is megkerülhetné az invariánsokat. Emiatt az
+M1B migration source és a külön eldobható admin-migrációs proof **nem**
+bizonyítja a trial runtime jogosultsági modelljét.
+
+M2, tenant-binding provisioning vagy bármely próbaüzemi deploy előtt egy
+verziózott, auditált preflightnak külön kell igazolnia a tényleges BFF runtime
+principalról, hogy:
+
+- nem superuser, nem replication, `CREATEDB`, `CREATEROLE` vagy `BYPASSRLS`
+  attribútumú;
+- nem tulajdonosa a control-plane tábláknak, sémának vagy trigger-functionöknek,
+  és nem tud a tulajdonos szerepre `SET ROLE`-t végrehajtani;
+- az érintett sémán sem a runtime principalnak, sem semmilyen nem megbízható
+  szerepnek (különösen `PUBLIC`-nak) nincs `CREATE` joga, valamint a runtime
+  principalnak nincs `DELETE`, `TRUNCATE` vagy DDL/trigger-módosítási útja a
+  három control-plane táblához;
+- csak az M2 typed repository által ténylegesen igényelt, explicit least-
+  privilege `SELECT`/`INSERT`/korlátozott `UPDATE` jogosultságokat kapja.
+
+A preflight hibája trial-blokkoló. A disposable migration proof futtatója
+átmenetileg lehet migrációs owner, de ebből nem szabad runtime-authority
+következtetést levonni.
+
+Az evidence/session insert trigger a bindinget `FOR SHARE` zárral olvassa:
+ez kizárja a vele versenyző disable-átmenetet. PostgreSQL ehhez `SELECT` és
+legalább egy oszlopra adott `UPDATE` grantot is megkövetel, ezért a BFF runtime
+csak az immutable `DoorstarInstanceTenantBinding.id` oszlopra kaphat ilyen
+szűk `UPDATE` jogot, kizárólag a lock előfeltételeként. Az `id` tényleges
+módosítását a trigger elutasítja. A BFF nem kaphat `UPDATE` jogot a lifecycle
+`status`/`bindingVersion`/disable-mezőkre; ezek módosítása külön, auditált
+provisioning principal feladata. Ha az M2 valóban használja a session
+életciklus-frissítését, annak `UPDATE` joga csak a
+`revokedAt`/`revokeReason`/`lastValidatedAt` oszlopokra korlátozható; minden
+más authority-oszlop DB triggerrel és granttal is írásvédett.
+
 ### HMAC kulcs- és ellenőrzési szerződés
 
 Minden evidence-state-, session-state-, session-verifier- és CSRF-MAC
@@ -329,6 +369,12 @@ bejelentkezés; rotációs pozitív és negatív teszt kötelező.
 6. **M2 külön slice:** PKCE, strict humán JWT-validáció, exact callback/redirect,
    CSRF/origin, M0 orchestration, route/OpenAPI és csak ekkor a legacy headeres
    útvonalak kontrollált kiváltása.
+
+Az M1B DB a session expiry felső korlátát a humán evidence `exp` értékéhez
+tudja kötni. A `min(exp, konfigurált rövid maximum)` pontos második operandusa
+nem M1B-adat, ezért az M2 typed session repositoryban explicit, tesztelt
+invariáns: a sessiont csak e pontos minimumra állíthatja ki. Ennek hiánya
+ugyanúgy trial-blokkoló, mint a runtime-principal preflight hiánya.
 
 ## M1 teszt- és minőségi kapu
 

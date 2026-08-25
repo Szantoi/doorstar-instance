@@ -127,6 +127,22 @@ enum OrderRevisionAuditAction {
   SUPERSEDED
 }
 
+/// Control-plane lifecycle for the one explicit Kernel tenant associated with
+/// a dedicated Doorstar instance. It is deliberately unrelated to the legacy
+/// business tables' eventual multi-tenant/RLS migration.
+enum DoorstarTenantBindingStatus {
+  ACTIVE
+  DISABLED
+}
+
+/// Narrow capability derived from an exact `joinerytech.door.*` authority
+/// grant. It is never a legacy role, station, consumer selector, or token.
+enum DoorstarSessionCapability {
+  view
+  edit
+  admin
+}
+
 /// A legacy preview is evidence, not an import. Only an explicit, recorded
 /// run may later create DRAFT records in the isolated test schema.
 enum ImportRunStatus {
@@ -936,4 +952,94 @@ model ProjectSheet {
   updatedAt DateTime  @updatedAt
 
   @@unique([projectId, kind])
+}
+
+/// Instance-level trial binding. Raw SQL in the forward-only migration enforces
+/// the lifetime singleton and the sole ACTIVE -> DISABLED transition; Prisma
+/// model metadata alone is not the authority for that lifecycle.
+model DoorstarInstanceTenantBinding {
+  id              String                      @id @default(cuid())
+  tenantId        String                      @db.Uuid
+  status          DoorstarTenantBindingStatus @default(ACTIVE)
+  bindingVersion  BigInt                      @default(1)
+  createdAt       DateTime                    @default(now()) @db.Timestamptz(6)
+  disabledAt      DateTime?                   @db.Timestamptz(6)
+  disabledReason  String?
+  evidences       IdentityAuthorityEvidence[] @relation("DoorstarEvidenceBinding")
+  sessions        DoorstarSession[]           @relation("DoorstarSessionBinding")
+
+  /// Supports the evidence-side composite FK, which proves its tenant snapshot
+  /// belongs to this exact binding row instead of merely to any binding id.
+  @@unique([id, tenantId])
+}
+
+/// Immutable, token-free record of an accepted M0 authority resolution. The
+/// migration blocks UPDATE/DELETE and persists exact UTC triples because a
+/// DateTime value alone cannot carry the required nanosecond proof/cutoff.
+model IdentityAuthorityEvidence {
+  id                                         String                           @id @default(cuid())
+  tenantBindingId                            String
+  tenantId                                   String                           @db.Uuid
+  bindingVersion                             BigInt
+  subject                                    String
+  schemaVersion                              String
+  membershipVersion                          BigInt
+  projectionVersion                          BigInt
+  enabledModules                             Json
+  permissions                                Json
+  acceptTokensIssuedAtOrAfterWire            String
+  acceptTokensIssuedAtOrAfterEpochSeconds    BigInt
+  acceptTokensIssuedAtOrAfterNanoseconds     Int
+  tokenIssuedAtWire                          String
+  tokenIssuedAtEpochSeconds                  BigInt
+  tokenIssuedAtNanoseconds                   Int
+  tokenExpiresAtWire                         String
+  tokenExpiresAtEpochSeconds                 BigInt
+  tokenExpiresAtNanoseconds                  Int
+  stateMacKeyVersion                         Int
+  stateMac                                   Bytes
+  correlationId                              String                           @db.Uuid
+  evidenceVersion                            Int                              @default(1)
+  createdAt                                  DateTime                         @default(now()) @db.Timestamptz(6)
+  tenantBinding                              DoorstarInstanceTenantBinding   @relation("DoorstarEvidenceBinding", fields: [tenantBindingId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Restrict)
+  sessions                                   DoorstarSession[]                @relation("DoorstarSessionEvidence")
+
+  /// Required reference target for the session's exact binding/evidence FK.
+  @@unique([id, tenantBindingId])
+  @@index([tenantBindingId, subject, createdAt])
+}
+
+/// Opaque M2 session state. Only HMACs of verifier/CSRF/state material are
+/// persisted; no human bearer, refresh token, M2M assertion, role, station,
+/// consumer id, or authorization code has a column in this model.
+model DoorstarSession {
+  id                      String                         @id @default(cuid())
+  sessionSelector         String                         @unique
+  verifierMacKeyVersion   Int
+  verifierMac             Bytes
+  csrfMacKeyVersion       Int
+  csrfMac                 Bytes
+  stateMacKeyVersion      Int
+  stateMac                Bytes
+  tenantBindingId         String
+  evidenceId              String
+  subject                 String
+  capability              DoorstarSessionCapability
+  bindingVersion          BigInt
+  issuedAtWire            String
+  issuedAtEpochSeconds    BigInt
+  issuedAtNanoseconds     Int
+  expiresAtWire           String
+  expiresAtEpochSeconds   BigInt
+  expiresAtNanoseconds    Int
+  revokedAt               DateTime?                     @db.Timestamptz(6)
+  revokeReason            String?
+  lastValidatedAt         DateTime?                     @db.Timestamptz(6)
+  createdAt               DateTime                       @default(now()) @db.Timestamptz(6)
+  tenantBinding           DoorstarInstanceTenantBinding @relation("DoorstarSessionBinding", fields: [tenantBindingId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  evidence                IdentityAuthorityEvidence     @relation("DoorstarSessionEvidence", fields: [evidenceId, tenantBindingId], references: [id, tenantBindingId], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([verifierMacKeyVersion, verifierMac])
+  @@unique([csrfMacKeyVersion, csrfMac])
+  @@index([tenantBindingId, revokedAt, expiresAtEpochSeconds, expiresAtNanoseconds])
 }

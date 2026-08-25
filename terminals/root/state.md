@@ -1,6 +1,6 @@
 # Doorstar Root állapot
 
-**Frissítve:** 2026-08-01
+**Frissítve:** 2026-08-25
 **Szerep:** Doorstar ügyfél-specifikus root
 
 ## Aktív állapot
@@ -745,3 +745,34 @@
 - Független security és domain review: P0/P1 nincs. Az M1B Prisma migration,
   session state machine és egy explicit engedélyű eldobható PostgreSQL proof
   nélkül a próbaüzem továbbra sem indítható.
+
+## 2026-08-25 — Doorstar M1B perzisztencia source checkpoint
+
+- Elkészült a három új, tokenmentes control-plane modell (`binding`, immutable
+  `evidence`, opaque `session`) és az egyetlen forward-only PostgreSQL
+  migráció. A 33 meglévő üzleti modellhez, route-hoz, cookie-hoz, Keycloakhoz,
+  VPS-hez vagy deployhoz nem nyúlt.
+- A DB-szintű kapuk: instance-lifetime singleton binding, exact UTC
+  wire/epoch/nanos triple-ek, HMAC-hossz és key-version ellenőrzés, canonical
+  grantból képzett capability, evidence append-only, session revoke state
+  machine, binding-disable tranzakciós revoke, composite FK, `TRUNCATE`
+  tiltás és `ENABLE ALWAYS` triggerök. Minden `createdAt` insertkor
+  adatbázisidőre íródik felül; a triggerek trusted `search_path`-ja
+  `pg_catalog, <migration-schema>, pg_temp`.
+- Külön, defaultból kizárt migration-test harness készült. Csak explicit
+  approval + exact dedikált loopback adatbázisnév után fut, saját véletlen
+  sémát hoz létre, nem olvassa a normál `DATABASE_URL`/`TEST_DATABASE_URL`
+  értéket és elutasítja a persistent `5462` portot. A tényleges
+  `migrate deploy` proof még **nem futott**.
+- A statikus security/data-model audit P0/P1 tiszta, de feltételes: trial
+  előtt a runtime principal preflightnak igazolnia kell a nem-owner/
+  non-superuser least privilege-et és azt, hogy `PUBLIC`/untrusted szerep sem
+  kap `CREATE` jogot a cél sémára.
+- Ellenőrzés: Prisma validate/generate zöld nem kapcsolódó dummy URL-lel;
+  identity célzott unit 92/92, migration target guard 8/8, TypeScript build és
+  OpenAPI 3.1/85 operation zöld. A teljes unit suite 166/168: a két változatlan
+  baseline hiba a planning-input-pack SHA pin és a RAG candidate dry-run
+  validator driftje, nem M1B regresszió.
+- Próbaüzem továbbra sem indítható: következő külön kapu az explicit emberi
+  jóváhagyású, dedikált disposable PostgreSQL proof, majd a runtime-role
+  preflight és az M2 BFF/Keycloak/Kernel attestation szelet.
