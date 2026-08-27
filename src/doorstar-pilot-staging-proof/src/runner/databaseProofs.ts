@@ -168,6 +168,10 @@ async function proveRuntimeAclAndSourceBoundaries(
     bootstrap_current_scope_helper: boolean;
     runtime_effective_manager_predicate: boolean;
     bootstrap_effective_manager_predicate: boolean;
+    runtime_roster_lock_key: boolean;
+    bootstrap_roster_lock_key: boolean;
+    runtime_require_effective_manager: boolean;
+    bootstrap_require_effective_manager: boolean;
     runtime_temporary: boolean;
     bootstrap_temporary: boolean;
   }>(
@@ -190,6 +194,10 @@ async function proveRuntimeAclAndSourceBoundaries(
        pg_catalog.has_function_privilege($2, 'pilot.doorstar_current_pilot_scope_id()'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_current_scope_helper,
        pg_catalog.has_function_privilege($1, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'::pg_catalog.regprocedure, 'EXECUTE') AS runtime_effective_manager_predicate,
        pg_catalog.has_function_privilege($2, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_effective_manager_predicate,
+       pg_catalog.has_function_privilege($1, 'pilot.doorstar_pilot_roster_lock_key(uuid)'::pg_catalog.regprocedure, 'EXECUTE') AS runtime_roster_lock_key,
+       pg_catalog.has_function_privilege($2, 'pilot.doorstar_pilot_roster_lock_key(uuid)'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_roster_lock_key,
+       pg_catalog.has_function_privilege($1, 'pilot.doorstar_require_effective_pilot_roster_manager(uuid)'::pg_catalog.regprocedure, 'EXECUTE') AS runtime_require_effective_manager,
+       pg_catalog.has_function_privilege($2, 'pilot.doorstar_require_effective_pilot_roster_manager(uuid)'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_require_effective_manager,
        pg_catalog.has_database_privilege($1, pg_catalog.current_database(), 'TEMPORARY') AS runtime_temporary,
        pg_catalog.has_database_privilege($2, pg_catalog.current_database(), 'TEMPORARY') AS bootstrap_temporary`,
     [plan.runtime.username, plan.bootstrap.username],
@@ -201,9 +209,15 @@ async function proveRuntimeAclAndSourceBoundaries(
     || row.bootstrap_current_scope_helper !== false
     || row.runtime_effective_manager_predicate !== true
     || row.bootstrap_effective_manager_predicate !== false
+    || row.runtime_roster_lock_key !== true
+    || row.bootstrap_roster_lock_key !== false
+    || row.runtime_require_effective_manager !== true
+    || row.bootstrap_require_effective_manager !== false
     || Object.entries(row).some(([key, value]) => (
       key !== "runtime_current_scope_helper"
       && key !== "runtime_effective_manager_predicate"
+      && key !== "runtime_roster_lock_key"
+      && key !== "runtime_require_effective_manager"
       && value !== false
     ))
   ) {
@@ -235,6 +249,22 @@ async function proveRuntimeAclAndSourceBoundaries(
     ),
     ["42501"],
     "a03_bootstrap_effective_manager_predicate_not_denied",
+  );
+  await expectPostgresFailure(
+    async () => pools.bootstrap.query(
+      "SELECT pilot.doorstar_pilot_roster_lock_key($1::uuid)",
+      [randomUUID()],
+    ),
+    ["42501"],
+    "a03_bootstrap_roster_lock_key_not_denied",
+  );
+  await expectPostgresFailure(
+    async () => pools.bootstrap.query(
+      "SELECT pilot.doorstar_require_effective_pilot_roster_manager($1::uuid)",
+      [randomUUID()],
+    ),
+    ["42501"],
+    "a03_bootstrap_require_effective_manager_not_denied",
   );
   await assertAllCrossSourceRoutineGrantsDenied(plan, pools.migrator);
   for (const pool of [pools.runtime, pools.bootstrap]) {
@@ -303,6 +333,8 @@ async function assertAllCrossSourceRoutineGrantsDenied(plan: DisposableProofPlan
     [plan.bootstrap.username, "pilot.pilot_runtime_preflight_v1()"],
     [plan.bootstrap.username, "pilot.doorstar_current_pilot_scope_id()"],
     [plan.bootstrap.username, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'],
+    [plan.bootstrap.username, "pilot.doorstar_pilot_roster_lock_key(uuid)"],
+    [plan.bootstrap.username, "pilot.doorstar_require_effective_pilot_roster_manager(uuid)"],
     [plan.bootstrap.username, "pilot.pilot_create_authorization_transaction_v1(text,text,text,bytea,timestamp without time zone)"],
     [plan.bootstrap.username, "pilot.pilot_consume_authorization_transaction_v1(text,text)"],
     [plan.bootstrap.username, 'pilot.pilot_direct_update_binding_v1(text,uuid,integer,pilot."PilotOfficeRole",boolean,boolean,text,uuid)'],

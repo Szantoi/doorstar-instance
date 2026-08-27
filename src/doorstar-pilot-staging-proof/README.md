@@ -83,10 +83,15 @@ It also grants the runtime identity (and only that identity) narrow EXECUTE on
 and on
 `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`.
 The latter is the immutable, non-writing boolean predicate required by the
-direct writer's DB-owned invariant. Neither grant confers table DML or writer
-authority, and the bootstrap identity remains denied both. A real DBA/operations
-runtime grant must preserve the same boundary outside this disposable harness
-and remains separately approved.
+direct writer's DB-owned invariant. It also grants runtime-only EXECUTE on
+`pilot.doorstar_pilot_roster_lock_key(uuid)`, the immutable pure helper used by
+the direct writer's serializable manager-loss trigger. None of these grants
+confers table DML or writer authority. Runtime also has EXECUTE on
+`pilot.doorstar_require_effective_pilot_roster_manager(uuid)`, the RLS-scoped
+non-writing void/`23514` invariant check used by that trigger chain; it is not
+an EXECUTE grant on a trigger function. The bootstrap identity remains denied
+all of them. A real DBA/operations runtime grant must preserve the same boundary
+outside this disposable harness and remains separately approved.
 
 The executable proof includes separate-session/PID two-scope RLS checks,
 transaction-local GUC reset via a real `pg.Pool({ max: 1 })`, absent/wrong GUC

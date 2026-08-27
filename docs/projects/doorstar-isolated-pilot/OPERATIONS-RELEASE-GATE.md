@@ -57,8 +57,13 @@ This is a separate human-approved test, never a production rehearsal.
    policies invoke that helper, and on
    `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
    because the direct writer's DB-owned invariant invokes that immutable,
-   non-writing predicate. Neither grant is writer authority; bootstrap receives
-   no corresponding grant unless a separately reviewed policy requires it.
+   non-writing predicate, and on `pilot.doorstar_pilot_roster_lock_key(uuid)`
+   because its serializable manager-loss trigger invokes that immutable pure
+   helper, plus `pilot.doorstar_require_effective_pilot_roster_manager(uuid)`
+   for that trigger chain's RLS-scoped, non-writing void/`23514` invariant
+   check. These are not EXECUTE grants on trigger functions and none is writer
+   authority; bootstrap receives no corresponding grant unless a separately
+   reviewed policy requires it.
 4. Prove with two distinct database PIDs and both source identities:
    RLS/ACL isolation, absent-or-wrong-scope denial, pool-context reset,
    routine-specific write authority, no raw-DML authority, first/last-manager
@@ -85,7 +90,11 @@ and record all of the following:
   and RLS policies, including runtime-only `EXECUTE` on
   `pilot.doorstar_current_pilot_scope_id()` for protected-table reads and on
   `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
-  as direct-writer, non-writing predicate support;
+  as direct-writer, non-writing predicate support, plus
+  `pilot.doorstar_pilot_roster_lock_key(uuid)` as non-writing serializable
+  manager-loss-trigger support and
+  `pilot.doorstar_require_effective_pilot_roster_manager(uuid)` as its
+  RLS-scoped non-writing void/`23514` invariant-check support;
 - confirmation that the roster contains Doorstar Office roles only; Plant
   `SHOP_FLOOR` authority remains outside this database and BFF; and
 - verified database TLS, BFF listener/TLS termination, host-only cookie origin

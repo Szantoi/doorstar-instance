@@ -478,6 +478,16 @@ async function grantDisposableProofPrivileges(client: PoolClient, plan: Disposab
   await client.query(
     `GRANT EXECUTE ON FUNCTION pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean) TO ${runtime}`,
   );
+  // The direct writer's serializable manager-loss trigger derives a per-scope
+  // advisory-lock key through this immutable, pure helper. It returns only a
+  // deterministic bigint and grants neither table DML nor writer authority.
+  await client.query(`GRANT EXECUTE ON FUNCTION pilot.doorstar_pilot_roster_lock_key(uuid) TO ${runtime}`);
+  // The direct writer's deferred manager-loss invariant uses this RLS-scoped,
+  // non-writing void check. It can only confirm the invariant or raise 23514;
+  // it grants neither table DML nor a trigger function entry point.
+  await client.query(
+    `GRANT EXECUTE ON FUNCTION pilot.doorstar_require_effective_pilot_roster_manager(uuid) TO ${runtime}`,
+  );
   await client.query(
     `GRANT EXECUTE ON FUNCTION pilot.pilot_create_authorization_transaction_v1(text, text, text, bytea, timestamp without time zone) TO ${runtime}`,
   );

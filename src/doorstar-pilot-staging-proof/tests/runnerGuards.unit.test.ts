@@ -260,6 +260,34 @@ describe("A-03 disposable-run guards", () => {
     );
   });
 
+  it("grants only runtime the immutable roster lock-key trigger support", async () => {
+    const [setup, proofs] = await Promise.all([
+      readFile(new URL("../src/runner/databaseSetup.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8"),
+    ]);
+    const signature = "pilot.doorstar_pilot_roster_lock_key(uuid)";
+    expect(setup).toContain(`GRANT EXECUTE ON FUNCTION ${signature} TO \${runtime}`);
+    expect(setup).toContain("deterministic bigint and grants neither table DML nor writer authority");
+    expect(proofs).toContain("runtime_roster_lock_key !== true");
+    expect(proofs).toContain("bootstrap_roster_lock_key !== false");
+    expect(proofs).toContain("a03_bootstrap_roster_lock_key_not_denied");
+    expect(proofs).toContain('[plan.bootstrap.username, "pilot.doorstar_pilot_roster_lock_key(uuid)"]');
+  });
+
+  it("grants only runtime the non-writing effective-manager invariant support", async () => {
+    const [setup, proofs] = await Promise.all([
+      readFile(new URL("../src/runner/databaseSetup.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8"),
+    ]);
+    const signature = "pilot.doorstar_require_effective_pilot_roster_manager(uuid)";
+    expect(setup).toContain(`GRANT EXECUTE ON FUNCTION ${signature} TO \${runtime}`);
+    expect(setup).toContain("can only confirm the invariant or raise 23514");
+    expect(proofs).toContain("runtime_require_effective_manager !== true");
+    expect(proofs).toContain("bootstrap_require_effective_manager !== false");
+    expect(proofs).toContain("a03_bootstrap_require_effective_manager_not_denied");
+    expect(proofs).toContain('[plan.bootstrap.username, "pilot.doorstar_require_effective_pilot_roster_manager(uuid)"]');
+  });
+
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {
     const plan = createDisposableProofPlan();
     const calls: string[][] = [];
