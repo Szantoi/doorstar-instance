@@ -24,7 +24,7 @@ milestones:
         description: "F-fázis build, unit teszt és független review bizonyíték."
   - id: A
     name: "OIDC BFF and DB-policy parity"
-    status: "in_progress"
+    status: "completed"
     tasks:
       - id: A-01
         status: "completed"
@@ -33,8 +33,8 @@ milestones:
         status: "completed"
         description: "P1 DB-owned writer routines, külön runtime/bootstrap identity boundary, Node/ESM smoke és Plant-only SHOP_FLOOR DB-szintű kizárása source-ready; független review PASS."
       - id: A-03
-        status: "in_progress"
-        description: "A production-lineage-en kívüli, source-verified disposable two-scope/two-PID RLS/ACL proof harness és a független source review elkészült. A tényleges Docker/PostgreSQL proof továbbra is külön emberi operations jóváhagyást, tiszta immutable candidate-et és redaktált evidence-et igényel."
+        status: "completed"
+        description: "A source-verified, production-lineage-en kívüli disposable two-scope/two-PID RLS/ACL proof PASS: a clean candidate, a PostgreSQL 16 Prisma-lineage, az ACL/RLS, a manager/audit invariantok és a SERIALIZABLE write-skew védelem redaktált evidence-szel igazolt."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -52,3 +52,5 @@ execution_log:
     outcome: "Az A-01/A-02 source-ready: OIDC authorization-code+PKCE BFF, opaque host-only session, DB-owned authorization/session/roster writers, elkülönített runtime és bootstrap DSN/identity, explicit TLS, valamint no-DB buildelt Node/ESM smoke készült. A történeti SHOP_FLOOR enum értéket PrincipalBinding CHECK és mindkét role-writer rutinszintű guard zárja ki; BFF és bootstrap sem fogadja Office szerepként. Független BFF és policy/bootstrap security review PASS. Bizonyíték: foundation 30, BFF 38, bootstrap 31 unit teszt, Prisma validate/generate, build/lint, buildelt smoke és production dependency audit PASS. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt; A-03 és R-01 változatlanul külön operations/release gate."
   - date: "2026-08-27"
     outcome: "Az A-03 source harness elkészült a src/doorstar-pilot-staging-proof csomagban: zárt két-scope fixture, immutable F/A migration- és Prisma-ledger ellenőrzés, két PID/RLS/ACL/manager/audit/write-skew proof-terv, valamint explicit disposable Docker acknowledgement, loopback+tmpfs lifecycle és redaktált evidence. Két független source review PASS. Bizonyíték: 15 unit teszt, fixture- és boundary-verifier, build, lint, Node 24 fail-closed CLI smoke és dependency audit PASS. Docker, PostgreSQL, IdP, VPS, ingress vagy deploy továbbra sem indult; A-03 runtime evidence és R-01 külön operations/release gate marad."
+  - date: "2026-08-27"
+    outcome: "Az A-03 emberileg jóváhagyott, kizárólag helyi disposable Docker/PostgreSQL 16 proof PASS a ddaf85f6cbe6b9f62878eb20ef5e596e271ba223 clean candidate-en. A 26 redaktált PASS marker igazolja többek között a Prisma-lineage-et, két PID-es RLS/ACL izolációt, callback-state egyszeri fogyasztást, pool-context resetet, append-only auditot, last-manager védelmet és a SERIALIZABLE write-skew elutasítást. A loopback+tmpfs konténer `container_destroyed` állapottal takarítva lett, maradék disposable konténer nélkül. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt; R-01 továbbra is külön operations/release GO."
