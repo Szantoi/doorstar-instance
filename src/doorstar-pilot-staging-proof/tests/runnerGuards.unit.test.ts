@@ -88,13 +88,50 @@ describe("A-03 disposable-run guards", () => {
   });
 
   it("accepts only a concrete postgres image ID and optional immutable digest", () => {
-    expect(parseVerifiedPostgresImageInspection(`sha256:${"a".repeat(64)}|postgres@sha256:${"b".repeat(64)}\n`))
+    expect(parseVerifiedPostgresImageInspection(
+      `sha256:${"a".repeat(64)}\n`,
+      JSON.stringify([`postgres@sha256:${"b".repeat(64)}`]),
+    ))
       .toEqual({
         imageId: `sha256:${"a".repeat(64)}`,
         immutableReference: `postgres@sha256:${"b".repeat(64)}`,
       });
-    expect(() => parseVerifiedPostgresImageInspection("postgres:16|"))
+    expect(parseVerifiedPostgresImageInspection(`sha256:${"c".repeat(64)}`, "null"))
+      .toEqual({ imageId: `sha256:${"c".repeat(64)}`, immutableReference: null });
+    expect(() => parseVerifiedPostgresImageInspection("postgres:16", "[]"))
       .toThrow("a03_postgres_image_id_invalid");
+    expect(() => parseVerifiedPostgresImageInspection(`sha256:${"d".repeat(64)}`, "not-json"))
+      .toThrow("a03_postgres_repo_digests_invalid");
+  });
+
+  it("uses separate Docker 29-safe image ID and RepoDigests JSON inspection", async () => {
+    const plan = createDisposableProofPlan();
+    const formats: string[] = [];
+    const commandRunner: CommandRunner = {
+      run: async (_command, argumentsList) => {
+        if (argumentsList[0] === "version") return { exitCode: 0, stdout: "29.1.5\n", stderr: "" };
+        if (argumentsList[0] === "image" && argumentsList[1] === "inspect") {
+          formats.push(argumentsList[3] ?? "");
+          if (argumentsList[3] === "{{.Id}}") {
+            return { exitCode: 0, stdout: `sha256:${"e".repeat(64)}\n`, stderr: "" };
+          }
+          if (argumentsList[3] === "{{json .RepoDigests}}") {
+            return { exitCode: 0, stdout: JSON.stringify([`postgres@sha256:${"f".repeat(64)}`]), stderr: "" };
+          }
+        }
+        throw new Error("unexpected Docker command");
+      },
+    };
+    const container = new DisposablePostgresContainer(commandRunner, {
+      containerName: plan.containerName,
+      administrator: plan.administrator,
+    });
+    await expect(container.assertDockerReadyAndImageAvailable()).resolves.toEqual({
+      imageId: `sha256:${"e".repeat(64)}`,
+      immutableReference: `postgres@sha256:${"f".repeat(64)}`,
+    });
+    expect(formats).toEqual(["{{.Id}}", "{{json .RepoDigests}}"]);
+    expect(formats.join(" ")).not.toContain("join");
   });
 
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {

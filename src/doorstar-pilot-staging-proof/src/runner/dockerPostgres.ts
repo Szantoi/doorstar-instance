@@ -24,6 +24,11 @@ export type VerifiedPostgresImage = Readonly<{
 
 export type DisposableContainerCleanup = "container_destroyed" | "container_not_started";
 
+type PostgresImageInspection = Readonly<{
+  imageId: CommandResult;
+  repoDigests: CommandResult | null;
+}>;
+
 /** Build-only data: calling this does not invoke Docker. */
 export function buildDisposablePostgresRunArguments(start: DisposablePostgresStart): readonly string[] {
   assertDockerName(start.containerName);
@@ -49,17 +54,15 @@ export function buildDisposablePostgresRunArguments(start: DisposablePostgresSta
  * generated identity. The image ID and repo digest are immutable hashes, so
  * they are safe to retain in redacted proof evidence.
  */
-export function parseVerifiedPostgresImageInspection(output: string): VerifiedPostgresImage {
-  const trimmed = output.trim();
-  const separator = trimmed.indexOf("|");
-  const imageId = separator < 0 ? "" : trimmed.slice(0, separator).trim();
-  const digests = separator < 0 ? [] : trimmed.slice(separator + 1)
-    .split(",")
-    .map((digest) => digest.trim())
-    .filter((digest) => digest !== "");
+export function parseVerifiedPostgresImageInspection(
+  imageIdOutput: string,
+  repoDigestsJsonOutput: string,
+): VerifiedPostgresImage {
+  const imageId = imageIdOutput.trim();
   if (!/^sha256:[a-f0-9]{64}$/i.test(imageId)) {
     throw new A03ProofError("a03_postgres_image_id_invalid");
   }
+  const digests = parseRepoDigestsJson(repoDigestsJsonOutput);
   const immutableReference = digests.find((digest) => /^postgres@sha256:[a-f0-9]{64}$/i.test(digest)) ?? null;
   return { imageId, immutableReference };
 }
@@ -86,12 +89,18 @@ export class DisposablePostgresContainer {
     }
 
     let inspection = await this.inspectImage();
-    if (inspection.exitCode !== 0) {
+    if (inspection.imageId.exitCode !== 0) {
       await requireSuccessfulCommand(this.commandRunner, "image", ["pull", disposablePostgresImage], 120_000);
       inspection = await this.inspectImage();
     }
-    if (inspection.exitCode !== 0) throw new A03ProofError("a03_docker_image_failed");
-    return parseVerifiedPostgresImageInspection(inspection.stdout);
+    if (
+      inspection.imageId.exitCode !== 0
+      || inspection.repoDigests === null
+      || inspection.repoDigests.exitCode !== 0
+    ) {
+      throw new A03ProofError("a03_docker_image_failed");
+    }
+    return parseVerifiedPostgresImageInspection(inspection.imageId.stdout, inspection.repoDigests.stdout);
   }
 
   public async startContainer(): Promise<void> {
@@ -162,12 +171,19 @@ export class DisposablePostgresContainer {
     }
   }
 
-  private async inspectImage(): Promise<CommandResult> {
-    return this.commandRunner.run(
+  private async inspectImage(): Promise<PostgresImageInspection> {
+    const imageId = await this.commandRunner.run(
       "docker",
-      ["image", "inspect", "--format", "{{.Id}}|{{join .RepoDigests \",\"}}", disposablePostgresImage],
+      ["image", "inspect", "--format", "{{.Id}}", disposablePostgresImage],
       15_000,
     );
+    if (imageId.exitCode !== 0) return { imageId, repoDigests: null };
+    const repoDigests = await this.commandRunner.run(
+      "docker",
+      ["image", "inspect", "--format", "{{json .RepoDigests}}", disposablePostgresImage],
+      15_000,
+    );
+    return { imageId, repoDigests };
   }
 
   private async assertExactDisposableContainerSafety(): Promise<void> {
@@ -234,6 +250,20 @@ function parseJsonInspection(value: string): unknown {
   } catch {
     throw new A03ProofError("a03_container_mount_inspection_invalid");
   }
+}
+
+function parseRepoDigestsJson(value: string): readonly string[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(value.trim());
+  } catch {
+    throw new A03ProofError("a03_postgres_repo_digests_invalid");
+  }
+  if (parsed === null) return [];
+  if (!Array.isArray(parsed) || parsed.some((digest) => typeof digest !== "string")) {
+    throw new A03ProofError("a03_postgres_repo_digests_invalid");
+  }
+  return parsed;
 }
 
 function isExactProofTmpfs(value: unknown): boolean {
