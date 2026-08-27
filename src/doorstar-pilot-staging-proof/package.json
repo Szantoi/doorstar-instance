@@ -1,0 +1,30 @@
+{
+  "name": "@doorstar/pilot-staging-proof",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Disposable, source-verified A-03 two-scope proof harness. It is not part of the Doorstar runtime.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "doorstar-pilot-a03-proof": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "verify:fixture": "tsx scripts/verifyTwoScopeFixture.ts",
+    "verify:boundary": "tsx scripts/verifyHarnessBoundary.ts",
+    "test": "npm run verify:fixture && npm run verify:boundary && npm run test:unit",
+    "proof:docker": "npm run build && node dist/cli.js --disposable-docker-proof"
+  },
+  "dependencies": {
+    "pg": "8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.12.0",
+    "@types/pg": "8.11.10",
+    "tsx": "4.23.12",
+    "typescript": "5.7.3",
+    "vitest": "4.1.11"
+  }
+}

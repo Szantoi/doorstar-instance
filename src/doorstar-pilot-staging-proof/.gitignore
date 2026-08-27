@@ -1,0 +1,6 @@
+# A disposable proof run writes redacted local evidence only. It is deliberately
+# not source-controlled and never contains credentials, tokens, scope values or
+# connection strings.
+/evidence/*.json
+/dist/
+/node_modules/

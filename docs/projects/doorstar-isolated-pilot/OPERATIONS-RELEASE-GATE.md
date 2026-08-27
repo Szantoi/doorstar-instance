@@ -4,10 +4,24 @@ This is an execution checklist for the isolated named-user pilot. It is not an
 instruction to perform any of these actions automatically. Every external
 action remains subject to a separately recorded human operations approval.
 
-The source implementation is deliberately unable to create an IdP client,
-database login, database, mapping, ingress, listener or deployment. The
-legacy Doorstar operational surface and JoineryTech Plant are outside this
-pilot.
+The runtime source implementation is deliberately unable to create an IdP
+client, database login, database, mapping, ingress, listener or deployment.
+The separately gated A-03 proof harness is the sole exception: after an exact
+human acknowledgement it may create only a generated, local, disposable
+PostgreSQL 16 container, database and identities, all of which it destroys at
+the end of that proof. It cannot receive a production connection string or
+perform a deploy. The legacy Doorstar operational surface and JoineryTech
+Plant are outside this pilot.
+
+## A-03 source harness
+
+`src/doorstar-pilot-staging-proof` is the reviewed, disposable-only Gate 1
+harness. Its `npm test`, build and lint commands are source-only checks and
+must not start Docker. Its `proof:docker` command is intentionally fail-closed:
+it requires an exact one-run acknowledgement, a clean committed candidate, a
+generated loopback-only PostgreSQL 16 container with tmpfs storage, and it
+destroys that container in its finalizer. The package README is the detailed
+operator reference; this document remains the approval authority.
 
 ## Gate 0 — immutable source candidate
 
@@ -38,6 +52,11 @@ This is a separate human-approved test, never a production rehearsal.
    the A-phase ADR. It must be outside the production Prisma lineage, alter
    only the closed two-scope guard, record every changed function hash, and be
    destroyed with the test database.
+   The runtime proof login also needs narrowly scoped `EXECUTE` on
+   `pilot.doorstar_current_pilot_scope_id()` because the protected-table RLS
+   policies invoke that helper. This is read-context support, not writer
+   authority; bootstrap receives no corresponding grant unless a separately
+   reviewed read policy requires it.
 4. Prove with two distinct database PIDs and both source identities:
    RLS/ACL isolation, absent-or-wrong-scope denial, pool-context reset,
    routine-specific write authority, no raw-DML authority, first/last-manager
@@ -60,7 +79,9 @@ and record all of the following:
   issuer, token/JWKS endpoints, approved asymmetric ID-token algorithms and
   server-side secret injection;
 - a fixed single pilot scope, approved named roster and least-privilege
-  database identities/mapping/ACLs required by the reviewed stored routines;
+  database identities/mapping/ACLs required by the reviewed stored routines
+  and RLS policies, including runtime-only `EXECUTE` on
+  `pilot.doorstar_current_pilot_scope_id()` for protected-table reads;
 - confirmation that the roster contains Doorstar Office roles only; Plant
   `SHOP_FLOOR` authority remains outside this database and BFF; and
 - verified database TLS, BFF listener/TLS termination, host-only cookie origin
