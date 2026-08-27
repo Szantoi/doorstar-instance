@@ -472,6 +472,12 @@ async function grantDisposableProofPrivileges(client: PoolClient, plan: Disposab
   // The RLS SELECT policies invoke this helper under the runtime login. It is
   // deliberately read support only: no writer routine is reachable through it.
   await client.query(`GRANT EXECUTE ON FUNCTION pilot.doorstar_current_pilot_scope_id() TO ${runtime}`);
+  // The direct writer's DB-owned invariant invokes this immutable SECURITY
+  // INVOKER predicate under the runtime login. It returns only a boolean and
+  // grants neither table DML nor any writer routine.
+  await client.query(
+    `GRANT EXECUTE ON FUNCTION pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean) TO ${runtime}`,
+  );
   await client.query(
     `GRANT EXECUTE ON FUNCTION pilot.pilot_create_authorization_transaction_v1(text, text, text, bytea, timestamp without time zone) TO ${runtime}`,
   );

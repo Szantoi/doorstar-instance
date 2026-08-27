@@ -205,11 +205,26 @@ describe("A-03 disposable-run guards", () => {
     expect(source).toContain('session_row."revokedAt" IS NULL');
     expect(source).toContain('session_row."expiresAt" > CURRENT_TIMESTAMP');
     expect(source).toContain('session_row."bindingEpoch" = binding."auditVersion"');
-    expect(source).toContain('binding."active" IS TRUE');
-    expect(source).toContain('binding."canManagePilotRoster" IS TRUE');
-    expect(source).toContain("'SALES'::pilot.\"PilotOfficeRole\"");
-    expect(source).toContain("'READER'::pilot.\"PilotOfficeRole\"");
-    expect(source).toContain("The runtime deliberately has no EXECUTE grant");
+    expect(source).toContain("pilot.doorstar_is_effective_pilot_roster_manager(");
+    expect(source).toContain('binding."active", binding."role", binding."canManagePilotRoster"');
+    expect(source).toContain("runtime has only this non-writing EXECUTE support");
+    expect(source).not.toContain("The runtime deliberately has no EXECUTE grant");
+  });
+
+  it("grants only runtime the canonical non-writing manager predicate support", async () => {
+    const [setup, proofs] = await Promise.all([
+      readFile(new URL("../src/runner/databaseSetup.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8"),
+    ]);
+    const signature = 'pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)';
+    expect(setup).toContain(`GRANT EXECUTE ON FUNCTION ${signature} TO \${runtime}`);
+    expect(setup).toContain("grants neither table DML nor any writer routine");
+    expect(proofs).toContain("runtime_effective_manager_predicate !== true");
+    expect(proofs).toContain("bootstrap_effective_manager_predicate !== false");
+    expect(proofs).toContain("a03_bootstrap_effective_manager_predicate_not_denied");
+    expect(proofs).toContain(
+      '[plan.bootstrap.username, \'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)\']',
+    );
   });
 
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {

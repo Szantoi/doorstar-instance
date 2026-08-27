@@ -156,6 +156,8 @@ async function proveRuntimeAclAndSourceBoundaries(
     bootstrap_runtime_preflight: boolean;
     runtime_current_scope_helper: boolean;
     bootstrap_current_scope_helper: boolean;
+    runtime_effective_manager_predicate: boolean;
+    bootstrap_effective_manager_predicate: boolean;
     runtime_temporary: boolean;
     bootstrap_temporary: boolean;
   }>(
@@ -176,6 +178,8 @@ async function proveRuntimeAclAndSourceBoundaries(
        pg_catalog.has_function_privilege($2, 'pilot.pilot_runtime_preflight_v1()'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_runtime_preflight,
        pg_catalog.has_function_privilege($1, 'pilot.doorstar_current_pilot_scope_id()'::pg_catalog.regprocedure, 'EXECUTE') AS runtime_current_scope_helper,
        pg_catalog.has_function_privilege($2, 'pilot.doorstar_current_pilot_scope_id()'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_current_scope_helper,
+       pg_catalog.has_function_privilege($1, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'::pg_catalog.regprocedure, 'EXECUTE') AS runtime_effective_manager_predicate,
+       pg_catalog.has_function_privilege($2, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'::pg_catalog.regprocedure, 'EXECUTE') AS bootstrap_effective_manager_predicate,
        pg_catalog.has_database_privilege($1, pg_catalog.current_database(), 'TEMPORARY') AS runtime_temporary,
        pg_catalog.has_database_privilege($2, pg_catalog.current_database(), 'TEMPORARY') AS bootstrap_temporary`,
     [plan.runtime.username, plan.bootstrap.username],
@@ -185,8 +189,12 @@ async function proveRuntimeAclAndSourceBoundaries(
     row === undefined
     || row.runtime_current_scope_helper !== true
     || row.bootstrap_current_scope_helper !== false
+    || row.runtime_effective_manager_predicate !== true
+    || row.bootstrap_effective_manager_predicate !== false
     || Object.entries(row).some(([key, value]) => (
-      key !== "runtime_current_scope_helper" && value !== false
+      key !== "runtime_current_scope_helper"
+      && key !== "runtime_effective_manager_predicate"
+      && value !== false
     ))
   ) {
     throw new A03ProofError("a03_acl_boundary_not_deny_by_default");
@@ -206,6 +214,17 @@ async function proveRuntimeAclAndSourceBoundaries(
     async () => pools.bootstrap.query("SELECT pilot.doorstar_current_pilot_scope_id()"),
     ["42501"],
     "a03_bootstrap_current_scope_helper_not_denied",
+  );
+  await expectPostgresFailure(
+    async () => pools.bootstrap.query(
+      `SELECT pilot.doorstar_is_effective_pilot_roster_manager(
+         true,
+         'ADMINISTRATOR'::pilot."PilotOfficeRole",
+         true
+       )`,
+    ),
+    ["42501"],
+    "a03_bootstrap_effective_manager_predicate_not_denied",
   );
   await assertAllCrossSourceRoutineGrantsDenied(plan, pools.migrator);
   for (const pool of [pools.runtime, pools.bootstrap]) {
@@ -273,6 +292,7 @@ async function assertAllCrossSourceRoutineGrantsDenied(plan: DisposableProofPlan
     [plan.runtime.username, "pilot.pilot_bootstrap_revoke_binding_v1(uuid,integer,text,uuid)"],
     [plan.bootstrap.username, "pilot.pilot_runtime_preflight_v1()"],
     [plan.bootstrap.username, "pilot.doorstar_current_pilot_scope_id()"],
+    [plan.bootstrap.username, 'pilot.doorstar_is_effective_pilot_roster_manager(boolean,pilot."PilotOfficeRole",boolean)'],
     [plan.bootstrap.username, "pilot.pilot_create_authorization_transaction_v1(text,text,text,bytea,timestamp without time zone)"],
     [plan.bootstrap.username, "pilot.pilot_consume_authorization_transaction_v1(text,text)"],
     [plan.bootstrap.username, 'pilot.pilot_direct_update_binding_v1(text,uuid,integer,pilot."PilotOfficeRole",boolean,boolean,text,uuid)'],
@@ -1059,21 +1079,11 @@ async function assertDirectWriterActorSessionVisible(
             AND session_row."revokedAt" IS NULL
             AND session_row."expiresAt" > CURRENT_TIMESTAMP
             AND session_row."bindingEpoch" = binding."auditVersion"
-            AND binding."active" IS TRUE
-            -- The runtime deliberately has no EXECUTE grant on the
-            -- SECURITY INVOKER helper. Keep this catalog-free read exactly
-            -- aligned with its deny-by-default effective-manager predicate.
-            AND binding."canManagePilotRoster" IS TRUE
-            AND binding."role" IN (
-              'SALES'::pilot."PilotOfficeRole",
-              'TECHNICAL_PREPARATION'::pilot."PilotOfficeRole",
-              'ORDER_APPROVER'::pilot."PilotOfficeRole",
-              'PRODUCTION_PLANNER'::pilot."PilotOfficeRole",
-              'INSTALLER'::pilot."PilotOfficeRole",
-              'WAREHOUSE_DISPATCH'::pilot."PilotOfficeRole",
-              'ADMINISTRATOR'::pilot."PilotOfficeRole",
-              'READER'::pilot."PilotOfficeRole"
-            )
+            -- Use the same immutable predicate as the direct writer's
+            -- invariant; runtime has only this non-writing EXECUTE support.
+            AND pilot.doorstar_is_effective_pilot_roster_manager(
+              binding."active", binding."role", binding."canManagePilotRoster"
+            ) IS TRUE
        ) AS live_actor_session_visible`,
       [actorSessionTokenHash],
     ),

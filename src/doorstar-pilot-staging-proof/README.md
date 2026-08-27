@@ -79,10 +79,14 @@ approved definitions must change; all other function manifests stay identical.
 The proof captures the concrete immutable PostgreSQL image ID and, when Docker
 provides one, the `postgres@sha256:…` repository digest in redacted evidence.
 It also grants the runtime identity (and only that identity) narrow EXECUTE on
-`pilot.doorstar_current_pilot_scope_id()`: the reviewed RLS read policies call
-that helper. This is RLS-read support, not writer authority; the bootstrap
-identity remains denied. A real DBA/operations runtime grant must preserve the
-same boundary outside this disposable harness.
+`pilot.doorstar_current_pilot_scope_id()` for the reviewed RLS read policies,
+and on
+`pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`.
+The latter is the immutable, non-writing boolean predicate required by the
+direct writer's DB-owned invariant. Neither grant confers table DML or writer
+authority, and the bootstrap identity remains denied both. A real DBA/operations
+runtime grant must preserve the same boundary outside this disposable harness
+and remains separately approved.
 
 The executable proof includes separate-session/PID two-scope RLS checks,
 transaction-local GUC reset via a real `pg.Pool({ max: 1 })`, absent/wrong GUC

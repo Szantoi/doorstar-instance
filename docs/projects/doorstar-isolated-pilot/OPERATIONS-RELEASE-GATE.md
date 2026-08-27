@@ -54,9 +54,11 @@ This is a separate human-approved test, never a production rehearsal.
    destroyed with the test database.
    The runtime proof login also needs narrowly scoped `EXECUTE` on
    `pilot.doorstar_current_pilot_scope_id()` because the protected-table RLS
-   policies invoke that helper. This is read-context support, not writer
-   authority; bootstrap receives no corresponding grant unless a separately
-   reviewed read policy requires it.
+   policies invoke that helper, and on
+   `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
+   because the direct writer's DB-owned invariant invokes that immutable,
+   non-writing predicate. Neither grant is writer authority; bootstrap receives
+   no corresponding grant unless a separately reviewed policy requires it.
 4. Prove with two distinct database PIDs and both source identities:
    RLS/ACL isolation, absent-or-wrong-scope denial, pool-context reset,
    routine-specific write authority, no raw-DML authority, first/last-manager
@@ -81,7 +83,9 @@ and record all of the following:
 - a fixed single pilot scope, approved named roster and least-privilege
   database identities/mapping/ACLs required by the reviewed stored routines
   and RLS policies, including runtime-only `EXECUTE` on
-  `pilot.doorstar_current_pilot_scope_id()` for protected-table reads;
+  `pilot.doorstar_current_pilot_scope_id()` for protected-table reads and on
+  `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
+  as direct-writer, non-writing predicate support;
 - confirmation that the roster contains Doorstar Office roles only; Plant
   `SHOP_FLOOR` authority remains outside this database and BFF; and
 - verified database TLS, BFF listener/TLS termination, host-only cookie origin
