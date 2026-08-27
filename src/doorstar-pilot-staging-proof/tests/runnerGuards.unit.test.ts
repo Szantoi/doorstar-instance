@@ -84,7 +84,13 @@ describe("A-03 disposable-run guards", () => {
 
   it("emits only stable public failure codes", () => {
     expect(publicFailureCode(new A03ProofError("a03_known"))).toBe("a03_known");
+    expect(publicFailureCode(Object.assign(new Error("sensitive PostgreSQL error"), { code: "42501" })))
+      .toBe("a03_postgres_sqlstate_42501");
+    expect(publicFailureCode({ code: "42P01", message: "sensitive relation name" }))
+      .toBe("a03_postgres_sqlstate_42P01");
     expect(publicFailureCode(new Error("sensitive details"))).toBe("a03_unexpected_failure");
+    expect(publicFailureCode({ code: "4250", message: "sensitive details" })).toBe("a03_unexpected_failure");
+    expect(publicFailureCode({ code: "42501; secret", message: "sensitive details" })).toBe("a03_unexpected_failure");
   });
 
   it("accepts only a concrete postgres image ID and optional immutable digest", () => {

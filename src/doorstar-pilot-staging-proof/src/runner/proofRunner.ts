@@ -153,7 +153,23 @@ export async function runDisposableA03Proof(
 }
 
 export function publicFailureCode(error: unknown): string {
-  return error instanceof A03ProofError ? error.publicCode : "a03_unexpected_failure";
+  if (error instanceof A03ProofError) return error.publicCode;
+  const sqlState = postgresSqlState(error);
+  return sqlState === undefined ? "a03_unexpected_failure" : `a03_postgres_sqlstate_${sqlState}`;
+}
+
+/** Only the standardized five-character SQLSTATE is safe diagnostic output. */
+function postgresSqlState(error: unknown): string | undefined {
+  if (
+    typeof error === "object"
+    && error !== null
+    && "code" in error
+    && typeof error.code === "string"
+    && /^[0-9A-Z]{5}$/.test(error.code)
+  ) {
+    return error.code;
+  }
+  return undefined;
 }
 
 function sha256(value: string): string {
