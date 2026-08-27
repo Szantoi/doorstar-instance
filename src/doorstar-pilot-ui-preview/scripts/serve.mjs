@@ -16,6 +16,9 @@ const staticAssets = new Map([
   ["/app.js", { fileName: "app.js", contentType: "text/javascript; charset=utf-8" }]
 ]);
 
+// Explicit fixture route only: this is deliberately not a generic SPA fallback.
+const projectPreviewPaths = new Set(["/office/projects/DS-26133"]);
+
 /**
  * Reads the optional port setting without accepting an accidental network bind.
  * Only the numeric port is configurable; the listener always stays on loopback.
@@ -53,6 +56,15 @@ function writePlainText(response, statusCode, body) {
   response.end(body);
 }
 
+function resolveStaticAsset(pathname) {
+  const directAsset = staticAssets.get(pathname);
+  if (directAsset) {
+    return directAsset;
+  }
+
+  return projectPreviewPaths.has(pathname) ? staticAssets.get("/") : undefined;
+}
+
 async function serveStaticAsset(request, response) {
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.setHeader("Allow", "GET, HEAD");
@@ -60,8 +72,9 @@ async function serveStaticAsset(request, response) {
     return;
   }
 
-  const requestUrl = new URL(request.url ?? "/", "http://localhost");
-  const asset = staticAssets.get(requestUrl.pathname);
+  // Do not pass the request target through URL parsing: that would normalize
+  // dot segments and weaken the exact-path fixture allowlist.
+  const asset = resolveStaticAsset(request.url ?? "/");
   if (!asset) {
     writePlainText(response, 404, "Not found");
     return;

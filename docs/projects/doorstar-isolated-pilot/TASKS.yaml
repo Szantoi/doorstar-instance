@@ -65,3 +65,7 @@ execution_log:
     outcome: "A V-01 helyi vizuális preview elkészült a src/doorstar-pilot-ui-preview csomagban. A saját Node statikus szervere kizárólag 127.0.0.1-re bindol, a login vezérlő disabled, a CSP `connect-src 'none'`, a dashboard mintaadatot mutat, és a `npm run verify` PASS ellenőrzi a loopback-kiszolgálást és a nem létező API-route-ot. Sem BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."
   - date: "2026-08-27"
     outcome: "A V-01 független source review PASS: a szervergyártó nem exportált, csak a loopback-ellenőrzött indítóút maradt; az ADR a nem érzékeny portbeállítást pontosítja; a tiltott jelszómezőben nincs beégetett érték. A felülvizsgálat BFF/DB/IdP/Plant/legacy import és kliensoldali külső hálózati hívás hiányát, valamint a nem-loopback host elutasítását is igazolta."
+  - date: "2026-08-27"
+    outcome: "A V-01 kibővült a felhasználó által kért /office/projects/DS-26133 explicit, statikus projekt-részletező fixture-rel. A route csak GET/HEAD esetén ugyanazt a helyi HTML shellt adja, nincs általános SPA fallback, és DS-12, nested útvonal, API vagy POST továbbra is elutasított. A képernyő mintaállapotot mutat; nem olvas projekt-, fájl-, DB-, BFF-, IdP- vagy Plant-adatot."
+  - date: "2026-08-27"
+    outcome: "A projekt-fixture független review PASS: a raw URL normalizálási kerülőút is zárva van, ezért /office/projects/x/../DS-26133 is 404. A verifier igazolja a pontos raw allowlistet, GET/HEAD 200-at, POST 405-öt, az eltérő útvonalak 404-ét, loopback-only bindet és `connect-src 'none'` CSP-t."

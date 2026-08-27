@@ -21,6 +21,16 @@ a **4317** porton. Nyisd meg ezt a címet:
 http://127.0.0.1:4317
 ~~~
 
+A jelenlegi projekt-részletező mintaútvonal:
+
+~~~text
+http://127.0.0.1:4317/office/projects/DS-26133
+~~~
+
+Ez kizárólag egy explicit helyi fixture: statikus képernyőt szolgál ki, nem
+olvas projektet, fájlt vagy más adatforrást. Más projektazonosító vagy mélyebb
+útvonal szándékosan 404 választ kap.
+
 Másik helyi port állítható be a dedikált konfigurációs változóval:
 
 ~~~powershell
@@ -47,8 +57,9 @@ bizonyítja, hogy az előnézetben nincs hitelesítési útvonal.
 
 - A **Bejelentkezés az Office-ba** gomb disabled, nincs eseménykezelője.
 - A dashboard minden adata forráskódban deklarált, egyértelműen mintaadat.
-- A szerver csak négy statikus útvonalat szolgál ki: **/**, **/index.html**,
-  **/styles.css** és **/app.js**.
+- A szerver csak öt explicit statikus útvonalat szolgál ki: **/**,
+  **/index.html**, **/styles.css**, **/app.js** és a helyi
+  **/office/projects/DS-26133** fixture. Nincs általános SPA fallback.
 - A Content Security Policy **connect-src 'none'** beállítása nem enged sem
   API-, sem külső hálózati kapcsolatot.
 

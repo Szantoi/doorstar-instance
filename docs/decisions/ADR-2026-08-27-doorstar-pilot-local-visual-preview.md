@@ -23,10 +23,12 @@ and would not be a valid way to review the new pilot.
    Plant connection. It carries no external-service or sensitive runtime
    configuration, secret, credential, customer record, or production URL. Its
    local listener port is the sole non-sensitive development setting.
-3. Its sample screens may show a static sign-in state and a static Office
-   dashboard state. Each screen must visibly state that it is a local visual
-   preview with neither sign-in nor data connection. The sign-in control must
-   not start an authorization flow or create a session.
+3. Its sample screens may show a static sign-in state, an Office dashboard
+   state, and explicitly allowlisted project-detail fixtures. Each screen must
+   visibly state that it is a local visual preview with neither sign-in nor
+   data connection. The sign-in control must not start an authorization flow
+   or create a session. A fixture route may only serve the same static shell;
+   it may not resolve, load, or infer a project from its path.
 4. The preview owns its own small static server and verification command, so
    visual work can be checked locally without changing the BFF's four-route
    public contract.

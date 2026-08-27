@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { request } from "node:http";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -22,6 +23,25 @@ async function closeServer(server) {
   });
 }
 
+function requestRawPath(url, path) {
+  const target = new URL(url);
+
+  return new Promise((resolveResponse, rejectResponse) => {
+    const clientRequest = request({
+      hostname: target.hostname,
+      port: target.port,
+      path,
+      method: "GET"
+    }, (response) => {
+      response.resume();
+      response.once("end", () => resolveResponse(response));
+    });
+
+    clientRequest.once("error", rejectResponse);
+    clientRequest.end();
+  });
+}
+
 async function verifyStaticContent() {
   const [packageText, indexText, appText, styleText, serverText] = await Promise.all([
     readFile(join(previewDirectory, "package.json"), "utf8"),
@@ -37,9 +57,12 @@ async function verifyStaticContent() {
   assert.match(indexText, /Helyi vizuális előnézet — nincs bejelentkezés vagy adatkapcsolat/);
   assert.match(indexText, /id="preview-sign-in"[^>]*disabled/);
   assert.match(indexText, /data-view-target="dashboard"/);
+  assert.match(indexText, /data-view-panel="project"/);
   assert.match(appText, /const previewData/);
+  assert.match(appText, /const projectPreviewPath = "\/office\/projects\/DS-26133"/);
   assert.match(styleText, /\.preview-notice/);
   assert.match(serverText, /const LOOPBACK_HOST = "127\.0\.0\.1"/);
+  assert.match(serverText, /"\/office\/projects\/DS-26133"/);
   assert.match(serverText, /connect-src 'none'/);
 }
 
@@ -51,19 +74,47 @@ async function verifyRunningServer() {
   });
 
   try {
-    const [indexResponse, stylesheetResponse, appResponse, apiResponse] = await Promise.all([
+    const [
+      indexResponse,
+      stylesheetResponse,
+      appResponse,
+      projectResponse,
+      projectHeadResponse,
+      malformedProjectResponse,
+      nestedProjectResponse,
+      apiResponse,
+      postProjectResponse
+    ] = await Promise.all([
       fetch(url + "/"),
       fetch(url + "/styles.css"),
       fetch(url + "/app.js"),
-      fetch(url + "/api/auth/start")
+      fetch(url + "/office/projects/DS-26133"),
+      fetch(url + "/office/projects/DS-26133", { method: "HEAD" }),
+      fetch(url + "/office/projects/DS-12"),
+      fetch(url + "/office/projects/DS-26133/extra"),
+      fetch(url + "/api/auth/start"),
+      fetch(url + "/office/projects/DS-26133", { method: "POST" })
     ]);
+    const dotSegmentProjectResponse = await requestRawPath(
+      url,
+      "/office/projects/x/../DS-26133"
+    );
 
     assert.equal(indexResponse.status, 200);
     assert.equal(stylesheetResponse.status, 200);
     assert.equal(appResponse.status, 200);
+    assert.equal(projectResponse.status, 200);
+    assert.equal(projectHeadResponse.status, 200);
+    assert.equal(await projectHeadResponse.text(), "");
+    assert.equal(malformedProjectResponse.status, 404);
+    assert.equal(nestedProjectResponse.status, 404);
+    assert.equal(dotSegmentProjectResponse.statusCode, 404);
     assert.equal(apiResponse.status, 404);
+    assert.equal(postProjectResponse.status, 405);
+    assert.equal(postProjectResponse.headers.get("allow"), "GET, HEAD");
     assert.match(indexResponse.headers.get("content-security-policy") ?? "", /connect-src 'none'/);
     assert.match(await indexResponse.text(), /Doorstar Office/);
+    assert.match(await projectResponse.text(), /DS-26133/);
   } finally {
     await closeServer(server);
   }
@@ -84,7 +135,7 @@ try {
   await verifyStaticContent();
   await verifyLoopbackBoundary();
   await verifyRunningServer();
-  console.log("[doorstar-ui-preview] PASS: static preview, loopback-only listener, and no API route verified.");
+  console.log("[doorstar-ui-preview] PASS: static preview, explicit project fixture, loopback-only listener, and no API route verified.");
 } catch (error) {
   console.error("[doorstar-ui-preview] FAIL:", error);
   process.exitCode = 1;

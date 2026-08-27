@@ -80,6 +80,8 @@ const previewData = Object.freeze({
   ]
 });
 
+const projectPreviewPath = "/office/projects/DS-26133";
+
 function createElement(tagName, className, text) {
   const element = document.createElement(tagName);
   if (className) {
@@ -167,12 +169,14 @@ function renderAgenda() {
 }
 
 function setActiveView(view) {
-  const viewName = view === "dashboard" ? "dashboard" : "login";
+  const viewName = ["dashboard", "project"].includes(view) ? view : "login";
   document.documentElement.dataset.view = viewName;
   document.title =
     viewName === "dashboard"
       ? "Doorstar Office · iroda áttekintés"
-      : "Doorstar Office · helyi előnézet";
+      : viewName === "project"
+        ? "Doorstar Office · DS-26133 projekt-előnézet"
+        : "Doorstar Office · helyi előnézet";
 
   document.querySelectorAll("[data-view-panel]").forEach((panel) => {
     panel.hidden = panel.dataset.viewPanel !== viewName;
@@ -186,18 +190,31 @@ function setActiveView(view) {
 }
 
 function preferredViewFromHash() {
+  if (window.location.pathname === projectPreviewPath) {
+    return "project";
+  }
+
   return window.location.hash.replace("#", "") === "dashboard" ? "dashboard" : "login";
 }
 
 document.querySelectorAll("[data-view-target]").forEach((control) => {
   control.addEventListener("click", () => {
     const target = control.dataset.viewTarget;
+    if (window.location.pathname === projectPreviewPath) {
+      window.location.assign("/#" + target);
+      return;
+    }
+
     window.location.hash = target;
     setActiveView(target);
   });
 });
 
-window.addEventListener("hashchange", () => setActiveView(preferredViewFromHash()));
+window.addEventListener("hashchange", () => {
+  if (window.location.pathname !== projectPreviewPath) {
+    setActiveView(preferredViewFromHash());
+  }
+});
 
 renderMetrics();
 renderProjects();

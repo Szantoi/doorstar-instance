@@ -177,6 +177,126 @@
             </aside>
           </div>
         </section>
+
+        <section class="project-layout" data-view-panel="project" aria-labelledby="project-title" hidden>
+          <nav class="project-breadcrumb" aria-label="Navigációs útvonal">
+            <a href="/#dashboard">Iroda áttekintés</a>
+            <span aria-hidden="true">/</span>
+            <span>Projektek</span>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">DS-26133</span>
+          </nav>
+
+          <div class="project-heading">
+            <div>
+              <p class="eyebrow">Projekt-részletező · helyi minta</p>
+              <h1 id="project-title">DS-26133 <span>· projekt-előnézet</span></h1>
+              <p class="dashboard-subtitle">
+                Az útvonal és az Office-részletező elrendezés vizuális ellenőrzéséhez.
+              </p>
+            </div>
+            <div class="heading-actions">
+              <span class="sample-badge">Mintaadat</span>
+              <a class="quiet-link" href="/#dashboard">Vissza az áttekintéshez</a>
+            </div>
+          </div>
+
+          <div class="project-fact-grid" aria-label="Projekt mintaállapota">
+            <article class="project-fact">
+              <span>Office állapot</span>
+              <strong>Műszaki előkészítés</strong>
+              <small>helyi minta</small>
+            </article>
+            <article class="project-fact">
+              <span>Dokumentumcsomag</span>
+              <strong>4 minta-verzió</strong>
+              <small>nincs fájlkapcsolat</small>
+            </article>
+            <article class="project-fact">
+              <span>Nyitott ellenőrzések</span>
+              <strong>2 tétel</strong>
+              <small>nem feladatkezelő</small>
+            </article>
+            <article class="project-fact">
+              <span>Átadási állapot</span>
+              <strong>Office review alatt</strong>
+              <small>nincs Plant-kapcsolat</small>
+            </article>
+          </div>
+
+          <div class="project-detail-grid">
+            <section class="panel project-detail-panel" aria-labelledby="preparation-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Office ellenőrzés</p>
+                  <h2 id="preparation-title">Műszaki előkészítés</h2>
+                </div>
+                <span class="sample-badge">Minta</span>
+              </div>
+              <ol class="review-list">
+                <li>
+                  <span class="review-marker review-marker--done" aria-hidden="true">✓</span>
+                  <div>
+                    <strong>Felmérési összefoglaló</strong>
+                    <span>Megjelenítési minta · nincs betöltött dokumentum</span>
+                  </div>
+                  <span class="status-pill status-pill--mint">Rendben</span>
+                </li>
+                <li>
+                  <span class="review-marker review-marker--review" aria-hidden="true">•</span>
+                  <div>
+                    <strong>Műszaki specifikáció</strong>
+                    <span>Mintaállapot · emberi Office review szükséges</span>
+                  </div>
+                  <span class="status-pill status-pill--amber">Ellenőrzés alatt</span>
+                </li>
+                <li>
+                  <span class="review-marker review-marker--pending" aria-hidden="true">○</span>
+                  <div>
+                    <strong>Jóváhagyott átadási csomag</strong>
+                    <span>Csak a végleges Office-döntés után készülhet</span>
+                  </div>
+                  <span class="status-pill status-pill--indigo">Várakozik</span>
+                </li>
+              </ol>
+            </section>
+
+            <aside class="project-side-column">
+              <section class="panel project-document-panel" aria-labelledby="document-title">
+                <div class="panel-heading">
+                  <div>
+                    <p class="panel-kicker">Eredeti fájlok helyett</p>
+                    <h2 id="document-title">Dokumentum nézet</h2>
+                  </div>
+                </div>
+                <p class="project-document-panel__copy">
+                  Ez a preview nem olvas mappát, adatbázist vagy ügyfélanyagot.
+                  A kártyák kizárólag az elrendezést mutatják.
+                </p>
+                <div class="document-sample-list" aria-label="Minta dokumentumkártyák">
+                  <span>Felmérés · minta</span>
+                  <span>Műszaki lap · minta</span>
+                  <span>Jóváhagyás · minta</span>
+                </div>
+              </section>
+
+              <section class="contract-card project-contract-card" aria-labelledby="project-contract-title">
+                <div class="contract-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M7 3h7l4 4v14H7z" />
+                    <path d="M14 3v5h5" />
+                    <path d="M10 12h5M10 16h5" />
+                  </svg>
+                </div>
+                <div>
+                  <p>Office → Plant</p>
+                  <h2 id="project-contract-title">Jóváhagyott szerződés szükséges</h2>
+                  <span>Nincs kiadás, task vagy Plant-authority ebben az előnézetben.</span>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
       </main>
 
       <footer class="site-footer">
