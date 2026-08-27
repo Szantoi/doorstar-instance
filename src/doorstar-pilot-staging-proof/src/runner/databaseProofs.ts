@@ -579,20 +579,33 @@ async function seedManagerAndAuditProof(
   await assertBootstrapProvisionAudit(pools.migrator, plan.fixture.scopeB.id, betaManager, "ADMINISTRATOR", true);
   ledger.pass("BOOTSTRAP_MANAGER_GUARD_AND_AUDIT_SEED");
 
+  ledger.beginPostSeedOperation("POST_SEED_SESSION_EXECUTE_CATALOG_ASSERTION");
+  await assertSessionIssueExecuteCatalogPrivilege(pools.migrator, plan.runtime.username);
+  ledger.completePostSeedOperation(
+    "POST_SEED_SESSION_EXECUTE_CATALOG_ASSERTION",
+    "POST_SEED_SESSION_EXECUTE_CATALOG_CONFIRMED",
+  );
+
   const alphaManagerOneSessionHash = hashHex("alpha-manager-one-session");
+  ledger.beginPostSeedOperation("POST_SEED_FIRST_SESSION_ISSUE");
   const alphaManagerOneSessionId = await issueOpaqueSession(
     pools.runtime,
     plan.fixture.scopeA.id,
     alphaManagerOne.id,
     alphaManagerOneSessionHash,
   );
+  ledger.completePostSeedOperation("POST_SEED_FIRST_SESSION_ISSUE", "POST_SEED_FIRST_SESSION_ISSUED");
+
+  ledger.beginPostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE");
   await issueOpaqueSession(
     pools.runtime,
     plan.fixture.scopeB.id,
     betaManager.id,
     hashHex("beta-manager-session"),
   );
+  ledger.completePostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE", "POST_SEED_SECOND_SESSION_ISSUED");
 
+  ledger.beginPostSeedOperation("POST_SEED_DIRECT_BINDING_UPDATE");
   const changedManagerTwo = await directUpdateBinding(
     pools.runtime,
     plan.fixture.scopeA.id,
@@ -604,15 +617,24 @@ async function seedManagerAndAuditProof(
     true,
     "A03 audited role transition",
   );
+  ledger.completePostSeedOperation("POST_SEED_DIRECT_BINDING_UPDATE", "POST_SEED_DIRECT_BINDING_UPDATED");
+
   const alphaManagerTwoSessionHash = hashHex("alpha-manager-two-session-after-transition");
+  ledger.beginPostSeedOperation("POST_SEED_TRANSITIONED_SESSION_ISSUE");
   await issueOpaqueSession(
     pools.runtime,
     plan.fixture.scopeA.id,
     changedManagerTwo.id,
     alphaManagerTwoSessionHash,
   );
+  ledger.completePostSeedOperation(
+    "POST_SEED_TRANSITIONED_SESSION_ISSUE",
+    "POST_SEED_TRANSITIONED_SESSION_ISSUED",
+  );
+
+  ledger.beginPostSeedOperation("POST_SEED_DIRECT_AUDIT_ASSERTION");
   const directAuditId = await assertAuditedDirectTransition(pools.migrator, plan.fixture.scopeA.id, changedManagerTwo.id);
-  ledger.pass("DIRECT_MANAGER_AUDIT_TRANSITION");
+  ledger.completePostSeedOperation("POST_SEED_DIRECT_AUDIT_ASSERTION", "DIRECT_MANAGER_AUDIT_TRANSITION");
 
   return {
     alphaManagerOne,
@@ -623,6 +645,24 @@ async function seedManagerAndAuditProof(
     alphaManagerTwoSessionHash,
     directAuditId,
   };
+}
+
+/**
+ * Checks only the catalog ACL before the first writer call. The principal name
+ * is a generated in-memory value and is never emitted into evidence.
+ */
+async function assertSessionIssueExecuteCatalogPrivilege(migrator: Pool, principalName: string): Promise<void> {
+  const result = await migrator.query<{ is_granted: boolean }>(
+    `SELECT pg_catalog.has_function_privilege(
+       $1,
+       'pilot.pilot_issue_opaque_session_v1(uuid, text, bytea, timestamp without time zone)'::pg_catalog.regprocedure,
+       'EXECUTE'
+     ) AS is_granted`,
+    [principalName],
+  );
+  if (result.rows.length !== 1 || result.rows[0]?.is_granted !== true) {
+    throw new A03ProofError("a03_session_issue_execute_catalog_missing");
+  }
 }
 
 async function proveTwoScopeRlsIsolation(

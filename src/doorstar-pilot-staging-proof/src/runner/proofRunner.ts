@@ -127,7 +127,7 @@ export async function runDisposableA03Proof(
     const status = primaryFailure === undefined && cleanup !== "container_cleanup_failed" ? "PASS" : "FAIL";
     const failureCode = primaryFailure === undefined ? null : publicFailureCode(primaryFailure);
     evidencePath = await writeRedactedEvidence({
-      schemaVersion: 1,
+      schemaVersion: 2,
       status,
       startedAt,
       completedAt: new Date().toISOString(),
@@ -143,6 +143,7 @@ export async function runDisposableA03Proof(
       afterFixtureManifest,
       finalFunctionManifest,
       passMarkers: ledger.markers(),
+      inFlightPostSeedOperation: ledger.inFlightPostSeedOperation(),
       cleanup,
       failureCode,
     });

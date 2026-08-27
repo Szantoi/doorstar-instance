@@ -2,9 +2,10 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { PolicyFunctionManifest, SourceMigrationEvidence } from "./databaseSetup.js";
+import type { PostSeedProofOperation } from "./proofLedger.js";
 
 export type RedactedProofEvidence = Readonly<{
-  schemaVersion: 1;
+  schemaVersion: 2;
   status: "PASS" | "FAIL";
   startedAt: string;
   completedAt: string;
@@ -20,6 +21,7 @@ export type RedactedProofEvidence = Readonly<{
   afterFixtureManifest: PolicyFunctionManifest | null;
   finalFunctionManifest: PolicyFunctionManifest | null;
   passMarkers: readonly string[];
+  inFlightPostSeedOperation: PostSeedProofOperation | null;
   cleanup: "container_destroyed" | "container_not_started" | "container_cleanup_failed";
   failureCode: string | null;
 }>;

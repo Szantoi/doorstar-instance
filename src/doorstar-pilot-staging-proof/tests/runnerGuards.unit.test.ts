@@ -16,6 +16,7 @@ import {
   parseVerifiedPostgresImageInspection,
 } from "../src/runner/dockerPostgres.js";
 import { requireCleanCandidateGitState } from "../src/runner/candidateGitState.js";
+import { ProofLedger, postSeedProofOperations } from "../src/runner/proofLedger.js";
 import { publicFailureCode, runDisposableA03Proof } from "../src/runner/proofRunner.js";
 import { writeRedactedEvidence } from "../src/runner/redactedEvidence.js";
 
@@ -51,7 +52,7 @@ describe("A-03 disposable-run guards", () => {
 
   it("writes evidence only under the package-local ignored evidence directory", async () => {
     const path = await writeRedactedEvidence({
-      schemaVersion: 1,
+      schemaVersion: 2,
       status: "PASS",
       startedAt: "2026-08-27T00:00:00.000Z",
       completedAt: "2026-08-27T00:00:01.000Z",
@@ -67,6 +68,7 @@ describe("A-03 disposable-run guards", () => {
       afterFixtureManifest: null,
       finalFunctionManifest: null,
       passMarkers: ["FIXTURE_SOURCE_VERIFIED"],
+      inFlightPostSeedOperation: "POST_SEED_FIRST_SESSION_ISSUE",
       cleanup: "container_not_started",
       failureCode: null,
     });
@@ -75,6 +77,7 @@ describe("A-03 disposable-run guards", () => {
       expect(path.startsWith(resolve(packageRoot, "evidence"))).toBe(true);
       const evidence = await readFile(path, "utf8");
       expect(evidence).toContain('"status": "PASS"');
+      expect(evidence).toContain('"inFlightPostSeedOperation": "POST_SEED_FIRST_SESSION_ISSUE"');
       expect(evidence).not.toContain("password");
       expect(evidence).not.toContain("postgresql://");
     } finally {
@@ -146,6 +149,29 @@ describe("A-03 disposable-run guards", () => {
     expect(source).toContain('"SELECT pilot.pilot_revoke_opaque_session_v1($1::text)"');
     expect(source).toContain("(CURRENT_TIMESTAMP + INTERVAL '5 minutes')::timestamp(3)");
     expect(source).toContain("(CURRENT_TIMESTAMP + INTERVAL '30 minutes')::timestamp(3)");
+    expect(source).toContain("a03_session_issue_execute_catalog_missing");
+    expect(source).toContain(
+      "'pilot.pilot_issue_opaque_session_v1(uuid, text, bytea, timestamp without time zone)'::pg_catalog.regprocedure",
+    );
+  });
+
+  it("records only fixed post-seed operation names while a step is in flight", () => {
+    const ledger = new ProofLedger();
+    const [catalogAssertion, firstIssue] = postSeedProofOperations;
+
+    ledger.beginPostSeedOperation(catalogAssertion);
+    expect(ledger.inFlightPostSeedOperation()).toBe(catalogAssertion);
+    ledger.completePostSeedOperation(catalogAssertion, "POST_SEED_SESSION_EXECUTE_CATALOG_CONFIRMED");
+    expect(ledger.inFlightPostSeedOperation()).toBeNull();
+    expect(ledger.markers()).toEqual(["POST_SEED_SESSION_EXECUTE_CATALOG_CONFIRMED"]);
+
+    ledger.beginPostSeedOperation(firstIssue);
+    expect(ledger.inFlightPostSeedOperation()).toBe(firstIssue);
+    expect(() => ledger.beginPostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE"))
+      .toThrow("a03_post_seed_operation_state_invalid");
+    expect(() => ledger.completePostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE", "POST_SEED_SECOND_SESSION_ISSUED"))
+      .toThrow("a03_post_seed_operation_state_invalid");
+    expect(ledger.inFlightPostSeedOperation()).toBe(firstIssue);
   });
 
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {
