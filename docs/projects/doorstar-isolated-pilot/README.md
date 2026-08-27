@@ -23,6 +23,13 @@ implemented and independently reviewed, but no database, IdP client, ingress
 or listener has been activated. A-03 disposable staging proof and the release
 gate remain mandatory before a real named-user pilot can go live.
 
+For development-time visual review, the separate
+[`doorstar-pilot-ui-preview`](../../../src/doorstar-pilot-ui-preview/README.md)
+package provides only static, loopback-only login and Office-dashboard views.
+It has no authentication, BFF, database, OIDC, cookie, or Plant connection;
+the visible notice and disabled sign-in control make this boundary explicit.
+
 See [the architecture decision](../../decisions/ADR-2026-08-27-isolated-doorstar-pilot-foundation.md)
-and [the task register](TASKS.yaml). The exact external staging and release
+and [the local-preview decision](../../decisions/ADR-2026-08-27-doorstar-pilot-local-visual-preview.md),
+then [the task register](TASKS.yaml). The exact external staging and release
 preconditions are recorded in the [operations release gate](OPERATIONS-RELEASE-GATE.md).

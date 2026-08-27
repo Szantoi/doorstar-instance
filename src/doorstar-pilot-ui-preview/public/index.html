@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="hu" data-view="login">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Doorstar Office helyi, vizuális fejlesztői előnézet."
+    />
+    <title>Doorstar Office · helyi előnézet</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="preview-notice" aria-label="Előnézeti korlátozás">
+        <span class="notice-dot" aria-hidden="true"></span>
+        <span>Helyi vizuális előnézet — nincs bejelentkezés vagy adatkapcsolat</span>
+      </aside>
+
+      <header class="site-header">
+        <a class="brand" href="#login" data-view-target="login" aria-label="Doorstar Office előnézet">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" focusable="false">
+              <path d="M8 7h18v26H8z" />
+              <path d="M13 7h19v26H13z" />
+              <circle cx="27" cy="20" r="1.7" />
+            </svg>
+          </span>
+          <span>
+            <strong>Doorstar</strong>
+            <small>Office</small>
+          </span>
+        </a>
+
+        <nav class="view-switcher" aria-label="Előnézeti nézetek">
+          <button type="button" class="view-switcher__button" data-view-target="login">
+            Bejelentkezés
+          </button>
+          <button type="button" class="view-switcher__button" data-view-target="dashboard">
+            Iroda áttekintés
+          </button>
+        </nav>
+
+        <span class="local-chip">
+          <span aria-hidden="true">●</span>
+          helyi
+        </span>
+      </header>
+
+      <main>
+        <section class="login-layout" data-view-panel="login" aria-labelledby="login-title">
+          <div class="login-introduction">
+            <p class="eyebrow">Doorstar Kft. · Office control plane</p>
+            <h1 id="login-title">Minden projekt, egy rendezett iroda.</h1>
+            <p class="lead">
+              Felmérés, műszaki előkészítés és jóváhagyott dokumentumok egy
+              áttekinthető munkatérben.
+            </p>
+
+            <dl class="assurance-list">
+              <div>
+                <dt>Fókusz</dt>
+                <dd>Értékesítés és műszaki előkészítés</dd>
+              </div>
+              <div>
+                <dt>Kapcsolat</dt>
+                <dd>Jóváhagyott Office → Plant szerződés</dd>
+              </div>
+              <div>
+                <dt>Állapot</dt>
+                <dd>Csak vizuális fejlesztői előnézet</dd>
+              </div>
+            </dl>
+          </div>
+
+          <section class="login-card" aria-label="Bejelentkezési előnézet">
+            <div class="login-card__topline">
+              <span class="sample-badge">Minta</span>
+              <span class="lock-label">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <rect x="5" y="10" width="14" height="10" rx="2" />
+                  <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                </svg>
+                Védett hozzáférés
+              </span>
+            </div>
+            <h2>Üdv újra</h2>
+            <p>Ez a képernyő csak a megjelenés ellenőrzésére szolgál.</p>
+
+            <div class="form-stack" aria-label="Nem aktív bejelentkezési mezők">
+              <label>
+                E-mail-cím
+                <input type="email" value="minta@doorstar.hu" disabled />
+              </label>
+              <label>
+                Jelszó
+                <input type="password" placeholder="Minta jelszó" disabled />
+              </label>
+            </div>
+
+            <button
+              id="preview-sign-in"
+              class="sign-in-button"
+              type="button"
+              disabled
+              aria-describedby="sign-in-help"
+            >
+              Bejelentkezés az Office-ba
+            </button>
+            <p id="sign-in-help" class="field-help">
+              Előnézeti módban a bejelentkezés szándékosan nem működik.
+            </p>
+
+            <div class="login-card__footer">
+              <span>Ajtógyártásra hangolva</span>
+              <span aria-hidden="true">·</span>
+              <span>Doorstar Office</span>
+            </div>
+          </section>
+        </section>
+
+        <section class="dashboard-layout" data-view-panel="dashboard" aria-labelledby="dashboard-title" hidden>
+          <div class="dashboard-heading">
+            <div>
+              <p class="eyebrow">Office áttekintés · mintaadatok</p>
+              <h1 id="dashboard-title">Jó reggelt, Gábor</h1>
+              <p class="dashboard-subtitle">Az iroda mai döntési pontjai egy helyen.</p>
+            </div>
+            <div class="heading-actions">
+              <span class="date-chip">2026. aug. 27., szerda</span>
+              <button type="button" class="quiet-button" data-view-target="login">
+                Bejelentkezési nézet
+              </button>
+            </div>
+          </div>
+
+          <section class="metric-grid" id="metric-grid" aria-label="Irodai mutatók"></section>
+
+          <div class="dashboard-columns">
+            <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Aktív portfólió</p>
+                  <h2 id="portfolio-title">Kiemelt projektek</h2>
+                </div>
+                <span class="sample-badge">Minta</span>
+              </div>
+              <div class="project-list" id="project-list"></div>
+            </section>
+
+            <aside class="dashboard-side-column">
+              <section class="panel agenda-panel" aria-labelledby="agenda-title">
+                <div class="panel-heading">
+                  <div>
+                    <p class="panel-kicker">Mai fókusz</p>
+                    <h2 id="agenda-title">Egyeztetések</h2>
+                  </div>
+                  <span class="count-pill">3</span>
+                </div>
+                <ol class="agenda-list" id="agenda-list"></ol>
+              </section>
+
+              <section class="contract-card" aria-labelledby="contract-title">
+                <div class="contract-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M7 3h7l4 4v14H7z" />
+                    <path d="M14 3v5h5" />
+                    <path d="M10 12h5M10 16h5" />
+                  </svg>
+                </div>
+                <div>
+                  <p>Office → Plant</p>
+                  <h2 id="contract-title">3 jóváhagyott átadási csomag</h2>
+                  <span>Csak mintaállapot · nincs élő kapcsolódás</span>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Doorstar Office előnézet</span>
+        <span aria-hidden="true">·</span>
+        <span>127.0.0.1</span>
+        <span aria-hidden="true">·</span>
+        <span>nincs munkamenet, nincs adatforrás</span>
+      </footer>
+    </div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

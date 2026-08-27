@@ -35,6 +35,13 @@ milestones:
       - id: A-03
         status: "completed"
         description: "A source-verified, production-lineage-en kívüli disposable two-scope/two-PID RLS/ACL proof PASS: a clean candidate, a PostgreSQL 16 Prisma-lineage, az ACL/RLS, a manager/audit invariantok és a SERIALIZABLE write-skew védelem redaktált evidence-szel igazolt."
+  - id: V
+    name: "Local visual development preview"
+    status: "completed"
+    tasks:
+      - id: V-01
+        status: "completed"
+        description: "Elkülönített, loopback-only statikus Office login/dashboard előnézet készült mintaadatokkal, tiltott belépési vezérlővel és no-network verifikációval; nem módosítja a BFF négy-route szerződését."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -54,3 +61,7 @@ execution_log:
     outcome: "Az A-03 source harness elkészült a src/doorstar-pilot-staging-proof csomagban: zárt két-scope fixture, immutable F/A migration- és Prisma-ledger ellenőrzés, két PID/RLS/ACL/manager/audit/write-skew proof-terv, valamint explicit disposable Docker acknowledgement, loopback+tmpfs lifecycle és redaktált evidence. Két független source review PASS. Bizonyíték: 15 unit teszt, fixture- és boundary-verifier, build, lint, Node 24 fail-closed CLI smoke és dependency audit PASS. Docker, PostgreSQL, IdP, VPS, ingress vagy deploy továbbra sem indult; A-03 runtime evidence és R-01 külön operations/release gate marad."
   - date: "2026-08-27"
     outcome: "Az A-03 emberileg jóváhagyott, kizárólag helyi disposable Docker/PostgreSQL 16 proof PASS a ddaf85f6cbe6b9f62878eb20ef5e596e271ba223 clean candidate-en. A 26 redaktált PASS marker igazolja többek között a Prisma-lineage-et, két PID-es RLS/ACL izolációt, callback-state egyszeri fogyasztást, pool-context resetet, append-only auditot, last-manager védelmet és a SERIALIZABLE write-skew elutasítást. A loopback+tmpfs konténer `container_destroyed` állapottal takarítva lett, maradék disposable konténer nélkül. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt; R-01 továbbra is külön operations/release GO."
+  - date: "2026-08-27"
+    outcome: "A V-01 helyi vizuális preview elkészült a src/doorstar-pilot-ui-preview csomagban. A saját Node statikus szervere kizárólag 127.0.0.1-re bindol, a login vezérlő disabled, a CSP `connect-src 'none'`, a dashboard mintaadatot mutat, és a `npm run verify` PASS ellenőrzi a loopback-kiszolgálást és a nem létező API-route-ot. Sem BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."
+  - date: "2026-08-27"
+    outcome: "A V-01 független source review PASS: a szervergyártó nem exportált, csak a loopback-ellenőrzött indítóút maradt; az ADR a nem érzékeny portbeállítást pontosítja; a tiltott jelszómezőben nincs beégetett érték. A felülvizsgálat BFF/DB/IdP/Plant/legacy import és kliensoldali külső hálózati hívás hiányát, valamint a nem-loopback host elutasítását is igazolta."

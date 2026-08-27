@@ -1,0 +1,16 @@
+{
+  "name": "@doorstar/pilot-ui-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Loopback-only, visual-only Doorstar Office preview with no authentication or data connection.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "verify": "node scripts/verify.mjs",
+    "test": "npm run verify"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
