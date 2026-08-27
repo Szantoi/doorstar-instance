@@ -1,0 +1,2 @@
+# This lineage is intentionally independent from src/production-service.
+provider = "postgresql"

@@ -1,0 +1,50 @@
+version: "1.0"
+project: "doorstar-isolated-pilot"
+updated: "2026-08-27"
+status: "active"
+goal: "Tiszta, izolált Doorstar named-user pilot foundation és a kiadásra kész A-fázis előkészítése, külső runtime-változás nélkül."
+stop_condition: "F és A csak akkor jelölhető source-ready állapotúnak, ha a clean worktree, a saját Prisma-lineage, a P1 DB-policy source boundary, a célzott tesztek és a független review bizonyított; élesítéshez ezután külön staging és release GO szükséges."
+
+milestones:
+  - id: F
+    name: "Isolated pilot foundation"
+    status: "completed"
+    tasks:
+      - id: F-01
+        status: "completed"
+        description: "A tiszta F→A→O→R architektúra, scope-lock és source-határ ADR-ben rögzítve."
+      - id: F-02
+        status: "completed"
+        description: "Saját doorstar-pilot-foundation package, önálló Prisma schema és üres pilot adatmodell."
+      - id: F-03
+        status: "completed"
+        description: "Append-only, saját initial migration és statikus schema-invariáns tesztek."
+      - id: F-04
+        status: "completed"
+        description: "F-fázis build, unit teszt és független review bizonyíték."
+  - id: A
+    name: "OIDC BFF and DB-policy parity"
+    status: "pending"
+    tasks:
+      - id: A-01
+        status: "pending"
+        description: "OIDC authorization-code + PKCE BFF és opaque-session source boundary."
+      - id: A-02
+        status: "pending"
+        description: "P1 DB-owned writer routines, distinct runtime/bootstrap boundary és source adapter."
+      - id: A-03
+        status: "pending"
+        description: "Disposable staging two-PID RLS/ACL proof; külön operations approval után."
+  - id: R
+    name: "Release readiness"
+    status: "pending"
+    tasks:
+      - id: R-01
+        status: "pending"
+        description: "Clean immutable RC, IdP/roster/DB/backup/ingress evidence és final release GO."
+
+execution_log:
+  - date: "2026-08-27"
+    outcome: "A felhasználó által engedélyezett clean rekonstrukció a 874392c7858fe973a785298e982926b3a97dca96 baseline commitból indult a codex/doorstar-pilot-foundation branchon. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."
+  - date: "2026-08-27"
+    outcome: "Az F-fázis source-ready: saját üres Prisma-lineage, SQL-szintű append-only BindingAudit trigger, production-egy-scope preflight szerződés, tiszta-build boundary verifier és független PASS review készült. Bizonyíték: prisma:validate, prisma:generate, build, lint, foundation verify és 8 unit teszt PASS. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás továbbra sem történt."

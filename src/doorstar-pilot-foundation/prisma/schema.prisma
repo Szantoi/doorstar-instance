@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Closed server-side vocabulary. A future role is deny-by-default until the
+/// TypeScript policy, DB helper and staging proof are reviewed together.
+enum PilotOfficeRole {
+  SALES
+  TECHNICAL_PREPARATION
+  ORDER_APPROVER
+  PRODUCTION_PLANNER
+  INSTALLER
+  WAREHOUSE_DISPATCH
+  ADMINISTRATOR
+  READER
+  SHOP_FLOOR
+}
+
+enum BindingAuditAction {
+  BOOTSTRAP_PROVISION
+  DIRECT_ADMIN_UPDATE
+  SESSION_REVOKED
+  BINDING_DEACTIVATED
+  BINDING_REACTIVATED
+}
+
+/// This is intentionally an enum, not browser input. The A phase binds each
+/// value to a DB-owned writer routine and a distinct server-side principal.
+enum BindingAuditSource {
+  BOOTSTRAP_CLI
+  DIRECT_ADMIN
+}
+
+/// Immutable local tenant-equivalent for the dedicated Doorstar pilot. A
+/// production preflight must require exactly one configured row; multiple rows
+/// exist only in a disposable staging isolation proof. This model replaces,
+/// rather than imports, the historical Tenant aggregate.
+model PilotScope {
+  id        String   @id @default(uuid()) @db.Uuid
+  scopeKey  String   @unique @db.VarChar(80)
+  createdAt DateTime @default(now())
+
+  bindings PrincipalBinding[]
+  sessions OpaqueSession[]
+  audits   BindingAudit[]
+}
+
+/// State persisted only long enough to validate an OIDC callback in A. There
+/// is no route or provider configuration in F, and no token/subject field.
+model AuthorizationTransaction {
+  id                    String   @id @default(uuid()) @db.Uuid
+  stateHash             String   @unique @db.Char(64)
+  browserBindingHash    String   @db.Char(64)
+  nonceHash             String   @db.Char(64)
+  codeVerifierCiphertext Bytes  @db.ByteA
+  expiresAt             DateTime
+  consumedAt            DateTime?
+  createdAt             DateTime @default(now())
+
+  @@index([expiresAt])
+}
+
+/// A locally authorised named person. Identity is a canonical issuer paired
+/// with a server-computed subject digest; raw subjects and IdP profile data are
+/// intentionally absent.
+model PrincipalBinding {
+  id                     String          @id @default(uuid()) @db.Uuid
+  pilotScopeId           String          @db.Uuid
+  actorKey               String          @db.Char(64)
+  issuer                 String          @db.VarChar(2048)
+  subjectDigest          String          @db.Char(64)
+  displayName            String          @db.VarChar(160)
+  role                   PilotOfficeRole
+  active                 Boolean         @default(true)
+  canManagePilotRoster   Boolean         @default(false)
+  auditVersion           Int             @default(1)
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  scope                  PilotScope      @relation(fields: [pilotScopeId], references: [id], onDelete: Restrict)
+  sessions               OpaqueSession[]
+  auditsAsTarget         BindingAudit[]  @relation("BindingAuditTarget")
+  auditsAsActor          BindingAudit[]  @relation("BindingAuditActor")
+
+  @@unique([pilotScopeId, issuer, subjectDigest])
+  @@unique([pilotScopeId, actorKey])
+  @@unique([id, pilotScopeId])
+  @@index([pilotScopeId, active])
+}
+
+/// Browser cookies will eventually contain only a random opaque handle. The
+/// database retains its hash and any protected server-side provider handle.
+model OpaqueSession {
+  id                            String           @id @default(uuid()) @db.Uuid
+  pilotScopeId                  String           @db.Uuid
+  bindingId                     String           @db.Uuid
+  sessionTokenHash              String           @db.Char(64)
+  providerAccessTokenCiphertext Bytes?           @db.ByteA
+  bindingEpoch                  Int              @default(1)
+  issuedAt                      DateTime         @default(now())
+  expiresAt                     DateTime
+  revokedAt                     DateTime?
+
+  scope                         PilotScope       @relation(fields: [pilotScopeId], references: [id], onDelete: Restrict)
+  binding                       PrincipalBinding @relation(fields: [bindingId, pilotScopeId], references: [id, pilotScopeId], onDelete: Restrict)
+
+  @@unique([pilotScopeId, sessionTokenHash])
+  @@index([bindingId, pilotScopeId, revokedAt, expiresAt])
+}
+
+/// Append-only, privacy-minimal roster evidence. The initial migration rejects
+/// UPDATE and DELETE; A adds DB-owned authorisation for writer source and actor
+/// resolution before any application DML exists.
+model BindingAudit {
+  id                            String              @id @default(uuid()) @db.Uuid
+  pilotScopeId                  String              @db.Uuid
+  bindingId                     String              @db.Uuid
+  actorBindingId                String?             @db.Uuid
+  action                        BindingAuditAction
+  source                        BindingAuditSource
+  previousRole                  PilotOfficeRole?
+  nextRole                      PilotOfficeRole?
+  previousActive                Boolean?
+  nextActive                    Boolean?
+  previousCanManagePilotRoster  Boolean?
+  nextCanManagePilotRoster      Boolean?
+  reason                        String?             @db.VarChar(500)
+  approvalReference             String?             @db.VarChar(160)
+  witnessTransactionId          BigInt?
+  createdAt                     DateTime            @default(now())
+
+  scope                         PilotScope          @relation(fields: [pilotScopeId], references: [id], onDelete: Restrict)
+  binding                       PrincipalBinding    @relation("BindingAuditTarget", fields: [bindingId, pilotScopeId], references: [id, pilotScopeId], onDelete: Restrict)
+  actorBinding                  PrincipalBinding?   @relation("BindingAuditActor", fields: [actorBindingId, pilotScopeId], references: [id, pilotScopeId], onDelete: Restrict)
+
+  @@index([bindingId, pilotScopeId, createdAt])
+  @@index([pilotScopeId, createdAt])
+}

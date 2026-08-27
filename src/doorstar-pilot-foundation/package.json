@@ -1,0 +1,27 @@
+{
+  "name": "@doorstar/pilot-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated Doorstar named-user pilot foundation; no HTTP, OIDC client, UI, or business-data surface.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "node scripts/validatePrismaSchema.mjs",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "verify:foundation": "tsx scripts/verifyFoundationBoundary.ts",
+    "test": "npm run verify:foundation && npm run test:unit"
+  },
+  "dependencies": {
+    "@prisma/client": "6.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "prisma": "6.3.1",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
+  }
+}
