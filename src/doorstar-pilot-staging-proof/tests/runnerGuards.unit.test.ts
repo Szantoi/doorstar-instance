@@ -134,6 +134,14 @@ describe("A-03 disposable-run guards", () => {
     expect(formats.join(" ")).not.toContain("join");
   });
 
+  it("uses a type-resolved writer call for the non-serializable guard proof", async () => {
+    const source = await readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8");
+    expect(source).toContain('"BEGIN ISOLATION LEVEL READ COMMITTED"');
+    expect(source).toContain('"SELECT pilot.pilot_revoke_opaque_session_v1($1::text)"');
+    expect(source).toContain("(CURRENT_TIMESTAMP + INTERVAL '5 minutes')::timestamp(3)");
+    expect(source).toContain("(CURRENT_TIMESTAMP + INTERVAL '30 minutes')::timestamp(3)");
+  });
+
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {
     const plan = createDisposableProofPlan();
     const calls: string[][] = [];

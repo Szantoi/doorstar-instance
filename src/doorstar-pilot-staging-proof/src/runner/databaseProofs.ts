@@ -226,16 +226,14 @@ async function proveRuntimeAclAndSourceBoundaries(
     );
     await client.query("ROLLBACK");
 
-    await client.query("BEGIN");
+    await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");
     await client.query(
       "SELECT pg_catalog.set_config('app.current_pilot_scope_id', $1, true)",
       [plan.fixture.scopeA.id],
     );
     await expectPostgresFailure(
       async () => client.query(
-        `SELECT pilot.pilot_issue_opaque_session_v1(
-          NULL, $1, NULL, CURRENT_TIMESTAMP + INTERVAL '5 minutes'
-        )`,
+        "SELECT pilot.pilot_revoke_opaque_session_v1($1::text)",
         [hashHex("read-committed")],
       ),
       ["25001"],
@@ -441,7 +439,7 @@ async function proveAuthorizationTransactionSingleConsumption(
       const row = await querySingle<{ id: string }>(
         client,
         `SELECT pilot.pilot_create_authorization_transaction_v1(
-           $1, $2, $3, $4::bytea, CURRENT_TIMESTAMP + INTERVAL '5 minutes'
+           $1, $2, $3, $4::bytea, (CURRENT_TIMESTAMP + INTERVAL '5 minutes')::timestamp(3)
          ) AS id`,
         [stateHash, browserBindingHash, nonceHash, Buffer.from([0x01, 0x02, 0x03])],
       );
@@ -929,7 +927,7 @@ async function issueOpaqueSession(
     const row = await querySingle<{ id: string }>(
       client,
       `SELECT pilot.pilot_issue_opaque_session_v1(
-         $1::uuid, $2, NULL, CURRENT_TIMESTAMP + INTERVAL '30 minutes'
+         $1::uuid, $2, NULL, (CURRENT_TIMESTAMP + INTERVAL '30 minutes')::timestamp(3)
        ) AS id`,
       [bindingId, sessionTokenHash],
     );
