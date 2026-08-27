@@ -16,7 +16,10 @@ import {
   parseVerifiedPostgresImageInspection,
 } from "../src/runner/dockerPostgres.js";
 import { requireCleanCandidateGitState } from "../src/runner/candidateGitState.js";
-import { knownDirectUpdatePostgresFailureCode } from "../src/runner/databaseProofs.js";
+import {
+  knownConcurrentDemotionPostgresFailureCode,
+  knownDirectUpdatePostgresFailureCode,
+} from "../src/runner/databaseProofs.js";
 import { ProofLedger, postSeedProofOperations } from "../src/runner/proofLedger.js";
 import { publicFailureCode, runDisposableA03Proof } from "../src/runner/proofRunner.js";
 import { writeRedactedEvidence } from "../src/runner/redactedEvidence.js";
@@ -209,6 +212,36 @@ describe("A-03 disposable-run guards", () => {
     expect(source).toContain('binding."active", binding."role", binding."canManagePilotRoster"');
     expect(source).toContain("runtime has only this non-writing EXECUTE support");
     expect(source).not.toContain("The runtime deliberately has no EXECUTE grant");
+  });
+
+  it("classifies exact concurrent-demotion diagnostics without changing accepted race outcomes", async () => {
+    const deadlock = Object.assign(new Error("deadlock detected"), { code: "40P01" });
+    const lockTimeout = Object.assign(new Error("canceling statement due to lock timeout"), { code: "55P03" });
+    const directWriter = Object.assign(
+      new Error("direct roster writer requires a live effective-manager session"),
+      { code: "42501" },
+    );
+    const sensitiveSuffix = "sensitive-concurrent-diagnostic";
+    const unknown = Object.assign(new Error(`unexpected ${sensitiveSuffix}`), { code: "42P01" });
+    const source = await readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8");
+
+    expect(knownConcurrentDemotionPostgresFailureCode(deadlock))
+      .toBe("a03_concurrent_manager_demotion_deadlock_detected");
+    expect(knownConcurrentDemotionPostgresFailureCode(lockTimeout))
+      .toBe("a03_concurrent_manager_demotion_lock_timeout");
+    expect(knownConcurrentDemotionPostgresFailureCode(directWriter))
+      .toBe("a03_direct_update_live_actor_session_rejected");
+    expect(knownConcurrentDemotionPostgresFailureCode({
+      code: "40P01",
+      message: `deadlock detected ${sensitiveSuffix}`,
+    })).toBeUndefined();
+    expect(knownConcurrentDemotionPostgresFailureCode(unknown)).toBeUndefined();
+    const safeFailureCode = publicFailureCode(unknown);
+    expect(safeFailureCode).toBe("a03_postgres_sqlstate_42P01");
+    expect(JSON.stringify({ failureCode: safeFailureCode })).not.toContain(sensitiveSuffix);
+    expect(source).toContain('if (code === "40001" || code === "23514") return "rejected";');
+    expect(source).toContain("const publicCode = knownConcurrentDemotionPostgresFailureCode(error);");
+    expect(source).toContain("throw error;");
   });
 
   it("grants only runtime the canonical non-writing manager predicate support", async () => {

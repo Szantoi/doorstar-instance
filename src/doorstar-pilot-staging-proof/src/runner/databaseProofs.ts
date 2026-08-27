@@ -46,6 +46,16 @@ const directUpdateKnownPostgresFailureCodes = new Map<string, string>([
   ["42501\u0000unsupported binding audit source", "a03_direct_update_audit_source_unsupported"],
 ]);
 
+/**
+ * These are the only non-direct-writer PostgreSQL diagnostics expected at the
+ * concurrent-demotion boundary. Serialization failures retain their reviewed
+ * `rejected` outcome below; this map covers unexpected lock failures only.
+ */
+const concurrentDemotionKnownPostgresFailureCodes = new Map<string, string>([
+  ["40P01\u0000deadlock detected", "a03_concurrent_manager_demotion_deadlock_detected"],
+  ["55P03\u0000canceling statement due to lock timeout", "a03_concurrent_manager_demotion_lock_timeout"],
+]);
+
 export async function executeDatabaseProofs(
   plan: DisposableProofPlan,
   pools: ProofPools,
@@ -1099,6 +1109,22 @@ async function assertDirectWriterActorSessionVisible(
  * remains the only public output for them.
  */
 export function knownDirectUpdatePostgresFailureCode(error: unknown): string | undefined {
+  const failureKey = exactPostgresFailureKey(error);
+  return failureKey === undefined ? undefined : directUpdateKnownPostgresFailureCodes.get(failureKey);
+}
+
+/**
+ * Maps only exact static errors caught by the concurrent-demotion boundary.
+ * The raw error object is never returned, logged, or included in evidence.
+ */
+export function knownConcurrentDemotionPostgresFailureCode(error: unknown): string | undefined {
+  const failureKey = exactPostgresFailureKey(error);
+  if (failureKey === undefined) return undefined;
+  return directUpdateKnownPostgresFailureCodes.get(failureKey)
+    ?? concurrentDemotionKnownPostgresFailureCodes.get(failureKey);
+}
+
+function exactPostgresFailureKey(error: unknown): string | undefined {
   if (
     typeof error !== "object"
     || error === null
@@ -1109,7 +1135,7 @@ export function knownDirectUpdatePostgresFailureCode(error: unknown): string | u
   ) {
     return undefined;
   }
-  return directUpdateKnownPostgresFailureCodes.get(`${error.code}\u0000${error.message}`);
+  return `${error.code}\u0000${error.message}`;
 }
 
 async function directUpdateBindingWithClient(
@@ -1224,8 +1250,14 @@ async function attemptConcurrentDemotion(
   } catch (error) {
     const code = postgresErrorCode(error);
     await safeRollback(client);
+    // These two outcomes are the reviewed race contract. Do not widen this
+    // set merely because another PostgreSQL error might look concurrent.
     if (code === "40001" || code === "23514") return "rejected";
-    throw new A03ProofError("a03_concurrent_manager_demotion_failed_unexpectedly");
+    const publicCode = knownConcurrentDemotionPostgresFailureCode(error);
+    if (publicCode !== undefined) throw new A03ProofError(publicCode);
+    // The outer redacted evidence layer exposes only a validated SQLSTATE for
+    // an unknown database error and never its message or diagnostic fields.
+    throw error;
   }
 }
 
