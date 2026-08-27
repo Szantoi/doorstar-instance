@@ -636,7 +636,7 @@ BEGIN
       AND transaction_row."expiresAt" > CURRENT_TIMESTAMP
     RETURNING
       transaction_row."id",
-      transaction_row."nonceHash",
+      transaction_row."nonceHash"::text,
       transaction_row."codeVerifierCiphertext",
       transaction_row."createdAt",
       transaction_row."expiresAt";

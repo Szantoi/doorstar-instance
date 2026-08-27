@@ -666,7 +666,15 @@ function verifyAuthorizationTransactionSurface(source: string, violations: APoli
       && hasPattern(consumeRoutine, /UPDATE\s+pilot\."AuthorizationTransaction"\s+AS\s+transaction_row/i)
       && hasPattern(consumeRoutine, /"consumedAt"\s+IS\s+NULL/i)
       && hasPattern(consumeRoutine, /"expiresAt"\s*>\s*CURRENT_TIMESTAMP/i)
-      && hasPattern(consumeRoutine, /RETURN\s+QUERY/i),
+      && hasPattern(consumeRoutine, /RETURN\s+QUERY/i)
+      && hasPattern(
+        consumeRoutine,
+        /RETURNS\s+TABLE\s*\(\s*"id"\s+uuid\s*,\s*"nonceHash"\s+text\s*,\s*"codeVerifierCiphertext"\s+bytea\s*,\s*"createdAt"\s+timestamp\(3\)\s+without\s+time\s+zone\s*,\s*"expiresAt"\s+timestamp\(3\)\s+without\s+time\s+zone\s*\)/i,
+      )
+      && hasPattern(
+        consumeRoutine,
+        /RETURNING\s+transaction_row\."id"\s*,\s*transaction_row\."nonceHash"::text\s*,\s*transaction_row\."codeVerifierCiphertext"\s*,\s*transaction_row\."createdAt"\s*,\s*transaction_row\."expiresAt"/i,
+      ),
   );
 
   const sourceOutsideAuthRoutines = source

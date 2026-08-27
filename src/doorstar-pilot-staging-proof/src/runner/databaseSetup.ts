@@ -15,7 +15,7 @@ const PgPool = pg.Pool;
 
 const expectedMigrationHashes: Readonly<Record<string, string>> = {
   "20260827000000_pilot_foundation/migration.sql": "b0408b3caba4d868cae2fcbcec39fb0442897ca17f877b7b09f0dd54809ba382",
-  "20260827120000_pilot_a_phase_authorization_policy/migration.sql": "a00ba2424729003bf9a8bfac87dfc11e0306d75b57b6cba347c97db83418e7d7",
+  "20260827120000_pilot_a_phase_authorization_policy/migration.sql": "94d3c2e993802f440daf684038f8b39a97febf97da097ee9df5c63341964b348",
 };
 
 const fixtureFunctionRegprocedures = [

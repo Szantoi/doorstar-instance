@@ -159,6 +159,21 @@ describe("A/P1 authorization policy source verifier", () => {
     expect(violationCodes(source)).toContain("authorization-transaction-routines");
   });
 
+  it("requires the canonical text nonce return contract when consuming an authorization transaction", async () => {
+    const source = await policySource();
+    const withoutExplicitTextCast = source.replace(
+      'transaction_row."nonceHash"::text,',
+      'transaction_row."nonceHash",',
+    );
+    expect(violationCodes(withoutExplicitTextCast)).toContain("authorization-transaction-routines");
+
+    const withCharacterNonceResult = source.replace(
+      '  "nonceHash" text,',
+      '  "nonceHash" character(64),',
+    );
+    expect(violationCodes(withCharacterNonceResult)).toContain("authorization-transaction-routines");
+  });
+
   it("rejects caller-selected scope/source and actorKey on runtime writers", async () => {
     const source = (await policySource()).replace(
       "CREATE FUNCTION pilot.pilot_direct_update_binding_v1(\n  p_actor_session_token_hash text,",

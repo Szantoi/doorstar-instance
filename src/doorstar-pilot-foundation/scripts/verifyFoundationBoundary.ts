@@ -33,7 +33,7 @@ const policyMigrationPath = join(
 );
 const ignoredDirectoryNames = new Set([".git", "dist", "node_modules"]);
 const expectedInitialMigrationSha256 = "b0408b3caba4d868cae2fcbcec39fb0442897ca17f877b7b09f0dd54809ba382";
-const expectedAPolicyMigrationSha256 = "a00ba2424729003bf9a8bfac87dfc11e0306d75b57b6cba347c97db83418e7d7";
+const expectedAPolicyMigrationSha256 = "94d3c2e993802f440daf684038f8b39a97febf97da097ee9df5c63341964b348";
 const expectedFoundationSourceSha256: Readonly<Record<string, string>> = {
   "src/domain/pilotScope.ts": "d8e6ee69a6df32ae72a6d574337adf53ba712d1e02a1ef710a51a409d389b74a",
   "src/domain/roles.ts": "135acfb3c76879bc1dfc475896923537a6b3093e9e9e196e66f024dfb67990aa",
