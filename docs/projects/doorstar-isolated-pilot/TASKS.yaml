@@ -24,17 +24,17 @@ milestones:
         description: "F-fázis build, unit teszt és független review bizonyíték."
   - id: A
     name: "OIDC BFF and DB-policy parity"
-    status: "pending"
+    status: "in_progress"
     tasks:
       - id: A-01
-        status: "pending"
-        description: "OIDC authorization-code + PKCE BFF és opaque-session source boundary."
+        status: "completed"
+        description: "OIDC authorization-code + PKCE BFF, opaque host-only session és fail-closed runtime DB boundary source-ready; független security review PASS."
       - id: A-02
-        status: "pending"
-        description: "P1 DB-owned writer routines, distinct runtime/bootstrap boundary és source adapter."
+        status: "completed"
+        description: "P1 DB-owned writer routines, külön runtime/bootstrap identity boundary, Node/ESM smoke és Plant-only SHOP_FLOOR DB-szintű kizárása source-ready; független review PASS."
       - id: A-03
         status: "pending"
-        description: "Disposable staging two-PID RLS/ACL proof; külön operations approval után."
+        description: "Disposable staging two-PID RLS/ACL proof; előtte külön jóváhagyott, production-lineage-en kívüli two-scope proof-fixture terv és operations approval szükséges."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -48,3 +48,5 @@ execution_log:
     outcome: "A felhasználó által engedélyezett clean rekonstrukció a 874392c7858fe973a785298e982926b3a97dca96 baseline commitból indult a codex/doorstar-pilot-foundation branchon. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."
   - date: "2026-08-27"
     outcome: "Az F-fázis source-ready: saját üres Prisma-lineage, SQL-szintű append-only BindingAudit trigger, production-egy-scope preflight szerződés, tiszta-build boundary verifier és független PASS review készült. Bizonyíték: prisma:validate, prisma:generate, build, lint, foundation verify és 8 unit teszt PASS. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás továbbra sem történt."
+  - date: "2026-08-27"
+    outcome: "Az A-01/A-02 source-ready: OIDC authorization-code+PKCE BFF, opaque host-only session, DB-owned authorization/session/roster writers, elkülönített runtime és bootstrap DSN/identity, explicit TLS, valamint no-DB buildelt Node/ESM smoke készült. A történeti SHOP_FLOOR enum értéket PrincipalBinding CHECK és mindkét role-writer rutinszintű guard zárja ki; BFF és bootstrap sem fogadja Office szerepként. Független BFF és policy/bootstrap security review PASS. Bizonyíték: foundation 30, BFF 38, bootstrap 31 unit teszt, Prisma validate/generate, build/lint, buildelt smoke és production dependency audit PASS. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt; A-03 és R-01 változatlanul külön operations/release gate."

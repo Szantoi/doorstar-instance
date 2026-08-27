@@ -32,6 +32,8 @@ describe("isolated pilot foundation schema", () => {
     const verifier = await readFile(boundaryVerifierPath, "utf8");
     expect(verifier).toContain("allowedPackageFiles");
     expect(verifier).toContain("expectedBuiltFiles");
+    expect(verifier).toContain("expectedInitialMigrationSha256");
+    expect(verifier).toContain("expectedAPolicyMigrationSha256");
     expect(verifier).toContain("listPackageFiles");
     expect(verifier).toContain("forbiddenExecutablePatterns");
     expect(verifier).toContain("verifyStaticImports");

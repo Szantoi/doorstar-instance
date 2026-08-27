@@ -10,9 +10,19 @@ server-side BFF. Browser sessions will be opaque and host-only. No password,
 shared account, browser role header, tenant selector, Plant token, or direct
 database access is part of the pilot.
 
+`SHOP_FLOOR` is Plant execution vocabulary retained only in the immutable
+foundation enum for historical compatibility; it is database-rejected as a
+Doorstar Office binding and cannot become a BFF or bootstrap role.
+
 The F phase is deliberately data-model only. A later A phase adds the OIDC
 BFF and the reviewed database writer boundary. Any Office business read model
 requires a separate data-owner decision; writes are out of scope.
 
+A-01 and A-02 are source-ready: the BFF and separate bootstrap CLI are
+implemented and independently reviewed, but no database, IdP client, ingress
+or listener has been activated. A-03 disposable staging proof and the release
+gate remain mandatory before a real named-user pilot can go live.
+
 See [the architecture decision](../../decisions/ADR-2026-08-27-isolated-doorstar-pilot-foundation.md)
-and [the task register](TASKS.yaml).
+and [the task register](TASKS.yaml). The exact external staging and release
+preconditions are recorded in the [operations release gate](OPERATIONS-RELEASE-GATE.md).

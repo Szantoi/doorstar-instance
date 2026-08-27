@@ -1,0 +1,26 @@
+{
+  "name": "@doorstar/pilot-bff",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source-only, fail-closed named-user OIDC BFF for the isolated Doorstar pilot.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "verify:runtime-import": "node scripts/verifyBuiltRuntimeImport.mjs",
+    "test": "npm run test:unit && npm run build && npm run verify:runtime-import"
+  },
+  "dependencies": {
+    "jose": "5.10.0",
+    "pg": "8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "@types/pg": "8.11.10",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
+  }
+}

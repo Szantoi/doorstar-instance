@@ -1,0 +1,27 @@
+{
+  "name": "@doorstar/pilot-bootstrap",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source-only, fail-closed bootstrap CLI for the isolated Doorstar pilot roster.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "doorstar-pilot-bootstrap": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "test": "npm run test:unit && npm run verify:built-cli",
+    "verify:built-cli": "npm run build && node scripts/verifyBuiltCli.mjs"
+  },
+  "dependencies": {
+    "pg": "8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.12.0",
+    "@types/pg": "8.11.10",
+    "typescript": "5.7.3",
+    "vitest": "4.1.11"
+  }
+}

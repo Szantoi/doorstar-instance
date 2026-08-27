@@ -11,8 +11,10 @@
     "prisma:generate": "prisma generate",
     "prisma:validate": "node scripts/validatePrismaSchema.mjs",
     "test:unit": "vitest run --config vitest.unit.config.ts",
+    "verify:a:policy": "tsx scripts/verifyAPolicySource.ts",
     "verify:foundation": "tsx scripts/verifyFoundationBoundary.ts",
-    "test": "npm run verify:foundation && npm run test:unit"
+    "verify:source": "npm run verify:foundation && npm run verify:a:policy",
+    "test": "npm run verify:source && npm run test:unit"
   },
   "dependencies": {
     "@prisma/client": "6.3.1"

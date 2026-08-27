@@ -1,8 +1,8 @@
 # Doorstar pilot foundation
 
-This package is the F phase of the isolated Doorstar named-user pilot. It owns
-only the empty-database Prisma lineage and pure domain rules required before a
-future OIDC BFF can exist.
+This package preserves the immutable F foundation capsule and owns the A-phase
+PostgreSQL policy source for the isolated Doorstar named-user pilot. It remains
+an identity/session/audit package only; the sibling BFF owns HTTP and OIDC.
 
 It has deliberately **no** HTTP listener, port, OIDC client, cookie, UI,
 business read model, legacy Office import, Plant integration, Flow/Calculation
@@ -18,27 +18,31 @@ integration, or direct database provisioning command.
 - `BindingAudit` is append-only by design and contains no browser-selected
   actor, tenant or free-form writer source.
 
-The initial migration is source evidence only. Do not run it against a shared,
-legacy, staging or production database. A later approved A phase adds the
-database-owned writer routines, RLS/ACL boundary, separate bootstrap identity,
-OIDC BFF and staging proof.
+The initial F migration is hash-pinned and immutable. The append-only A
+migration moves the empty lineage into the dedicated `pilot` schema and adds
+DB-owned authorization-transaction, roster, bootstrap and session routines.
+It seeds neither database login nor ACL mapping; an empty mapping fails closed.
+Do not run either migration against a shared, legacy, staging or production
+database without the separately approved operations gate.
 
-A production preflight will require exactly one configured `PilotScope`. The
-schema permits two immutable scopes only in a disposable staging isolation
-proof, never as a browser-selectable tenant mechanism.
+A production preflight and every writer transaction require exactly one
+configured `PilotScope`. A future two-scope isolation exercise needs a
+separately approved disposable-only fixture outside this production lineage;
+it is not an alternative tenant model and is never browser-selectable.
 
 ## Safe checks
 
 ```powershell
 npm ci
 npm run prisma:validate
-npm run verify:foundation
-npm run test:unit
+npm test
 npm run build
+npm run lint
 ```
 
 `prisma:validate` always overrides `DATABASE_URL` with an inert loopback value
-and runs schema parsing only. `verify:foundation` recreates the ignored local
-`dist/` output before it inspects it; this rejects stale or extra runtime
-artifacts. None of these commands creates an IdP client, starts a service,
-runs a migration, or changes an external system.
+and runs schema parsing only. `npm test` runs the F capsule verifier and the
+A-policy source verifier before unit tests; the F verifier recreates ignored
+local `dist/` output before inspection and the A verifier never opens a
+PostgreSQL connection. None of these commands creates an IdP client, starts a
+service, runs a migration, or changes an external system.

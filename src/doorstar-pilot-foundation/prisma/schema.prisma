@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["pilot"]
 }
 
 /// Closed server-side vocabulary. A future role is deny-by-default until the
@@ -19,6 +21,8 @@ enum PilotOfficeRole {
   ADMINISTRATOR
   READER
   SHOP_FLOOR
+
+  @@schema("pilot")
 }
 
 enum BindingAuditAction {
@@ -27,6 +31,8 @@ enum BindingAuditAction {
   SESSION_REVOKED
   BINDING_DEACTIVATED
   BINDING_REACTIVATED
+
+  @@schema("pilot")
 }
 
 /// This is intentionally an enum, not browser input. The A phase binds each
@@ -34,6 +40,8 @@ enum BindingAuditAction {
 enum BindingAuditSource {
   BOOTSTRAP_CLI
   DIRECT_ADMIN
+
+  @@schema("pilot")
 }
 
 /// Immutable local tenant-equivalent for the dedicated Doorstar pilot. A
@@ -48,6 +56,8 @@ model PilotScope {
   bindings PrincipalBinding[]
   sessions OpaqueSession[]
   audits   BindingAudit[]
+
+  @@schema("pilot")
 }
 
 /// State persisted only long enough to validate an OIDC callback in A. There
@@ -63,6 +73,7 @@ model AuthorizationTransaction {
   createdAt             DateTime @default(now())
 
   @@index([expiresAt])
+  @@schema("pilot")
 }
 
 /// A locally authorised named person. Identity is a canonical issuer paired
@@ -91,6 +102,7 @@ model PrincipalBinding {
   @@unique([pilotScopeId, actorKey])
   @@unique([id, pilotScopeId])
   @@index([pilotScopeId, active])
+  @@schema("pilot")
 }
 
 /// Browser cookies will eventually contain only a random opaque handle. The
@@ -111,11 +123,12 @@ model OpaqueSession {
 
   @@unique([pilotScopeId, sessionTokenHash])
   @@index([bindingId, pilotScopeId, revokedAt, expiresAt])
+  @@schema("pilot")
 }
 
 /// Append-only, privacy-minimal roster evidence. The initial migration rejects
-/// UPDATE and DELETE; A adds DB-owned authorisation for writer source and actor
-/// resolution before any application DML exists.
+/// UPDATE and DELETE; A adds DB-owned writer/actor resolution plus a witnessed
+/// previous→next binding-version transition and controlled server correlation.
 model BindingAudit {
   id                            String              @id @default(uuid()) @db.Uuid
   pilotScopeId                  String              @db.Uuid
@@ -131,7 +144,10 @@ model BindingAudit {
   nextCanManagePilotRoster      Boolean?
   reason                        String?             @db.VarChar(500)
   approvalReference             String?             @db.VarChar(160)
-  witnessTransactionId          BigInt?
+  previousAuditVersion          Int?
+  nextAuditVersion              Int
+  correlationId                 String              @db.Uuid
+  witnessTransactionId          BigInt
   createdAt                     DateTime            @default(now())
 
   scope                         PilotScope          @relation(fields: [pilotScopeId], references: [id], onDelete: Restrict)
@@ -140,4 +156,18 @@ model BindingAudit {
 
   @@index([bindingId, pilotScopeId, createdAt])
   @@index([pilotScopeId, createdAt])
+  @@unique([pilotScopeId, correlationId])
+  @@schema("pilot")
+}
+
+/// Non-tenant policy configuration. It is deliberately empty until the
+/// separately approved DBA/operations role-provisioning step binds each source
+/// to its exact PostgreSQL login. Runtime and bootstrap code cannot write it.
+model PilotAuditWriterRole {
+  source           BindingAuditSource @id
+  databaseRoleName String             @unique @db.VarChar(63)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@schema("pilot")
 }
