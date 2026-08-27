@@ -27,6 +27,25 @@ type SeededProofData = Readonly<{
   directAuditId: string;
 }>;
 
+/**
+ * Exact, static errors emitted by the direct writer or its DB-owned audit
+ * witness. The values are stable public codes; the original PostgreSQL error
+ * object, including its message and fields, is never written to evidence.
+ */
+const directUpdateKnownPostgresFailureCodes = new Map<string, string>([
+  ["22023\u0000invalid direct roster writer arguments", "a03_direct_update_arguments_invalid"],
+  ["42501\u0000pilot writer source DIRECT_ADMIN is not mapped to this session login", "a03_direct_update_writer_source_not_mapped"],
+  ["42501\u0000direct roster writer requires a live effective-manager session", "a03_direct_update_live_actor_session_rejected"],
+  ["42501\u0000a roster manager cannot change its own binding", "a03_direct_update_self_target_rejected"],
+  ["P0001\u0000target binding is absent from the current pilot scope", "a03_direct_update_target_absent"],
+  ["P0001\u0000target binding audit version is stale", "a03_direct_update_target_audit_version_stale"],
+  ["23514\u0000binding audit witness is not DB-owned for the current pilot scope", "a03_direct_update_audit_witness_invalid"],
+  ["23514\u0000binding audit does not witness the current protected binding state", "a03_direct_update_audit_state_invalid"],
+  ["42501\u0000direct roster changes require a distinct manager actor", "a03_direct_update_audit_actor_not_distinct"],
+  ["42501\u0000direct roster changes require an effective manager actor", "a03_direct_update_audit_actor_not_effective"],
+  ["42501\u0000unsupported binding audit source", "a03_direct_update_audit_source_unsupported"],
+]);
+
 export async function executeDatabaseProofs(
   plan: DisposableProofPlan,
   pools: ProofPools,
@@ -606,6 +625,12 @@ async function seedManagerAndAuditProof(
   ledger.completePostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE", "POST_SEED_SECOND_SESSION_ISSUED");
 
   ledger.beginPostSeedOperation("POST_SEED_DIRECT_BINDING_UPDATE");
+  await assertDirectWriterActorSessionVisible(
+    pools.runtime,
+    plan.fixture.scopeA.id,
+    alphaManagerOneSessionHash,
+  );
+  ledger.pass("POST_SEED_DIRECT_ACTOR_SESSION_CONFIRMED");
   const changedManagerTwo = await directUpdateBinding(
     pools.runtime,
     plan.fixture.scopeA.id,
@@ -986,16 +1011,95 @@ async function directUpdateBinding(
   nextCanManagePilotRoster: boolean,
   reason: string,
 ): Promise<Binding> {
-  return withScopedSerializableTransaction(pool, scopeId, "runtime", async (client) => directUpdateBindingWithClient(
-    client,
-    actorSessionTokenHash,
-    targetId,
-    expectedAuditVersion,
-    nextRole,
-    nextActive,
-    nextCanManagePilotRoster,
-    reason,
-  ));
+  return withScopedSerializableTransaction(pool, scopeId, "runtime", async (client) => {
+    try {
+      return await directUpdateBindingWithClient(
+        client,
+        actorSessionTokenHash,
+        targetId,
+        expectedAuditVersion,
+        nextRole,
+        nextActive,
+        nextCanManagePilotRoster,
+        reason,
+      );
+    } catch (error) {
+      const publicCode = knownDirectUpdatePostgresFailureCode(error);
+      if (publicCode !== undefined) throw new A03ProofError(publicCode);
+      throw error;
+    }
+  });
+}
+
+/**
+ * Checks the direct writer's actual actor prerequisites through the runtime
+ * pool and the same scoped RLS path as the writer. It returns only one boolean
+ * to this process; generated IDs, hashes and lifecycle timestamps stay inside
+ * PostgreSQL.
+ */
+async function assertDirectWriterActorSessionVisible(
+  runtime: Pool,
+  scopeId: string,
+  actorSessionTokenHash: string,
+): Promise<void> {
+  const row = await withScopedSerializableTransaction(
+    runtime,
+    scopeId,
+    "runtime",
+    async (client) => querySingle<{ live_actor_session_visible: boolean }>(
+      client,
+      `SELECT EXISTS (
+         SELECT 1
+           FROM pilot."OpaqueSession" AS session_row
+           JOIN pilot."PrincipalBinding" AS binding
+             ON binding."id" = session_row."bindingId"
+            AND binding."pilotScopeId" = session_row."pilotScopeId"
+          WHERE session_row."pilotScopeId" = pilot.doorstar_current_pilot_scope_id()
+            AND session_row."sessionTokenHash" = $1
+            AND session_row."revokedAt" IS NULL
+            AND session_row."expiresAt" > CURRENT_TIMESTAMP
+            AND session_row."bindingEpoch" = binding."auditVersion"
+            AND binding."active" IS TRUE
+            -- The runtime deliberately has no EXECUTE grant on the
+            -- SECURITY INVOKER helper. Keep this catalog-free read exactly
+            -- aligned with its deny-by-default effective-manager predicate.
+            AND binding."canManagePilotRoster" IS TRUE
+            AND binding."role" IN (
+              'SALES'::pilot."PilotOfficeRole",
+              'TECHNICAL_PREPARATION'::pilot."PilotOfficeRole",
+              'ORDER_APPROVER'::pilot."PilotOfficeRole",
+              'PRODUCTION_PLANNER'::pilot."PilotOfficeRole",
+              'INSTALLER'::pilot."PilotOfficeRole",
+              'WAREHOUSE_DISPATCH'::pilot."PilotOfficeRole",
+              'ADMINISTRATOR'::pilot."PilotOfficeRole",
+              'READER'::pilot."PilotOfficeRole"
+            )
+       ) AS live_actor_session_visible`,
+      [actorSessionTokenHash],
+    ),
+  );
+  if (row.live_actor_session_visible !== true) {
+    throw new A03ProofError("a03_direct_actor_session_visibility_invalid");
+  }
+}
+
+/**
+ * Reads only the exact static error code/message pair. Unknown errors are
+ * deliberately left untouched so the existing generic SQLSTATE boundary
+ * remains the only public output for them.
+ */
+export function knownDirectUpdatePostgresFailureCode(error: unknown): string | undefined {
+  if (
+    typeof error !== "object"
+    || error === null
+    || !("code" in error)
+    || !("message" in error)
+    || typeof error.code !== "string"
+    || typeof error.message !== "string"
+  ) {
+    return undefined;
+  }
+  return directUpdateKnownPostgresFailureCodes.get(`${error.code}\u0000${error.message}`);
 }
 
 async function directUpdateBindingWithClient(

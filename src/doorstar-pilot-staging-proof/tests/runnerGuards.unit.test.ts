@@ -16,6 +16,7 @@ import {
   parseVerifiedPostgresImageInspection,
 } from "../src/runner/dockerPostgres.js";
 import { requireCleanCandidateGitState } from "../src/runner/candidateGitState.js";
+import { knownDirectUpdatePostgresFailureCode } from "../src/runner/databaseProofs.js";
 import { ProofLedger, postSeedProofOperations } from "../src/runner/proofLedger.js";
 import { publicFailureCode, runDisposableA03Proof } from "../src/runner/proofRunner.js";
 import { writeRedactedEvidence } from "../src/runner/redactedEvidence.js";
@@ -172,6 +173,43 @@ describe("A-03 disposable-run guards", () => {
     expect(() => ledger.completePostSeedOperation("POST_SEED_SECOND_SESSION_ISSUE", "POST_SEED_SECOND_SESSION_ISSUED"))
       .toThrow("a03_post_seed_operation_state_invalid");
     expect(ledger.inFlightPostSeedOperation()).toBe(firstIssue);
+  });
+
+  it("maps only exact static direct-writer errors without leaking unknown database messages", async () => {
+    const knownError = Object.assign(
+      new Error("direct roster writer requires a live effective-manager session"),
+      { code: "42501" },
+    );
+    const sensitiveSuffix = "sensitive-generated-session-hash";
+    const unknownError = Object.assign(
+      new Error(`permission denied while handling ${sensitiveSuffix}`),
+      { code: "42501" },
+    );
+
+    expect(knownDirectUpdatePostgresFailureCode(knownError))
+      .toBe("a03_direct_update_live_actor_session_rejected");
+    expect(knownDirectUpdatePostgresFailureCode({
+      code: "42501",
+      message: `${knownError.message} ${sensitiveSuffix}`,
+    })).toBeUndefined();
+    expect(knownDirectUpdatePostgresFailureCode(unknownError)).toBeUndefined();
+    const safeFailureCode = publicFailureCode(unknownError);
+    expect(safeFailureCode).toBe("a03_postgres_sqlstate_42501");
+    expect(JSON.stringify({ failureCode: safeFailureCode })).not.toContain(sensitiveSuffix);
+  });
+
+  it("uses a scoped RLS read to validate the direct actor session before the writer call", async () => {
+    const source = await readFile(new URL("../src/runner/databaseProofs.ts", import.meta.url), "utf8");
+    expect(source).toContain("await assertDirectWriterActorSessionVisible(");
+    expect(source).toContain("POST_SEED_DIRECT_ACTOR_SESSION_CONFIRMED");
+    expect(source).toContain('session_row."revokedAt" IS NULL');
+    expect(source).toContain('session_row."expiresAt" > CURRENT_TIMESTAMP');
+    expect(source).toContain('session_row."bindingEpoch" = binding."auditVersion"');
+    expect(source).toContain('binding."active" IS TRUE');
+    expect(source).toContain('binding."canManagePilotRoster" IS TRUE');
+    expect(source).toContain("'SALES'::pilot.\"PilotOfficeRole\"");
+    expect(source).toContain("'READER'::pilot.\"PilotOfficeRole\"");
+    expect(source).toContain("The runtime deliberately has no EXECUTE grant");
   });
 
   it("claims and removes an exact labelled orphan after a non-zero Docker run", async () => {
