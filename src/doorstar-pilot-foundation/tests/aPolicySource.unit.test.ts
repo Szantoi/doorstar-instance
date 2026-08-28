@@ -13,12 +13,19 @@ const adminRosterMigrationPath = fileURLToPath(
   new URL("../prisma/migrations/20260828140000_pilot_admin_roster/migration.sql", import.meta.url),
 );
 
+function normalizedMigrationSource(source: string): string {
+  // The verifier itself accepts repository text with either line ending. Keep
+  // mutation fixtures on that same canonical form so a release archive cannot
+  // silently turn a negative test into a no-op on a Linux host.
+  return source.replace(/\r\n/g, "\n");
+}
+
 async function policySource(): Promise<string> {
-  return readFile(policyMigrationPath, "utf8");
+  return normalizedMigrationSource(await readFile(policyMigrationPath, "utf8"));
 }
 
 async function adminRosterSource(): Promise<string> {
-  return readFile(adminRosterMigrationPath, "utf8");
+  return normalizedMigrationSource(await readFile(adminRosterMigrationPath, "utf8"));
 }
 
 function violationCodes(source: string): string[] {
