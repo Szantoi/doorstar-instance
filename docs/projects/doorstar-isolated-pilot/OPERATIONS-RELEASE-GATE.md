@@ -1,161 +1,127 @@
-# Doorstar pilot — operations and release gate
+# Doorstar pilot — owner-controlled release checklist
 
-This is an execution checklist for the isolated named-user pilot. It is not an
-instruction to perform any of these actions automatically. Every external
-action remains subject to a separately recorded human operations approval.
+This is the release checklist for the isolated Doorstar named-user pilot. It
+uses the accountable company owner's recorded GO rather than a separate
+signing service or external verifier artifact. It is intentionally sized for
+one small company; it is not a template for a multi-company or Plant-connected
+release.
 
-The runtime source implementation is deliberately unable to create an IdP
-client, database login, database, mapping, ingress, listener or deployment.
-The checked-out A-03 proof source is not an exception: it is intentionally
-unable to start Docker or create a database, even after an exact human
-acknowledgement. It stops before any candidate, provenance, Git, Docker,
-Prisma, PostgreSQL, or evidence operation until a separately released verifier
-and independently administered authenticated approval anchor exist. It cannot
-receive a production connection string or perform a deploy. The legacy
-Doorstar operational surface and JoineryTech Plant are outside this pilot.
+The checklist is an operations record, not a command. It does not permit
+automatic deployment and it must never contain credentials, tokens, cookies,
+raw OIDC subjects, customer records, or browser-derived authority.
 
-## A-03 source harness
+## Fixed boundaries
 
-`src/doorstar-pilot-staging-proof` is reviewed source material for a future,
-disposable-only Gate 1 verifier. Its `npm test`, build and lint commands are
-source-only checks and must not start Docker. Its guarded `proof:docker` CLI
-is intentionally fail-closed with
-`a03_gate1_external_trust_anchor_required`; it does not presently verify Gate
-0, inspect Docker, create a container, or write proof evidence. The exact
-operator acknowledgement remains an intent signal, not an approval credential.
-The future independent verifier must bind the clean candidate, authenticated
-one-run approval, immutable runtime inputs, and local Docker constraints before
-it can create a loopback-only tmpfs PostgreSQL 16 container. The package README
-and the external-trust-anchor ADR are the detailed source references; this
-document remains the approval authority.
+Every checklist item is a NO-GO if it would cross one of these boundaries:
 
-## Gate 0 — immutable source candidate
+- use a fresh, dedicated pilot PostgreSQL database, database identities,
+  Keycloak realm/client, service account, loopback listener, and nginx vhost;
+  never reuse a legacy Doorstar Board/SpaceOS runtime, database, Keycloak
+  realm, service, ingress, backup, or credential. The approved hostname may
+  be bound only by that new pilot vhost; it does not authorise reuse of a
+  historical vhost configuration;
+- never use a JoineryTech Plant database, service, UI, role, token, station,
+  or execution authority;
+- expose the public application over HTTPS only. Plain HTTP is closed or is
+  limited to a direct redirect to the equivalent HTTPS URL; the Node/BFF
+  listener remains `127.0.0.1`-only; and
+- keep authority server-side. No browser header, query value, cookie payload,
+  token, role, scope, actor, station, or Plant value may create authority.
 
-Before any staging environment exists, bind one clean candidate commit to the
-versioned check plan and its package-lock hashes with the source-only
-[`GATE0-CAPSULE.md`](GATE0-CAPSULE.md) tool. Its
-`CANDIDATE_BOUND_NOT_EXECUTED` capsule is technical identity evidence only; it
-does not run or attest to candidate package code.
+## Owner GO record
 
-In a separately approved, isolated source-verification environment, the same
-clean candidate must then pass:
+Before external activation, record these redacted fields in the
+operations-owned release record:
 
-- `src/doorstar-pilot-foundation`: source verifier, unit tests, Prisma
-  validation/generation, build and lint;
-- `src/doorstar-pilot-bff`: unit tests, build, lint and production-dependency
-  audit;
-- `src/doorstar-pilot-bootstrap`: unit tests, build, lint and
-  production-dependency audit.
+| Field | Required record |
+| --- | --- |
+| Candidate | Clean commit identifier and build/check result summary |
+| Owner GO | Accountable owner, date/time, and explicit GO or NO-GO |
+| Operator | Authorised person who will carry out the release |
+| Pilot resources | Redacted identifiers for the new database, IdP realm/client, service, and vhost |
+| Backup and rollback | Backup reference, recovery owner, and stop/restore decision |
+| Activation outcome | Service, ingress, identity/mail, and named-user smoke-check results |
 
-The Gate 0 approval record must name the candidate commit, capsule SHA-256,
-reviewer, environment classification, redacted source-check outcomes and the
-permitted next action. It must not contain credentials, raw OIDC subjects,
-browser tokens or customer data. Only after that human Gate 0 acceptance may
-the record permit the separate human-approved Gate 1 proof.
+A missing, failed, or materially changed entry is a NO-GO. The owner records a
+new GO only after the changed item has been checked again.
 
-## Gate 1 — disposable staging isolation proof
+## Checklist
 
-This is a separate human-approved test, never a production rehearsal.
+### 1. Source candidate
 
-**Current state: blocked before execution.** No checked-out source command may
-perform the following steps. They are the required contract for a future
-candidate-independent verifier after a separate operations/security decision
-has provisioned an immutable verifier artifact and authenticated approval
-anchor.
+- [ ] The candidate worktree is clean and its commit is recorded.
+- [ ] `src/doorstar-pilot-foundation`, `src/doorstar-pilot-bff`, and
+      `src/doorstar-pilot-bootstrap` pass their versioned `npm test`, build,
+      and lint/source verification checks as applicable.
+- [ ] The BFF web build contains the reviewed shell and `/login` route, and no
+      source, package, or configuration points at a legacy Doorstar/SpaceOS or
+      Plant component.
 
-1. Supply the exact Gate 0 capsule and its separately recorded human acceptance
-   marker for the immutable candidate. The source verifier must bind both to
-   the clean candidate before any Docker command. This proves structured
-   provenance, not the identity of the approver; the external human record
-   remains authoritative.
-2. Use only a proven local Docker `default` context with no endpoint/context
-   override inherited from the environment. A remote, custom or ambiguous
-   container engine is a stop condition; the proof must never fall back to
-   Podman or another runtime.
-3. Provision a new disposable PostgreSQL database and separate, non-shared
-   migrator, runtime and bootstrap identities. Do not reuse a legacy Doorstar
-   or Plant database, role, backup or connection string.
-4. Apply only the immutable candidate migration lineage. Record migration and
-   function hashes before testing.
-5. Use the separately reviewed disposable-only two-scope fixture described in
-   the A-phase ADR. It must be outside the production Prisma lineage, alter
-   only the closed two-scope guard, record every changed function hash, and be
-   destroyed with the test database.
-   The runtime proof login also needs narrowly scoped `EXECUTE` on
-   `pilot.doorstar_current_pilot_scope_id()` because the protected-table RLS
-   policies invoke that helper, and on
-   `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
-   because the direct writer's DB-owned invariant invokes that immutable,
-   non-writing predicate, and on `pilot.doorstar_pilot_roster_lock_key(uuid)`
-   because its serializable manager-loss trigger invokes that immutable pure
-   helper, plus `pilot.doorstar_require_effective_pilot_roster_manager(uuid)`
-   for that trigger chain's RLS-scoped, non-writing void/`23514` invariant
-   check. These are not EXECUTE grants on trigger functions and none is writer
-   authority; bootstrap receives no corresponding grant unless a separately
-   reviewed policy requires it.
-6. Prove with two distinct database PIDs and both source identities:
-   RLS/ACL isolation, absent-or-wrong-scope denial, pool-context reset,
-   routine-specific write authority, no raw-DML authority, first/last-manager
-   protection, append-only audit behavior and serializable write-skew
-   rejection.
-7. Destroy the disposable database and fixture. Preserve only redacted test
-   evidence and checksums; do not promote the fixture, its identities or its
-   data to an RC.
+The Gate 0 capsule may be retained as extra candidate-identification evidence,
+but it is not a required signing or external-approval mechanism for this
+owner-GO pilot.
 
-Any failure or unrecorded divergence returns the work to source review.
+### 2. Dedicated pilot data and rollback
 
-## Gate 2 — release-candidate operations design
+- [ ] A new, dedicated pilot PostgreSQL database and the separate migrator,
+      runtime, and bootstrap identities are identified. No legacy Doorstar or
+      Plant connection string, role, data, backup, or schema is reused.
+- [ ] The reviewed pilot migrations, one approved pilot scope, and the exact
+      database role mappings/grants are applied or ready for the recorded
+      activation step.
+- [ ] A backup reference exists before the first business write. The owner has
+      recorded who can restore it and whether a failed first activation means
+      disable-only, restore, or both.
 
-For a newly approved RC, the operations, identity and data owners must review
-and record all of the following:
+### 3. Identity and mail smoke checks
 
-- a dedicated pilot database and backup/restore test, distinct from legacy
-  Doorstar and Plant;
-- a confidential OIDC authorization-code client, exact HTTPS callback origin,
-  issuer, token/JWKS endpoints, approved asymmetric ID-token algorithms and
-  server-side secret injection;
-- a redacted callback-compatibility proof against the BFF's exact `GET`
-  `code` + `state` contract. The proof may name only accepted/rejected
-  parameter names, never their values, tokens, cookies or subjects. A provider
-  that emits `session_state`, `iss`, error fields or a form post is not
-  compatible until separately reviewed source work changes the contract; it
-  must not be rewritten away at an ingress or proxy. See
-  [`OIDC-CLIENT-COMPATIBILITY.md`](OIDC-CLIENT-COMPATIBILITY.md);
-- a fixed single pilot scope, approved named roster and least-privilege
-  database identities/mapping/ACLs required by the reviewed stored routines
-  and RLS policies, including runtime-only `EXECUTE` on
-  `pilot.doorstar_current_pilot_scope_id()` for protected-table reads and on
-  `pilot.doorstar_is_effective_pilot_roster_manager(boolean, pilot."PilotOfficeRole", boolean)`
-  as direct-writer, non-writing predicate support, plus
-  `pilot.doorstar_pilot_roster_lock_key(uuid)` as non-writing serializable
-  manager-loss-trigger support and
-  `pilot.doorstar_require_effective_pilot_roster_manager(uuid)` as its
-  RLS-scoped non-writing void/`23514` invariant-check support;
-- confirmation that the roster contains Doorstar Office roles only; Plant
-  `SHOP_FLOOR` authority remains outside this database and BFF; and
-- verified database TLS, BFF listener/TLS termination, host-only cookie origin
-  and ingress rule; and
-- logging, incident rollback, secret rotation and availability ownership.
+- [ ] A dedicated confidential Keycloak authorization-code client is configured
+      with the exact HTTPS callback required by
+      [`OIDC-CLIENT-COMPATIBILITY.md`](OIDC-CLIENT-COMPATIBILITY.md). Its
+      callback reaches `GET /auth/callback` with exactly one `code` and one
+      `state`; an incompatible callback is a NO-GO, not an ingress rewrite.
+- [ ] Server-side secrets are injected only into the dedicated service account.
+      No secret is committed, copied into the release tree, or exposed to a
+      browser.
+- [ ] Brevo's configured sender and the Keycloak mail delivery path are smoke
+      checked with a controlled named-user invitation or recovery message. The
+      release record stores only the outcome, never email content or addresses.
+- [ ] The first approved administrator is provisioned through the reviewed
+      server-side/bootstrap path; there is no shared account, self-service
+      registration, or browser-created first-admin authority.
 
-No browser header, query field or client-supplied token may become a role,
-scope, actor, station or Plant authority during this work.
+### 4. Service and HTTPS ingress sanity
 
-## Gate 3 — controlled production activation
+- [ ] The new systemd service starts only after its BFF/database preflight and
+      listens only on the expected `127.0.0.1` port under the new least-
+      privilege service account.
+- [ ] The new nginx vhost passes its syntax check and proxies only to that
+      loopback listener. It does not serve or proxy a historical Doorstar
+      Board/SpaceOS endpoint or any Plant UI/service.
+- [ ] The approved origin is `https://doorstar.joinerytech.hu`; the public
+      sign-in surface is `https://doorstar.joinerytech.hu/login`. TLS
+      certificate, host, redirect, cookie origin, and callback origin match
+      the configured values.
 
-Only after Gates 0–2 are accepted may the authorised operator:
+### 5. Named-user acceptance and rollback decision
 
-1. create the dedicated pilot database and apply the immutable RC migration;
-2. create the separately approved database identities and exact writer-role
-   mapping/grants documented by the migration;
-3. configure the OIDC client and inject secrets through the approved secret
-   store, never through source control or a browser;
-4. deploy the BFF behind the approved HTTPS ingress, then run its fixed-scope
-   preflight;
-5. use the separate bootstrap CLI only for the reviewed, approved named roster
-   operations; and
-6. perform a documented named-user sign-in, logout, deactivation and recovery
-   check without customer business-data or Plant authority.
+- [ ] The authorised operator verifies a named-user login, session read,
+      logout, administrator invite, deactivation, and recovery flow without
+      loading customer business data or Plant authority.
+- [ ] The owner records either `GO` or `NO-GO`, including the rollback choice.
+      On a failure, stop before the next step; disable the new pilot ingress or
+      service as recorded, revoke/disable the new pilot identity if needed,
+      and restore only from the dedicated pilot backup.
 
-The release record must include the final GO authority, source commit, masked
-environment identifiers, preflight outcome, backup/restore evidence and
-rollback decision. If any item is absent, the pilot remains inactive.
+## Optional staging assurance
+
+`src/doorstar-pilot-staging-proof` and historical A-03/Gate 1 material remain
+optional additional assurance. They are not evidence that the current release
+candidate passed a disposable proof, are not required for the owner-GO pilot,
+and this checklist does not make their fail-closed Docker command executable.
+
+## Scope change
+
+Before a second company, Plant connection, broader user volume, or material
+authority/data expansion, stop and create a new release decision. The owner-GO
+exception does not silently extend to that scope.

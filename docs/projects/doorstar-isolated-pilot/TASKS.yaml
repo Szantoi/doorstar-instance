@@ -2,8 +2,8 @@ version: "1.0"
 project: "doorstar-isolated-pilot"
 updated: "2026-08-28"
 status: "active"
-goal: "Tiszta, izolált Doorstar named-user pilot foundation és a kiadásra kész A-fázis előkészítése, külső runtime-változás nélkül."
-stop_condition: "F és A csak akkor jelölhető source-ready állapotúnak, ha a clean worktree, a saját Prisma-lineage, a P1 DB-policy source boundary, a célzott tesztek és a független review bizonyított; élesítéshez ezután külön staging és release GO szükséges."
+goal: "Tiszta, izolált Doorstar named-user pilot foundation és kisvállalati owner-GO szerinti, dedicated erőforrásokra épülő élesítés előkészítése."
+stop_condition: "F és A source-ready feltétele a clean worktree, a saját Prisma-lineage, a P1 DB-policy source boundary, a célzott tesztek és a független review; éles pilot csak a dokumentált owner-GO checklist minden redaktált bizonyítékával, dedicated erőforrásokkal és sikeres named-user smoke-checkkel jelölhető aktívnak."
 
 milestones:
   - id: F
@@ -34,7 +34,7 @@ milestones:
         description: "P1 DB-owned writer routines, külön runtime/bootstrap identity boundary, Node/ESM smoke és Plant-only SHOP_FLOOR DB-szintű kizárása source-ready; független review PASS."
       - id: A-03
         status: "completed"
-        description: "A source-verified, production-lineage-en kívüli disposable two-scope/two-PID RLS/ACL proof PASS: a clean candidate, a PostgreSQL 16 Prisma-lineage, az ACL/RLS, a manager/audit invariantok és a SERIALIZABLE write-skew védelem redaktált evidence-szel igazolt."
+        description: "A source-verified, production-lineage-en kívüli disposable two-scope/two-PID RLS/ACL proof történeti evidence-e megőrzött, opcionális assurance: nem a jelenlegi release candidate bizonyítéka és nem az owner-GO pilot aktiválási előfeltétele."
   - id: V
     name: "Local visual development preview"
     status: "completed"
@@ -70,7 +70,7 @@ milestones:
     tasks:
       - id: R-01
         status: "pending"
-        description: "Clean immutable RC, IdP/roster/DB/backup/ingress evidence és final release GO."
+        description: "Clean candidate, dedicated IdP/roster/DB/backup/ingress evidence, named-user smoke-check és dokumentált owner GO szerinti tényleges pilot-aktiválás."
       - id: R-02
         status: "completed"
         description: "A strict OIDC callback-kompatibilitási szerződés, a hiányzó redirect-URI minta, Keycloak session_state fail-closed beállítási követelménye és regressziós teszt source-ready; külső IdP-változás nélkül."
@@ -81,8 +81,8 @@ milestones:
         status: "completed"
         description: "Gate 1 source-remediation lezárva: a candidate checkoutból indított proof és minden package-managed entry point fail-closed; a Git/fixture/toolchain/Docker hardening csak jövőbeli, candidate-független verifier specifikáció. A tényleges disposable proof kizárólag külső immutable verifier + hitelesített, egy-run approval anchor után engedhető."
       - id: R-05
-        status: "blocked"
-        description: "Külső Gate 1 trust anchor: külön kiadott immutable verifier artifact és candidate-checkouten kívül pinelt aláírásos vagy privilegizált audit-store alapú emberi egy-run approval. Ez operations/security döntés és külön GO nélkül nem provisionálható."
+        status: "completed"
+        description: "A kisvállalati, izolált pilot release authority-ja dokumentált owner GO: a külső immutable verifier/aláírásos trust-anchor előfeltételt a source-check, backup, service/ingress, Keycloak/Brevo smoke és rollback checklist váltja fel. A staging proof opcionális assurance marad."
       - id: R-06
         status: "completed"
         description: "A valós OIDC belépéshez szükséges loopback-only Node composition és same-origin Office shell source-ready: csak 127.0.0.1-re bindol, a BFF preflight után indul, és a leválasztott local preview változatlan marad. Független security review és célzott regressziós tesztek PASS."
@@ -121,6 +121,8 @@ execution_log:
   - date: "2026-08-28"
     outcome: "A V-02 helyi vizuális preview bővült egy külön Minta iroda megnyitása navigációs vezérlővel. A valódi szervezeti OIDC gomb továbbra is disabled és handler nélküli; az új vezérlő csak a #dashboard mintaállapotot nyitja, nem hoz létre munkamenetet és nem kapcsol hálózatra. Bizonyíték: preview `npm run verify` PASS, kézi local browser ellenőrzés 390/768/1440 px-en, 48 px vezérlőmagassággal, vízszintes túlcsordulás és console hiba nélkül. BFF-, DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."
   - date: "2026-08-28"
-    outcome: "Az R-06 source-ready: a pilot BFF-ben elkészült a konfiguráció által kötelezővé tett, kizárólag 127.0.0.1-re kötött Node web composition és ugyanazon originű Office shell. A BFF/database preflight és a statikus assetek betöltése megelőzi a listen műveletet; a shell csak a reviewed /auth és /admin route-okat használja. A független security review utáni regressziók lezárják a statikus body-drain, rejtett roster-állapot és callback-forwarding kockázatát. Bizonyíték: BFF 72, Foundation 37, Bootstrap 31 unit teszt, BFF build/lint/runtime-import és preview verify PASS. Új systemd/nginx template és kiadási contract készült, de DB-, Keycloak-, VPS-, ingress- vagy deploy-változás nem történt; R-01 és R-05 változatlanul külső release gate."
+    outcome: "Az R-06 source-ready: a pilot BFF-ben elkészült a konfiguráció által kötelezővé tett, kizárólag 127.0.0.1-re kötött Node web composition és ugyanazon originű Office shell. A BFF/database preflight és a statikus assetek betöltése megelőzi a listen műveletet; a shell csak a reviewed /auth és /admin route-okat használja. A független security review utáni regressziók lezárják a statikus body-drain, rejtett roster-állapot és callback-forwarding kockázatát. Bizonyíték: BFF 72, Foundation 37, Bootstrap 31 unit teszt, BFF build/lint/runtime-import és preview verify PASS. Új systemd/nginx template és kiadási contract készült, de DB-, Keycloak-, VPS-, ingress- vagy deploy-változás nem történt; a tényleges aktiválás R-01 owner-GO checklist szerint külön operations lépés."
   - date: "2026-08-28"
-    outcome: "A jóváhagyott pilot origin a https://doorstar.joinerytech.hu, és a /login ugyanazt a same-origin Office shellt szolgálja ki, mint a gyökérútvonal; a post-login path /login, míg az OIDC redirect változatlanul /auth/callback. A célzott GET/HEAD/POST és query-regressziós BFF tesztek PASS; commit 5754cc87affd4ba6ddb01525926cc42d234576bb. Külső DB-, Keycloak-, Brevo-, VPS-, ingress- vagy deploy-változás nem történt; R-01 és R-05 változatlanul külön release gate."
+    outcome: "A jóváhagyott pilot origin a https://doorstar.joinerytech.hu, és a /login ugyanazt a same-origin Office shellt szolgálja ki, mint a gyökérútvonal; a post-login path /login, míg az OIDC redirect változatlanul /auth/callback. A célzott GET/HEAD/POST és query-regressziós BFF tesztek PASS; commit 5754cc87affd4ba6ddb01525926cc42d234576bb. Külső DB-, Keycloak-, Brevo-, VPS-, ingress- vagy deploy-változás nem történt; a tényleges aktiválás R-01 owner-GO checklist szerint külön operations lépés."
+  - date: "2026-08-28"
+    outcome: "A felhasználó kifejezetten a teljes pilot egyszerűsítését és a kisvállalati owner-GO release modellt választotta. Az R-05 külső immutable verifier/aláírásos trust-anchor követelménye ezért dokumentált owner checklistre változott: clean source-check, dedicated pilot backup, service/HTTPS-ingress sanity, Keycloak/Brevo smoke és rollback döntés. A dedicated pilot, HTTPS-only, szerveroldali authority, no-legacy és no-Plant határ változatlan. Ez kizárólag policy/documentation döntés; DB-, Keycloak-, Brevo-, VPS-, ingress- vagy deploy-változás nem történt, és az A-03 staging proof nem lett újra lefuttatva vagy a jelenlegi candidate-re állítva."
