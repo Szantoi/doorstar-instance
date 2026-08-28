@@ -28,6 +28,21 @@ describe("pilot web composition", () => {
       expect(shell.body).toContain('href="/auth/login"');
       expect(delegatedRequests).toEqual([]);
 
+      const loginShell = await requestLoopback(port, "/login");
+      expect(loginShell.statusCode).toBe(200);
+      expect(loginShell.body).toBe(shell.body);
+      expect(loginShell.headers["content-security-policy"]).toContain("connect-src 'self'");
+      expect(delegatedRequests).toEqual([]);
+
+      const loginShellHead = await requestLoopback(port, "/login", "HEAD");
+      expect(loginShellHead.statusCode).toBe(200);
+      expect(loginShellHead.body).toBe("");
+      expect(loginShellHead.headers["content-length"]).toBe(shell.headers["content-length"]);
+
+      const loginWithQuery = await requestLoopback(port, "/login?unexpected=not-allowed");
+      expect(loginWithQuery.statusCode).toBe(404);
+      expect(delegatedRequests).toEqual([]);
+
       const client = await requestLoopback(port, "/assets/office.js");
       expect(client.statusCode).toBe(200);
       expect(client.headers["content-type"]).toContain("text/javascript");
@@ -65,6 +80,10 @@ describe("pilot web composition", () => {
       const staticPost = await requestLoopback(port, "/", "POST");
       expect(staticPost.statusCode).toBe(405);
       expect(staticPost.headers.allow).toBe("GET, HEAD");
+
+      const loginPost = await requestLoopback(port, "/login", "POST");
+      expect(loginPost.statusCode).toBe(405);
+      expect(loginPost.headers.allow).toBe("GET, HEAD");
 
       const bodyBearingStaticRequest = await requestLoopback(port, "/", "GET", "not-allowed", {
         "content-length": "11",

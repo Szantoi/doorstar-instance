@@ -43,7 +43,7 @@ export type PilotOfficeStaticAssets = Readonly<{
 
 const assetDefinitions = [
   {
-    requestPaths: ["/", "/index.html"],
+    requestPaths: ["/", "/index.html", "/login"],
     fileName: "index.html",
     contentType: "text/html; charset=utf-8",
     contentSecurityPolicy: htmlContentSecurityPolicy,

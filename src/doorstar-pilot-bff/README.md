@@ -86,7 +86,7 @@ host/port and signal names.
 
 The static allowlist is intentionally narrow:
 
-- `GET`/`HEAD` `/` and `/index.html`
+- `GET`/`HEAD` `/`, `/index.html` and `/login` (the same Office shell)
 - `GET`/`HEAD` `/assets/office.css`
 - `GET`/`HEAD` `/assets/office.js`
 
@@ -175,6 +175,9 @@ approved secret/configuration mechanism. It requires:
 - independent 32-byte unpadded-base64url encryption and subject-digest keys.
 - one explicit, non-privileged `DOORSTAR_PILOT_LISTENER_PORT`; it is separate
   from the HTTPS public origin and is always bound to `127.0.0.1`.
+- `DOORSTAR_PILOT_POST_LOGIN_PATH=/login`; `/login` is a same-origin Office
+  route, not part of the public-origin value. For the supplied domain, the
+  public origin remains `https://doorstar.joinerytech.hu` (with no path).
 
 No real values belong in this repository or in a browser.
 

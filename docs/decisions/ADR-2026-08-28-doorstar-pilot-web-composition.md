@@ -36,6 +36,10 @@ as authority.
 5. First-admin provisioning remains a controlled server-side bootstrap action
    using a separately created IdP identity. Runtime code must not turn a
    browser request into first-admin authority.
+6. The approved pilot public origin is `https://doorstar.joinerytech.hu`.
+   Its `/login` path serves the same Office shell as `/` and is the configured
+   post-login destination; it is not part of the public-origin or OIDC
+   redirect-URI values.
 
 ## Consequences
 
