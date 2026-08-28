@@ -1,8 +1,10 @@
 # Doorstar pilot BFF
 
-This is the source-only named-user OIDC backend-for-frontend (BFF) for the
-isolated Doorstar Office pilot. It exposes these seven routes when a separately
-approved host adapts its `handle()` function to HTTP:
+This is the source-only named-user OIDC backend-for-frontend (BFF) and its
+small Node web composition for the isolated Doorstar Office pilot. The package
+validates its runtime configuration, loads the fixed same-origin Office shell,
+composes/preflights the BFF and only then binds a loopback HTTP listener. It
+exposes these seven BFF routes:
 
 - `GET /auth/login`
 - `GET /auth/callback`
@@ -67,10 +69,39 @@ All JSON admin bodies are limited to 8 KiB, require `application/json` (or
 `application/json; charset=utf-8`), and reject unknown fields.
 
 `createPilotBffRuntime()` composes the real Node crypto, OIDC and PostgreSQL
-adapters and performs the fixed-scope database preflight. It intentionally does
-not open a listener, run a migration, contact an IdP during startup, configure
-an ingress, or deploy anything. The existing Node handler remains an adapter;
-process lifecycle and TLS are outside this package.
+adapters and performs the fixed-scope database preflight. The web composition
+then adapts it through `createNodePilotBffHandler()` and serves the static
+Office shell. It intentionally does not run a migration, contact an IdP during
+startup, configure an ingress, or deploy anything.
+
+## Loopback web composition
+
+`npm start` runs the compiled composition. It requires the explicit
+`DOORSTAR_PILOT_LISTENER_PORT` value, validates it as a non-privileged TCP
+port, and binds only to `127.0.0.1`; the host is not configurable. The BFF
+runtime and database scope preflight finish before the listener is opened. A
+controlled `SIGINT` or `SIGTERM` first closes that listener and then closes the
+owned PostgreSQL pool. Its operational logs contain only event names, loopback
+host/port and signal names.
+
+The static allowlist is intentionally narrow:
+
+- `GET`/`HEAD` `/` and `/index.html`
+- `GET`/`HEAD` `/assets/office.css`
+- `GET`/`HEAD` `/assets/office.js`
+
+Only `/auth/*` and `/admin/*` reach `createNodePilotBffHandler()`. The shell
+uses normal browser navigation for `/auth/login`, checks `/auth/session`,
+posts to `/auth/logout`, and only requests the roster after an authenticated
+session. It reads no cookies, password, OIDC token, role header or browser
+authority; all roster decisions remain server-side.
+
+The listener is an internal HTTP hop. `DOORSTAR_PILOT_PUBLIC_ORIGIN` remains
+HTTPS and must match a separately approved ingress origin for secure
+`__Host-` cookies and the OIDC callback. A direct `http://127.0.0.1` browser
+connection cannot complete the real sign-in flow by itself. The separate
+`doorstar-pilot-ui-preview` package remains an intentionally disconnected
+visual fixture and is neither reused nor a fallback.
 
 ## Security boundary
 
@@ -142,6 +173,8 @@ approved secret/configuration mechanism. It requires:
   post-binding activation; the configured OIDC token endpoint must be the
   standard endpoint of that same issuer realm;
 - independent 32-byte unpadded-base64url encryption and subject-digest keys.
+- one explicit, non-privileged `DOORSTAR_PILOT_LISTENER_PORT`; it is separate
+  from the HTTPS public origin and is always bound to `127.0.0.1`.
 
 No real values belong in this repository or in a browser.
 
@@ -171,4 +204,9 @@ npm install --ignore-scripts
 npm test
 npm run build
 npm run lint
+npm start
 ```
+
+`npm run dev` runs the same composition from TypeScript source. Neither command
+loads `.env` files or creates external resources: use an approved runtime
+secret/configuration mechanism and the separate operational release gates.

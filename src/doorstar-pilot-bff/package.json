@@ -6,8 +6,10 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node scripts/copyWebStatic.mjs",
     "lint": "tsc -p tsconfig.json --noEmit",
+    "dev": "tsx src/web/main.ts",
+    "start": "node dist/web/main.js",
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "verify:runtime-import": "node scripts/verifyBuiltRuntimeImport.mjs",
     "test": "npm run test:unit && npm run build && npm run verify:runtime-import"

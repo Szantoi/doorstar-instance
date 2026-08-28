@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Doorstar Office pilot: szervezeti OIDC bejelentkezés és név szerinti hozzáféréskezelés."
+    />
+    <title>Doorstar Office</title>
+    <link rel="stylesheet" href="/assets/office.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Doorstar Office kezdőlap">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span><strong>Doorstar</strong><small>Office</small></span>
+        </a>
+        <p class="environment-label">Pilot · szervezeti hozzáférés</p>
+      </header>
+
+      <main>
+        <section id="initializing-view" class="centered-card" aria-live="polite">
+          <p class="eyebrow">Doorstar Office</p>
+          <h1>Munkamenet ellenőrzése</h1>
+          <p>Az Office hozzáférés állapotát ellenőrizzük.</p>
+        </section>
+
+        <section id="signed-out-view" class="login-layout" hidden aria-labelledby="sign-in-title">
+          <div class="login-introduction">
+            <p class="eyebrow">Doorstar Kft. · Office control plane</p>
+            <h1 id="sign-in-title">Rendezett iroda, név szerinti hozzáféréssel.</h1>
+            <p class="lead">
+              A pilot a Doorstar szervezeti fiókjával nyitja meg az Office felületet.
+            </p>
+            <dl class="assurance-list">
+              <div><dt>Belépés</dt><dd>Szervezeti OIDC-átirányítás</dd></div>
+              <div><dt>Munkamenet</dt><dd>Biztonságos, szerveroldali munkamenet</dd></div>
+              <div><dt>Jogosultság</dt><dd>Szerver által ellenőrzött névsor</dd></div>
+            </dl>
+          </div>
+
+          <section class="login-card" aria-label="Szervezeti bejelentkezés">
+            <span class="security-chip">Védett hozzáférés</span>
+            <h2>Bejelentkezés szervezeti fiókkal</h2>
+            <p>
+              A folytatás az Ön Doorstar szervezeti azonosítójához irányítja. A jelszó
+              nem kerül erre a felületre.
+            </p>
+            <a id="sign-in-link" class="primary-action" href="/auth/login">
+              Folytatás szervezeti fiókkal
+            </a>
+            <p class="field-help">
+              Csak előzetesen felvett, aktív név szerinti hozzáférés használható.
+            </p>
+          </section>
+        </section>
+
+        <section id="signed-in-view" class="office-layout" hidden aria-labelledby="office-title">
+          <div class="office-heading">
+            <div>
+              <p class="eyebrow">Doorstar Office · pilot</p>
+              <h1 id="office-title">Üdvözöljük, <span id="principal-name"></span></h1>
+              <p id="principal-role" class="lead"></p>
+            </div>
+            <button id="logout-button" class="secondary-action" type="button">Kijelentkezés</button>
+          </div>
+
+          <section class="information-card" aria-labelledby="office-boundary-title">
+            <p class="panel-kicker">Office határ</p>
+            <h2 id="office-boundary-title">A pilot a belépést és a név szerinti Office-hozzáférést kezeli.</h2>
+            <p>
+              Nincs üzemi feladatkiadás, Plant-authority vagy böngészőben tárolt azonosító.
+            </p>
+          </section>
+
+          <section id="roster-loading" class="centered-card compact-card" aria-live="polite">
+            <p>Felhasználói jogosultság ellenőrzése…</p>
+          </section>
+
+          <section id="roster-denied" class="information-card restrained-card" hidden aria-labelledby="roster-denied-title">
+            <p class="panel-kicker">Hozzáféréskezelés</p>
+            <h2 id="roster-denied-title">Nincs névsorkezelési jogosultsága.</h2>
+            <p>A saját Office-munkamenete aktív, de a felhasználói névsor csak kijelölt kezelők számára érhető el.</p>
+          </section>
+
+          <section id="roster-unavailable" class="information-card error-card" hidden role="alert">
+            <p class="panel-kicker">Hozzáféréskezelés</p>
+            <h2>A felhasználói névsor most nem érhető el.</h2>
+            <p>Frissítse az oldalt, vagy kérjen segítséget a pilot üzemeltetőjétől.</p>
+          </section>
+
+          <section id="roster-view" class="roster-layout" hidden aria-labelledby="roster-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Hozzáféréskezelés</p>
+                <h2 id="roster-title">Név szerinti Office-névsor</h2>
+                <p>A jelszó, OIDC-token és e-mail cím nem jelenik meg a névsorban.</p>
+              </div>
+              <button id="refresh-roster-button" class="secondary-action" type="button">Lista frissítése</button>
+            </div>
+
+            <div id="roster-feedback" class="feedback" aria-live="polite" hidden></div>
+
+            <div class="roster-grid">
+              <section class="panel roster-panel" aria-labelledby="users-title">
+                <div class="panel-heading"><h3 id="users-title">Felhasználók</h3></div>
+                <div id="roster-list" class="roster-list" aria-live="polite"></div>
+              </section>
+
+              <section class="panel create-panel" aria-labelledby="create-user-title">
+                <div class="panel-heading">
+                  <p class="panel-kicker">Szervezeti meghívó</p>
+                  <h3 id="create-user-title">Új felhasználó</h3>
+                </div>
+                <form id="create-user-form" class="user-form">
+                  <label class="form-field" for="new-display-name">
+                    <span>Név</span>
+                    <input id="new-display-name" name="displayName" type="text" maxlength="120" autocomplete="name" required />
+                  </label>
+                  <label class="form-field" for="new-email">
+                    <span>Céges e-mail</span>
+                    <input id="new-email" name="email" type="email" maxlength="254" autocomplete="email" required />
+                  </label>
+                  <label class="form-field" for="new-role">
+                    <span>Office-szerepkör</span>
+                    <select id="new-role" name="role"></select>
+                  </label>
+                  <label class="form-check" for="new-manager">
+                    <input id="new-manager" name="canManagePilotRoster" type="checkbox" />
+                    <span><strong>Felhasználókat kezelhet</strong><small>Külön, szerver által ellenőrzött jogosultság.</small></span>
+                  </label>
+                  <button id="create-user-submit" class="primary-action" type="submit">Meghívó küldése</button>
+                </form>
+              </section>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <dialog id="update-user-dialog" class="user-dialog" aria-labelledby="update-user-title">
+        <form id="update-user-form" class="user-form">
+          <div class="dialog-heading">
+            <div>
+              <p class="panel-kicker">Teljes jogosultságcsere</p>
+              <h2 id="update-user-title">Felhasználó módosítása</h2>
+            </div>
+            <button id="close-update-dialog" class="icon-button" type="button" aria-label="Párbeszédablak bezárása">×</button>
+          </div>
+          <p id="update-user-name" class="dialog-copy"></p>
+          <input id="update-binding-id" type="hidden" />
+          <input id="update-audit-version" type="hidden" />
+          <label class="form-field" for="update-role"><span>Office-szerepkör</span><select id="update-role" name="role"></select></label>
+          <label class="form-check" for="update-active">
+            <input id="update-active" name="active" type="checkbox" />
+            <span><strong>Hozzáférés aktív</strong><small>A letiltott felhasználó nem használhatja a pilot munkamenetet.</small></span>
+          </label>
+          <label class="form-check" for="update-manager">
+            <input id="update-manager" name="canManagePilotRoster" type="checkbox" />
+            <span><strong>Felhasználókat kezelhet</strong><small>Külön, szerver által ellenőrzött jogosultság.</small></span>
+          </label>
+          <div class="dialog-actions">
+            <button id="cancel-update-button" class="secondary-action" type="button">Mégse</button>
+            <button id="update-user-submit" class="primary-action" type="submit">Változtatások mentése</button>
+          </div>
+        </form>
+      </dialog>
+
+      <footer>Doorstar Office pilot · ugyanazon eredetű, szerver által védett felület</footer>
+    </div>
+    <script type="module" src="/assets/office.js"></script>
+  </body>
+</html>

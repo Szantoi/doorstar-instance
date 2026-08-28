@@ -83,6 +83,9 @@ milestones:
       - id: R-05
         status: "blocked"
         description: "Külső Gate 1 trust anchor: külön kiadott immutable verifier artifact és candidate-checkouten kívül pinelt aláírásos vagy privilegizált audit-store alapú emberi egy-run approval. Ez operations/security döntés és külön GO nélkül nem provisionálható."
+      - id: R-06
+        status: "completed"
+        description: "A valós OIDC belépéshez szükséges loopback-only Node composition és same-origin Office shell source-ready: csak 127.0.0.1-re bindol, a BFF preflight után indul, és a leválasztott local preview változatlan marad. Független security review és célzott regressziós tesztek PASS."
 
 execution_log:
   - date: "2026-08-27"
@@ -117,3 +120,5 @@ execution_log:
     outcome: "Az M kisvállalati admin és név szerinti hozzáférési source-ready szelet elkészült. A BFF ugyanazon originű GET/POST /admin/users és PUT /admin/users/:bindingId szerződést ad, élő opaque-sessionből feloldott roster-manager authorityval; a DB append-only direct provision/list policyt alkalmaz. A Keycloak management kliens a fiókot először tiltottan hozza létre, csak a helyi binding sikeres írása után aktiválja; hibás Location vagy aktiválási hiba fail-closed, az utóbbi best-effort directory-tiltással és local binding-deaktiválással jár. A #users local preview expliciten minta és no-network. Bizonyíték: foundation 37, BFF 59 unit test, BFF build/runtime-import, preview verify és két független review PASS. Docker, PostgreSQL, Keycloak, VPS, ingress vagy deploy nem futott; R-01 külön operations/release GO marad."
   - date: "2026-08-28"
     outcome: "A V-02 helyi vizuális preview bővült egy külön Minta iroda megnyitása navigációs vezérlővel. A valódi szervezeti OIDC gomb továbbra is disabled és handler nélküli; az új vezérlő csak a #dashboard mintaállapotot nyitja, nem hoz létre munkamenetet és nem kapcsol hálózatra. Bizonyíték: preview `npm run verify` PASS, kézi local browser ellenőrzés 390/768/1440 px-en, 48 px vezérlőmagassággal, vízszintes túlcsordulás és console hiba nélkül. BFF-, DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."
+  - date: "2026-08-28"
+    outcome: "Az R-06 source-ready: a pilot BFF-ben elkészült a konfiguráció által kötelezővé tett, kizárólag 127.0.0.1-re kötött Node web composition és ugyanazon originű Office shell. A BFF/database preflight és a statikus assetek betöltése megelőzi a listen műveletet; a shell csak a reviewed /auth és /admin route-okat használja. A független security review utáni regressziók lezárják a statikus body-drain, rejtett roster-állapot és callback-forwarding kockázatát. Bizonyíték: BFF 72, Foundation 37, Bootstrap 31 unit teszt, BFF build/lint/runtime-import és preview verify PASS. Új systemd/nginx template és kiadási contract készült, de DB-, Keycloak-, VPS-, ingress- vagy deploy-változás nem történt; R-01 és R-05 változatlanul külső release gate."

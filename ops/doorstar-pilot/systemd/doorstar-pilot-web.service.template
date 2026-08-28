@@ -1,0 +1,32 @@
+[Unit]
+Description=Doorstar pilot Office web composition
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__PILOT_SERVICE_USER__
+Group=__PILOT_SERVICE_GROUP__
+WorkingDirectory=__PILOT_RELEASE_DIRECTORY__/src/doorstar-pilot-bff
+EnvironmentFile=__PILOT_SECRET_ENVIRONMENT_FILE__
+ExecStart=__PILOT_NODE_EXECUTABLE__ dist/web/main.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

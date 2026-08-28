@@ -54,6 +54,27 @@ export {
   createNodePilotBffHandler,
 } from "./http/nodeHandler.js";
 export {
+  loadPilotWebConfig,
+  validatePilotWebConfig,
+  pilotWebListenerHost,
+  PilotWebConfigurationError,
+  type PilotWebConfig,
+} from "./web/pilotWebConfig.js";
+export {
+  loadPilotOfficeStaticAssets,
+  servePilotOfficeStaticRequest,
+  type PilotOfficeStaticAssets,
+} from "./web/officeStatic.js";
+export {
+  createPilotWebRequestHandler,
+  startPilotWebServer,
+  runPilotWebServer,
+  consolePilotWebLogger,
+  type PilotWebLogger,
+  type PilotWebServer,
+  type StartPilotWebServerOptions,
+} from "./web/pilotWebServer.js";
+export {
   dispatchPilotAuthRequest,
 } from "./http/route.js";
 export {

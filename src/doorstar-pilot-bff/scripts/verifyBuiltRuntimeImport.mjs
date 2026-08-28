@@ -1,4 +1,7 @@
-import { createRuntimePilotPgPool } from "../dist/index.js";
+import {
+  createRuntimePilotPgPool,
+  loadPilotOfficeStaticAssets,
+} from "../dist/index.js";
 
 // Node executes this built ESM module, so it proves the CJS `pg` dependency is
 // imported through its default export before any database connection is made.
@@ -15,3 +18,10 @@ if (typeof pool.connect !== "function" || typeof pool.end !== "function") {
 }
 
 await pool.end();
+
+// Build output must contain the same-origin Office shell that the composition
+// root loads before it opens its loopback listener.
+const officeStaticAssets = await loadPilotOfficeStaticAssets();
+if (!officeStaticAssets.get("/") || !officeStaticAssets.get("/assets/office.js")) {
+  throw new Error("built_runtime_office_static_assets_missing");
+}
