@@ -85,6 +85,13 @@ and record all of the following:
 - a confidential OIDC authorization-code client, exact HTTPS callback origin,
   issuer, token/JWKS endpoints, approved asymmetric ID-token algorithms and
   server-side secret injection;
+- a redacted callback-compatibility proof against the BFF's exact `GET`
+  `code` + `state` contract. The proof may name only accepted/rejected
+  parameter names, never their values, tokens, cookies or subjects. A provider
+  that emits `session_state`, `iss`, error fields or a form post is not
+  compatible until separately reviewed source work changes the contract; it
+  must not be rewritten away at an ingress or proxy. See
+  [`OIDC-CLIENT-COMPATIBILITY.md`](OIDC-CLIENT-COMPATIBILITY.md);
 - a fixed single pilot scope, approved named roster and least-privilege
   database identities/mapping/ACLs required by the reviewed stored routines
   and RLS policies, including runtime-only `EXECUTE` on

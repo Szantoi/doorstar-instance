@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {
   loadPilotBffConfig,
@@ -16,6 +17,14 @@ describe("pilot BFF configuration", () => {
       ...testConfig,
       oidc: { ...testConfig.oidc, redirectUri: "https://attacker.example.invalid/auth/callback" },
     })).toThrow("oidc_redirect_uri_not_auth_callback");
+  });
+
+  it("documents the mandatory exact OIDC callback placeholder", async () => {
+    const example = await readFile(new URL("../.env.example", import.meta.url), "utf8");
+
+    expect(example).toContain(
+      "DOORSTAR_PILOT_OIDC_REDIRECT_URI=https://doorstar.example.invalid/auth/callback",
+    );
   });
 
   it("requires HTTPS and the openid scope", () => {

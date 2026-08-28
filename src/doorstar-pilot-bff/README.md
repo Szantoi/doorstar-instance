@@ -63,11 +63,24 @@ approved secret/configuration mechanism. It requires:
 - one complete runtime PostgreSQL DSN (explicit host, port, database, user and
   password; no query or fragment);
 - the fixed server-owned scope key;
+- the exact HTTPS `DOORSTAR_PILOT_OIDC_REDIRECT_URI`, equal to
+  `DOORSTAR_PILOT_PUBLIC_ORIGIN` plus `/auth/callback`, with no query or
+  fragment;
 - explicit HTTPS OIDC authorization, token and JWKS endpoints;
 - a confidential-client secret and ID-token algorithm allowlist;
 - independent 32-byte unpadded-base64url encryption and subject-digest keys.
 
 No real values belong in this repository or in a browser.
+
+## IdP callback compatibility
+
+The callback is deliberately fail-closed: it accepts only a `GET` query with
+one non-empty `code` and one non-empty `state`. It does not support
+`response_mode=form_post`, fragments, `session_state`, `iss`, or error fields.
+An IdP client must be configured to return exactly this shape; the BFF must not
+be made permissive at an ingress or proxy. The source-only compatibility
+contract and the Gate 2 redacted-proof requirement are in
+[`docs/projects/doorstar-isolated-pilot/OIDC-CLIENT-COMPATIBILITY.md`](../../docs/projects/doorstar-isolated-pilot/OIDC-CLIENT-COMPATIBILITY.md).
 
 ## Explicitly not an activation guide
 

@@ -29,6 +29,33 @@ describe("pilot BFF HTTP auth surface", () => {
     expect(sessionSetCookie).not.toContain("Domain=");
   });
 
+  it("rejects Keycloak-style extra callback fields and duplicate callback values before OIDC exchange", async () => {
+    const harness = await createTestHarness();
+    const state = "state_0001_" + "x".repeat(48);
+    const rejectedTargets = [
+      `/auth/callback?code=authorization-code&state=${encodeURIComponent(state)}&session_state=provider-session`,
+      `/auth/callback?code=first-code&code=second-code&state=${encodeURIComponent(state)}`,
+      `/auth/callback?code=authorization-code&state=first-state&state=second-state`,
+    ];
+
+    for (const url of rejectedTargets) {
+      const response = await harness.app.handle({ method: "GET", url, headers: {} });
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toBe(JSON.stringify({ error: "invalid_request" }));
+    }
+
+    const formPost = await harness.app.handle({
+      method: "POST",
+      url: "/auth/callback",
+      headers: { "content-length": "0" },
+    });
+    expect(formPost.statusCode).toBe(405);
+    expect(formPost.headers.Allow).toBe("GET");
+
+    expect(harness.oidc.codeExchanges).toHaveLength(0);
+    expect(harness.sessions.created).toHaveLength(0);
+  });
+
   it("rejects browser-supplied bearer, role, scope and actor authority", async () => {
     const harness = await createTestHarness();
     for (const headers of [

@@ -52,6 +52,9 @@ milestones:
       - id: R-01
         status: "pending"
         description: "Clean immutable RC, IdP/roster/DB/backup/ingress evidence és final release GO."
+      - id: R-02
+        status: "completed"
+        description: "A strict OIDC callback-kompatibilitási szerződés, a hiányzó redirect-URI minta, Keycloak session_state fail-closed beállítási követelménye és regressziós teszt source-ready; külső IdP-változás nélkül."
 
 execution_log:
   - date: "2026-08-27"
@@ -74,3 +77,5 @@ execution_log:
     outcome: "A projekt-fixture független review PASS: a raw URL normalizálási kerülőút is zárva van, ezért /office/projects/x/../DS-26133 is 404. A verifier igazolja a pontos raw allowlistet, GET/HEAD 200-at, POST 405-öt, az eltérő útvonalak 404-ét, loopback-only bindet és `connect-src 'none'` CSP-t."
   - date: "2026-08-28"
     outcome: "A V-02 identity-faithful preview PASS: a korábbi e-mail/jelszó-minta helyett disabled szervezeti OIDC-kártya látható, a dashboard explicit DS-26133 fixture-linket ad, a verifier jelszómező, belépési handler és kliensoldali hálózati primitív hiányát, valamint a preview /auth/login és /auth/session 404-ét is igazolja. BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."
+  - date: "2026-08-28"
+    outcome: "Az R-02 OIDC callback source-contract PASS: a BFF minta-konfiguráció immár tartalmazza a kötelező exact redirect URI-t; teszt rögzíti a Keycloak-szerű session_state, a duplikált code/state és a callback form-post fail-closed elutasítását, a dokumentáció pedig az IdP-kompatibilitást, redaktált Gate 2 bizonyítékot és a történeti Keycloak anyag tiltását rögzíti. BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."

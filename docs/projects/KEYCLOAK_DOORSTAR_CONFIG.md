@@ -1,5 +1,16 @@
 # Keycloak Doorstar Tenant Configuration Specification
 
+> **HISTORICAL — NOT FOR ISOLATED PILOT ACTIVATION**
+>
+> This 2026-07 SpaceOS/Kernel soft-launch specification is retained only as
+> historical evidence. It targets the legacy `kernel-api` audience, password
+> grant and role-claim model, none of which may be reused for the isolated
+> Doorstar pilot. The pilot authority is the
+> [`doorstar-isolated-pilot` release gate](doorstar-isolated-pilot/OPERATIONS-RELEASE-GATE.md)
+> and its [OIDC compatibility contract](doorstar-isolated-pilot/OIDC-CLIENT-COMPATIBILITY.md).
+> Do not execute the commands, create users or clients, or copy its settings
+> for the pilot.
+
 > **Version:** 1.0
 > **Created:** 2026-07-08
 > **Status:** SPECIFICATION (for TASK-DS-002, TASK-DS-003 implementation)
