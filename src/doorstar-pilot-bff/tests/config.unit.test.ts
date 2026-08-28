@@ -61,6 +61,37 @@ describe("pilot BFF configuration", () => {
     })).toThrow("keycloak_admin_token_endpoint_mismatch");
   });
 
+  it("accepts the same-origin Keycloak reverse-proxy layout with OIDC below /auth and administration below /admin", () => {
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      oidc: {
+        ...testConfig.oidc,
+        issuer: "https://identity.example.invalid/auth/realms/doorstar",
+        authorizationEndpoint: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/auth",
+        tokenEndpoint: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/token",
+        jwksUrl: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/certs",
+      },
+      keycloakAdmin: {
+        ...testConfig.keycloakAdmin,
+        realmAdminBaseUrl: "https://identity.example.invalid/admin/realms/doorstar",
+      },
+    })).not.toThrow();
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      oidc: {
+        ...testConfig.oidc,
+        issuer: "https://identity.example.invalid/auth/realms/doorstar",
+        authorizationEndpoint: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/auth",
+        tokenEndpoint: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/token",
+        jwksUrl: "https://identity.example.invalid/auth/realms/doorstar/protocol/openid-connect/certs",
+      },
+      keycloakAdmin: {
+        ...testConfig.keycloakAdmin,
+        realmAdminBaseUrl: "https://identity.example.invalid/other/admin/realms/doorstar",
+      },
+    })).toThrow("keycloak_admin_realm_base_url_mismatch");
+  });
+
   it("requires HTTPS and the openid scope", () => {
     expect(() => validatePilotBffConfig({
       ...testConfig,

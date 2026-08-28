@@ -294,10 +294,18 @@ function validateKeycloakAdminConfiguration(
   tokenEndpoint: string,
 ): PilotBffConfig["keycloakAdmin"] {
   const issuerUrl = new URL(issuer);
-  const realmMatch = /^\/realms\/([A-Za-z0-9._-]{1,120})$/.exec(issuerUrl.pathname);
+  // Keycloak deployments commonly publish OIDC below a relative path such as
+  // `/auth/realms/{realm}` while reverse-proxying administration separately at
+  // `/admin/realms/{realm}`. Preserve the same-origin, realm-specific binding
+  // instead of requiring one accidental path layout.
+  const realmMatch = /^((?:\/[A-Za-z0-9._-]+)*)\/realms\/([A-Za-z0-9._-]{1,120})$/.exec(
+    issuerUrl.pathname,
+  );
   if (!realmMatch) {
     throw new PilotBffConfigurationError("oidc_issuer_not_keycloak_realm");
   }
+  const issuerPrefix = realmMatch[1];
+  const realmName = realmMatch[2];
   const expectedTokenEndpoint = `${issuer}/protocol/openid-connect/token`;
   if (tokenEndpoint !== expectedTokenEndpoint) {
     throw new PilotBffConfigurationError("keycloak_admin_token_endpoint_mismatch");
@@ -307,8 +315,14 @@ function validateKeycloakAdminConfiguration(
     "keycloak_admin_realm_base_url_invalid",
   );
   const realmAdminUrl = new URL(realmAdminBaseUrl);
-  const expectedPath = `/admin/realms/${realmMatch[1]}`;
-  if (realmAdminUrl.origin !== issuerUrl.origin || realmAdminUrl.pathname !== expectedPath) {
+  const permittedAdminPaths = new Set([
+    `/admin/realms/${realmName}`,
+    `${issuerPrefix}/admin/realms/${realmName}`,
+  ]);
+  if (
+    realmAdminUrl.origin !== issuerUrl.origin
+    || !permittedAdminPaths.has(realmAdminUrl.pathname)
+  ) {
     throw new PilotBffConfigurationError("keycloak_admin_realm_base_url_mismatch");
   }
   const clientId = requireClientId(

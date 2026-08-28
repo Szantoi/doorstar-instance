@@ -173,7 +173,9 @@ approved secret/configuration mechanism. It requires:
 - a separate Keycloak realm-admin base URL plus narrowly scoped management
   client ID and secret for disabled-account creation, invitation delivery and
   post-binding activation; the configured OIDC token endpoint must be the
-  standard endpoint of that same issuer realm;
+  standard endpoint of that same issuer realm. The admin URL must share the
+  issuer origin and use either `/admin/realms/{realm}` or the issuer's own
+  path prefix followed by `/admin/realms/{realm}`;
 - independent 32-byte unpadded-base64url encryption and subject-digest keys.
 - one explicit, non-privileged `DOORSTAR_PILOT_LISTENER_PORT`; it is separate
   from the HTTPS public origin and is always bound to `127.0.0.1`.
