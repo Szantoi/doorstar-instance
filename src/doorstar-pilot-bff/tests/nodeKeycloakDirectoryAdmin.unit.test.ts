@@ -7,11 +7,13 @@ import {
 import { testConfig } from "./testDoubles.js";
 
 describe("NodeKeycloakDirectoryAdmin", () => {
-  it("creates a disabled Keycloak user, requests its invitation, then explicitly enables it", async () => {
+  it("restores a disabled Keycloak user after required temporary invitation enablement, then explicitly enables it after local provisioning", async () => {
     const requests: Array<Readonly<{ url: string; method: string; body: string; authorization: string }>> = [];
     const responses = [
       response(200, { access_token: "management-token-never-returned" }),
       response(201, undefined, `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-002`),
+      response(204),
+      response(204),
       response(204),
       response(200, { access_token: "management-token-enable" }),
       response(204),
@@ -27,7 +29,7 @@ describe("NodeKeycloakDirectoryAdmin", () => {
     await directory.enableCreatedAccount(result);
 
     expect(result).toEqual({ subject: "user-002" });
-    expect(requests).toHaveLength(5);
+    expect(requests).toHaveLength(7);
     expect(requests[0]).toMatchObject({
       url: testConfig.oidc.tokenEndpoint,
       method: "POST",
@@ -43,9 +45,21 @@ describe("NodeKeycloakDirectoryAdmin", () => {
       requiredActions: ["VERIFY_EMAIL", "UPDATE_PASSWORD"],
     });
     expect(requests[1].authorization).toBe("Bearer management-token-never-returned");
-    expect(requests[2].url).toContain("/users/user-002/execute-actions-email?lifespan=86400");
-    expect(JSON.parse(requests[2].body)).toEqual(["VERIFY_EMAIL", "UPDATE_PASSWORD"]);
+    expect(requests[2]).toMatchObject({
+      method: "PUT",
+      url: `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-002`,
+      body: JSON.stringify({ enabled: true }),
+      authorization: "Bearer management-token-never-returned",
+    });
+    expect(requests[3].url).toContain("/users/user-002/execute-actions-email?lifespan=86400");
+    expect(JSON.parse(requests[3].body)).toEqual(["VERIFY_EMAIL", "UPDATE_PASSWORD"]);
     expect(requests[4]).toMatchObject({
+      method: "PUT",
+      url: `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-002`,
+      body: JSON.stringify({ enabled: false }),
+      authorization: "Bearer management-token-never-returned",
+    });
+    expect(requests[6]).toMatchObject({
       method: "PUT",
       url: `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-002`,
       body: JSON.stringify({ enabled: true }),
@@ -59,6 +73,7 @@ describe("NodeKeycloakDirectoryAdmin", () => {
     const responses = [
       response(200, { access_token: "management-token-one" }),
       response(201, undefined, `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-003`),
+      response(204),
       response(500),
       response(200, { access_token: "management-token-two" }),
       response(204),
@@ -72,8 +87,14 @@ describe("NodeKeycloakDirectoryAdmin", () => {
       displayName: "Unavailable Person",
     })).rejects.toThrow("pilot_keycloak_directory_unavailable");
 
-    expect(requests).toHaveLength(5);
-    expect(requests[4]).toMatchObject({
+    expect(requests).toHaveLength(6);
+    expect(requests[2]).toMatchObject({
+      method: "PUT",
+      url: `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-003`,
+      body: JSON.stringify({ enabled: true }),
+      authorization: "Bearer management-token-one",
+    });
+    expect(requests[5]).toMatchObject({
       method: "PUT",
       url: `${testConfig.keycloakAdmin.realmAdminBaseUrl}/users/user-003`,
       body: JSON.stringify({ enabled: false }),

@@ -33,10 +33,13 @@ administrator workflow.
    source.
 3. Adding a person is a server-to-server Keycloak directory action. A
    narrowly scoped, server-only Keycloak management client first creates the
-   named IdP account in a disabled state, obtains the immutable Keycloak user
-   identifier that will be the OIDC subject, and requests Keycloak's
-   password-setup/verification invitation. Doorstar never creates, stores,
-   displays, or sends a password.
+   named IdP account in a disabled state and obtains the immutable Keycloak
+   user identifier that will be the OIDC subject. Keycloak requires an enabled
+   account before it will deliver password-setup/verification actions, so the
+   server enables the new account only for that delivery request and disables
+   it again before returning. No local binding exists during this short
+   delivery window and the dedicated realm exposes no other application
+   client. Doorstar never creates, stores, displays, or sends a password.
 4. After the directory returns a subject, the BFF derives the existing
    server-side subject digest and calls a new DB-owned direct-admin provision
    writer. The writer derives the admin actor from the live opaque session,

@@ -31,11 +31,12 @@ export type NodeKeycloakDirectoryAdminOptions = Readonly<{
 
 /**
  * Server-only Keycloak directory adapter. It obtains a management token only
- * in local variables, creates an initially disabled account, and asks
- * Keycloak to deliver its own verification/password-setup message. The BFF
- * enables the account only after a database-owned local binding succeeds.
- * The browser never sees a password, token, raw subject, or management
- * response.
+ * in local variables and creates an initially disabled account. Keycloak only
+ * delivers execute-actions mail for an enabled user, so the account is enabled
+ * briefly to request its own verification/password-setup message and disabled
+ * again before this method returns. The BFF enables it for use only after a
+ * database-owned local binding succeeds. The browser never sees a password,
+ * token, raw subject, or management response.
  */
 export class NodeKeycloakDirectoryAdmin implements PilotDirectoryAdmin {
   private readonly request: KeycloakAdminApiFetch;
@@ -76,6 +77,12 @@ export class NodeKeycloakDirectoryAdmin implements PilotDirectoryAdmin {
       }
       created = { subject: readCreatedSubject(createdResponse.headers.get("location"), this.usersUrl()) };
 
+      // Keycloak rejects execute-actions mail for a disabled account. This is
+      // not an authority grant: the only browser client remains the BFF and a
+      // local binding does not exist yet. Restore the disabled state before
+      // returning so the caller can make the binding the final activation gate.
+      await this.setCreatedAccountEnabledWithAccessToken(created, true, accessToken);
+
       const invitationResponse = await this.request(this.invitationUrl(created.subject), {
         method: "PUT",
         headers: this.jsonHeaders(accessToken),
@@ -85,6 +92,7 @@ export class NodeKeycloakDirectoryAdmin implements PilotDirectoryAdmin {
       if (!invitationResponse.ok || invitationResponse.status !== 204) {
         throw new Error("keycloak_invitation_rejected");
       }
+      await this.setCreatedAccountEnabledWithAccessToken(created, false, accessToken);
       return created;
     } catch {
       if (created) {
@@ -110,20 +118,28 @@ export class NodeKeycloakDirectoryAdmin implements PilotDirectoryAdmin {
     input: CreatedPilotDirectoryAccount,
     enabled: boolean,
   ): Promise<void> {
-    const subject = requireOpaqueDirectorySubject(input?.subject);
     try {
       const accessToken = await this.getManagementAccessToken();
-      const response = await this.request(this.userUrl(subject), {
-        method: "PUT",
-        headers: this.jsonHeaders(accessToken),
-        body: JSON.stringify({ enabled }),
-        redirect: "error",
-      });
-      if (!response.ok || response.status !== 204) {
-        throw new Error("keycloak_account_update_rejected");
-      }
+      await this.setCreatedAccountEnabledWithAccessToken(input, enabled, accessToken);
     } catch {
       throw new Error("pilot_keycloak_directory_unavailable");
+    }
+  }
+
+  private async setCreatedAccountEnabledWithAccessToken(
+    input: CreatedPilotDirectoryAccount,
+    enabled: boolean,
+    accessToken: string,
+  ): Promise<void> {
+    const subject = requireOpaqueDirectorySubject(input?.subject);
+    const response = await this.request(this.userUrl(subject), {
+      method: "PUT",
+      headers: this.jsonHeaders(accessToken),
+      body: JSON.stringify({ enabled }),
+      redirect: "error",
+    });
+    if (!response.ok || response.status !== 204) {
+      throw new Error("keycloak_account_update_rejected");
     }
   }
 

@@ -37,16 +37,17 @@ e-mail address, OIDC subject/digest, actor key, session or audit record.
 ```
 
 The BFF creates the Keycloak directory account through its server-only
-management client in a disabled state, asks Keycloak to send
-verification/password-setup actions, derives the OIDC subject digest and
-writes the local binding through the database-owned direct-admin provision
-routine. Only after that local write succeeds does it enable the directory
-account. If the local write or directory activation fails, it best-effort keeps
-the account disabled; an activation failure also best-effort deactivates the
-just-created local binding using its audit version. A missing, malformed or
-foreign Keycloak `Location` cannot leave a usable account because the account
-was created disabled. No password, invite token or raw directory subject is
-returned to the browser.
+management client in a disabled state. Keycloak requires an enabled account to
+deliver verification/password-setup actions, so the adapter enables it only
+for that request and disables it again before it returns a subject. It then
+derives the OIDC subject digest and writes the local binding through the
+database-owned direct-admin provision routine. Only after that local write
+succeeds does it enable the directory account for use. If the local write or
+directory activation fails, it best-effort keeps the account disabled; an
+activation failure also best-effort deactivates the just-created local binding
+using its audit version. A missing, malformed or foreign Keycloak `Location`
+cannot leave a usable account because the account was created disabled. No
+password, invite token or raw directory subject is returned to the browser.
 The very first roster manager remains a separately approved server-side
 bootstrap action; this endpoint does not create a shared or self-registered
 first administrator.
@@ -147,10 +148,11 @@ visual fixture and is neither reused nor a fallback.
   `<issuer>/protocol/openid-connect/token`, preventing its credential from
   being sent to an arbitrary HTTPS endpoint through configuration. It first
   obtains a client-credentials access token in local memory, creates the
-  account disabled and requests `VERIFY_EMAIL` plus `UPDATE_PASSWORD`; only a
-  successful local binding permits a subsequent enable. It never stores, logs
-  or returns that token, an e-mail address or the raw Keycloak subject. The
-  source adapter is constructed at runtime but makes no network request during
+  account disabled, briefly enables it for Keycloak's `VERIFY_EMAIL` plus
+  `UPDATE_PASSWORD` delivery, then disables it again. Only a successful local
+  binding permits the subsequent usable enablement. It never stores, logs or
+  returns that token, an e-mail address or the raw Keycloak subject. The source
+  adapter is constructed at runtime but makes no network request during
   composition.
 - Bootstrap remains a separate identity and executable boundary; the BFF
   fail-closes if a bootstrap or generic database variable is present.
