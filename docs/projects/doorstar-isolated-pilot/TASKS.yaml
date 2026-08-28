@@ -44,7 +44,7 @@ milestones:
         description: "Elkülönített, loopback-only statikus Office login/dashboard előnézet készült mintaadatokkal, tiltott belépési vezérlővel és no-network verifikációval; nem módosítja a BFF négy-route szerződését."
       - id: V-02
         status: "completed"
-        description: "Az előnézet belépési képe a valódi szervezeti OIDC authorization-code + PKCE modellhez igazodott; nincs alkalmazás-jelszómező. A dashboardról csak a pontosan allowlistelt DS-26133 statikus projekt-fixture érhető el."
+        description: "Az előnézet belépési képe a valódi szervezeti OIDC authorization-code + PKCE modellhez igazodott; nincs alkalmazás-jelszómező. A dashboardról csak a pontosan allowlistelt DS-26133 statikus projekt-fixture érhető el. A külön jelölt Minta iroda megnyitása vezérlő kizárólag helyi #dashboard navigációt ad a vizuális ellenőrzéshez, hitelesítés vagy munkamenet nélkül."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -94,3 +94,5 @@ execution_log:
     outcome: "Az R-04 security review megállapította, hogy a candidate checkoutból futó Gate 0/Gate 1 JavaScript és egy szabadon elhelyezett approval JSON nem lehet önmaga hiteles végrehajtási vagy emberi approval authority-ja. Emiatt a proof:docker fail-closed a03_gate1_external_trust_anchor_required kóddal áll meg minden Git-, Prisma-, Docker-, PostgreSQL- és evidence-művelet előtt; célzott unit teszt igazolja a nulla child-process hívást. Nem futott Docker, PostgreSQL, IdP, VPS, ingress vagy deploy. Az immutable verifier és hiteles approval anchor külső operations/security döntésként R-05 blocker marad."
   - date: "2026-08-28"
     outcome: "Az R-04 source-remediation lezárva: a nyers Git-fa és raw-byte candidate-ellenőrzés, immutable fixture/schema/toolchain snapshot és local Docker-input hardening mellett a package `main`/`bin` exportjai megszűntek, a `proof:docker` importmentes external-trust-anchor hard stop, a csomag whitelistje nem publikál `dist` artifactot. A helyileg újraépített történeti `dist` CLI és a package script is kizárólag a03_gate1_external_trust_anchor_required hibával áll le. Bizonyíték: staging `lint`, `build`, teljes `npm test` (25 Gate0 + 16 Gate1 + 83 unit), valamint `npm pack --dry-run` PASS. Docker, PostgreSQL, IdP, VPS, ingress vagy deploy nem futott."
+  - date: "2026-08-28"
+    outcome: "A V-02 helyi vizuális preview bővült egy külön Minta iroda megnyitása navigációs vezérlővel. A valódi szervezeti OIDC gomb továbbra is disabled és handler nélküli; az új vezérlő csak a #dashboard mintaállapotot nyitja, nem hoz létre munkamenetet és nem kapcsol hálózatra. Bizonyíték: preview `npm run verify` PASS, kézi local browser ellenőrzés 390/768/1440 px-en, 48 px vezérlőmagassággal, vízszintes túlcsordulás és console hiba nélkül. BFF-, DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."

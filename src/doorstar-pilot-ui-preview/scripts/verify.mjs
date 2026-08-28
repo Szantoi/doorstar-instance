@@ -57,6 +57,8 @@ async function verifyStaticContent() {
   assert.match(indexText, /Helyi vizuális előnézet — nincs bejelentkezés vagy adatkapcsolat/);
   assert.match(indexText, /id="preview-sign-in"[^>]*disabled/);
   assert.match(indexText, /Doorstar szervezeti fiók/);
+  assert.match(indexText, /id="preview-open-dashboard"[^>]*data-view-target="dashboard"/);
+  assert.match(indexText, /Csak a helyi minta nézetre lép; nem hitelesít és nem hoz létre munkamenetet\./);
   assert.match(indexText, /href="\/office\/projects\/DS-26133"/);
   assert.doesNotMatch(indexText, /<input\b/i);
   assert.doesNotMatch(indexText, /type="password"/i);
@@ -65,7 +67,9 @@ async function verifyStaticContent() {
   assert.match(appText, /const previewData/);
   assert.match(appText, /const projectPreviewPath = "\/office\/projects\/DS-26133"/);
   assert.doesNotMatch(appText, /preview-sign-in/);
+  assert.doesNotMatch(appText, /preview-open-dashboard/);
   assert.doesNotMatch(appText, /\b(fetch|XMLHttpRequest|WebSocket|EventSource)\b/);
+  assert.match(styleText, /\.preview-navigation-button/);
   assert.match(styleText, /\.preview-notice/);
   assert.match(serverText, /const LOOPBACK_HOST = "127\.0\.0\.1"/);
   assert.match(serverText, /"\/office\/projects\/DS-26133"/);

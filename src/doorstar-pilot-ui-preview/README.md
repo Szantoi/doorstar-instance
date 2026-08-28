@@ -58,6 +58,9 @@ bizonyítja, hogy az előnézetben nincs hitelesítési útvonal.
 - A **Folytatás szervezeti fiókkal** gomb disabled, nincs eseménykezelője.
   A kártya az éles, szerveroldali OIDC authorization-code + PKCE folyamat
   megjelenítését mintázza; nincs saját e-mail- vagy jelszómező.
+- A **Minta iroda megnyitása** gomb kizárólag a helyi `#dashboard` nézetre
+  navigál. Nem hitelesít, nem tárol munkamenetet és nem oldja fel a valódi
+  szervezeti belépés tiltását.
 - A dashboard minden adata forráskódban deklarált, egyértelműen mintaadat.
 - A dashboardról csak a szó szerint allowlistelt **DS-26133** helyi
   projekt-előnézet nyitható meg.

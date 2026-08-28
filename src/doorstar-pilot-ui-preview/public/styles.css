@@ -417,6 +417,38 @@ main {
   box-shadow: none;
 }
 
+.preview-navigation-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 17px;
+  border: 1px solid #143d2c;
+  border-radius: 11px;
+  background: var(--forest);
+  color: #ffffff;
+  font-size: 0.91rem;
+  font-weight: 780;
+  box-shadow: 0 8px 18px rgb(20 61 44 / 16%);
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.preview-navigation-button:hover {
+  background: #0b291c;
+  box-shadow: 0 10px 22px rgb(20 61 44 / 21%);
+}
+
+.preview-navigation-button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-navigation-button {
+    transition: none;
+  }
+}
+
 .field-help {
   margin: 10px 1px 0;
   color: #75837b;
