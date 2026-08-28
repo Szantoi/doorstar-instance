@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "kind": "doorstar-pilot-gate0-policy",
+  "environmentClass": "SOURCE_ONLY_NO_EXTERNAL_RUNTIME",
+  "permittedNextAction": "HUMAN_SOURCE_CHECK_EVIDENCE_AND_GATE0_REVIEW_REQUIRED",
+  "components": [
+    {
+      "id": "foundation",
+      "directory": "src/doorstar-pilot-foundation",
+      "packageName": "@doorstar/pilot-foundation",
+      "checks": [
+        { "id": "prisma_validate", "kind": "npm_run", "script": "prisma:validate" },
+        { "id": "prisma_generate", "kind": "npm_run", "script": "prisma:generate" },
+        { "id": "source_and_unit", "kind": "npm_run", "script": "test" },
+        { "id": "build", "kind": "npm_run", "script": "build" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" }
+      ]
+    },
+    {
+      "id": "bff",
+      "directory": "src/doorstar-pilot-bff",
+      "packageName": "@doorstar/pilot-bff",
+      "checks": [
+        { "id": "source_and_runtime", "kind": "npm_run", "script": "test" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" },
+        { "id": "production_dependency_tree", "kind": "npm_production_dependency_tree" }
+      ]
+    },
+    {
+      "id": "bootstrap",
+      "directory": "src/doorstar-pilot-bootstrap",
+      "packageName": "@doorstar/pilot-bootstrap",
+      "checks": [
+        { "id": "source_and_runtime", "kind": "npm_run", "script": "test" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" },
+        { "id": "production_dependency_tree", "kind": "npm_production_dependency_tree" }
+      ]
+    }
+  ]
+}

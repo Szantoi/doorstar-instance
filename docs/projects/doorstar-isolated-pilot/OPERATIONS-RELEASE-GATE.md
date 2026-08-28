@@ -25,8 +25,14 @@ operator reference; this document remains the approval authority.
 
 ## Gate 0 — immutable source candidate
 
-Before any staging environment exists, record one immutable candidate commit
-and its package-lock hashes. The candidate must pass, from a clean checkout:
+Before any staging environment exists, bind one clean candidate commit to the
+versioned check plan and its package-lock hashes with the source-only
+[`GATE0-CAPSULE.md`](GATE0-CAPSULE.md) tool. Its
+`CANDIDATE_BOUND_NOT_EXECUTED` capsule is technical identity evidence only; it
+does not run or attest to candidate package code.
+
+In a separately approved, isolated source-verification environment, the same
+clean candidate must then pass:
 
 - `src/doorstar-pilot-foundation`: source verifier, unit tests, Prisma
   validation/generation, build and lint;
@@ -35,9 +41,11 @@ and its package-lock hashes. The candidate must pass, from a clean checkout:
 - `src/doorstar-pilot-bootstrap`: unit tests, build, lint and
   production-dependency audit.
 
-The approval record must name the candidate commit, the reviewer, the
-environment classification and the permitted next action. It must not contain
-credentials, raw OIDC subjects, browser tokens or customer data.
+The Gate 0 approval record must name the candidate commit, capsule SHA-256,
+reviewer, environment classification, redacted source-check outcomes and the
+permitted next action. It must not contain credentials, raw OIDC subjects,
+browser tokens or customer data. Only after that human Gate 0 acceptance may
+the record permit the separate human-approved Gate 1 proof.
 
 ## Gate 1 — disposable staging isolation proof
 
