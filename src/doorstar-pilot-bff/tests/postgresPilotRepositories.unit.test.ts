@@ -81,6 +81,7 @@ describe("PostgresPilotRepositories", () => {
 
     const sql = pool.clients.flatMap((client) => client.calls.map((call) => call.text)).join("\n");
     expect(sql).toContain("pilot.pilot_create_authorization_transaction_v1");
+    expect(sql).toContain("$5::timestamptz AT TIME ZONE pg_catalog.current_setting('TimeZone')");
     expect(sql).toContain("pilot.pilot_consume_authorization_transaction_v1");
     expect(sql).toContain("pilot.pilot_issue_opaque_session_v1");
     expect(sql).toContain("pilot.pilot_revoke_opaque_session_v1");

@@ -89,7 +89,13 @@ export class PostgresPilotRepositories implements
     const transaction = validateNewAuthorizationTransaction(input);
     await this.transactionRunner.scoped(this.requireResolvedRuntimeScopeId(), async (client) => {
       const result = await client.query(
-        `SELECT pilot.pilot_create_authorization_transaction_v1($1, $2, $3, $4, $5) AS "id"`,
+        `SELECT pilot.pilot_create_authorization_transaction_v1(
+           $1,
+           $2,
+           $3,
+           $4,
+           ($5::timestamptz AT TIME ZONE pg_catalog.current_setting('TimeZone'))
+         ) AS "id"`,
         [
           transaction.stateHash,
           transaction.browserBindingHash,
