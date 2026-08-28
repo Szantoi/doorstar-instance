@@ -84,18 +84,16 @@
                 Védett hozzáférés
               </span>
             </div>
-            <h2>Üdv újra</h2>
-            <p>Ez a képernyő csak a megjelenés ellenőrzésére szolgál.</p>
+            <h2>Bejelentkezés szervezeti fiókkal</h2>
+            <p>Ez a képernyő csak a valódi OIDC-belépés megjelenését szemlélteti.</p>
 
-            <div class="form-stack" aria-label="Nem aktív bejelentkezési mezők">
-              <label>
-                E-mail-cím
-                <input type="email" value="minta@doorstar.hu" disabled />
-              </label>
-              <label>
-                Jelszó
-                <input type="password" placeholder="Minta jelszó" disabled />
-              </label>
+            <div class="oidc-provider-card" aria-label="OIDC belépési előnézet">
+              <span class="oidc-provider-card__mark" aria-hidden="true">D</span>
+              <span class="oidc-provider-card__content">
+                <strong>Doorstar szervezeti fiók</strong>
+                <small>Biztonságos OIDC-átirányítás</small>
+              </span>
+              <span class="oidc-provider-card__status">minta</span>
             </div>
 
             <button
@@ -105,10 +103,10 @@
               disabled
               aria-describedby="sign-in-help"
             >
-              Bejelentkezés az Office-ba
+              Folytatás szervezeti fiókkal
             </button>
             <p id="sign-in-help" class="field-help">
-              Előnézeti módban a bejelentkezés szándékosan nem működik.
+              Előnézeti módban nincs átirányítás, munkamenet vagy adatkapcsolat.
             </p>
 
             <div class="login-card__footer">
@@ -135,6 +133,15 @@
           </div>
 
           <section class="metric-grid" id="metric-grid" aria-label="Irodai mutatók"></section>
+
+          <a class="project-fixture-link" href="/office/projects/DS-26133">
+            <span class="project-fixture-link__icon" aria-hidden="true">↗</span>
+            <span>
+              <small>Projekt-részletező előnézet</small>
+              <strong>DS-26133 · minta Office-projekt</strong>
+            </span>
+            <span class="project-fixture-link__action">Megnyitás</span>
+          </a>
 
           <div class="dashboard-columns">
             <section class="panel portfolio-panel" aria-labelledby="portfolio-title">

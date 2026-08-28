@@ -55,8 +55,12 @@ bizonyítja, hogy az előnézetben nincs hitelesítési útvonal.
 
 ## Tudatos korlátok
 
-- A **Bejelentkezés az Office-ba** gomb disabled, nincs eseménykezelője.
+- A **Folytatás szervezeti fiókkal** gomb disabled, nincs eseménykezelője.
+  A kártya az éles, szerveroldali OIDC authorization-code + PKCE folyamat
+  megjelenítését mintázza; nincs saját e-mail- vagy jelszómező.
 - A dashboard minden adata forráskódban deklarált, egyértelműen mintaadat.
+- A dashboardról csak a szó szerint allowlistelt **DS-26133** helyi
+  projekt-előnézet nyitható meg.
 - A szerver csak öt explicit statikus útvonalat szolgál ki: **/**,
   **/index.html**, **/styles.css**, **/app.js** és a helyi
   **/office/projects/DS-26133** fixture. Nincs általános SPA fallback.

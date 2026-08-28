@@ -29,6 +29,8 @@ and would not be a valid way to review the new pilot.
    data connection. The sign-in control must not start an authorization flow
    or create a session. A fixture route may only serve the same static shell;
    it may not resolve, load, or infer a project from its path.
+   The sign-in visual must depict the approved organizational OIDC flow rather
+   than application-owned e-mail or password collection.
 4. The preview owns its own small static server and verification command, so
    visual work can be checked locally without changing the BFF's four-route
    public contract.

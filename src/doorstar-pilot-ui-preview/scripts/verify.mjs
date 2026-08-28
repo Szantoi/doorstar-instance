@@ -56,10 +56,16 @@ async function verifyStaticContent() {
   assert.equal(packageJson.scripts.verify, "node scripts/verify.mjs");
   assert.match(indexText, /Helyi vizuális előnézet — nincs bejelentkezés vagy adatkapcsolat/);
   assert.match(indexText, /id="preview-sign-in"[^>]*disabled/);
+  assert.match(indexText, /Doorstar szervezeti fiók/);
+  assert.match(indexText, /href="\/office\/projects\/DS-26133"/);
+  assert.doesNotMatch(indexText, /<input\b/i);
+  assert.doesNotMatch(indexText, /type="password"/i);
   assert.match(indexText, /data-view-target="dashboard"/);
   assert.match(indexText, /data-view-panel="project"/);
   assert.match(appText, /const previewData/);
   assert.match(appText, /const projectPreviewPath = "\/office\/projects\/DS-26133"/);
+  assert.doesNotMatch(appText, /preview-sign-in/);
+  assert.doesNotMatch(appText, /\b(fetch|XMLHttpRequest|WebSocket|EventSource)\b/);
   assert.match(styleText, /\.preview-notice/);
   assert.match(serverText, /const LOOPBACK_HOST = "127\.0\.0\.1"/);
   assert.match(serverText, /"\/office\/projects\/DS-26133"/);
@@ -83,6 +89,8 @@ async function verifyRunningServer() {
       malformedProjectResponse,
       nestedProjectResponse,
       apiResponse,
+      authLoginResponse,
+      authSessionResponse,
       postProjectResponse
     ] = await Promise.all([
       fetch(url + "/"),
@@ -93,6 +101,8 @@ async function verifyRunningServer() {
       fetch(url + "/office/projects/DS-12"),
       fetch(url + "/office/projects/DS-26133/extra"),
       fetch(url + "/api/auth/start"),
+      fetch(url + "/auth/login"),
+      fetch(url + "/auth/session"),
       fetch(url + "/office/projects/DS-26133", { method: "POST" })
     ]);
     const dotSegmentProjectResponse = await requestRawPath(
@@ -110,6 +120,8 @@ async function verifyRunningServer() {
     assert.equal(nestedProjectResponse.status, 404);
     assert.equal(dotSegmentProjectResponse.statusCode, 404);
     assert.equal(apiResponse.status, 404);
+    assert.equal(authLoginResponse.status, 404);
+    assert.equal(authSessionResponse.status, 404);
     assert.equal(postProjectResponse.status, 405);
     assert.equal(postProjectResponse.headers.get("allow"), "GET, HEAD");
     assert.match(indexResponse.headers.get("content-security-policy") ?? "", /connect-src 'none'/);

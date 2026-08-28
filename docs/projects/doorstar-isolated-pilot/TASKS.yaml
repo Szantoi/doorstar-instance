@@ -1,6 +1,6 @@
 version: "1.0"
 project: "doorstar-isolated-pilot"
-updated: "2026-08-27"
+updated: "2026-08-28"
 status: "active"
 goal: "Tiszta, izolált Doorstar named-user pilot foundation és a kiadásra kész A-fázis előkészítése, külső runtime-változás nélkül."
 stop_condition: "F és A csak akkor jelölhető source-ready állapotúnak, ha a clean worktree, a saját Prisma-lineage, a P1 DB-policy source boundary, a célzott tesztek és a független review bizonyított; élesítéshez ezután külön staging és release GO szükséges."
@@ -42,6 +42,9 @@ milestones:
       - id: V-01
         status: "completed"
         description: "Elkülönített, loopback-only statikus Office login/dashboard előnézet készült mintaadatokkal, tiltott belépési vezérlővel és no-network verifikációval; nem módosítja a BFF négy-route szerződését."
+      - id: V-02
+        status: "completed"
+        description: "Az előnézet belépési képe a valódi szervezeti OIDC authorization-code + PKCE modellhez igazodott; nincs alkalmazás-jelszómező. A dashboardról csak a pontosan allowlistelt DS-26133 statikus projekt-fixture érhető el."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -69,3 +72,5 @@ execution_log:
     outcome: "A V-01 kibővült a felhasználó által kért /office/projects/DS-26133 explicit, statikus projekt-részletező fixture-rel. A route csak GET/HEAD esetén ugyanazt a helyi HTML shellt adja, nincs általános SPA fallback, és DS-12, nested útvonal, API vagy POST továbbra is elutasított. A képernyő mintaállapotot mutat; nem olvas projekt-, fájl-, DB-, BFF-, IdP- vagy Plant-adatot."
   - date: "2026-08-27"
     outcome: "A projekt-fixture független review PASS: a raw URL normalizálási kerülőút is zárva van, ezért /office/projects/x/../DS-26133 is 404. A verifier igazolja a pontos raw allowlistet, GET/HEAD 200-at, POST 405-öt, az eltérő útvonalak 404-ét, loopback-only bindet és `connect-src 'none'` CSP-t."
+  - date: "2026-08-28"
+    outcome: "A V-02 identity-faithful preview PASS: a korábbi e-mail/jelszó-minta helyett disabled szervezeti OIDC-kártya látható, a dashboard explicit DS-26133 fixture-linket ad, a verifier jelszómező, belépési handler és kliensoldali hálózati primitív hiányát, valamint a preview /auth/login és /auth/session 404-ét is igazolja. BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."
