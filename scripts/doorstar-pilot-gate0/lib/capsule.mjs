@@ -58,6 +58,12 @@ function readCandidateSnapshot(repository, candidate) {
         id: check.id,
         kind: check.kind,
         ...(check.kind === "npm_run" ? { script: check.script } : {}),
+        ...(check.kind === "npm_production_dependency_tree" ? {
+          command: check.command,
+          arguments: check.arguments,
+          acceptanceCriteria: check.acceptanceCriteria,
+          reviewedToolchain: check.reviewedToolchain,
+        } : {}),
       })),
     });
   });
@@ -82,6 +88,7 @@ function buildCapsule(snapshot) {
     },
     policySha256: snapshot.policySha256,
     environmentClass: snapshot.policy.environmentClass,
+    reviewedToolchain: snapshot.policy.reviewedToolchain,
     components: snapshot.components,
     permittedNextAction: snapshot.policy.permittedNextAction,
   };

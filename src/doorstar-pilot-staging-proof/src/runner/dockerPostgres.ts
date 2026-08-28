@@ -1,9 +1,18 @@
 import type { DisposableDatabaseIdentity } from "./a03Config.js";
 import { A03ProofError } from "./a03Config.js";
 import type { CommandResult, CommandRunner } from "./commandRunner.js";
-import { requireSuccessfulCommand } from "./commandRunner.js";
-
-export const disposablePostgresImage = "postgres:16";
+import {
+  assertAllowlistedLocalDockerEndpoint,
+  createLocalDockerInvocation,
+  localDockerContextHostFormat,
+  runLocalDockerCommand,
+  type LocalDockerInvocation,
+} from "./dockerLocalEndpointGuard.js";
+import {
+  requireImmutablePostgresImageReference,
+  type DockerRuntimeInput,
+  type ImmutablePostgresImageReference,
+} from "./dockerRuntimeInput.js";
 
 const disposableLabelKey = "doorstar.a03.disposable";
 const disposableLabelValue = "true";
@@ -19,7 +28,7 @@ export type DisposablePostgresStart = Readonly<{
 
 export type VerifiedPostgresImage = Readonly<{
   imageId: string;
-  immutableReference: string | null;
+  immutableReference: ImmutablePostgresImageReference;
 }>;
 
 export type DisposableContainerCleanup = "container_destroyed" | "container_not_started";
@@ -30,8 +39,12 @@ type PostgresImageInspection = Readonly<{
 }>;
 
 /** Build-only data: calling this does not invoke Docker. */
-export function buildDisposablePostgresRunArguments(start: DisposablePostgresStart): readonly string[] {
+export function buildDisposablePostgresRunArguments(
+  start: DisposablePostgresStart,
+  postgresImageReference: string,
+): readonly string[] {
   assertDockerName(start.containerName);
+  const immutableReference = requireImmutablePostgresImageReference(postgresImageReference);
   return [
     "run",
     "--detach",
@@ -45,7 +58,7 @@ export function buildDisposablePostgresRunArguments(start: DisposablePostgresSta
     // `postgres` is a disposable control database. The proof database itself
     // is created later with the non-runtime migrator as owner.
     "--env", "POSTGRES_DB=postgres",
-    disposablePostgresImage,
+    immutableReference,
   ];
 }
 
@@ -57,13 +70,17 @@ export function buildDisposablePostgresRunArguments(start: DisposablePostgresSta
 export function parseVerifiedPostgresImageInspection(
   imageIdOutput: string,
   repoDigestsJsonOutput: string,
+  postgresImageReference: string,
 ): VerifiedPostgresImage {
+  const immutableReference = requireImmutablePostgresImageReference(postgresImageReference);
   const imageId = imageIdOutput.trim();
   if (!/^sha256:[a-f0-9]{64}$/i.test(imageId)) {
     throw new A03ProofError("a03_postgres_image_id_invalid");
   }
   const digests = parseRepoDigestsJson(repoDigestsJsonOutput);
-  const immutableReference = digests.find((digest) => /^postgres@sha256:[a-f0-9]{64}$/i.test(digest)) ?? null;
+  if (!digests.includes(immutableReference)) {
+    throw new A03ProofError("a03_postgres_image_reference_mismatch");
+  }
   return { imageId, immutableReference };
 }
 
@@ -72,14 +89,18 @@ export class DisposablePostgresContainer {
   private started = false;
   private startMayHaveCreatedContainer = false;
   private startOutcomeUncertain = false;
+  private localDockerInvocation: LocalDockerInvocation | null = null;
+  private localDockerEndpointVerification: Promise<void> | null = null;
 
   public constructor(
     private readonly commandRunner: CommandRunner,
     private readonly start: DisposablePostgresStart,
+    private readonly dockerRuntime: DockerRuntimeInput,
+    private readonly environment: NodeJS.ProcessEnv = process.env,
   ) {}
 
   public async assertDockerReadyAndImageAvailable(): Promise<VerifiedPostgresImage> {
-    const version = await requireSuccessfulCommand(this.commandRunner, "version", [
+    const version = await this.requireSuccessfulDockerCommand("version", [
       "version",
       "--format",
       "{{.Server.Version}}",
@@ -88,27 +109,26 @@ export class DisposablePostgresContainer {
       throw new A03ProofError("a03_docker_not_ready");
     }
 
-    let inspection = await this.inspectImage();
-    if (inspection.imageId.exitCode !== 0) {
-      await requireSuccessfulCommand(this.commandRunner, "image", ["pull", disposablePostgresImage], 120_000);
-      inspection = await this.inspectImage();
-    }
+    const inspection = await this.inspectImage();
     if (
       inspection.imageId.exitCode !== 0
       || inspection.repoDigests === null
       || inspection.repoDigests.exitCode !== 0
     ) {
-      throw new A03ProofError("a03_docker_image_failed");
+      throw new A03ProofError("a03_docker_image_not_available");
     }
-    return parseVerifiedPostgresImageInspection(inspection.imageId.stdout, inspection.repoDigests.stdout);
+    return parseVerifiedPostgresImageInspection(
+      inspection.imageId.stdout,
+      inspection.repoDigests.stdout,
+      this.dockerRuntime.postgresImageReference,
+    );
   }
 
   public async startContainer(): Promise<void> {
     let result: CommandResult;
     try {
-      result = await this.commandRunner.run(
-        "docker",
-        buildDisposablePostgresRunArguments(this.start),
+      result = await this.runDocker(
+        buildDisposablePostgresRunArguments(this.start, this.dockerRuntime.postgresImageReference),
         30_000,
       );
       // A non-zero result can still follow daemon-side container creation.
@@ -132,7 +152,7 @@ export class DisposablePostgresContainer {
 
   public async loopbackPort(): Promise<number> {
     if (!this.started) throw new A03ProofError("a03_container_not_started");
-    const inspection = await requireSuccessfulCommand(this.commandRunner, "inspect", [
+    const inspection = await this.requireSuccessfulDockerCommand("inspect", [
       "inspect",
       "--format",
       "{{range (index .NetworkSettings.Ports \"5432/tcp\")}}{{.HostIp}}:{{.HostPort}}{{end}}",
@@ -147,40 +167,43 @@ export class DisposablePostgresContainer {
   }
 
   /**
-   * Claims a possible orphan by its exact generated name, image tag, and
+   * Returns only the content hash observed for the explicit CLI file. The
+   * filesystem path and the temporary Docker config directory never leave this
+   * runner boundary. A null value means Docker was never reached.
+   */
+  public dockerCliContentSha256(): string | null {
+    return this.localDockerInvocation?.dockerCliContentSha256 ?? null;
+  }
+
+  /**
+   * Claims a possible orphan by its exact generated name, immutable image, and
    * disposable label before removal. It never searches legacy containers.
    */
   public async destroy(): Promise<DisposableContainerCleanup> {
-    if (!this.startMayHaveCreatedContainer) return "container_not_started";
-    const exists = this.startOutcomeUncertain
-      ? await this.settleAndInspectClaimedContainer()
-      : await this.inspectClaimedContainer();
-    if (!exists) {
-      this.started = false;
-      this.startMayHaveCreatedContainer = false;
-      this.startOutcomeUncertain = false;
-      return "container_not_started";
-    }
     try {
-      await requireSuccessfulCommand(this.commandRunner, "remove", ["rm", "--force", this.start.containerName], 30_000);
+      if (!this.startMayHaveCreatedContainer) return "container_not_started";
+      const exists = this.startOutcomeUncertain
+        ? await this.settleAndInspectClaimedContainer()
+        : await this.inspectClaimedContainer();
+      if (!exists) return "container_not_started";
+      await this.requireSuccessfulDockerCommand("remove", ["rm", "--force", this.start.containerName], 30_000);
       return "container_destroyed";
     } finally {
       this.started = false;
       this.startMayHaveCreatedContainer = false;
       this.startOutcomeUncertain = false;
+      this.localDockerInvocation?.dispose();
     }
   }
 
   private async inspectImage(): Promise<PostgresImageInspection> {
-    const imageId = await this.commandRunner.run(
-      "docker",
-      ["image", "inspect", "--format", "{{.Id}}", disposablePostgresImage],
+    const imageId = await this.runDocker(
+      ["image", "inspect", "--format", "{{.Id}}", this.dockerRuntime.postgresImageReference],
       15_000,
     );
     if (imageId.exitCode !== 0) return { imageId, repoDigests: null };
-    const repoDigests = await this.commandRunner.run(
-      "docker",
-      ["image", "inspect", "--format", "{{json .RepoDigests}}", disposablePostgresImage],
+    const repoDigests = await this.runDocker(
+      ["image", "inspect", "--format", "{{json .RepoDigests}}", this.dockerRuntime.postgresImageReference],
       15_000,
     );
     return { imageId, repoDigests };
@@ -190,7 +213,7 @@ export class DisposablePostgresContainer {
     const claim = await this.inspectContainerFormat(
       "{{.Config.Image}}|{{index .Config.Labels \"doorstar.a03.disposable\"}}",
     );
-    if (claim.trim() !== `${disposablePostgresImage}|${disposableLabelValue}`) {
+    if (claim.trim() !== `${this.dockerRuntime.postgresImageReference}|${disposableLabelValue}`) {
       throw new A03ProofError("a03_container_claim_invalid");
     }
     const mounts = parseJsonInspection(await this.inspectContainerFormat("{{json .Mounts}}"));
@@ -204,8 +227,7 @@ export class DisposablePostgresContainer {
   }
 
   private async inspectClaimedContainer(): Promise<boolean> {
-    const inspection = await this.commandRunner.run(
-      "docker",
+    const inspection = await this.runDocker(
       [
         "inspect",
         "--format",
@@ -218,7 +240,7 @@ export class DisposablePostgresContainer {
       if (/\bno such (?:container|object)\b/i.test(`${inspection.stdout}\n${inspection.stderr}`)) return false;
       throw new A03ProofError("a03_docker_inspect_failed");
     }
-    if (inspection.stdout.trim() !== `${disposablePostgresImage}|${disposableLabelValue}`) {
+    if (inspection.stdout.trim() !== `${this.dockerRuntime.postgresImageReference}|${disposableLabelValue}`) {
       throw new A03ProofError("a03_container_cleanup_claim_invalid");
     }
     return true;
@@ -234,13 +256,80 @@ export class DisposablePostgresContainer {
   }
 
   private async inspectContainerFormat(format: string): Promise<string> {
-    const inspection = await requireSuccessfulCommand(this.commandRunner, "inspect", [
+    const inspection = await this.requireSuccessfulDockerCommand("inspect", [
       "inspect",
       "--format",
       format,
       this.start.containerName,
     ]);
     return inspection.stdout;
+  }
+
+  /**
+   * Every Docker request, including cleanup and image inspection, goes through
+   * this one local-only gate. It is deliberately lazy so a rejected
+   * environment becomes a normal redacted proof failure instead of a
+   * constructor-time side effect.
+   */
+  private runDocker(
+    argumentsList: readonly string[],
+    timeoutMilliseconds: number,
+  ): Promise<CommandResult> {
+    return this.runDockerAfterLocalEndpointVerification(argumentsList, timeoutMilliseconds);
+  }
+
+  private async runDockerAfterLocalEndpointVerification(
+    argumentsList: readonly string[],
+    timeoutMilliseconds: number,
+  ): Promise<CommandResult> {
+    await this.assertLocalDockerEndpoint();
+    return this.runDockerWithoutEndpointAssertion(argumentsList, timeoutMilliseconds);
+  }
+
+  /**
+   * Context inspection is the single pre-daemon Docker operation. It runs
+   * through the existing environment/context guard, then proves that the
+   * selected context resolves to the narrow platform-local endpoint allowlist.
+   */
+  private assertLocalDockerEndpoint(): Promise<void> {
+    return this.localDockerEndpointVerification ??= this.inspectLocalDockerEndpoint();
+  }
+
+  private async inspectLocalDockerEndpoint(): Promise<void> {
+    const inspection = await this.runDockerWithoutEndpointAssertion([
+      "context",
+      "inspect",
+      "default",
+      "--format",
+      localDockerContextHostFormat,
+    ], 10_000);
+    if (inspection.exitCode !== 0) {
+      throw new A03ProofError("a03_docker_local_context_inspection_failed");
+    }
+    assertAllowlistedLocalDockerEndpoint(inspection.stdout);
+  }
+
+  private runDockerWithoutEndpointAssertion(
+    argumentsList: readonly string[],
+    timeoutMilliseconds: number,
+  ): Promise<CommandResult> {
+    const invocation = this.localDockerInvocation ??= createLocalDockerInvocation(
+      this.dockerRuntime.dockerCliPath,
+      this.environment,
+    );
+    return runLocalDockerCommand(this.commandRunner, invocation, argumentsList, timeoutMilliseconds);
+  }
+
+  private async requireSuccessfulDockerCommand(
+    category: "version" | "image" | "run" | "inspect" | "remove",
+    argumentsList: readonly string[],
+    timeoutMilliseconds = 30_000,
+  ): Promise<CommandResult> {
+    const result = await this.runDocker(argumentsList, timeoutMilliseconds);
+    if (result.exitCode !== 0) {
+      throw new A03ProofError(`a03_docker_${category}_failed`);
+    }
+    return result;
   }
 }
 

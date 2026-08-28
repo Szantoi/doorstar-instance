@@ -20,6 +20,8 @@ npm run lint
 npm run build
 npm run verify:fixture
 npm run verify:boundary
+npm run test:gate0
+npm run test:gate1
 npm test
 ```
 
@@ -35,23 +37,38 @@ only: the production one-scope guard becomes a literal, closed two-scope guard.
 The runner generates fresh UUID/scope-key pairs per run and renders them only
 in memory. No production-like scope values are hard-coded.
 
-## The separately approved disposable run
+## Current Gate 1 execution status
 
-The only command capable of Docker activity is `npm run proof:docker`. It
-refuses to start unless both the CLI argument (provided by the script) and this
-exact, one-run environment acknowledgement are present:
+The local `proof:docker` entry point is intentionally **disabled**. It is a
+tracked, import-free hard stop that always reports
+`a03_gate1_external_trust_anchor_required`; it does not parse an
+acknowledgement, read a candidate or external artifact, start a child process,
+write evidence, or contact Docker. The package exposes no `main` or `bin`
+entry point, and its package whitelist excludes `dist`. It cannot be used to
+create a disposable database today.
 
-```powershell
-$env:DOORSTAR_A03_ACKNOWLEDGEMENT = "I_CONFIRM_A03_DISPOSABLE_POSTGRES_16_PROOF"
-npm run proof:docker
-Remove-Item Env:DOORSTAR_A03_ACKNOWLEDGEMENT
-```
+This is deliberate: a verifier loaded from the candidate checkout and an
+unsigned approval JSON file cannot authenticate their own authority. A future
+run requires a separately released verifier artifact and an independently
+administered, authenticated one-run approval anchor. See
+[`ADR-2026-08-28-doorstar-pilot-gate1-external-trust-anchor.md`](../../docs/decisions/ADR-2026-08-28-doorstar-pilot-gate1-external-trust-anchor.md).
 
-Running that command requires separate human approval for the disposable
-staging proof. It is never part of normal build, lint, unit-test, deploy, or
-application startup behavior.
+## Historical execution design — not an operator procedure
 
-Prerequisites after that approval:
+The following describes constraints that the future independent verifier must
+enforce. It is not a command to run from this checkout and cannot authorize or
+start Docker here. There is deliberately no local command line for this
+historical sequence.
+
+The capsule and acceptance marker must already be verified by the Gate 0 tool
+for the exact, clean candidate. The marker binds the approved source-check
+evidence structurally; the authoritative human Gate 0 record stays external.
+The acknowledgement is deliberately not an approval credential and may not be
+used as one. A future execution requires a separately recorded, authenticated
+one-run human approval for the disposable staging proof. It is never part of
+normal build, lint, unit-test, deploy, or application startup behavior.
+
+Prerequisites for a future external verifier only:
 
 - Docker Desktop is ready for Linux containers;
 - `postgres:16` can be inspected or pulled by Docker;
@@ -59,7 +76,8 @@ Prerequisites after that approval:
   dependencies installed (`npm ci` or equivalent);
 - no secrets, production DSNs, IdP credentials, or customer data are supplied.
 
-The guarded runner creates a new generated-name `postgres:16` container with:
+The future external verifier would create a new generated-name `postgres:16`
+container with:
 
 - `127.0.0.1:0:5432` only — a dynamically allocated loopback port, never a
   fixed or public port;
@@ -68,15 +86,19 @@ The guarded runner creates a new generated-name `postgres:16` container with:
   `NOSUPERUSER NOBYPASSRLS NOINHERIT` migrator, runtime, and bootstrap logins;
 - a fresh database owned by the non-superuser migrator.
 
-It runs the immutable migrations through the foundation Prisma CLI as that
-migrator, then checks the real `public._prisma_migrations` ledger/checksums.
-Before Docker activity it also requires a clean Git worktree and records the
-candidate commit SHA in redacted evidence; source drift fails closed.
-It captures every `pilot` function's definition, owner, ACL, security-definer
+It would run the immutable migrations through the foundation Prisma CLI as that
+migrator, then check the real `public._prisma_migrations` ledger/checksums.
+Before Docker activity it must require a clean Git worktree and verify the
+external Gate 0 capsule plus acceptance marker against that exact candidate;
+source drift or an unaccepted candidate fails closed. It proves that Docker's
+fixed `default` context resolves to the allowlisted local engine endpoint with
+no inherited Docker/container-runtime endpoint override. The candidate and
+provenance are verified again immediately before container creation.
+It would capture every `pilot` function's definition, owner, ACL, security-definer
 flag, and configuration before and after the fixture. Exactly the three
 approved definitions must change; all other function manifests stay identical.
 
-The proof captures the concrete immutable PostgreSQL image ID and, when Docker
+The proof would capture the concrete immutable PostgreSQL image ID and, when Docker
 provides one, the `postgres@sha256:…` repository digest in redacted evidence.
 It also grants the runtime identity (and only that identity) narrow EXECUTE on
 `pilot.doorstar_current_pilot_scope_id()` for the reviewed RLS read policies,

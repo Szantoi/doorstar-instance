@@ -1,6 +1,34 @@
 import { fail } from "./errors.mjs";
 
-export const POLICY_PATH = "scripts/doorstar-pilot-gate0/gate0-policy.v1.json";
+export const POLICY_PATH = "scripts/doorstar-pilot-gate0/gate0-policy.v2.json";
+
+export const EXPECTED_REVIEWED_TOOLCHAIN = Object.freeze({
+  node: "v24.13.0",
+  npm: "11.6.2",
+});
+
+const PRODUCTION_DEPENDENCY_TREE_CHECK = Object.freeze({
+  id: "production_dependency_tree",
+  kind: "npm_production_dependency_tree",
+  command: "npm",
+  arguments: Object.freeze([
+    "--offline",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--workspaces=false",
+    "ls",
+    "--package-lock-only",
+    "--omit=dev",
+    "--all",
+    "--json",
+  ]),
+  acceptanceCriteria: Object.freeze({
+    exitCode: 0,
+    stdoutJsonMustOmitKeys: Object.freeze(["problems"]),
+  }),
+  reviewedToolchain: EXPECTED_REVIEWED_TOOLCHAIN,
+});
 
 const EXPECTED_COMPONENTS = Object.freeze([
   Object.freeze({
@@ -29,7 +57,7 @@ const EXPECTED_COMPONENTS = Object.freeze([
     checks: Object.freeze([
       Object.freeze({ id: "source_and_runtime", kind: "npm_run", script: "test" }),
       Object.freeze({ id: "lint", kind: "npm_run", script: "lint" }),
-      Object.freeze({ id: "production_dependency_tree", kind: "npm_production_dependency_tree" }),
+      PRODUCTION_DEPENDENCY_TREE_CHECK,
     ]),
     expectedScripts: Object.freeze({
       test: "npm run test:unit && npm run build && npm run verify:runtime-import",
@@ -43,7 +71,7 @@ const EXPECTED_COMPONENTS = Object.freeze([
     checks: Object.freeze([
       Object.freeze({ id: "source_and_runtime", kind: "npm_run", script: "test" }),
       Object.freeze({ id: "lint", kind: "npm_run", script: "lint" }),
-      Object.freeze({ id: "production_dependency_tree", kind: "npm_production_dependency_tree" }),
+      PRODUCTION_DEPENDENCY_TREE_CHECK,
     ]),
     expectedScripts: Object.freeze({
       test: "npm run test:unit && npm run verify:built-cli",
@@ -96,10 +124,11 @@ function assertPolicy(policy) {
     "schemaVersion",
     "kind",
     "environmentClass",
+    "reviewedToolchain",
     "permittedNextAction",
     "components",
   ]);
-  if (policy.schemaVersion !== 1
+  if (policy.schemaVersion !== 2
     || policy.kind !== "doorstar-pilot-gate0-policy"
     || policy.environmentClass !== EXPECTED_ENVIRONMENT_CLASS
     || policy.permittedNextAction !== EXPECTED_NEXT_ACTION
@@ -107,6 +136,7 @@ function assertPolicy(policy) {
     || policy.components.length !== EXPECTED_COMPONENTS.length) {
     fail("gate0_policy_invalid");
   }
+  assertReviewedToolchain(policy.reviewedToolchain);
   policy.components.forEach((component, index) => assertComponent(component, EXPECTED_COMPONENTS[index]));
 }
 
@@ -129,11 +159,59 @@ function assertCheck(check, expected) {
   if (!isPlainObject(check)) {
     fail("gate0_policy_invalid");
   }
-  const expectedKeys = expected.kind === "npm_run" ? ["id", "kind", "script"] : ["id", "kind"];
-  assertExactKeys(check, expectedKeys);
-  if (check.id !== expected.id || check.kind !== expected.kind || check.script !== expected.script) {
+  if (expected.kind === "npm_run") {
+    assertExactKeys(check, ["id", "kind", "script"]);
+    if (check.id !== expected.id || check.kind !== expected.kind || check.script !== expected.script) {
+      fail("gate0_policy_invalid");
+    }
+    return;
+  }
+  if (expected.kind !== "npm_production_dependency_tree") {
     fail("gate0_policy_invalid");
   }
+  assertExactKeys(check, [
+    "id",
+    "kind",
+    "command",
+    "arguments",
+    "acceptanceCriteria",
+    "reviewedToolchain",
+  ]);
+  if (check.id !== expected.id
+    || check.kind !== expected.kind
+    || check.command !== expected.command
+    || !sameStringArray(check.arguments, expected.arguments)) {
+    fail("gate0_policy_invalid");
+  }
+  assertAcceptanceCriteria(check.acceptanceCriteria, expected.acceptanceCriteria);
+  assertReviewedToolchain(check.reviewedToolchain);
+}
+
+function assertAcceptanceCriteria(value, expected) {
+  if (!isPlainObject(value)) {
+    fail("gate0_policy_invalid");
+  }
+  assertExactKeys(value, ["exitCode", "stdoutJsonMustOmitKeys"]);
+  if (value.exitCode !== expected.exitCode
+    || !sameStringArray(value.stdoutJsonMustOmitKeys, expected.stdoutJsonMustOmitKeys)) {
+    fail("gate0_policy_invalid");
+  }
+}
+
+function assertReviewedToolchain(value) {
+  if (!isPlainObject(value)) {
+    fail("gate0_policy_invalid");
+  }
+  assertExactKeys(value, ["node", "npm"]);
+  if (value.node !== EXPECTED_REVIEWED_TOOLCHAIN.node || value.npm !== EXPECTED_REVIEWED_TOOLCHAIN.npm) {
+    fail("gate0_policy_invalid");
+  }
+}
+
+function sameStringArray(value, expected) {
+  return Array.isArray(value)
+    && value.length === expected.length
+    && value.every((entry, index) => typeof entry === "string" && entry === expected[index]);
 }
 
 function assertExactKeys(value, expected) {

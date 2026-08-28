@@ -58,6 +58,12 @@ milestones:
       - id: R-03
         status: "completed"
         description: "Determinista, Git-blob-alapú Gate 0 candidate capsule source-ready: clean candidate, lockfile-hash és fix source-check terv külső runtime- vagy candidate-code futtatás nélkül; 14 natív teszt és független security review PASS. Az izolált, emberi source-check evidence külön Gate 0 feltétel marad."
+      - id: R-04
+        status: "completed"
+        description: "Gate 1 source-remediation lezárva: a candidate checkoutból indított proof és minden package-managed entry point fail-closed; a Git/fixture/toolchain/Docker hardening csak jövőbeli, candidate-független verifier specifikáció. A tényleges disposable proof kizárólag külső immutable verifier + hitelesített, egy-run approval anchor után engedhető."
+      - id: R-05
+        status: "blocked"
+        description: "Külső Gate 1 trust anchor: külön kiadott immutable verifier artifact és candidate-checkouten kívül pinelt aláírásos vagy privilegizált audit-store alapú emberi egy-run approval. Ez operations/security döntés és külön GO nélkül nem provisionálható."
 
 execution_log:
   - date: "2026-08-27"
@@ -84,3 +90,7 @@ execution_log:
     outcome: "Az R-02 OIDC callback source-contract PASS: a BFF minta-konfiguráció immár tartalmazza a kötelező exact redirect URI-t; teszt rögzíti a Keycloak-szerű session_state, a duplikált code/state és a callback form-post fail-closed elutasítását, a dokumentáció pedig az IdP-kompatibilitást, redaktált Gate 2 bizonyítékot és a történeti Keycloak anyag tiltását rögzíti. BFF-, DB-, IdP-, cookie-, VPS-, ingress- vagy deploy-változás nem történt."
   - date: "2026-08-28"
     outcome: "Az R-03 Gate 0 candidate capsule source-ready: a kapszula kizárólag tiszta Git candidate commitot, Git-blob package/lockfile SHA-256 értékeket és a verziózott, fix source-check tervet köt össze; candidate package-kódot vagy npm-et nem futtat, státusza CANDIDATE_BOUND_NOT_EXECUTED. Bizonyíték: 14 natív Node teszt, node --check és független security review PASS. Az elkülönített, emberileg jóváhagyott source-check evidence és a Gate 0 elfogadás továbbra is szükséges a külön Gate 1 proof előtt. Külső DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."
+  - date: "2026-08-28"
+    outcome: "Az R-04 security review megállapította, hogy a candidate checkoutból futó Gate 0/Gate 1 JavaScript és egy szabadon elhelyezett approval JSON nem lehet önmaga hiteles végrehajtási vagy emberi approval authority-ja. Emiatt a proof:docker fail-closed a03_gate1_external_trust_anchor_required kóddal áll meg minden Git-, Prisma-, Docker-, PostgreSQL- és evidence-művelet előtt; célzott unit teszt igazolja a nulla child-process hívást. Nem futott Docker, PostgreSQL, IdP, VPS, ingress vagy deploy. Az immutable verifier és hiteles approval anchor külső operations/security döntésként R-05 blocker marad."
+  - date: "2026-08-28"
+    outcome: "Az R-04 source-remediation lezárva: a nyers Git-fa és raw-byte candidate-ellenőrzés, immutable fixture/schema/toolchain snapshot és local Docker-input hardening mellett a package `main`/`bin` exportjai megszűntek, a `proof:docker` importmentes external-trust-anchor hard stop, a csomag whitelistje nem publikál `dist` artifactot. A helyileg újraépített történeti `dist` CLI és a package script is kizárólag a03_gate1_external_trust_anchor_required hibával áll le. Bizonyíték: staging `lint`, `build`, teljes `npm test` (25 Gate0 + 16 Gate1 + 83 unit), valamint `npm pack --dry-run` PASS. Docker, PostgreSQL, IdP, VPS, ingress vagy deploy nem futott."

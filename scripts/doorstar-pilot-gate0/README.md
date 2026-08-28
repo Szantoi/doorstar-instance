@@ -2,7 +2,7 @@
 
 This zero-dependency Node tool creates and verifies **source-only** candidate
 evidence for the isolated Doorstar pilot. It is governed by
-[`gate0-policy.v1.json`](gate0-policy.v1.json) and the release decision in
+[`gate0-policy.v2.json`](gate0-policy.v2.json) and the release decisions in
 [`ADR-2026-08-28-doorstar-pilot-gate0-capsule.md`](../../docs/decisions/ADR-2026-08-28-doorstar-pilot-gate0-capsule.md).
 
 It is not a deploy, database, Docker, IdP, listener, migration or secret
@@ -30,6 +30,10 @@ commit/tree identity, policy SHA-256, Git-blob SHA-256 values for the three
 package files, and the fixed check plan only. Its status is
 `CANDIDATE_BOUND_NOT_EXECUTED`; it never asserts that a package check passed.
 
+The versioned policy also pins the reviewed Node/npm tuple and the literal,
+offline production-dependency-tree command/acceptance contract. A capsule binds
+that plan only; it still never invokes npm.
+
 ## Toolchain boundary
 
 Run this only with a trusted local Node/Git toolchain. Clear `NODE_OPTIONS`
@@ -49,13 +53,34 @@ Verification requires the same clean candidate checkout and compares the saved
 canonical bytes against the candidate's Git blobs and policy. It does not run
 candidate code, package checks or contact an external service.
 
+## Bind a human Gate 0 acceptance for Gate 1
+
+After the separately approved isolated source checks have passed, the
+authoritative human record may produce a canonical, redacted acceptance marker
+outside the checkout. It must contain only the candidate/tree identity,
+capsule/policy SHA-256 values, reviewed toolchain, the fixed PASS check matrix,
+and the sole Gate 1 next-action value. It must not contain a person name,
+timestamp, transcript, path, credential, token, DSN, hostname or customer data.
+
+Verify the capsule and marker together before the separately approved A-03
+proof:
+
+```powershell
+node scripts/doorstar-pilot-gate0/verifyGate0Acceptance.mjs --candidate <full-commit-sha> --capsule <external-capsule-path> --acceptance <external-marker-path>
+```
+
+Both paths must be absolute, external to the checkout, bounded regular files
+with no symbolic-link component. The output is canonical redacted provenance;
+it proves structural binding only. It cannot authenticate the human approver,
+whose authoritative record remains a separate operations control.
+
 ## Human release record remains mandatory
 
-The capsule does not grant a release or a passing source verification. An
-approved, isolated human verification must run the fixed check plan and record
-redacted outcomes alongside the capsule SHA-256. Only after that Gate 0 review
-may a human release record permit the separately approved disposable Gate 1
-proof.
+Neither the capsule nor the acceptance verifier grants a release or starts
+Docker. An approved, isolated human verification must run the fixed check plan
+and record redacted outcomes alongside the capsule SHA-256. Only after that
+human Gate 0 acceptance may its structurally bound marker be supplied to the
+separately approved disposable Gate 1 proof.
 
 ## Tool tests
 

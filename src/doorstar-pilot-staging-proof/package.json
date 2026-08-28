@@ -4,18 +4,20 @@
   "private": true,
   "description": "Disposable, source-verified A-03 two-scope proof harness. It is not part of the Doorstar runtime.",
   "type": "module",
-  "main": "dist/index.js",
-  "bin": {
-    "doorstar-pilot-a03-proof": "dist/cli.js"
-  },
+  "files": [
+    "README.md",
+    "scripts/gate1ExternalTrustAnchorRequired.mjs"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.json --noEmit",
     "test:unit": "vitest run --config vitest.unit.config.ts",
+    "test:gate0": "node --test ../../scripts/doorstar-pilot-gate0/test/gate0.test.mjs",
+    "test:gate1": "node --test ../../scripts/doorstar-pilot-gate1/test/gate1.test.mjs",
     "verify:fixture": "tsx scripts/verifyTwoScopeFixture.ts",
     "verify:boundary": "tsx scripts/verifyHarnessBoundary.ts",
-    "test": "npm run verify:fixture && npm run verify:boundary && npm run test:unit",
-    "proof:docker": "npm run build && node dist/cli.js --disposable-docker-proof"
+    "test": "npm run verify:fixture && npm run verify:boundary && npm run test:gate0 && npm run test:gate1 && npm run test:unit",
+    "proof:docker": "node scripts/gate1ExternalTrustAnchorRequired.mjs"
   },
   "dependencies": {
     "pg": "8.13.1"

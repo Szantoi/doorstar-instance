@@ -13,7 +13,8 @@ The Gate 0 capsule deterministically binds one clean candidate commit to:
 - the SHA-256 of the versioned Gate 0 policy; and
 - Git-blob SHA-256 values for `package.json` and `package-lock.json` in the
   foundation, BFF and bootstrap packages, together with the fixed source-only
-  check plan that a separate isolated human verification must execute.
+  check plan, reviewed Node/npm tuple and exact production-dependency-tree
+  command contract that a separate isolated human verification must execute.
 
 Its status is `CANDIDATE_BOUND_NOT_EXECUTED`: it is deliberately neither a
 passing test report nor an approval record. Reviewer identity, observed time,
@@ -45,7 +46,7 @@ run the policy's exact named source checks and preserve redacted outcomes. That
 environment and its dependency provenance are separate human evidence; the
 capsule never runs or attests to candidate code.
 
-The human approval record must then name:
+The authoritative human approval record must then name:
 
 - the exact candidate commit and capsule SHA-256;
 - the reviewer;
@@ -57,11 +58,31 @@ The human approval record must then name:
 No evidence record may contain a credential, authorization code, `state`,
 token, cookie, raw OIDC subject, DSN, hostname, absolute path or customer data.
 
+For the separately approved Gate 1 proof, produce a canonical, redacted
+acceptance marker outside the checkout and run
+`verifyGate0Acceptance.mjs` against that marker and capsule. The marker may
+contain only the exact candidate/tree identity, capsule/policy hashes, reviewed
+toolchain, fixed PASS check matrix and the Gate 1 next-action value. It must be
+a bounded regular file with no symbolic-link component; a path in the checkout
+is rejected. The verifier's output proves that the structured marker binds the
+candidate, not that a program can authenticate the human approver.
+
+The current source helper accepts those files only from a trusted local path:
+UNC/device paths are rejected, and on Windows the path must be on the same
+volume as the operating-system root so a mapped approval share is not silently
+treated as local evidence; NTFS alternate data streams and hard-linked files
+are rejected as well. This is a fail-closed path policy under the trusted host
+environment, not an OS-level attestation of `SystemRoot` or filesystem type
+(and Unix network mounts are not distinguished from a local absolute path). A
+remote or privileged approval store requires the separate external-trust-anchor
+design; it must not be passed to this generic file reader as a workaround.
+
 ## Verification and failure handling
 
-Run the verifier against the same clean checkout and the stored capsule before
-the human record is accepted. A dirty checkout, changed candidate, policy/blob
-mismatch, missing lockfile or forbidden environment name is a capsule stop
-condition. A failed or unrecorded isolated source check is a separate Gate 0
-stop condition. Preserve only stable failure codes and redacted outcomes; do
-not edit the capsule or waive a failure.
+Run the capsule verifier before the human record is accepted, then run the
+acceptance verifier against the same clean checkout and external marker before
+Gate 1. A dirty checkout, changed candidate, policy/blob mismatch, missing
+lockfile, forbidden environment name, noncanonical marker or evidence-path
+violation is a stop condition. A failed or unrecorded isolated source check is
+a separate Gate 0 stop condition. Preserve only stable failure codes and
+redacted outcomes; do not edit the capsule or waive a failure.

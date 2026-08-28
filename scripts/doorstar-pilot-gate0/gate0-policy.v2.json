@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "kind": "doorstar-pilot-gate0-policy",
+  "environmentClass": "SOURCE_ONLY_NO_EXTERNAL_RUNTIME",
+  "reviewedToolchain": {
+    "node": "v24.13.0",
+    "npm": "11.6.2"
+  },
+  "permittedNextAction": "HUMAN_SOURCE_CHECK_EVIDENCE_AND_GATE0_REVIEW_REQUIRED",
+  "components": [
+    {
+      "id": "foundation",
+      "directory": "src/doorstar-pilot-foundation",
+      "packageName": "@doorstar/pilot-foundation",
+      "checks": [
+        { "id": "prisma_validate", "kind": "npm_run", "script": "prisma:validate" },
+        { "id": "prisma_generate", "kind": "npm_run", "script": "prisma:generate" },
+        { "id": "source_and_unit", "kind": "npm_run", "script": "test" },
+        { "id": "build", "kind": "npm_run", "script": "build" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" }
+      ]
+    },
+    {
+      "id": "bff",
+      "directory": "src/doorstar-pilot-bff",
+      "packageName": "@doorstar/pilot-bff",
+      "checks": [
+        { "id": "source_and_runtime", "kind": "npm_run", "script": "test" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" },
+        {
+          "id": "production_dependency_tree",
+          "kind": "npm_production_dependency_tree",
+          "command": "npm",
+          "arguments": [
+            "--offline",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund",
+            "--workspaces=false",
+            "ls",
+            "--package-lock-only",
+            "--omit=dev",
+            "--all",
+            "--json"
+          ],
+          "acceptanceCriteria": {
+            "exitCode": 0,
+            "stdoutJsonMustOmitKeys": ["problems"]
+          },
+          "reviewedToolchain": {
+            "node": "v24.13.0",
+            "npm": "11.6.2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bootstrap",
+      "directory": "src/doorstar-pilot-bootstrap",
+      "packageName": "@doorstar/pilot-bootstrap",
+      "checks": [
+        { "id": "source_and_runtime", "kind": "npm_run", "script": "test" },
+        { "id": "lint", "kind": "npm_run", "script": "lint" },
+        {
+          "id": "production_dependency_tree",
+          "kind": "npm_production_dependency_tree",
+          "command": "npm",
+          "arguments": [
+            "--offline",
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund",
+            "--workspaces=false",
+            "ls",
+            "--package-lock-only",
+            "--omit=dev",
+            "--all",
+            "--json"
+          ],
+          "acceptanceCriteria": {
+            "exitCode": 0,
+            "stdoutJsonMustOmitKeys": ["problems"]
+          },
+          "reviewedToolchain": {
+            "node": "v24.13.0",
+            "npm": "11.6.2"
+          }
+        }
+      ]
+    }
+  ]
+}

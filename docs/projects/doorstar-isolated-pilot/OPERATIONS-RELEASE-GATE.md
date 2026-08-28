@@ -6,22 +6,28 @@ action remains subject to a separately recorded human operations approval.
 
 The runtime source implementation is deliberately unable to create an IdP
 client, database login, database, mapping, ingress, listener or deployment.
-The separately gated A-03 proof harness is the sole exception: after an exact
-human acknowledgement it may create only a generated, local, disposable
-PostgreSQL 16 container, database and identities, all of which it destroys at
-the end of that proof. It cannot receive a production connection string or
-perform a deploy. The legacy Doorstar operational surface and JoineryTech
-Plant are outside this pilot.
+The checked-out A-03 proof source is not an exception: it is intentionally
+unable to start Docker or create a database, even after an exact human
+acknowledgement. It stops before any candidate, provenance, Git, Docker,
+Prisma, PostgreSQL, or evidence operation until a separately released verifier
+and independently administered authenticated approval anchor exist. It cannot
+receive a production connection string or perform a deploy. The legacy
+Doorstar operational surface and JoineryTech Plant are outside this pilot.
 
 ## A-03 source harness
 
-`src/doorstar-pilot-staging-proof` is the reviewed, disposable-only Gate 1
-harness. Its `npm test`, build and lint commands are source-only checks and
-must not start Docker. Its `proof:docker` command is intentionally fail-closed:
-it requires an exact one-run acknowledgement, a clean committed candidate, a
-generated loopback-only PostgreSQL 16 container with tmpfs storage, and it
-destroys that container in its finalizer. The package README is the detailed
-operator reference; this document remains the approval authority.
+`src/doorstar-pilot-staging-proof` is reviewed source material for a future,
+disposable-only Gate 1 verifier. Its `npm test`, build and lint commands are
+source-only checks and must not start Docker. Its guarded `proof:docker` CLI
+is intentionally fail-closed with
+`a03_gate1_external_trust_anchor_required`; it does not presently verify Gate
+0, inspect Docker, create a container, or write proof evidence. The exact
+operator acknowledgement remains an intent signal, not an approval credential.
+The future independent verifier must bind the clean candidate, authenticated
+one-run approval, immutable runtime inputs, and local Docker constraints before
+it can create a loopback-only tmpfs PostgreSQL 16 container. The package README
+and the external-trust-anchor ADR are the detailed source references; this
+document remains the approval authority.
 
 ## Gate 0 — immutable source candidate
 
@@ -51,12 +57,27 @@ the record permit the separate human-approved Gate 1 proof.
 
 This is a separate human-approved test, never a production rehearsal.
 
-1. Provision a new disposable PostgreSQL database and separate, non-shared
+**Current state: blocked before execution.** No checked-out source command may
+perform the following steps. They are the required contract for a future
+candidate-independent verifier after a separate operations/security decision
+has provisioned an immutable verifier artifact and authenticated approval
+anchor.
+
+1. Supply the exact Gate 0 capsule and its separately recorded human acceptance
+   marker for the immutable candidate. The source verifier must bind both to
+   the clean candidate before any Docker command. This proves structured
+   provenance, not the identity of the approver; the external human record
+   remains authoritative.
+2. Use only a proven local Docker `default` context with no endpoint/context
+   override inherited from the environment. A remote, custom or ambiguous
+   container engine is a stop condition; the proof must never fall back to
+   Podman or another runtime.
+3. Provision a new disposable PostgreSQL database and separate, non-shared
    migrator, runtime and bootstrap identities. Do not reuse a legacy Doorstar
    or Plant database, role, backup or connection string.
-2. Apply only the immutable candidate migration lineage. Record migration and
+4. Apply only the immutable candidate migration lineage. Record migration and
    function hashes before testing.
-3. Use the separately reviewed disposable-only two-scope fixture described in
+5. Use the separately reviewed disposable-only two-scope fixture described in
    the A-phase ADR. It must be outside the production Prisma lineage, alter
    only the closed two-scope guard, record every changed function hash, and be
    destroyed with the test database.
@@ -72,12 +93,12 @@ This is a separate human-approved test, never a production rehearsal.
    check. These are not EXECUTE grants on trigger functions and none is writer
    authority; bootstrap receives no corresponding grant unless a separately
    reviewed policy requires it.
-4. Prove with two distinct database PIDs and both source identities:
+6. Prove with two distinct database PIDs and both source identities:
    RLS/ACL isolation, absent-or-wrong-scope denial, pool-context reset,
    routine-specific write authority, no raw-DML authority, first/last-manager
    protection, append-only audit behavior and serializable write-skew
    rejection.
-5. Destroy the disposable database and fixture. Preserve only redacted test
+7. Destroy the disposable database and fixture. Preserve only redacted test
    evidence and checksums; do not promote the fixture, its identities or its
    data to an RC.
 

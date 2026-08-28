@@ -14,6 +14,11 @@ const staticImportPatterns = [
   /^\s*import\s*["']([^"']+)["']/gm,
   /^\s*(?:import|export)\s+(?:type\s+)?[\w\s{},*]+?\s+from\s+["']([^"']+)["']/gm,
 ] as const;
+const disabledProofDockerScript = "node scripts/gate1ExternalTrustAnchorRequired.mjs";
+const publishedFiles = Object.freeze([
+  "README.md",
+  "scripts/gate1ExternalTrustAnchorRequired.mjs",
+]);
 
 export type HarnessBoundaryReport = Readonly<{
   package: "@doorstar/pilot-staging-proof";
@@ -30,6 +35,7 @@ export type HarnessBoundaryReport = Readonly<{
 export async function verifyHarnessBoundary(): Promise<HarnessBoundaryReport> {
   const localSourceFiles = await listFiles(localSourceRoot, (path) => path.endsWith(".ts"));
   const violations: string[] = [];
+  await verifyDisabledPackageEntrypoints(violations);
   for (const file of localSourceFiles) {
     const contents = await readFile(file, "utf8");
     for (const pattern of staticImportPatterns) {
@@ -80,6 +86,45 @@ export async function verifyHarnessBoundary(): Promise<HarnessBoundaryReport> {
     sourceFiles: localSourceFiles.length,
     checkedSiblings: siblingPackages,
   };
+}
+
+/**
+ * A stale generated `dist` tree once contained an executable historical
+ * Docker runner. Keep every package-managed entry point on the independent
+ * hard stop and publish only that inert script until a separate verifier is
+ * released outside the candidate checkout.
+ */
+async function verifyDisabledPackageEntrypoints(violations: string[]): Promise<void> {
+  let manifest: unknown;
+  try {
+    manifest = JSON.parse(await readFile(join(packageRoot, "package.json"), "utf8"));
+  } catch {
+    violations.push("disposable staging-proof package manifest is unreadable");
+    return;
+  }
+  if (manifest === null || typeof manifest !== "object") {
+    violations.push("disposable staging-proof package manifest is invalid");
+    return;
+  }
+  const packageManifest = manifest as Readonly<{
+    main?: unknown;
+    bin?: unknown;
+    files?: unknown;
+    scripts?: Readonly<Record<string, unknown>>;
+  }>;
+  if (packageManifest.main !== undefined || packageManifest.bin !== undefined) {
+    violations.push("disposable staging-proof package exposes a main or bin entry point");
+  }
+  if (packageManifest.scripts?.["proof:docker"] !== disabledProofDockerScript) {
+    violations.push("disposable staging-proof proof:docker script is not the external-trust hard stop");
+  }
+  if (
+    !Array.isArray(packageManifest.files)
+    || packageManifest.files.length !== publishedFiles.length
+    || packageManifest.files.some((entry, index) => entry !== publishedFiles[index])
+  ) {
+    violations.push("disposable staging-proof package publication whitelist is not the inert hard-stop set");
+  }
 }
 
 async function listFiles(directory: string, include: (path: string) => boolean): Promise<string[]> {

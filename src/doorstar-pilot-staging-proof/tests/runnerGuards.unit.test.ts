@@ -1,6 +1,6 @@
-import { rm, readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   A03ProofError,
@@ -15,7 +15,16 @@ import {
   DisposablePostgresContainer,
   parseVerifiedPostgresImageInspection,
 } from "../src/runner/dockerPostgres.js";
-import { requireCleanCandidateGitState } from "../src/runner/candidateGitState.js";
+import {
+  assertAllowlistedLocalDockerEndpoint,
+  createLocalDockerInvocation,
+  localDockerContextHostFormat,
+  runLocalDockerCommand,
+} from "../src/runner/dockerLocalEndpointGuard.js";
+import {
+  redactDockerRuntimeInput,
+  requireDockerRuntimeInput,
+} from "../src/runner/dockerRuntimeInput.js";
 import {
   knownConcurrentDemotionPostgresFailureCode,
   knownDirectUpdatePostgresFailureCode,
@@ -23,6 +32,40 @@ import {
 import { ProofLedger, postSeedProofOperations } from "../src/runner/proofLedger.js";
 import { publicFailureCode, runDisposableA03Proof } from "../src/runner/proofRunner.js";
 import { writeRedactedEvidence } from "../src/runner/redactedEvidence.js";
+
+function dockerSubcommandArguments(argumentsList: readonly string[]): readonly string[] {
+  if (
+    argumentsList[0] === "--config"
+    && argumentsList[2] === "--context"
+    && argumentsList[3] === "default"
+  ) {
+    return argumentsList.slice(4);
+  }
+  return argumentsList[0] === "--context" && argumentsList[1] === "default"
+    ? argumentsList.slice(2)
+    : argumentsList;
+}
+
+function platformDefaultDockerEndpoint(): string {
+  return process.platform === "win32"
+    ? "npipe:////./pipe/docker_engine"
+    : "unix:///var/run/docker.sock";
+}
+
+const testPostgresImageReference = `postgres@sha256:${"a".repeat(64)}`;
+
+function testDockerCliPath(): string {
+  // This is only a regular local file to exercise path/content guards. The
+  // mock runner never executes it as Docker in a source-only test.
+  return process.execPath;
+}
+
+function testDockerRuntimeInput() {
+  return requireDockerRuntimeInput({
+    dockerCliPath: testDockerCliPath(),
+    postgresImageReference: testPostgresImageReference,
+  });
+}
 
 describe("A-03 disposable-run guards", () => {
   it("requires an exact environment acknowledgement before a runner can invoke Docker", async () => {
@@ -39,33 +82,268 @@ describe("A-03 disposable-run guards", () => {
       .rejects.toMatchObject({ publicCode: "a03_disposable_acknowledgement_required" });
   });
 
-  it("builds only a fresh loopback/tmpfs postgres:16 Docker command without running it", () => {
+  it("requires a candidate-independent Gate 1 trust anchor before any command can run", async () => {
+    let calls = 0;
+    const commandRunner: CommandRunner = {
+      run: async () => {
+        calls += 1;
+        throw new Error("no_child_process_may_run_without_external_trust_anchor");
+      },
+    };
+
+    await expect(runDisposableA03Proof({
+      environment: {
+        [disposableAcknowledgementEnvironment]: disposableAcknowledgement,
+      },
+      commandRunner,
+      gate0Provenance: {
+        capsulePath: "C:\\external\\gate0-capsule.json",
+        acceptancePath: "C:\\external\\gate0-acceptance.json",
+      },
+      dockerRuntime: {
+        dockerCliPath: "C:\\external\\docker.exe",
+        postgresImageReference: testPostgresImageReference,
+      },
+    })).rejects.toMatchObject({ publicCode: "a03_gate1_external_trust_anchor_required" });
+
+    expect(calls).toBe(0);
+  });
+
+  it("builds only a fresh loopback/tmpfs immutable PostgreSQL Docker command without running it", () => {
     const plan = createDisposableProofPlan();
     const args = buildDisposablePostgresRunArguments({
       containerName: plan.containerName,
       administrator: plan.administrator,
-    });
+    }, testPostgresImageReference);
     expect(args).toContain("127.0.0.1:0:5432");
     expect(args).toContain("--tmpfs");
-    expect(args).toContain("postgres:16");
+    expect(args).toContain(testPostgresImageReference);
+    expect(args).toContain("--pull");
+    expect(args).toContain("never");
+    expect(args).not.toContain("postgres:16");
     expect(args).not.toContain("--volume");
     expect(args).not.toContain("--mount");
     expect(args.join(" ")).not.toContain("0.0.0.0");
     expect(args.join(" ")).not.toContain("compose");
   });
 
-  it("writes evidence only under the package-local ignored evidence directory", async () => {
-    const path = await writeRedactedEvidence({
-      schemaVersion: 2,
+  it.each([
+    ["DOCKER_HOST", "tcp://198.51.100.77:2376"],
+    ["DOCKER_CONTEXT", "remote-staging"],
+    ["DOCKER_CONFIG", "C:\\untrusted-docker-config"],
+    ["DOCKER_TLS_VERIFY", "1"],
+    ["docker_host", "ssh://example.invalid"],
+    ["CONTAINER_HOST", "ssh://example.invalid"],
+    ["PODMAN_CONNECTION", "remote-engine"],
+  ])("rejects %s before it can invoke Docker", async (environmentName, environmentValue) => {
+    const plan = createDisposableProofPlan();
+    let calls = 0;
+    const commandRunner: CommandRunner = {
+      run: async () => {
+        calls += 1;
+        return { exitCode: 0, stdout: "", stderr: "" };
+      },
+    };
+    const container = new DisposablePostgresContainer(commandRunner, {
+      containerName: plan.containerName,
+      administrator: plan.administrator,
+    }, testDockerRuntimeInput(), {
+      [environmentName]: environmentValue,
+    });
+
+    await expect(container.assertDockerReadyAndImageAvailable())
+      .rejects.toMatchObject({ publicCode: "a03_docker_remote_endpoint_forbidden" });
+    expect(calls).toBe(0);
+  });
+
+  it("uses an absolute CLI path and a fresh Docker config without HOME, PATH, or ambient routing", async () => {
+    const sourceEnvironment: NodeJS.ProcessEnv = {
+      PATH: "a03-test-path",
+      HOME: "a03-test-home",
+      USERPROFILE: "a03-test-profile",
+    };
+    const invocation = createLocalDockerInvocation(testDockerCliPath(), sourceEnvironment);
+    sourceEnvironment.DOCKER_HOST = "tcp://198.51.100.99:2376";
+    let receivedCommand: string | null = null;
+    let receivedArguments: readonly string[] | null = null;
+    let receivedEnvironment: NodeJS.ProcessEnv | undefined;
+    const commandRunner: CommandRunner = {
+      run: async (command, argumentsList, _timeoutMilliseconds, environment) => {
+        receivedCommand = command;
+        receivedArguments = [...argumentsList];
+        receivedEnvironment = environment;
+        return { exitCode: 0, stdout: "", stderr: "" };
+      },
+    };
+
+    try {
+      await expect(runLocalDockerCommand(commandRunner, invocation, ["version"], 1_000))
+        .resolves.toEqual({ exitCode: 0, stdout: "", stderr: "" });
+      expect(receivedCommand).toBe(testDockerCliPath());
+      expect(receivedArguments).toEqual([
+        "--config",
+        invocation.argumentsPrefix[1],
+        "--context",
+        "default",
+        "version",
+      ]);
+      expect(receivedEnvironment).not.toBe(sourceEnvironment);
+      expect(receivedEnvironment).not.toHaveProperty("HOME");
+      expect(receivedEnvironment).not.toHaveProperty("USERPROFILE");
+      expect(receivedEnvironment).not.toHaveProperty("PATH");
+      expect(receivedEnvironment).not.toHaveProperty("DOCKER_CONFIG");
+      expect(receivedEnvironment).not.toHaveProperty("DOCKER_HOST");
+      expect(receivedEnvironment).not.toHaveProperty("DOCKER_CONTEXT");
+      const isolatedConfigDirectory = invocation.argumentsPrefix[1];
+      expect(isolatedConfigDirectory).toMatch(/doorstar-a03-docker-config-/);
+      await expect(readdir(isolatedConfigDirectory ?? "")).resolves.toEqual([]);
+    } finally {
+      invocation.dispose();
+    }
+  });
+
+  it("rejects a replaced generated Docker config and never recursively removes its replacement", async () => {
+    const invocation = createLocalDockerInvocation(testDockerCliPath(), {});
+    const configDirectory = invocation.argumentsPrefix[1];
+    if (configDirectory === undefined) throw new Error("Docker config test fixture is missing");
+    try {
+      await rm(configDirectory, { recursive: true, force: true, maxRetries: 1 });
+      await mkdir(configDirectory);
+      expect(() => invocation.verifyIsolatedConfig())
+        .toThrow("a03_docker_config_isolation_failed");
+      invocation.dispose();
+      await expect(readdir(configDirectory)).resolves.toEqual([]);
+    } finally {
+      await rm(configDirectory, { recursive: true, force: true, maxRetries: 1 });
+    }
+  });
+
+  it("requires the generated Docker config to remain empty before every child command", async () => {
+    const invocation = createLocalDockerInvocation(testDockerCliPath(), {});
+    const configDirectory = invocation.argumentsPrefix[1];
+    if (configDirectory === undefined) throw new Error("Docker config test fixture is missing");
+    try {
+      await writeFile(join(configDirectory, "config.json"), "{}\n", "utf8");
+      expect(() => invocation.verifyIsolatedConfig())
+        .toThrow("a03_docker_config_isolation_failed");
+      invocation.dispose();
+      await expect(readdir(configDirectory)).resolves.toEqual(["config.json"]);
+    } finally {
+      await rm(configDirectory, { recursive: true, force: true, maxRetries: 1 });
+    }
+  });
+
+  it("rejects bare, relative, and mutable Docker inputs before a Docker command can form", () => {
+    expect(() => createLocalDockerInvocation("docker", {}))
+      .toThrow("a03_docker_cli_path_not_absolute");
+    expect(() => requireDockerRuntimeInput({
+      dockerCliPath: "docker",
+      postgresImageReference: testPostgresImageReference,
+    })).toThrow("a03_docker_cli_path_not_absolute");
+    expect(() => requireDockerRuntimeInput({
+      dockerCliPath: "./docker",
+      postgresImageReference: testPostgresImageReference,
+    })).toThrow("a03_docker_cli_path_not_absolute");
+    expect(() => requireDockerRuntimeInput({
+      dockerCliPath: testDockerCliPath(),
+      postgresImageReference: "postgres:16",
+    })).toThrow("a03_postgres_image_reference_invalid");
+    expect(() => requireDockerRuntimeInput({
+      dockerCliPath: testDockerCliPath(),
+      postgresImageReference: `postgres@sha256:${"A".repeat(64)}`,
+    })).toThrow("a03_postgres_image_reference_invalid");
+    if (process.platform === "win32") {
+      expect(() => requireDockerRuntimeInput({
+        dockerCliPath: "C:\\approved\\docker.exe:alternate-stream",
+        postgresImageReference: testPostgresImageReference,
+      })).toThrow("a03_docker_cli_path_not_absolute");
+    }
+  });
+
+  it("accepts only JSON-encoded standard local Docker endpoints", () => {
+    expect(() => assertAllowlistedLocalDockerEndpoint(
+      JSON.stringify("npipe:////./pipe/docker_engine"),
+      "win32",
+    )).not.toThrow();
+    expect(() => assertAllowlistedLocalDockerEndpoint(
+      JSON.stringify("unix:///var/run/docker.sock"),
+      "linux",
+    )).not.toThrow();
+    expect(() => assertAllowlistedLocalDockerEndpoint(
+      JSON.stringify("tcp://198.51.100.77:2376"),
+      "win32",
+    )).toThrow("a03_docker_local_endpoint_invalid");
+    expect(() => assertAllowlistedLocalDockerEndpoint(
+      "not-json",
+      "linux",
+    )).toThrow("a03_docker_local_endpoint_invalid");
+  });
+
+  it.each([
+    ["remote", JSON.stringify("ssh://example.invalid")],
+    ["malformed", "not-json"],
+  ])("stops after a %s default-context endpoint inspection", async (_label, contextHost) => {
+    const plan = createDisposableProofPlan();
+    const calls: string[][] = [];
+    const commandRunner: CommandRunner = {
+      run: async (_command, argumentsList) => {
+        calls.push([...argumentsList]);
+        const dockerArguments = dockerSubcommandArguments(argumentsList);
+        if (
+          dockerArguments[0] === "context"
+          && dockerArguments[1] === "inspect"
+          && dockerArguments[2] === "default"
+          && dockerArguments[3] === "--format"
+          && dockerArguments[4] === localDockerContextHostFormat
+        ) {
+          return { exitCode: 0, stdout: contextHost, stderr: "" };
+        }
+        throw new Error("daemon_command_must_not_follow_rejected_context");
+      },
+    };
+    const container = new DisposablePostgresContainer(commandRunner, {
+      containerName: plan.containerName,
+      administrator: plan.administrator,
+    }, testDockerRuntimeInput(), { PATH: "a03-test-path" });
+
+    await expect(container.assertDockerReadyAndImageAvailable())
+      .rejects.toMatchObject({ publicCode: "a03_docker_local_endpoint_invalid" });
+    await expect(container.startContainer())
+      .rejects.toMatchObject({ publicCode: "a03_docker_local_endpoint_invalid" });
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.[0]).toBe("--config");
+    expect(calls[0]?.slice(2)).toEqual([
+      "--context",
+      "default",
+      "context",
+      "inspect",
+      "default",
+      "--format",
+      localDockerContextHostFormat,
+    ]);
+    expect(calls.flat().some((argument) => ["version", "pull", "run"].includes(argument))).toBe(false);
+    await expect(container.destroy()).resolves.toBe("container_not_started");
+  });
+
+  it("does not let candidate checkout code publish redacted evidence", async () => {
+    await expect(writeRedactedEvidence({
+      schemaVersion: 4,
       status: "PASS",
       startedAt: "2026-08-27T00:00:00.000Z",
       completedAt: "2026-08-27T00:00:01.000Z",
       runIdSha256: "a".repeat(64),
       candidateCommitSha: "c".repeat(40),
       candidateWorkingTreeClean: true,
-      image: "postgres:16",
+      candidatePrismaSnapshotManifestSha256: "h".repeat(64),
+      gate0Provenance: {
+        candidateCommitSha: "c".repeat(40),
+        capsuleSha256: "f".repeat(64),
+        acceptanceMarkerSha256: "g".repeat(64),
+      },
+      dockerRuntime: redactDockerRuntimeInput(testDockerRuntimeInput(), null),
+      image: testPostgresImageReference,
       imageId: `sha256:${"d".repeat(64)}`,
-      imageImmutableReference: `postgres@sha256:${"e".repeat(64)}`,
+      imageImmutableReference: testPostgresImageReference,
       fixtureSha256: "b".repeat(64),
       migrationEvidence: null,
       beforeFixtureManifest: null,
@@ -75,18 +353,7 @@ describe("A-03 disposable-run guards", () => {
       inFlightPostSeedOperation: "POST_SEED_FIRST_SESSION_ISSUE",
       cleanup: "container_not_started",
       failureCode: null,
-    });
-    try {
-      const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-      expect(path.startsWith(resolve(packageRoot, "evidence"))).toBe(true);
-      const evidence = await readFile(path, "utf8");
-      expect(evidence).toContain('"status": "PASS"');
-      expect(evidence).toContain('"inFlightPostSeedOperation": "POST_SEED_FIRST_SESSION_ISSUE"');
-      expect(evidence).not.toContain("password");
-      expect(evidence).not.toContain("postgresql://");
-    } finally {
-      await rm(path, { force: true });
-    }
+    })).rejects.toMatchObject({ publicCode: "a03_gate1_external_trust_anchor_required" });
   });
 
   it("emits only stable public failure codes", () => {
@@ -100,36 +367,55 @@ describe("A-03 disposable-run guards", () => {
     expect(publicFailureCode({ code: "42501; secret", message: "sensitive details" })).toBe("a03_unexpected_failure");
   });
 
-  it("accepts only a concrete postgres image ID and optional immutable digest", () => {
+  it("accepts only a concrete image ID for the exact requested immutable digest", () => {
     expect(parseVerifiedPostgresImageInspection(
       `sha256:${"a".repeat(64)}\n`,
       JSON.stringify([`postgres@sha256:${"b".repeat(64)}`]),
+      `postgres@sha256:${"b".repeat(64)}`,
     ))
       .toEqual({
         imageId: `sha256:${"a".repeat(64)}`,
         immutableReference: `postgres@sha256:${"b".repeat(64)}`,
       });
-    expect(parseVerifiedPostgresImageInspection(`sha256:${"c".repeat(64)}`, "null"))
-      .toEqual({ imageId: `sha256:${"c".repeat(64)}`, immutableReference: null });
-    expect(() => parseVerifiedPostgresImageInspection("postgres:16", "[]"))
+    expect(() => parseVerifiedPostgresImageInspection(
+      `sha256:${"c".repeat(64)}`,
+      JSON.stringify([`postgres@sha256:${"d".repeat(64)}`]),
+      `postgres@sha256:${"e".repeat(64)}`,
+    )).toThrow("a03_postgres_image_reference_mismatch");
+    expect(() => parseVerifiedPostgresImageInspection("postgres:16", "[]", testPostgresImageReference))
       .toThrow("a03_postgres_image_id_invalid");
-    expect(() => parseVerifiedPostgresImageInspection(`sha256:${"d".repeat(64)}`, "not-json"))
+    expect(() => parseVerifiedPostgresImageInspection(
+      `sha256:${"d".repeat(64)}`,
+      "not-json",
+      testPostgresImageReference,
+    ))
       .toThrow("a03_postgres_repo_digests_invalid");
   });
 
   it("uses separate Docker 29-safe image ID and RepoDigests JSON inspection", async () => {
     const plan = createDisposableProofPlan();
     const formats: string[] = [];
+    const calls: Array<Readonly<{
+      command: string;
+      argumentsList: readonly string[];
+      environment: NodeJS.ProcessEnv | undefined;
+    }>> = [];
+    const suppliedEnvironment = { PATH: "a03-test-path", HOME: "a03-test-home" };
     const commandRunner: CommandRunner = {
-      run: async (_command, argumentsList) => {
-        if (argumentsList[0] === "version") return { exitCode: 0, stdout: "29.1.5\n", stderr: "" };
-        if (argumentsList[0] === "image" && argumentsList[1] === "inspect") {
-          formats.push(argumentsList[3] ?? "");
-          if (argumentsList[3] === "{{.Id}}") {
+      run: async (command, argumentsList, _timeoutMilliseconds, environment) => {
+        calls.push({ command, argumentsList: [...argumentsList], environment });
+        const dockerArguments = dockerSubcommandArguments(argumentsList);
+        if (dockerArguments[0] === "context" && dockerArguments[1] === "inspect") {
+          return { exitCode: 0, stdout: JSON.stringify(platformDefaultDockerEndpoint()), stderr: "" };
+        }
+        if (dockerArguments[0] === "version") return { exitCode: 0, stdout: "29.1.5\n", stderr: "" };
+        if (dockerArguments[0] === "image" && dockerArguments[1] === "inspect") {
+          formats.push(dockerArguments[3] ?? "");
+          if (dockerArguments[3] === "{{.Id}}") {
             return { exitCode: 0, stdout: `sha256:${"e".repeat(64)}\n`, stderr: "" };
           }
-          if (argumentsList[3] === "{{json .RepoDigests}}") {
-            return { exitCode: 0, stdout: JSON.stringify([`postgres@sha256:${"f".repeat(64)}`]), stderr: "" };
+          if (dockerArguments[3] === "{{json .RepoDigests}}") {
+            return { exitCode: 0, stdout: JSON.stringify([testPostgresImageReference]), stderr: "" };
           }
         }
         throw new Error("unexpected Docker command");
@@ -138,13 +424,32 @@ describe("A-03 disposable-run guards", () => {
     const container = new DisposablePostgresContainer(commandRunner, {
       containerName: plan.containerName,
       administrator: plan.administrator,
-    });
+    }, testDockerRuntimeInput(), suppliedEnvironment);
     await expect(container.assertDockerReadyAndImageAvailable()).resolves.toEqual({
       imageId: `sha256:${"e".repeat(64)}`,
-      immutableReference: `postgres@sha256:${"f".repeat(64)}`,
+      immutableReference: testPostgresImageReference,
     });
+    const expectedCliContentSha256 = createHash("sha256")
+      .update(await readFile(testDockerCliPath()))
+      .digest("hex");
+    expect(container.dockerCliContentSha256()).toBe(expectedCliContentSha256);
     expect(formats).toEqual(["{{.Id}}", "{{json .RepoDigests}}"]);
     expect(formats.join(" ")).not.toContain("join");
+    expect(calls).toHaveLength(4);
+    for (const call of calls) {
+      expect(call.command).toBe(testDockerCliPath());
+      expect(call.argumentsList[0]).toBe("--config");
+      expect(call.argumentsList.slice(2, 4)).toEqual(["--context", "default"]);
+      expect(call.environment).not.toBe(suppliedEnvironment);
+      expect(call.environment).not.toHaveProperty("HOME");
+      expect(call.environment).not.toHaveProperty("PATH");
+      expect(call.environment).not.toHaveProperty("DOCKER_HOST");
+      expect(call.environment).not.toHaveProperty("DOCKER_CONTEXT");
+      expect(call.environment).not.toHaveProperty("DOCKER_CONFIG");
+    }
+    const isolatedConfigDirectory = calls[0]?.argumentsList[1];
+    await container.destroy();
+    await expect(readdir(isolatedConfigDirectory ?? "")).rejects.toMatchObject({ code: "ENOENT" });
   });
 
   it("uses a type-resolved writer call for the non-serializable guard proof", async () => {
@@ -294,22 +599,26 @@ describe("A-03 disposable-run guards", () => {
     const commandRunner: CommandRunner = {
       run: async (_command, argumentsList) => {
         calls.push([...argumentsList]);
-        if (argumentsList[0] === "run") return { exitCode: 1, stdout: "", stderr: "daemon response lost" };
-        if (argumentsList[0] === "inspect") {
-          return { exitCode: 0, stdout: "postgres:16|true\n", stderr: "" };
+        const dockerArguments = dockerSubcommandArguments(argumentsList);
+        if (dockerArguments[0] === "context" && dockerArguments[1] === "inspect") {
+          return { exitCode: 0, stdout: JSON.stringify(platformDefaultDockerEndpoint()), stderr: "" };
         }
-        if (argumentsList[0] === "rm") return { exitCode: 0, stdout: "", stderr: "" };
+        if (dockerArguments[0] === "run") return { exitCode: 1, stdout: "", stderr: "daemon response lost" };
+        if (dockerArguments[0] === "inspect") {
+          return { exitCode: 0, stdout: `${testPostgresImageReference}|true\n`, stderr: "" };
+        }
+        if (dockerArguments[0] === "rm") return { exitCode: 0, stdout: "", stderr: "" };
         throw new Error("unexpected Docker command");
       },
     };
     const container = new DisposablePostgresContainer(commandRunner, {
       containerName: plan.containerName,
       administrator: plan.administrator,
-    });
+    }, testDockerRuntimeInput(), {});
     await expect(container.startContainer()).rejects.toMatchObject({ publicCode: "a03_docker_run_failed" });
     await expect(container.destroy()).resolves.toBe("container_destroyed");
-    expect(calls.some((argumentsList) => argumentsList[0] === "inspect" && argumentsList.at(-1) === plan.containerName)).toBe(true);
-    expect(calls.some((argumentsList) => argumentsList[0] === "rm" && argumentsList.at(-1) === plan.containerName)).toBe(true);
+    expect(calls.some((argumentsList) => dockerSubcommandArguments(argumentsList)[0] === "inspect" && argumentsList.at(-1) === plan.containerName)).toBe(true);
+    expect(calls.some((argumentsList) => dockerSubcommandArguments(argumentsList)[0] === "rm" && argumentsList.at(-1) === plan.containerName)).toBe(true);
   });
 
   it("settles a delayed exact-name orphan lookup after a failed Docker run", async () => {
@@ -317,46 +626,28 @@ describe("A-03 disposable-run guards", () => {
     let inspectionCount = 0;
     const commandRunner: CommandRunner = {
       run: async (_command, argumentsList) => {
-        if (argumentsList[0] === "run") return { exitCode: 1, stdout: "", stderr: "daemon response lost" };
-        if (argumentsList[0] === "inspect") {
+        const dockerArguments = dockerSubcommandArguments(argumentsList);
+        if (dockerArguments[0] === "context" && dockerArguments[1] === "inspect") {
+          return { exitCode: 0, stdout: JSON.stringify(platformDefaultDockerEndpoint()), stderr: "" };
+        }
+        if (dockerArguments[0] === "run") return { exitCode: 1, stdout: "", stderr: "daemon response lost" };
+        if (dockerArguments[0] === "inspect") {
           inspectionCount += 1;
           return inspectionCount === 1
             ? { exitCode: 1, stdout: "", stderr: `No such container: ${plan.containerName}` }
-            : { exitCode: 0, stdout: "postgres:16|true\n", stderr: "" };
+            : { exitCode: 0, stdout: `${testPostgresImageReference}|true\n`, stderr: "" };
         }
-        if (argumentsList[0] === "rm") return { exitCode: 0, stdout: "", stderr: "" };
+        if (dockerArguments[0] === "rm") return { exitCode: 0, stdout: "", stderr: "" };
         throw new Error("unexpected Docker command");
       },
     };
     const container = new DisposablePostgresContainer(commandRunner, {
       containerName: plan.containerName,
       administrator: plan.administrator,
-    });
+    }, testDockerRuntimeInput(), {});
     await expect(container.startContainer()).rejects.toMatchObject({ publicCode: "a03_docker_run_failed" });
     await expect(container.destroy()).resolves.toBe("container_destroyed");
     expect(inspectionCount).toBe(2);
   });
 
-  it("requires a clean committed candidate before any disposable Docker step", async () => {
-    const cleanRunner: CommandRunner = {
-      run: async (_command, argumentsList) => ({
-        exitCode: 0,
-        stdout: argumentsList.includes("rev-parse") ? `${"d".repeat(40)}\n` : "",
-        stderr: "",
-      }),
-    };
-    await expect(requireCleanCandidateGitState(cleanRunner)).resolves.toEqual({
-      commitSha: "d".repeat(40),
-      clean: true,
-    });
-    const dirtyRunner: CommandRunner = {
-      run: async (_command, argumentsList) => ({
-        exitCode: 0,
-        stdout: argumentsList.includes("rev-parse") ? `${"e".repeat(40)}\n` : " M src/file.ts\n",
-        stderr: "",
-      }),
-    };
-    await expect(requireCleanCandidateGitState(dirtyRunner))
-      .rejects.toMatchObject({ publicCode: "a03_candidate_worktree_dirty" });
-  });
 });

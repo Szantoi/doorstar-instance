@@ -38,11 +38,27 @@ function productionPolicyMigrationPath(): string {
 
 export async function verifyTwoScopeFixtureSources(): Promise<FixtureVerificationReport> {
   const template = await loadTwoScopeFixtureTemplate();
+  const productionMigration = await readFile(productionPolicyMigrationPath(), "utf8");
+  return verifyTwoScopeFixtureContents(template, productionMigration);
+}
+
+/**
+ * Verify candidate-derived fixture and policy bytes without reading a live
+ * checkout. The disposable proof uses this pure form after its Git-blob
+ * snapshot has been created; the async wrapper above remains only for the
+ * source verifier and unit tests.
+ */
+export function verifyTwoScopeFixtureContents(
+  template: string,
+  productionMigration: string,
+): FixtureVerificationReport {
+  if (typeof template !== "string" || typeof productionMigration !== "string") {
+    throw new Error("a03_fixture_candidate_source_invalid");
+  }
   verifyFixtureDdlSurface(template);
   const rendered = renderTwoScopeFixture(template, sampleFixtureInput);
   verifyRenderedFixtureSurface(rendered);
 
-  const productionMigration = await readFile(productionPolicyMigrationPath(), "utf8");
   for (const signature of fixtureFunctionSignatures) {
     const productionFunction = extractFunction(productionMigration, signature, false);
     const fixtureFunction = extractFunction(rendered, signature, true);

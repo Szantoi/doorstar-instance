@@ -1,20 +1,29 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { A03ProofError } from "./a03Config.js";
 import type { PolicyFunctionManifest, SourceMigrationEvidence } from "./databaseSetup.js";
+import type {
+  ImmutablePostgresImageReference,
+  RedactedDockerRuntimeInput,
+} from "./dockerRuntimeInput.js";
 import type { PostSeedProofOperation } from "./proofLedger.js";
 
 export type RedactedProofEvidence = Readonly<{
-  schemaVersion: 2;
+  schemaVersion: 4;
   status: "PASS" | "FAIL";
   startedAt: string;
   completedAt: string;
   runIdSha256: string;
   candidateCommitSha: string | null;
   candidateWorkingTreeClean: boolean | null;
-  image: "postgres:16";
+  candidatePrismaSnapshotManifestSha256: string | null;
+  gate0Provenance: Readonly<{
+    candidateCommitSha: string;
+    capsuleSha256: string;
+    acceptanceMarkerSha256: string;
+  }> | null;
+  dockerRuntime: RedactedDockerRuntimeInput | null;
+  image: ImmutablePostgresImageReference | null;
   imageId: string | null;
-  imageImmutableReference: string | null;
+  imageImmutableReference: ImmutablePostgresImageReference | null;
   fixtureSha256: string;
   migrationEvidence: SourceMigrationEvidence | null;
   beforeFixtureManifest: PolicyFunctionManifest | null;
@@ -26,13 +35,16 @@ export type RedactedProofEvidence = Readonly<{
   failureCode: string | null;
 }>;
 
-/** Evidence contains only hashes, fixed marker names and timestamps. */
-export async function writeRedactedEvidence(evidence: RedactedProofEvidence): Promise<string> {
-  const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
-  const evidenceDirectory = join(packageRoot, "evidence");
-  await mkdir(evidenceDirectory, { recursive: true });
-  const filename = `a03-${evidence.completedAt.replaceAll(/[:.]/g, "-")}-${evidence.runIdSha256.slice(0, 12)}.json`;
-  const path = join(evidenceDirectory, filename);
-  await writeFile(path, `${JSON.stringify(evidence, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
-  return path;
+/**
+ * Candidate checkout code may not choose or publish an evidence location.
+ *
+ * A package-local ignored directory is still inside mutable candidate source;
+ * even a carefully sanitized filename cannot turn a replaced directory or
+ * junction into an independently trusted evidence store. Until the external
+ * Gate 1 verifier owns an authenticated, private evidence sink, fail before
+ * any filesystem write. This helper remains typed so that the future verifier
+ * contract is explicit, but it is intentionally not an evidence publisher.
+ */
+export async function writeRedactedEvidence(_evidence: RedactedProofEvidence): Promise<string> {
+  throw new A03ProofError("a03_gate1_external_trust_anchor_required");
 }

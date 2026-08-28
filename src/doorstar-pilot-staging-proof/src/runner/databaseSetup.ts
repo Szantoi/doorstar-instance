@@ -1,22 +1,18 @@
 import { createHash } from "node:crypto";
-import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { lstatSync, realpathSync } from "node:fs";
+import { isAbsolute, join, resolve } from "node:path";
 import pg, { type Pool, type PoolClient, type QueryResultRow } from "pg";
 import type { DisposableProofPlan } from "./a03Config.js";
 import { A03ProofError } from "./a03Config.js";
 import type { CommandRunner } from "./commandRunner.js";
 import { runProgram } from "./commandRunner.js";
+import type { CandidatePrismaSnapshot } from "./candidatePrismaSnapshot.js";
+import type { PrismaToolchainSnapshot } from "./prismaToolchainSnapshot.js";
+import { requireLocalFilesystemPath } from "./trustedLocalTempRoot.js";
 
 // `pg` is CommonJS. Node's ESM loader exposes its default export reliably,
 // whereas a named runtime import of Pool is not portable to Node 24.
 const PgPool = pg.Pool;
-
-const expectedMigrationHashes: Readonly<Record<string, string>> = {
-  "20260827000000_pilot_foundation/migration.sql": "b0408b3caba4d868cae2fcbcec39fb0442897ca17f877b7b09f0dd54809ba382",
-  "20260827120000_pilot_a_phase_authorization_policy/migration.sql": "94d3c2e993802f440daf684038f8b39a97febf97da097ee9df5c63341964b348",
-};
 
 const fixtureFunctionRegprocedures = [
   'pilot.doorstar_require_pilot_write_context(pilot."BindingAuditSource")',
@@ -25,6 +21,7 @@ const fixtureFunctionRegprocedures = [
 ] as const;
 
 export type SourceMigrationEvidence = Readonly<{
+  sourceSnapshotManifestSha256: string;
   migrationHashes: Readonly<Record<string, string>>;
   prismaMigrationChecksums: Readonly<Record<string, string>>;
 }>;
@@ -121,25 +118,56 @@ export async function deployImmutablePilotMigrationsThroughPrisma(
   commandRunner: CommandRunner,
   plan: DisposableProofPlan,
   port: number,
+  snapshot: CandidatePrismaSnapshot,
+  toolchainSnapshot: PrismaToolchainSnapshot,
 ): Promise<SourceMigrationEvidence> {
-  const migrations = await readVerifiedSourceMigrations();
-  const foundation = foundationPackagePaths();
-  if (!existsSync(foundation.prismaCli) || !existsSync(foundation.schema)) {
-    throw new A03ProofError("a03_prisma_cli_or_schema_missing_run_foundation_npm_ci");
-  }
   const migratorConnection = connectionString(plan.migrator, port, plan.databaseName);
+  await snapshot.verifyIntegrity();
+  await toolchainSnapshot.verifyIntegrity();
   await runProgram(
     commandRunner,
     process.execPath,
-    [foundation.prismaCli, "migrate", "deploy", "--schema", foundation.schema],
-    { ...process.env, DATABASE_URL: migratorConnection },
+    [toolchainSnapshot.prismaLauncherPath, "migrate", "deploy", "--schema", snapshot.schemaPath],
+    createPrismaMigrationChildEnvironment(migratorConnection, toolchainSnapshot.childTempPath),
     120_000,
     "a03_prisma_migrate_deploy_failed",
+    snapshot.prismaRootPath,
   );
+  await snapshot.verifyIntegrity();
+  await toolchainSnapshot.verifyIntegrity();
   return {
-    migrationHashes: Object.fromEntries(migrations.map((migration) => [migration.name, migration.hash])),
-    prismaMigrationChecksums: Object.fromEntries(migrations.map((migration) => [migration.prismaMigrationName, migration.prismaChecksum])),
+    sourceSnapshotManifestSha256: snapshot.manifestSha256,
+    migrationHashes: snapshot.migrationHashes,
+    prismaMigrationChecksums: snapshot.prismaMigrationChecksums,
   };
+}
+
+/**
+ * Builds the complete environment for the Prisma migration child from the
+ * environment received by the proof runner. The migration process needs no
+ * inherited application, database, proxy, credential, Git, Prisma or Node
+ * configuration: its only database route is the generated disposable URL.
+ *
+ * `process.env` is intentionally never consulted here. This keeps a caller's
+ * reviewed environment boundary intact and makes the returned frozen snapshot
+ * immune to later mutation of the proof runner's source object.
+ */
+export function createPrismaMigrationChildEnvironment(
+  databaseUrl: string,
+  privateChildTempPath: string,
+  platform: NodeJS.Platform = process.platform,
+): NodeJS.ProcessEnv {
+  const childTempPath = requirePrivateChildTempPath(privateChildTempPath);
+  const childEnvironment: NodeJS.ProcessEnv = platform === "win32"
+    ? createWindowsPrismaMigrationEnvironment(childTempPath)
+    : {
+      PATH: "/usr/bin:/bin",
+      TEMP: childTempPath,
+      TMP: childTempPath,
+      TMPDIR: childTempPath,
+    };
+  childEnvironment.DATABASE_URL = databaseUrl;
+  return Object.freeze(childEnvironment) as NodeJS.ProcessEnv;
 }
 
 /**
@@ -404,40 +432,71 @@ export async function querySingle<T extends QueryResultRow>(client: PoolClient, 
   return result.rows[0];
 }
 
-function sourceMigrationDirectory(): string {
-  const sourcePackagesRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
-  return resolve(sourcePackagesRoot, "doorstar-pilot-foundation", "prisma", "migrations");
-}
-
-function foundationPackagePaths(): Readonly<{ prismaCli: string; schema: string }> {
-  const migrationDirectory = sourceMigrationDirectory();
-  const foundationRoot = resolve(migrationDirectory, "..", "..");
+/**
+ * The Prisma CLI has no reason to inherit an operator PATH: its Node entry
+ * point is absolute, and on Unix its platform probe is constrained to the
+ * OS-owned standard binary directories. Windows uses a separately validated
+ * host system root only because the process loader may require it. Neither
+ * branch accepts PATH, TEMP/TMP, Node, Git, Prisma, proxy, or DB state from
+ * the proof call environment.
+ */
+function createWindowsPrismaMigrationEnvironment(childTempPath: string): NodeJS.ProcessEnv {
+  const systemRoot = requireTrustedWindowsSystemRoot();
   return {
-    prismaCli: join(foundationRoot, "node_modules", "prisma", "build", "index.js"),
-    schema: join(foundationRoot, "prisma", "schema.prisma"),
+    PATH: `${join(systemRoot, "System32")};${systemRoot}`,
+    SystemRoot: systemRoot,
+    WINDIR: systemRoot,
+    TEMP: childTempPath,
+    TMP: childTempPath,
   };
 }
 
-async function readVerifiedSourceMigrations(): Promise<readonly {
-  name: string;
-  prismaMigrationName: string;
-  hash: string;
-  prismaChecksum: string;
-}[]> {
-  const root = sourceMigrationDirectory();
-  const result: { name: string; prismaMigrationName: string; hash: string; prismaChecksum: string }[] = [];
-  for (const [name, expectedHash] of Object.entries(expectedMigrationHashes)) {
-    const sql = await readFile(resolve(root, name), "utf8");
-    const hash = sha256(sql);
-    if (hash !== expectedHash) throw new A03ProofError("a03_immutable_migration_hash_mismatch");
-    result.push({
-      name,
-      prismaMigrationName: name.slice(0, name.indexOf("/")),
-      hash,
-      prismaChecksum: createHash("sha256").update(sql, "utf8").digest("hex"),
-    });
+function requirePrivateChildTempPath(value: unknown): string {
+  return requireLocalFilesystemPath(value, "a03_prisma_child_temp_invalid");
+}
+
+/**
+ * The Windows system root is an explicit trusted-host prerequisite, not a
+ * caller-provided proof input. Verify the local real directories before using
+ * them to construct the one allowed Windows PATH.
+ */
+function requireTrustedWindowsSystemRoot(): string {
+  const rawSystemRoot = process.env.SystemRoot ?? process.env.WINDIR;
+  if (
+    typeof rawSystemRoot !== "string"
+    || rawSystemRoot.length === 0
+    || rawSystemRoot.includes("\0")
+    || rawSystemRoot.startsWith("\\\\")
+    || !isAbsolute(rawSystemRoot)
+  ) {
+    throw new A03ProofError("a03_windows_system_root_invalid");
   }
-  return result;
+  try {
+    const resolvedSystemRoot = resolve(rawSystemRoot);
+    const realSystemRoot = realpathSync.native(resolvedSystemRoot);
+    const systemRootMetadata = lstatSync(resolvedSystemRoot);
+    const system32Path = join(realSystemRoot, "System32");
+    const system32Metadata = lstatSync(system32Path);
+    const realSystem32Path = realpathSync.native(system32Path);
+    if (
+      systemRootMetadata.isSymbolicLink()
+      || !systemRootMetadata.isDirectory()
+      || system32Metadata.isSymbolicLink()
+      || !system32Metadata.isDirectory()
+      || !sameWindowsFilesystemPath(resolvedSystemRoot, realSystemRoot)
+      || !sameWindowsFilesystemPath(system32Path, realSystem32Path)
+    ) {
+      throw new Error("windows-system-root-not-trusted");
+    }
+    return realSystemRoot;
+  } catch {
+    throw new A03ProofError("a03_windows_system_root_invalid");
+  }
+}
+
+function sameWindowsFilesystemPath(left: string, right: string): boolean {
+  return resolve(left).replaceAll("\\", "/").toLowerCase()
+    === resolve(right).replaceAll("\\", "/").toLowerCase();
 }
 
 async function grantDisposableProofPrivileges(client: PoolClient, plan: DisposableProofPlan): Promise<void> {
