@@ -65,6 +65,36 @@ export type ActiveOpaqueSession = Readonly<{
   expiresAt: Date;
 }>;
 
+/**
+ * Server-owned input to the DB direct-admin provision routine. The actor is
+ * derived by the routine from `actorSessionTokenHash`; no browser-supplied
+ * binding/actor/scope/audit value can cross this boundary.
+ */
+export type DirectRosterBindingProvision = Readonly<{
+  pilotScopeId: string;
+  actorSessionTokenHash: string;
+  issuer: string;
+  subjectDigest: string;
+  actorKey: string;
+  displayName: string;
+  role: PilotOfficeRole;
+  canManagePilotRoster: boolean;
+  correlationId: string;
+}>;
+
+/** Server-owned input to the DB direct-admin update routine. */
+export type DirectRosterBindingUpdate = Readonly<{
+  pilotScopeId: string;
+  actorSessionTokenHash: string;
+  targetBindingId: string;
+  expectedAuditVersion: number;
+  role: PilotOfficeRole;
+  active: boolean;
+  canManagePilotRoster: boolean;
+  reason: string;
+  correlationId: string;
+}>;
+
 export type OidcBindingLookup = Readonly<{
   pilotScopeId: string;
   issuer: string;

@@ -50,6 +50,11 @@ describe("createPilotBffRuntime", () => {
           throw new Error("OIDC must not be called during composition");
         },
       },
+      directory: {
+        fetch: async () => {
+          throw new Error("Keycloak management must not be called during composition");
+        },
+      },
     });
 
     expect(runtime.config.fixedScopeKey).toBe("doorstar-pilot");
@@ -115,6 +120,9 @@ function runtimeEnvironment(): NodeJS.ProcessEnv {
     DOORSTAR_PILOT_OIDC_REDIRECT_URI: testConfig.oidc.redirectUri,
     DOORSTAR_PILOT_OIDC_SCOPES: testConfig.oidc.requestedScopes.join(","),
     DOORSTAR_PILOT_OIDC_ID_TOKEN_ALGORITHMS: testConfig.oidc.idTokenAlgorithms.join(","),
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_REALM_BASE_URL: testConfig.keycloakAdmin.realmAdminBaseUrl,
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_ID: testConfig.keycloakAdmin.clientId,
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_SECRET: testConfig.keycloakAdmin.clientSecret,
     DOORSTAR_PILOT_TRANSACTION_TTL_SECONDS: String(testConfig.transactionTtlSeconds),
     DOORSTAR_PILOT_SESSION_TTL_SECONDS: String(testConfig.sessionTtlSeconds),
     DOORSTAR_PILOT_BROWSER_BINDING_TTL_SECONDS: String(testConfig.browserBindingTtlSeconds),

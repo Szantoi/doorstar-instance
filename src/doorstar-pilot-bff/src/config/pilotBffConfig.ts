@@ -54,6 +54,15 @@ export type PilotBffConfig = Readonly<{
     requestedScopes: readonly string[];
     idTokenAlgorithms: readonly ApprovedOidcIdTokenAlgorithm[];
   }>;
+  /**
+   * Separate, server-only Keycloak service account for named-user creation
+   * and invitation delivery. It is never an OIDC browser client.
+   */
+  keycloakAdmin: Readonly<{
+    realmAdminBaseUrl: string;
+    clientId: string;
+    clientSecret: string;
+  }>;
   transactionTtlSeconds: number;
   sessionTtlSeconds: number;
   browserBindingTtlSeconds: number;
@@ -121,6 +130,17 @@ export function loadPilotBffConfig(environment: NodeJS.ProcessEnv): PilotBffConf
         .split(",")
         .map((algorithm) => algorithm.trim()) as ApprovedOidcIdTokenAlgorithm[],
     },
+    keycloakAdmin: {
+      realmAdminBaseUrl: requiredEnvironment(
+        environment,
+        "DOORSTAR_PILOT_KEYCLOAK_ADMIN_REALM_BASE_URL",
+      ),
+      clientId: requiredEnvironment(environment, "DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_ID"),
+      clientSecret: requiredEnvironment(
+        environment,
+        "DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_SECRET",
+      ),
+    },
     transactionTtlSeconds: requiredInteger(
       environment,
       "DOORSTAR_PILOT_TRANSACTION_TTL_SECONDS",
@@ -170,6 +190,15 @@ export function validatePilotBffConfig(input: PilotBffConfig): PilotBffConfig {
   const clientSecret = input.oidc.clientSecret;
   if (!clientSecret || clientSecret.length > 4_096 || /[\r\n\u0000]/.test(clientSecret)) {
     throw new PilotBffConfigurationError("oidc_client_secret_invalid");
+  }
+
+  const keycloakAdmin = validateKeycloakAdminConfiguration(
+    input.keycloakAdmin,
+    issuer,
+    tokenEndpoint,
+  );
+  if (keycloakAdmin.clientId === clientId) {
+    throw new PilotBffConfigurationError("keycloak_admin_client_must_be_distinct");
   }
 
   const requestedScopes = [...input.oidc.requestedScopes];
@@ -251,11 +280,46 @@ export function validatePilotBffConfig(input: PilotBffConfig): PilotBffConfig {
       requestedScopes: Object.freeze(requestedScopes),
       idTokenAlgorithms: Object.freeze(idTokenAlgorithms),
     }),
+    keycloakAdmin,
     transactionTtlSeconds,
     sessionTtlSeconds,
     browserBindingTtlSeconds,
     postLoginRedirectPath,
   });
+}
+
+function validateKeycloakAdminConfiguration(
+  input: PilotBffConfig["keycloakAdmin"],
+  issuer: string,
+  tokenEndpoint: string,
+): PilotBffConfig["keycloakAdmin"] {
+  const issuerUrl = new URL(issuer);
+  const realmMatch = /^\/realms\/([A-Za-z0-9._-]{1,120})$/.exec(issuerUrl.pathname);
+  if (!realmMatch) {
+    throw new PilotBffConfigurationError("oidc_issuer_not_keycloak_realm");
+  }
+  const expectedTokenEndpoint = `${issuer}/protocol/openid-connect/token`;
+  if (tokenEndpoint !== expectedTokenEndpoint) {
+    throw new PilotBffConfigurationError("keycloak_admin_token_endpoint_mismatch");
+  }
+  const realmAdminBaseUrl = requireHttpsUrl(
+    input?.realmAdminBaseUrl,
+    "keycloak_admin_realm_base_url_invalid",
+  );
+  const realmAdminUrl = new URL(realmAdminBaseUrl);
+  const expectedPath = `/admin/realms/${realmMatch[1]}`;
+  if (realmAdminUrl.origin !== issuerUrl.origin || realmAdminUrl.pathname !== expectedPath) {
+    throw new PilotBffConfigurationError("keycloak_admin_realm_base_url_mismatch");
+  }
+  const clientId = requireClientId(
+    input?.clientId,
+    "keycloak_admin_client_id_invalid",
+  );
+  const clientSecret = requireClientSecret(
+    input?.clientSecret,
+    "keycloak_admin_client_secret_invalid",
+  );
+  return Object.freeze({ realmAdminBaseUrl, clientId, clientSecret });
 }
 
 function rejectBootstrapAndAmbientPostgresVariables(environment: NodeJS.ProcessEnv): void {
@@ -277,6 +341,20 @@ function requiredEnvironment(environment: NodeJS.ProcessEnv, name: string): stri
   const value = environment[name]?.trim();
   if (!value) {
     throw new PilotBffConfigurationError(`missing_${name.toLowerCase()}`);
+  }
+  return value;
+}
+
+function requireClientId(value: unknown, code: string): string {
+  if (typeof value !== "string" || !value || value.length > 200 || /[\r\n\u0000]/.test(value)) {
+    throw new PilotBffConfigurationError(code);
+  }
+  return value.trim();
+}
+
+function requireClientSecret(value: unknown, code: string): string {
+  if (typeof value !== "string" || !value || value.length > 4_096 || /[\r\n\u0000]/.test(value)) {
+    throw new PilotBffConfigurationError(code);
   }
   return value;
 }

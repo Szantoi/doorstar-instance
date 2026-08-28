@@ -9,6 +9,10 @@ import type { Clock } from "../../ports/clock.js";
 import type { PilotAuthLogger } from "../../ports/logger.js";
 import { NodePilotCrypto } from "../crypto/nodePilotCrypto.js";
 import {
+  NodeKeycloakDirectoryAdmin,
+  type NodeKeycloakDirectoryAdminOptions,
+} from "../keycloak/nodeKeycloakDirectoryAdmin.js";
+import {
   NodeOidcAuthorizationClient,
   type NodeOidcAuthorizationClientOptions,
 } from "../oidc/nodeOidcAuthorizationClient.js";
@@ -27,6 +31,7 @@ export type CreatePilotBffRuntimeOptions = Readonly<{
   clock?: Clock;
   logger?: PilotAuthLogger;
   oidc?: NodeOidcAuthorizationClientOptions;
+  directory?: NodeKeycloakDirectoryAdminOptions;
 }>;
 
 /**
@@ -65,6 +70,9 @@ export async function createPilotBffRuntime(
       bindings: repositories,
       sessions: repositories,
       scopes: repositories,
+      rosterReader: repositories,
+      rosterWriter: repositories,
+      directory: new NodeKeycloakDirectoryAdmin(config, options.directory),
       logger: options.logger ?? consolePilotAuthLogger,
     });
     return withClose(bff, repositories);

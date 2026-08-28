@@ -3,7 +3,11 @@ export {
   type PilotBff,
   type PilotBffDependencies,
 } from "./application/pilotBff.js";
-export { PilotAuthError } from "./application/errors.js";
+export { PilotAuthError, PilotRosterAdminError } from "./application/errors.js";
+export {
+  PilotRosterAdminService,
+  type PilotRosterAdminServiceDependencies,
+} from "./application/rosterAdminService.js";
 export {
   loadPilotBffConfig,
   validatePilotBffConfig,
@@ -24,6 +28,12 @@ export {
   type OidcTokenEndpointFetch,
   type OidcTokenEndpointResponse,
 } from "./infrastructure/oidc/nodeOidcAuthorizationClient.js";
+export {
+  NodeKeycloakDirectoryAdmin,
+  type KeycloakAdminApiFetch,
+  type KeycloakAdminApiResponse,
+  type NodeKeycloakDirectoryAdminOptions,
+} from "./infrastructure/keycloak/nodeKeycloakDirectoryAdmin.js";
 export {
   PostgresPilotRepositories,
 } from "./infrastructure/postgres/postgresPilotRepositories.js";
@@ -54,6 +64,7 @@ export type {
   PilotHttpRequest,
   PilotHttpResponse,
 } from "./http/contracts.js";
+export { pilotJsonBodyLimitBytes } from "./http/contracts.js";
 export {
   pilotOfficeRoles,
   type ActiveOpaqueSession,
@@ -63,15 +74,27 @@ export {
   type ConsumedAuthorizationTransaction,
   type DirectBindingProvision,
   type DirectBindingRevocation,
+  type DirectRosterBindingProvision,
+  type DirectRosterBindingUpdate,
   type NewAuthorizationTransaction,
   type NewOpaqueSession,
   type OidcBindingLookup,
   type PilotOfficeRole,
   type ResolvedPilotScope,
 } from "./domain/model.js";
+export type {
+  EffectivePilotRosterManager,
+  NewPilotRosterUserRequest,
+  PilotRosterUser,
+  UpdatePilotRosterUserRequest,
+} from "./domain/roster.js";
 export type { Clock } from "./ports/clock.js";
 export type { PilotCrypto } from "./ports/crypto.js";
 export type { PilotAuthLogger } from "./ports/logger.js";
+export type {
+  CreatedPilotDirectoryAccount,
+  PilotDirectoryAdmin,
+} from "./ports/directory.js";
 export type {
   OidcAuthorizationClient,
   OidcAuthorizationRequest,
@@ -84,5 +107,7 @@ export type {
   DirectPilotWriter,
   OpaqueSessionRepository,
   PilotBindingRepository,
+  PilotRosterReader,
+  PilotRosterWriter,
   PilotScopeRepository,
 } from "./ports/repositories.js";

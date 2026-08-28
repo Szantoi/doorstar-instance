@@ -45,6 +45,25 @@ milestones:
       - id: V-02
         status: "completed"
         description: "Az előnézet belépési képe a valódi szervezeti OIDC authorization-code + PKCE modellhez igazodott; nincs alkalmazás-jelszómező. A dashboardról csak a pontosan allowlistelt DS-26133 statikus projekt-fixture érhető el. A külön jelölt Minta iroda megnyitása vezérlő kizárólag helyi #dashboard navigációt ad a vizuális ellenőrzéshez, hitelesítés vagy munkamenet nélkül."
+  - id: M
+    name: "Small-company administrator and named-user access"
+    status: "completed"
+    tasks:
+      - id: M-01
+        status: "completed"
+        description: "A kis, egycéges admin-pilot döntése rögzítve: első admin bootstrap, server-side Keycloak invitation, DB-owned direct provision és ugyanazon originű roster API; nincs saját jelszó vagy self-service regisztráció."
+      - id: M-02
+        status: "completed"
+        description: "A BFF admin roster API és a Keycloak directory adapter source-ready megvalósítása elkészült: GET/POST /admin/users és PUT /admin/users/:bindingId, server-side opaque-session manager gate, 8 KiB JSON adapter, server-only Keycloak account/invitation flow és célzott egységtesztek."
+      - id: M-03
+        status: "completed"
+        description: "A DB-owned direct-admin provision writer, manager-guarded roster-list és append-only migration/schema source evidence elkészült; az F/A migrációk hash-pinje változatlan maradt."
+      - id: M-04
+        status: "completed"
+        description: "A helyi, egyértelműen disconnected admin UI-minta elkészült #users nézeten, reszponzív ellenőrzéssel, fókusz-visszaállítással és utolsó roster-manager mintavédelemmel; ez nem BFF vagy belépési kerülőút."
+      - id: M-05
+        status: "completed"
+        description: "A teljes source build, unit teszt, statikus boundary ellenőrzés és két független review PASS; a Keycloak malformed-Location és enable-failure fail-closed ága külön regressziós tesztet kapott."
   - id: R
     name: "Release readiness"
     status: "pending"
@@ -94,5 +113,7 @@ execution_log:
     outcome: "Az R-04 security review megállapította, hogy a candidate checkoutból futó Gate 0/Gate 1 JavaScript és egy szabadon elhelyezett approval JSON nem lehet önmaga hiteles végrehajtási vagy emberi approval authority-ja. Emiatt a proof:docker fail-closed a03_gate1_external_trust_anchor_required kóddal áll meg minden Git-, Prisma-, Docker-, PostgreSQL- és evidence-művelet előtt; célzott unit teszt igazolja a nulla child-process hívást. Nem futott Docker, PostgreSQL, IdP, VPS, ingress vagy deploy. Az immutable verifier és hiteles approval anchor külső operations/security döntésként R-05 blocker marad."
   - date: "2026-08-28"
     outcome: "Az R-04 source-remediation lezárva: a nyers Git-fa és raw-byte candidate-ellenőrzés, immutable fixture/schema/toolchain snapshot és local Docker-input hardening mellett a package `main`/`bin` exportjai megszűntek, a `proof:docker` importmentes external-trust-anchor hard stop, a csomag whitelistje nem publikál `dist` artifactot. A helyileg újraépített történeti `dist` CLI és a package script is kizárólag a03_gate1_external_trust_anchor_required hibával áll le. Bizonyíték: staging `lint`, `build`, teljes `npm test` (25 Gate0 + 16 Gate1 + 83 unit), valamint `npm pack --dry-run` PASS. Docker, PostgreSQL, IdP, VPS, ingress vagy deploy nem futott."
+  - date: "2026-08-28"
+    outcome: "Az M kisvállalati admin és név szerinti hozzáférési source-ready szelet elkészült. A BFF ugyanazon originű GET/POST /admin/users és PUT /admin/users/:bindingId szerződést ad, élő opaque-sessionből feloldott roster-manager authorityval; a DB append-only direct provision/list policyt alkalmaz. A Keycloak management kliens a fiókot először tiltottan hozza létre, csak a helyi binding sikeres írása után aktiválja; hibás Location vagy aktiválási hiba fail-closed, az utóbbi best-effort directory-tiltással és local binding-deaktiválással jár. A #users local preview expliciten minta és no-network. Bizonyíték: foundation 37, BFF 59 unit test, BFF build/runtime-import, preview verify és két független review PASS. Docker, PostgreSQL, Keycloak, VPS, ingress vagy deploy nem futott; R-01 külön operations/release GO marad."
   - date: "2026-08-28"
     outcome: "A V-02 helyi vizuális preview bővült egy külön Minta iroda megnyitása navigációs vezérlővel. A valódi szervezeti OIDC gomb továbbra is disabled és handler nélküli; az új vezérlő csak a #dashboard mintaállapotot nyitja, nem hoz létre munkamenetet és nem kapcsol hálózatra. Bizonyíték: preview `npm run verify` PASS, kézi local browser ellenőrzés 390/768/1440 px-en, 48 px vezérlőmagassággal, vízszintes túlcsordulás és console hiba nélkül. BFF-, DB-, IdP-, VPS-, ingress- vagy deploy-változás nem történt."

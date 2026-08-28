@@ -4,6 +4,7 @@ import {
   createHash,
   createHmac,
   randomBytes,
+  randomUUID,
 } from "node:crypto";
 import { Buffer } from "node:buffer";
 import type { PilotCrypto } from "../../ports/crypto.js";
@@ -36,9 +37,13 @@ export class NodePilotCrypto implements PilotCrypto {
   }
 
   public createOpaqueSecret(
-    _purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session",
+    _purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session" | "actor_key",
   ): string {
     return randomBytes(32).toString("base64url");
+  }
+
+  public createCorrelationId(): string {
+    return randomUUID();
   }
 
   public hash(value: string): string {

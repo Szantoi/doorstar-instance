@@ -22,6 +22,10 @@ The initial F migration is hash-pinned and immutable. The append-only A
 migration moves the empty lineage into the dedicated `pilot` schema and adds
 DB-owned authorization-transaction, roster, bootstrap and session routines.
 It seeds neither database login nor ACL mapping; an empty mapping fails closed.
+The later append-only admin-roster migration adds only a direct-manager
+provision writer and privacy-minimal manager roster read. Both resolve the
+manager from a live opaque-session hash; they store no e-mail or raw OIDC
+subject and keep the initial provision as immutable audit evidence.
 Do not run either migration against a shared, legacy, staging or production
 database without the separately approved operations gate.
 

@@ -3,6 +3,8 @@ import {
   PostgresPilotRepositories,
   type NewAuthorizationTransaction,
   type NewOpaqueSession,
+  type DirectRosterBindingProvision,
+  type DirectRosterBindingUpdate,
   type PilotPgClient,
   type PilotPgPool,
   type PilotPgQueryResult,
@@ -128,6 +130,36 @@ describe("PostgresPilotRepositories", () => {
     expect(pool.clients[0].released).toBe(true);
     expect(pool.clients[0].releaseError).toBeInstanceOf(Error);
   });
+
+  it("uses the guarded list, provision and update stored-routine contracts for admin roster work", async () => {
+    const pool = new ScriptedPool();
+    const repositories = new PostgresPilotRepositories(pool);
+    await repositories.requireSingleConfiguredScope({ scopeKey: "doorstar-pilot" });
+
+    const manager = await repositories.findEffectiveManagerBySessionTokenHash({
+      pilotScopeId: scopeId,
+      sessionTokenHash: "c".repeat(64),
+      observedAt: now,
+    });
+    const listed = await repositories.listDirectAdminBindings({
+      pilotScopeId: scopeId,
+      actorSessionTokenHash: "c".repeat(64),
+    });
+    const provisioned = await repositories.provisionDirectAdminBinding(directProvision());
+    const updated = await repositories.updateDirectAdminBinding(directUpdate());
+
+    expect(manager).toEqual({ bindingId, pilotScopeId: scopeId });
+    expect(listed).toEqual([expectedRosterUser()]);
+    expect(provisioned).toEqual(expectedRosterUser());
+    expect(updated).toEqual(expectedRosterUser());
+    const sql = pool.clients.flatMap((client) => client.calls.map((call) => call.text)).join("\n");
+    expect(sql).toContain("pilot.doorstar_is_effective_pilot_roster_manager(");
+    expect(sql).not.toContain("binding.\"role\" = 'ADMINISTRATOR'");
+    expect(sql).toContain("pilot.pilot_list_direct_admin_bindings_v1($1::text)");
+    expect(sql).toContain("pilot.pilot_direct_provision_binding_v1(");
+    expect(sql).toContain("pilot.pilot_direct_update_binding_v1(");
+    expect(sql).not.toMatch(/\b(?:INSERT|UPDATE|DELETE)\s+INTO?\s+pilot\."(?:PrincipalBinding|BindingAudit|OpaqueSession)"/i);
+  });
 });
 
 class ScriptedPool implements PilotPgPool {
@@ -193,6 +225,18 @@ function scriptedRows(
       expiresAt: new Date(now.getTime() + 300_000),
     }];
   }
+  if (text.includes("binding.\"canManagePilotRoster\"") && text.includes("AS \"bindingId\"")) {
+    return [{ bindingId, pilotScopeId: scopeId }];
+  }
+  if (text.includes("pilot_list_direct_admin_bindings_v1")) {
+    return [expectedRosterUser()];
+  }
+  if (text.includes("pilot_direct_provision_binding_v1")) {
+    return [{ bindingId }];
+  }
+  if (text.includes("pilot_direct_update_binding_v1")) {
+    return [{ bindingId }];
+  }
   if (text.includes('FROM pilot."PrincipalBinding"')) {
     return [{
       id: bindingId,
@@ -237,5 +281,44 @@ function newOpaqueSession(): NewOpaqueSession {
     sessionTokenHash: "c".repeat(64),
     issuedAt: now,
     expiresAt: new Date(now.getTime() + 28_800_000),
+  };
+}
+
+function directProvision(): DirectRosterBindingProvision {
+  return {
+    pilotScopeId: scopeId,
+    actorSessionTokenHash: "c".repeat(64),
+    issuer: "https://identity.example.invalid/realms/doorstar",
+    subjectDigest: digest,
+    actorKey: "e".repeat(64),
+    displayName: "Pilot User",
+    role: "SALES",
+    canManagePilotRoster: false,
+    correlationId: transactionId,
+  };
+}
+
+function directUpdate(): DirectRosterBindingUpdate {
+  return {
+    pilotScopeId: scopeId,
+    actorSessionTokenHash: "c".repeat(64),
+    targetBindingId: bindingId,
+    expectedAuditVersion: 1,
+    role: "SALES",
+    active: true,
+    canManagePilotRoster: false,
+    reason: "admin-roster-policy-update",
+    correlationId: transactionId,
+  };
+}
+
+function expectedRosterUser(): PilotPgRow {
+  return {
+    bindingId,
+    displayName: "Pilot User",
+    role: "SALES",
+    active: true,
+    canManagePilotRoster: false,
+    auditVersion: 1,
   };
 }

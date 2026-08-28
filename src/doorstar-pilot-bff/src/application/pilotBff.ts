@@ -3,15 +3,19 @@ import type { Clock } from "../ports/clock.js";
 import type { PilotCrypto } from "../ports/crypto.js";
 import type { PilotAuthLogger } from "../ports/logger.js";
 import type { OidcAuthorizationClient } from "../ports/oidc.js";
+import type { PilotDirectoryAdmin } from "../ports/directory.js";
 import type {
   AuthorizationTransactionRepository,
   OpaqueSessionRepository,
   PilotBindingRepository,
+  PilotRosterReader,
+  PilotRosterWriter,
   PilotScopeRepository,
 } from "../ports/repositories.js";
 import { dispatchPilotAuthRequest } from "../http/route.js";
 import type { PilotHttpRequest, PilotHttpResponse } from "../http/contracts.js";
 import { PilotAuthService } from "./authService.js";
+import { PilotRosterAdminService } from "./rosterAdminService.js";
 
 export type PilotBffDependencies = Readonly<{
   config: PilotBffConfig;
@@ -22,6 +26,9 @@ export type PilotBffDependencies = Readonly<{
   bindings: PilotBindingRepository;
   sessions: OpaqueSessionRepository;
   scopes: PilotScopeRepository;
+  rosterReader: PilotRosterReader;
+  rosterWriter: PilotRosterWriter;
+  directory: PilotDirectoryAdmin;
   logger: PilotAuthLogger;
 }>;
 
@@ -55,12 +62,23 @@ export async function createPilotBff(dependencies: PilotBffDependencies): Promis
     sessions: dependencies.sessions,
     logger: dependencies.logger,
   });
+  const roster = new PilotRosterAdminService({
+    config,
+    fixedScope,
+    clock: dependencies.clock,
+    crypto: dependencies.crypto,
+    auth,
+    rosterReader: dependencies.rosterReader,
+    rosterWriter: dependencies.rosterWriter,
+    directory: dependencies.directory,
+    logger: dependencies.logger,
+  });
   dependencies.logger.info("pilot_bff_scope_preflight_passed", {
     scopeKey: fixedScope.scopeKey,
   });
 
   return Object.freeze({
     config,
-    handle: (request) => dispatchPilotAuthRequest(request, config, auth),
+    handle: (request) => dispatchPilotAuthRequest(request, config, auth, roster),
   });
 }

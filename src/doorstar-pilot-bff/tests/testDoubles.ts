@@ -8,6 +8,9 @@ import {
   type Clock,
   type ConsumedAuthorizationTransaction,
   type DirectPilotWriter,
+  type DirectRosterBindingProvision,
+  type DirectRosterBindingUpdate,
+  type EffectivePilotRosterManager,
   type NewAuthorizationTransaction,
   type NewOpaqueSession,
   type OidcAuthorizationClient,
@@ -18,6 +21,10 @@ import {
   type PilotBff,
   type PilotBffConfig,
   type PilotBindingRepository,
+  type PilotDirectoryAdmin,
+  type PilotRosterReader,
+  type PilotRosterUser,
+  type PilotRosterWriter,
   type PilotCrypto,
   type PilotScopeRepository,
   type ResolvedPilotScope,
@@ -51,6 +58,11 @@ export const testConfig: PilotBffConfig = {
     requestedScopes: ["openid", "profile", "email"],
     idTokenAlgorithms: ["RS256"],
   },
+  keycloakAdmin: {
+    realmAdminBaseUrl: "https://identity.example.invalid/admin/realms/doorstar",
+    clientId: "doorstar-pilot-roster-admin",
+    clientSecret: "test-only-keycloak-admin-secret",
+  },
   transactionTtlSeconds: 300,
   sessionTtlSeconds: 28_800,
   browserBindingTtlSeconds: 86_400,
@@ -74,9 +86,13 @@ export class FakeCrypto implements PilotCrypto {
   private encryptedCounter = 0;
   private readonly ciphertextValues = new Map<string, string>();
 
-  public createOpaqueSecret(purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session"): string {
+  public createOpaqueSecret(purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session" | "actor_key"): string {
     this.counter += 1;
     return `${purpose}_${String(this.counter).padStart(4, "0")}_${"x".repeat(48)}`;
+  }
+
+  public createCorrelationId(): string {
+    return "00000000-0000-4000-8000-000000000099";
   }
 
   public hash(value: string): string {
@@ -221,6 +237,129 @@ export class FakeSessions implements OpaqueSessionRepository {
   }
 }
 
+export class FakeRosterReader implements PilotRosterReader {
+  public readonly managerCalls: Array<Readonly<{
+    pilotScopeId: string;
+    sessionTokenHash: string;
+    observedAt: Date;
+  }>> = [];
+  public readonly listCalls: Array<Readonly<{
+    pilotScopeId: string;
+    actorSessionTokenHash: string;
+  }>> = [];
+  public manager: EffectivePilotRosterManager | null = {
+    bindingId: "binding-001",
+    pilotScopeId: "scope-001",
+  };
+  public users: readonly PilotRosterUser[] = [{
+    bindingId: "00000000-0000-4000-8000-000000000010",
+    displayName: "Pilot Administrator",
+    role: "ADMINISTRATOR",
+    active: true,
+    canManagePilotRoster: true,
+    auditVersion: 1,
+  }];
+  public failManager = false;
+  public failList = false;
+
+  public async findEffectiveManagerBySessionTokenHash(input: Readonly<{
+    pilotScopeId: string;
+    sessionTokenHash: string;
+    observedAt: Date;
+  }>): Promise<EffectivePilotRosterManager | null> {
+    this.managerCalls.push(input);
+    if (this.failManager) {
+      throw new Error("fake_roster_manager_failure");
+    }
+    return this.manager;
+  }
+
+  public async listDirectAdminBindings(input: Readonly<{
+    pilotScopeId: string;
+    actorSessionTokenHash: string;
+  }>): Promise<readonly PilotRosterUser[]> {
+    this.listCalls.push(input);
+    if (this.failList) {
+      throw new Error("fake_roster_list_failure");
+    }
+    return this.users;
+  }
+}
+
+export class FakeRosterWriter implements PilotRosterWriter {
+  public readonly provisionCalls: DirectRosterBindingProvision[] = [];
+  public readonly updateCalls: DirectRosterBindingUpdate[] = [];
+  public failProvision = false;
+  public failUpdate = false;
+  public provisionedUser: PilotRosterUser = {
+    bindingId: "00000000-0000-4000-8000-000000000011",
+    displayName: "New Pilot User",
+    role: "SALES",
+    active: true,
+    canManagePilotRoster: false,
+    auditVersion: 1,
+  };
+  public updatedUser: PilotRosterUser = {
+    bindingId: "00000000-0000-4000-8000-000000000010",
+    displayName: "Pilot Administrator",
+    role: "READER",
+    active: false,
+    canManagePilotRoster: false,
+    auditVersion: 2,
+  };
+
+  public async provisionDirectAdminBinding(input: DirectRosterBindingProvision): Promise<PilotRosterUser> {
+    this.provisionCalls.push(input);
+    if (this.failProvision) {
+      throw new Error("fake_roster_provision_failure");
+    }
+    return this.provisionedUser;
+  }
+
+  public async updateDirectAdminBinding(input: DirectRosterBindingUpdate): Promise<PilotRosterUser> {
+    this.updateCalls.push(input);
+    if (this.failUpdate) {
+      throw new Error("fake_roster_update_failure");
+    }
+    return this.updatedUser;
+  }
+}
+
+export class FakeDirectory implements PilotDirectoryAdmin {
+  public readonly createCalls: Array<Readonly<{ email: string; displayName: string }>> = [];
+  public readonly enabledSubjects: string[] = [];
+  public readonly disabledSubjects: string[] = [];
+  public subject = "oidc-subject-002";
+  public failCreate = false;
+  public failEnable = false;
+  public failDisable = false;
+
+  public async createAccountAndSendInvitation(input: Readonly<{
+    email: string;
+    displayName: string;
+  }>): Promise<Readonly<{ subject: string }>> {
+    this.createCalls.push(input);
+    if (this.failCreate) {
+      throw new Error("fake_directory_create_failure");
+    }
+    return { subject: this.subject };
+  }
+
+  public async enableCreatedAccount(input: Readonly<{ subject: string }>): Promise<void> {
+    this.enabledSubjects.push(input.subject);
+    if (this.failEnable) {
+      throw new Error("fake_directory_enable_failure");
+    }
+  }
+
+  public async disableCreatedAccount(input: Readonly<{ subject: string }>): Promise<void> {
+    this.disabledSubjects.push(input.subject);
+    if (this.failDisable) {
+      throw new Error("fake_directory_disable_failure");
+    }
+  }
+}
+
 export class FakeOidc implements OidcAuthorizationClient {
   public authorizationRequests: OidcAuthorizationRequest[] = [];
   public codeExchanges: OidcCodeExchangeRequest[] = [];
@@ -284,6 +423,9 @@ export type TestHarness = Readonly<{
   bindings: FakeBindings;
   sessions: FakeSessions;
   oidc: FakeOidc;
+  rosterReader: FakeRosterReader;
+  rosterWriter: FakeRosterWriter;
+  directory: FakeDirectory;
   logger: FakeLogger;
 }>;
 
@@ -294,6 +436,9 @@ export async function createTestHarness(): Promise<TestHarness> {
   const scopes = new FakeScopeRepository();
   const bindings = new FakeBindings();
   const sessions = new FakeSessions();
+  const rosterReader = new FakeRosterReader();
+  const rosterWriter = new FakeRosterWriter();
+  const directory = new FakeDirectory();
   const oidc = new FakeOidc();
   const logger = new FakeLogger();
   const app = await createPilotBff({
@@ -305,9 +450,25 @@ export async function createTestHarness(): Promise<TestHarness> {
     bindings,
     sessions,
     scopes,
+    rosterReader,
+    rosterWriter,
+    directory,
     logger,
   });
-  return { app, clock, crypto, transactions, scopes, bindings, sessions, oidc, logger };
+  return {
+    app,
+    clock,
+    crypto,
+    transactions,
+    scopes,
+    bindings,
+    sessions,
+    oidc,
+    rosterReader,
+    rosterWriter,
+    directory,
+    logger,
+  };
 }
 
 /** Compile-only evidence: BFF test composition cannot accept either writer. */

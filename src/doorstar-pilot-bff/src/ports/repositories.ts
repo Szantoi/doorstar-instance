@@ -10,7 +10,10 @@ import type {
   NewOpaqueSession,
   OidcBindingLookup,
   ResolvedPilotScope,
+  DirectRosterBindingProvision,
+  DirectRosterBindingUpdate,
 } from "../domain/model.js";
+import type { EffectivePilotRosterManager, PilotRosterUser } from "../domain/roster.js";
 
 /** Resolves exactly one configured production scope during BFF startup. */
 export interface PilotScopeRepository {
@@ -47,6 +50,32 @@ export interface OpaqueSessionRepository {
     sessionTokenHash: string;
     revokedAt: Date;
   }>): Promise<void>;
+}
+
+/**
+ * Server-side roster reads. The implementation must obtain authority from the
+ * same live opaque session hash that backs the BFF cookie; it must not accept
+ * browser-supplied actor, scope, role or capability data.
+ */
+export interface PilotRosterReader {
+  findEffectiveManagerBySessionTokenHash(input: Readonly<{
+    pilotScopeId: string;
+    sessionTokenHash: string;
+    observedAt: Date;
+  }>): Promise<EffectivePilotRosterManager | null>;
+  listDirectAdminBindings(input: Readonly<{
+    pilotScopeId: string;
+    actorSessionTokenHash: string;
+  }>): Promise<readonly PilotRosterUser[]>;
+}
+
+/**
+ * DB-owned direct-admin writes. A stored routine derives the actor from the
+ * live opaque session and creates immutable audit evidence.
+ */
+export interface PilotRosterWriter {
+  provisionDirectAdminBinding(input: DirectRosterBindingProvision): Promise<PilotRosterUser>;
+  updateDirectAdminBinding(input: DirectRosterBindingUpdate): Promise<PilotRosterUser>;
 }
 
 /**

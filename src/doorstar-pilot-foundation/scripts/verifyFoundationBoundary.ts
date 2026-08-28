@@ -31,9 +31,17 @@ const policyMigrationPath = join(
   "20260827120000_pilot_a_phase_authorization_policy",
   "migration.sql",
 );
+const adminRosterMigrationPath = join(
+  packageRoot,
+  "prisma",
+  "migrations",
+  "20260828140000_pilot_admin_roster",
+  "migration.sql",
+);
 const ignoredDirectoryNames = new Set([".git", "dist", "node_modules"]);
 const expectedInitialMigrationSha256 = "b0408b3caba4d868cae2fcbcec39fb0442897ca17f877b7b09f0dd54809ba382";
 const expectedAPolicyMigrationSha256 = "94d3c2e993802f440daf684038f8b39a97febf97da097ee9df5c63341964b348";
+const expectedAdminRosterMigrationSha256 = "10f4280ffe54845e8a148797526759fd5e5ec7e5d2671b5fbeb52511dd48d613";
 const expectedFoundationSourceSha256: Readonly<Record<string, string>> = {
   "src/domain/pilotScope.ts": "d8e6ee69a6df32ae72a6d574337adf53ba712d1e02a1ef710a51a409d389b74a",
   "src/domain/roles.ts": "135acfb3c76879bc1dfc475896923537a6b3093e9e9e196e66f024dfb67990aa",
@@ -58,6 +66,7 @@ const allowedPackageFiles = new Set([
   "package.json",
   "prisma/migrations/20260827000000_pilot_foundation/migration.sql",
   "prisma/migrations/20260827120000_pilot_a_phase_authorization_policy/migration.sql",
+  "prisma/migrations/20260828140000_pilot_admin_roster/migration.sql",
   "prisma/migrations/migration_lock.toml",
   "prisma/schema.prisma",
   "scripts/validatePrismaSchema.mjs",
@@ -361,6 +370,9 @@ if (await sha256Normalized(migrationPath) !== expectedInitialMigrationSha256) {
 if (await sha256Normalized(policyMigrationPath) !== expectedAPolicyMigrationSha256) {
   violations.push("the approved A policy migration differs from its reviewed hash");
 }
+if (await sha256Normalized(adminRosterMigrationPath) !== expectedAdminRosterMigrationSha256) {
+  violations.push("the append-only admin roster migration differs from its reviewed hash");
+}
 for (const [path, expectedSha256] of Object.entries(expectedFoundationSourceSha256)) {
   if (await sha256Normalized(join(packageRoot, path)) !== expectedSha256) {
     violations.push(`the immutable F source capsule differs from its reviewed hash: ${path}`);
@@ -407,6 +419,9 @@ if (
   || !bindingAudit.includes("witnessTransactionId")
 ) {
   violations.push("schema is missing the approved A-phase DB-owned audit evidence fields");
+}
+if (!/enum\s+BindingAuditAction\s*\{[\s\S]*?\bDIRECT_ADMIN_PROVISION\b[\s\S]*?\n\}/m.test(schema)) {
+  violations.push("schema is missing the append-only DIRECT_ADMIN_PROVISION audit action");
 }
 for (const model of ["Project", "Order", "Task", "Station", "Plant", "Flow", "Calculation"]) {
   if (schema.includes(`model ${model}`)) {

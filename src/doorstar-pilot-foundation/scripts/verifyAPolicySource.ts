@@ -77,6 +77,11 @@ const effectiveManagerRoles = [
   "ADMINISTRATOR",
   "READER",
 ] as const;
+const adminRosterRoutineNames = [
+  "doorstar_guard_binding_audit_insert",
+  "pilot_direct_provision_binding_v1",
+  "pilot_list_direct_admin_bindings_v1",
+].sort();
 
 function sqlWithoutComments(source: string): string {
   return source
@@ -98,7 +103,7 @@ function hasPattern(source: string, pattern: RegExp): boolean {
 
 function functionDefinition(source: string, name: string): string | undefined {
   const expression = new RegExp(
-    `CREATE\\s+FUNCTION\\s+${escapeRegExp(pilotSchema)}\\.${escapeRegExp(name)}\\s*\\([\\s\\S]*?\\)\\s*RETURNS[\\s\\S]*?\\$\\$[\\s\\S]*?\\$\\$\\s*;`,
+    `CREATE\\s+(?:OR\\s+REPLACE\\s+)?FUNCTION\\s+${escapeRegExp(pilotSchema)}\\.${escapeRegExp(name)}\\s*\\([\\s\\S]*?\\)\\s*RETURNS[\\s\\S]*?\\$\\$[\\s\\S]*?\\$\\$\\s*;`,
     "i",
   );
   return source.match(expression)?.[0];
@@ -116,7 +121,7 @@ function normalizedStatement(statement: string): string {
 }
 
 function functionParameters(definition: string): string {
-  const match = definition.match(/CREATE\s+FUNCTION\s+pilot\.[A-Za-z0-9_]+\s*\(([\s\S]*?)\)\s*RETURNS/i);
+  const match = definition.match(/CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+pilot\.[A-Za-z0-9_]+\s*\(([\s\S]*?)\)\s*RETURNS/i);
   return match?.[1] ?? "";
 }
 
@@ -827,6 +832,227 @@ function verifyWriterMapDefaults(source: string, violations: APolicyViolation[])
   );
 }
 
+function hasLiveManagerSessionResolution(definition: string): boolean {
+  return hasPattern(definition, /FROM\s+pilot\."OpaqueSession"\s+AS\s+session_row/i)
+    && hasPattern(definition, /JOIN\s+pilot\."PrincipalBinding"\s+AS\s+binding/i)
+    && hasPattern(definition, /session_row\."pilotScopeId"\s*=\s*v_scope_id/i)
+    && hasPattern(definition, /session_row\."sessionTokenHash"\s*=\s*p_actor_session_token_hash/i)
+    && hasPattern(definition, /session_row\."revokedAt"\s+IS\s+NULL/i)
+    && hasPattern(definition, /session_row\."expiresAt"\s*>\s*CURRENT_TIMESTAMP/i)
+    && hasPattern(definition, /session_row\."bindingEpoch"\s*=\s*binding\."auditVersion"/i)
+    && hasPattern(definition, /FOR\s+SHARE\s+OF\s+session_row\s*,\s*binding/i)
+    && hasPattern(definition, /doorstar_is_effective_pilot_roster_manager\s*\(/i);
+}
+
+function hasDirectAdminWriteContext(definition: string): boolean {
+  return hasPattern(
+    definition,
+    /doorstar_require_pilot_write_context\s*\(\s*'DIRECT_ADMIN'\s*::\s*pilot\."BindingAuditSource"\s*\)/i,
+  );
+}
+
+/**
+ * Static assertions for the append-only named-user admin roster migration.
+ * The original F and A policy source remains independently hash-pinned by the
+ * foundation boundary verifier and is never merged into this input.
+ */
+export function verifyAdminRosterPolicySource(adminRosterMigrationSql: string): readonly APolicyViolation[] {
+  const source = normalizedSql(adminRosterMigrationSql);
+  const violations: APolicyViolation[] = [];
+  const provision = functionDefinition(source, "pilot_direct_provision_binding_v1");
+  const list = functionDefinition(source, "pilot_list_direct_admin_bindings_v1");
+  const auditGuard = functionDefinition(source, "doorstar_guard_binding_audit_insert");
+  const enumAddition = source.match(
+    /ALTER\s+TYPE\s+pilot\."BindingAuditAction"\s+ADD\s+VALUE\s+'DIRECT_ADMIN_PROVISION'\s*;/i,
+  );
+
+  addMissing(
+    violations,
+    "admin-roster-enum",
+    "The admin roster migration must append DIRECT_ADMIN_PROVISION before its routine transaction",
+    enumAddition !== null
+      && (enumAddition.index ?? Number.POSITIVE_INFINITY) < source.indexOf("BEGIN;"),
+  );
+  addForbidden(
+    violations,
+    "admin-roster-enum",
+    "The admin roster migration may append exactly one audit enum value",
+    (source.match(/ALTER\s+TYPE\s+pilot\."BindingAuditAction"\s+ADD\s+VALUE\b/gi)?.length ?? 0) !== 1
+      || hasPattern(source, /ALTER\s+TYPE\s+pilot\."PilotOfficeRole"/i)
+      || hasPattern(source, /ALTER\s+TYPE\s+pilot\."BindingAuditSource"/i),
+  );
+
+  const createdFunctions = createdFunctionNames(source);
+  addMissing(
+    violations,
+    "admin-roster-function-manifest",
+    "The admin roster migration may replace only its audit guard and create only provision/list routines",
+    JSON.stringify(createdFunctions) === JSON.stringify(adminRosterRoutineNames)
+      && (source.match(/CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\b/gi)?.length ?? 0) === adminRosterRoutineNames.length,
+  );
+  addForbidden(
+    violations,
+    "admin-roster-ddl-boundary",
+    "The admin roster migration must not create a role, table, trigger, policy, login or other schema authority",
+    hasPattern(source, /\bCREATE\s+(?:ROLE|USER|LOGIN|TABLE|SCHEMA|POLICY|(?:CONSTRAINT\s+)?TRIGGER|PROCEDURE|EXTENSION|DOMAIN|EVENT\s+TRIGGER)\b/i)
+      || hasPattern(source, /\bDROP\s+(?:SCHEMA|TABLE|TYPE|FUNCTION|POLICY|TRIGGER|INDEX|ROLE|USER|OWNED)\b/i)
+      || hasPattern(source, /\bALTER\s+DEFAULT\s+PRIVILEGES\b/i)
+      || hasPattern(source, /\bALTER\s+TABLE\b[^;]*\b(?:DISABLE|ENABLE\s+ALWAYS)\s+TRIGGER\b/i),
+  );
+  addForbidden(
+    violations,
+    "admin-roster-grant-boundary",
+    "The admin roster migration must not grant table or function authority or create a writer mapping",
+    hasPattern(source, /^\s*GRANT\s+/im)
+      || hasPattern(source, /\b(?:INSERT\s+INTO|UPDATE|DELETE\s+FROM|COPY)\s+pilot\."PilotAuditWriterRole"/i),
+  );
+
+  const expectedRevokes = [
+    'REVOKE ALL ON FUNCTION pilot.pilot_direct_provision_binding_v1( text, text, text, text, text, pilot."PilotOfficeRole", boolean, uuid ) FROM PUBLIC',
+    "REVOKE ALL ON FUNCTION pilot.pilot_list_direct_admin_bindings_v1(text) FROM PUBLIC",
+  ].sort();
+  const actualRevokes = Array.from(
+    source.matchAll(/^\s*REVOKE\s+[^;]*;/gim),
+    (match) => normalizedStatement(match[0]),
+  ).sort();
+  addMissing(
+    violations,
+    "admin-roster-public-execute",
+    "New admin roster routines must revoke PostgreSQL's default PUBLIC execute privilege",
+    JSON.stringify(actualRevokes) === JSON.stringify(expectedRevokes),
+  );
+
+  for (const [name, definition] of [
+    ["pilot_direct_provision_binding_v1", provision],
+    ["pilot_list_direct_admin_bindings_v1", list],
+  ] as const) {
+    addMissing(
+      violations,
+      "admin-roster-security-definer",
+      `${name} must remain a fixed-path, RLS-enforcing SECURITY DEFINER routine`,
+      definition !== undefined
+        && hasPattern(definition, /SECURITY\s+DEFINER/i)
+        && hasPattern(definition, /SET\s+search_path\s*=\s*pg_catalog\s*,\s*pilot\s*,\s*pg_temp/i)
+        && hasPattern(definition, /SET\s+row_security\s*=\s*on/i)
+        && hasDirectAdminWriteContext(definition),
+    );
+    addForbidden(
+      violations,
+      "admin-roster-authority-parameters",
+      `${name} must not accept caller-selected scope, actor binding, audit source or audit version`,
+      definition !== undefined
+        && (hasPattern(functionParameters(definition), /\bp_(?:pilot_)?scope(?:_id)?\b/i)
+          || hasPattern(functionParameters(definition), /\bp_(?:actor_)?binding_id\b/i)
+          || hasPattern(functionParameters(definition), /\bp_source\b/i)
+          || hasPattern(functionParameters(definition), /\bp_(?:expected_)?audit_version\b/i)),
+    );
+  }
+
+  const provisionParameters = provision === undefined ? "" : functionParameters(provision);
+  addMissing(
+    violations,
+    "admin-roster-provision-contract",
+    "Direct provision must accept only server-owned prospective binding data and a live manager session hash",
+    provision !== undefined
+      && hasPattern(provisionParameters, /\bp_actor_session_token_hash\s+text\b/i)
+      && hasPattern(provisionParameters, /\bp_issuer\s+text\b/i)
+      && hasPattern(provisionParameters, /\bp_subject_digest\s+text\b/i)
+      && hasPattern(provisionParameters, /\bp_new_actor_key\s+text\b/i)
+      && hasPattern(provisionParameters, /\bp_display_name\s+text\b/i)
+      && hasPattern(provisionParameters, /\bp_role\s+pilot\."PilotOfficeRole"/i)
+      && hasPattern(provisionParameters, /\bp_can_manage_pilot_roster\s+boolean\b/i)
+      && hasPattern(provisionParameters, /\bp_correlation_id\s+uuid\b/i)
+      && !hasPattern(provisionParameters, /\bp_reason\b/i),
+  );
+  addMissing(
+    violations,
+    "admin-roster-provision-guards",
+    "Direct provision must validate input, lock the roster first, resolve a live manager, reject self/duplicates and exclude SHOP_FLOOR",
+    provision !== undefined
+      && hasPattern(provision, /p_actor_session_token_hash\s*!~\s*'\^\[0-9a-f\]\{64\}\$'/i)
+      && hasPattern(provision, /p_subject_digest\s*!~\s*'\^\[0-9a-f\]\{64\}\$'/i)
+      && hasPattern(provision, /p_new_actor_key\s*!~\s*'\^\[0-9a-f\]\{64\}\$'/i)
+      && hasPattern(provision, /p_role\s*=\s*'SHOP_FLOOR'\s*::\s*pilot\."PilotOfficeRole"/i)
+      && hasLiveManagerSessionResolution(provision)
+      && hasPattern(provision, /v_actor\."issuer"\s*=\s*p_issuer/i)
+      && hasPattern(provision, /v_actor\."subjectDigest"\s*=\s*p_subject_digest/i)
+      && hasPattern(provision, /v_actor\."actorKey"\s*=\s*p_new_actor_key/i)
+      && hasPattern(provision, /direct roster provision cannot create a duplicate binding/i)
+      && hasPattern(provision, /INSERT\s+INTO\s+pilot\."PrincipalBinding"/i)
+      && hasPattern(provision, /"active"\s*,\s*"canManagePilotRoster"\s*,\s*"auditVersion"/i)
+      && hasPattern(provision, /p_role\s*,\s*true\s*,\s*p_can_manage_pilot_roster\s*,\s*1/i)
+      && hasPattern(provision, /pg_catalog\.pg_advisory_xact_lock\s*\(/i)
+      && (provision.indexOf("pg_catalog.pg_advisory_xact_lock") < provision.indexOf("FOR SHARE OF session_row, binding")),
+  );
+  addMissing(
+    violations,
+    "admin-roster-provision-audit",
+    "Direct provision must append the exact DB-owned initial audit evidence",
+    provision !== undefined
+      && hasPattern(provision, /INSERT\s+INTO\s+pilot\."BindingAudit"/i)
+      && hasPattern(provision, /'DIRECT_ADMIN_PROVISION'\s*::\s*pilot\."BindingAuditAction"/i)
+      && hasPattern(provision, /'DIRECT_ADMIN'\s*::\s*pilot\."BindingAuditSource"/i)
+      && hasPattern(provision, /'direct-admin-provision'\s*,\s*NULL\s*,\s*NULL\s*,\s*1\s*,\s*p_correlation_id/i)
+      && hasPattern(provision, /pg_catalog\.txid_current\s*\(\s*\)/i),
+  );
+
+  const listParameters = list === undefined ? "" : functionParameters(list);
+  addMissing(
+    violations,
+    "admin-roster-list-contract",
+    "The roster list must accept only a live manager session hash and return privacy-minimal fields",
+    list !== undefined
+      && hasPattern(listParameters, /^\s*p_actor_session_token_hash\s+text\s*$/i)
+      && hasPattern(
+        list,
+        /RETURNS\s+TABLE\s*\(\s*"bindingId"\s+uuid\s*,\s*"displayName"\s+text\s*,\s*"role"\s+pilot\."PilotOfficeRole"\s*,\s*"active"\s+boolean\s*,\s*"canManagePilotRoster"\s+boolean\s*,\s*"auditVersion"\s+integer\s*\)/i,
+      )
+      && hasLiveManagerSessionResolution(list),
+  );
+  const rosterProjection = list?.slice(list.indexOf("RETURN QUERY")) ?? "";
+  addForbidden(
+    violations,
+    "admin-roster-list-privacy",
+    "The roster list must not return issuer, subject digest, actor key, sessions or audit data",
+    hasPattern(rosterProjection, /"issuer"|"subjectDigest"|"actorKey"|"OpaqueSession"|"BindingAudit"/i),
+  );
+
+  addMissing(
+    violations,
+    "admin-roster-audit-guard",
+    "The replaced audit guard must allow only the reviewed direct initial transition and preserve append-only evidence",
+    auditGuard !== undefined
+      && hasPattern(auditGuard, /SECURITY\s+INVOKER/i)
+      && !hasPattern(auditGuard, /SECURITY\s+DEFINER/i)
+      && hasPattern(auditGuard, /'DIRECT_ADMIN_PROVISION'\s*::\s*pilot\."BindingAuditAction"/i)
+      && hasPattern(auditGuard, /NEW\."previousAuditVersion"\s+IS\s+NOT\s+NULL/i)
+      && hasPattern(auditGuard, /NEW\."nextAuditVersion"\s*<>\s*1/i)
+      && hasPattern(auditGuard, /NEW\."reason"\s+IS\s+DISTINCT\s+FROM\s+'direct-admin-provision'/i)
+      && hasPattern(auditGuard, /NEW\."source"\s*=\s*'DIRECT_ADMIN'\s*::\s*pilot\."BindingAuditSource"/i)
+      && hasPattern(auditGuard, /NEW\."action"\s+NOT\s+IN/i)
+      && hasPattern(auditGuard, /pg_catalog\.txid_current\s*\(\s*\)/i),
+  );
+  addForbidden(
+    violations,
+    "admin-roster-append-only",
+    "The admin roster migration must not rewrite or remove append-only BindingAudit evidence",
+    hasPattern(source, /\bUPDATE\s+pilot\."BindingAudit"/i)
+      || hasPattern(source, /\bDELETE\s+FROM\s+pilot\."BindingAudit"/i)
+      || hasPattern(source, /\bDROP\s+TRIGGER\s+(?:IF\s+EXISTS\s+)?"BindingAudit_append_only"/i)
+      || hasPattern(source, /ALTER\s+TABLE\s+pilot\."BindingAudit"\s+DISABLE\s+TRIGGER/i),
+  );
+
+  return violations;
+}
+
+export function assertAdminRosterPolicySource(adminRosterMigrationSql: string): void {
+  const violations = verifyAdminRosterPolicySource(adminRosterMigrationSql);
+  if (violations.length > 0) {
+    const detail = violations.map((violation) => `[${violation.code}] ${violation.message}`).join("\n");
+    throw new Error(`doorstar_pilot_admin_roster_policy_source_invalid\n${detail}`);
+  }
+}
+
 /**
  * Runs deterministic checks against migration SQL already present in memory.
  * No I/O and no database connection occur in this function.
@@ -871,12 +1097,26 @@ const policyMigrationPath = join(
   "20260827120000_pilot_a_phase_authorization_policy",
   "migration.sql",
 );
+const adminRosterMigrationPath = join(
+  packageRoot,
+  "prisma",
+  "migrations",
+  "20260828140000_pilot_admin_roster",
+  "migration.sql",
+);
 
 async function main(): Promise<void> {
-  const source = await readFile(policyMigrationPath, "utf8");
-  assertAPolicySource(source);
+  const [policySource, adminRosterSource] = await Promise.all([
+    readFile(policyMigrationPath, "utf8"),
+    readFile(adminRosterMigrationPath, "utf8"),
+  ]);
+  assertAPolicySource(policySource);
+  assertAdminRosterPolicySource(adminRosterSource);
   process.stdout.write(JSON.stringify({
-    migration: "20260827120000_pilot_a_phase_authorization_policy",
+    migrations: [
+      "20260827120000_pilot_a_phase_authorization_policy",
+      "20260828140000_pilot_admin_roster",
+    ],
     databaseConnections: false,
     policySource: "valid",
   }, null, 2) + "\n");

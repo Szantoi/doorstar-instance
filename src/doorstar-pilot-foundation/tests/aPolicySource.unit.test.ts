@@ -1,18 +1,32 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { verifyAPolicySource } from "../scripts/verifyAPolicySource.js";
+import {
+  verifyAPolicySource,
+  verifyAdminRosterPolicySource,
+} from "../scripts/verifyAPolicySource.js";
 
 const policyMigrationPath = fileURLToPath(
   new URL("../prisma/migrations/20260827120000_pilot_a_phase_authorization_policy/migration.sql", import.meta.url),
+);
+const adminRosterMigrationPath = fileURLToPath(
+  new URL("../prisma/migrations/20260828140000_pilot_admin_roster/migration.sql", import.meta.url),
 );
 
 async function policySource(): Promise<string> {
   return readFile(policyMigrationPath, "utf8");
 }
 
+async function adminRosterSource(): Promise<string> {
+  return readFile(adminRosterMigrationPath, "utf8");
+}
+
 function violationCodes(source: string): string[] {
   return [...new Set(verifyAPolicySource(source).map((violation) => violation.code))];
+}
+
+function adminRosterViolationCodes(source: string): string[] {
+  return [...new Set(verifyAdminRosterPolicySource(source).map((violation) => violation.code))];
 }
 
 describe("A/P1 authorization policy source verifier", () => {
@@ -223,5 +237,76 @@ describe("A/P1 authorization policy source verifier", () => {
       '"nextAuditVersion" = "previousAuditVersion"',
     );
     expect(violationCodes(source)).toContain("append-only-audit");
+  });
+});
+
+describe("append-only direct-admin roster policy source verifier", () => {
+  it("accepts the reviewed admin roster migration without connecting to a database", async () => {
+    expect(verifyAdminRosterPolicySource(await adminRosterSource())).toEqual([]);
+  });
+
+  it("requires the committed audit action and the two narrow public-execute revocations", async () => {
+    const withoutEnum = (await adminRosterSource()).replace(
+      "ALTER TYPE pilot.\"BindingAuditAction\" ADD VALUE 'DIRECT_ADMIN_PROVISION';",
+      "",
+    );
+    expect(adminRosterViolationCodes(withoutEnum)).toContain("admin-roster-enum");
+
+    const withoutRevoke = (await adminRosterSource()).replace(
+      "REVOKE ALL ON FUNCTION pilot.pilot_list_direct_admin_bindings_v1(text) FROM PUBLIC;",
+      "",
+    );
+    expect(adminRosterViolationCodes(withoutRevoke)).toContain("admin-roster-public-execute");
+  });
+
+  it("rejects provision authority selected by a caller or a missing effective-manager session check", async () => {
+    const withCallerAuthority = (await adminRosterSource()).replace(
+      "CREATE FUNCTION pilot.pilot_direct_provision_binding_v1(\n  p_actor_session_token_hash text,",
+      "CREATE FUNCTION pilot.pilot_direct_provision_binding_v1(\n  p_scope_id uuid,\n  p_actor_binding_id uuid,\n  p_source pilot.\"BindingAuditSource\",\n  p_actor_session_token_hash text,",
+    );
+    expect(adminRosterViolationCodes(withCallerAuthority)).toContain("admin-roster-authority-parameters");
+
+    const withoutLiveSession = (await adminRosterSource()).replace(
+      'AND session_row."bindingEpoch" = binding."auditVersion"',
+      "",
+    );
+    expect(adminRosterViolationCodes(withoutLiveSession)).toContain("admin-roster-provision-guards");
+  });
+
+  it("rejects a provision writer that admits SHOP_FLOOR, omits duplicate protection or makes the audit reason caller-owned", async () => {
+    const withoutOfficeGuard = (await adminRosterSource()).replace(
+      "     OR p_role = 'SHOP_FLOOR'::pilot.\"PilotOfficeRole\"\n",
+      "",
+    );
+    expect(adminRosterViolationCodes(withoutOfficeGuard)).toContain("admin-roster-provision-guards");
+
+    const withoutDuplicateProtection = (await adminRosterSource()).replace(
+      "direct roster provision cannot create a duplicate binding",
+      "duplicate protection removed",
+    );
+    expect(adminRosterViolationCodes(withoutDuplicateProtection)).toContain("admin-roster-provision-guards");
+
+    const callerOwnedReason = (await adminRosterSource()).replace(
+      "  p_correlation_id uuid\n)",
+      "  p_reason text,\n  p_correlation_id uuid\n)",
+    );
+    expect(adminRosterViolationCodes(callerOwnedReason)).toContain("admin-roster-provision-contract");
+  });
+
+  it("requires a privacy-minimal manager-only roster list and preserves the append-only audit guard", async () => {
+    const listLeaksIdentity = (await adminRosterSource()).replace(
+      '    binding."displayName"::text,',
+      '    binding."issuer",',
+    );
+    expect(adminRosterViolationCodes(listLeaksIdentity)).toContain("admin-roster-list-privacy");
+
+    const auditRewrite = `${await adminRosterSource()}\nUPDATE pilot."BindingAudit" SET "reason" = 'rewritten';`;
+    expect(adminRosterViolationCodes(auditRewrite)).toContain("admin-roster-append-only");
+
+    const weakAuditGuard = (await adminRosterSource()).replace(
+      "NEW.\"reason\" IS DISTINCT FROM 'direct-admin-provision'",
+      "false",
+    );
+    expect(adminRosterViolationCodes(weakAuditGuard)).toContain("admin-roster-audit-guard");
   });
 });

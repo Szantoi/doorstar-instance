@@ -27,6 +27,40 @@ describe("pilot BFF configuration", () => {
     );
   });
 
+  it("requires a separate Keycloak realm-management client bound to the configured OIDC realm", async () => {
+    const example = await readFile(new URL("../.env.example", import.meta.url), "utf8");
+
+    expect(example).toContain("DOORSTAR_PILOT_KEYCLOAK_ADMIN_REALM_BASE_URL=");
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      keycloakAdmin: {
+        ...testConfig.keycloakAdmin,
+        realmAdminBaseUrl: "https://identity.example.invalid/admin/realms/another-realm",
+      },
+    })).toThrow("keycloak_admin_realm_base_url_mismatch");
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      keycloakAdmin: {
+        ...testConfig.keycloakAdmin,
+        clientSecret: "",
+      },
+    })).toThrow("keycloak_admin_client_secret_invalid");
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      keycloakAdmin: {
+        ...testConfig.keycloakAdmin,
+        clientId: testConfig.oidc.clientId,
+      },
+    })).toThrow("keycloak_admin_client_must_be_distinct");
+    expect(() => validatePilotBffConfig({
+      ...testConfig,
+      oidc: {
+        ...testConfig.oidc,
+        tokenEndpoint: "https://credential-sink.example.invalid/token",
+      },
+    })).toThrow("keycloak_admin_token_endpoint_mismatch");
+  });
+
   it("requires HTTPS and the openid scope", () => {
     expect(() => validatePilotBffConfig({
       ...testConfig,
@@ -127,6 +161,9 @@ function validEnvironment(): NodeJS.ProcessEnv {
     DOORSTAR_PILOT_OIDC_REDIRECT_URI: testConfig.oidc.redirectUri,
     DOORSTAR_PILOT_OIDC_SCOPES: testConfig.oidc.requestedScopes.join(","),
     DOORSTAR_PILOT_OIDC_ID_TOKEN_ALGORITHMS: testConfig.oidc.idTokenAlgorithms.join(","),
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_REALM_BASE_URL: testConfig.keycloakAdmin.realmAdminBaseUrl,
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_ID: testConfig.keycloakAdmin.clientId,
+    DOORSTAR_PILOT_KEYCLOAK_ADMIN_CLIENT_SECRET: testConfig.keycloakAdmin.clientSecret,
     DOORSTAR_PILOT_TRANSACTION_TTL_SECONDS: String(testConfig.transactionTtlSeconds),
     DOORSTAR_PILOT_SESSION_TTL_SECONDS: String(testConfig.sessionTtlSeconds),
     DOORSTAR_PILOT_BROWSER_BINDING_TTL_SECONDS: String(testConfig.browserBindingTtlSeconds),

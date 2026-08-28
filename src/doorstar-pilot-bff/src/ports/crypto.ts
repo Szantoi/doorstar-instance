@@ -5,8 +5,10 @@
  */
 export interface PilotCrypto {
   createOpaqueSecret(
-    purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session",
+    purpose: "transaction" | "state" | "nonce" | "pkce_verifier" | "browser_binding" | "session" | "actor_key",
   ): string;
+  /** A CSPRNG UUID used only as DB audit correlation, never as authority. */
+  createCorrelationId(): string;
   hash(value: string): string;
   encrypt(value: string): Uint8Array;
   decrypt(ciphertext: Uint8Array): string;

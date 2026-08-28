@@ -31,6 +31,16 @@ Ez kizárólag egy explicit helyi fixture: statikus képernyőt szolgál ki, nem
 olvas projektet, fájlt vagy más adatforrást. Más projektazonosító vagy mélyebb
 útvonal szándékosan 404 választ kap.
 
+A helyi felhasználókezelési minta a következő hash-útvonalon nyitható meg:
+
+~~~text
+http://127.0.0.1:4317/#users
+~~~
+
+Itt az **Új felhasználó**, szerepkör-módosítás, letiltás és visszakapcsolás
+csak a böngésző memóriájában mutatja meg a tervezett adminisztrátori folyamatot.
+Az előnézet újratöltése minden ilyen mintaállapotot eldob.
+
 Másik helyi port állítható be a dedikált konfigurációs változóval:
 
 ~~~powershell
@@ -62,6 +72,9 @@ bizonyítja, hogy az előnézetben nincs hitelesítési útvonal.
   navigál. Nem hitelesít, nem tárol munkamenetet és nem oldja fel a valódi
   szervezeti belépés tiltását.
 - A dashboard minden adata forráskódban deklarált, egyértelműen mintaadat.
+- A **Felhasználók** nézet is minta. Az űrlap nem tartalmaz jelszómezőt, nem
+  küld meghívót, nem hoz létre OIDC-fiókot, és nem ír adatbázisba. A benne
+  látható e-mail-címek `example.invalid` helykitöltők.
 - A dashboardról csak a szó szerint allowlistelt **DS-26133** helyi
   projekt-előnézet nyitható meg.
 - A szerver csak öt explicit statikus útvonalat szolgál ki: **/**,

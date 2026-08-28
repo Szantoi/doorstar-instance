@@ -3,15 +3,23 @@ import {
   type ActiveOpaqueSession,
   type ActivePilotBinding,
   type ConsumedAuthorizationTransaction,
+  type DirectRosterBindingProvision,
+  type DirectRosterBindingUpdate,
   type NewAuthorizationTransaction,
   type NewOpaqueSession,
   type PilotOfficeRole,
   type ResolvedPilotScope,
 } from "../../domain/model.js";
 import type {
+  EffectivePilotRosterManager,
+  PilotRosterUser,
+} from "../../domain/roster.js";
+import type {
   AuthorizationTransactionRepository,
   OpaqueSessionRepository,
   PilotBindingRepository,
+  PilotRosterReader,
+  PilotRosterWriter,
   PilotScopeRepository,
 } from "../../ports/repositories.js";
 import type { PilotPgClient, PilotPgPool, PilotPgRow } from "./pilotPostgresContracts.js";
@@ -30,7 +38,9 @@ export class PostgresPilotRepositories implements
   PilotScopeRepository,
   AuthorizationTransactionRepository,
   PilotBindingRepository,
-  OpaqueSessionRepository {
+  OpaqueSessionRepository,
+  PilotRosterReader,
+  PilotRosterWriter {
   private readonly transactionRunner: PilotPostgresTransactionRunner;
   private resolvedRuntimeScopeId: string | undefined;
 
@@ -237,6 +247,123 @@ export class PostgresPilotRepositories implements
     });
   }
 
+  public async findEffectiveManagerBySessionTokenHash(input: Readonly<{
+    pilotScopeId: string;
+    sessionTokenHash: string;
+    observedAt: Date;
+  }>): Promise<EffectivePilotRosterManager | null> {
+    const pilotScopeId = this.requireFixedScopeId(input.pilotScopeId);
+    const sessionTokenHash = requireSha256Hex(
+      input.sessionTokenHash,
+      "pilot_postgres_session_token_hash_invalid",
+    );
+    const observedAt = requireDate(input.observedAt, "pilot_postgres_observed_at_invalid");
+    return this.transactionRunner.scoped(pilotScopeId, async (client) => {
+      const result = await client.query(
+        `SELECT binding."id" AS "bindingId", binding."pilotScopeId"
+           FROM pilot."OpaqueSession" AS session_row
+           JOIN pilot."PrincipalBinding" AS binding
+             ON binding."id" = session_row."bindingId"
+            AND binding."pilotScopeId" = session_row."pilotScopeId"
+          WHERE session_row."pilotScopeId" = $1
+            AND session_row."sessionTokenHash" = $2
+            AND session_row."revokedAt" IS NULL
+            AND session_row."expiresAt" > $3
+            AND session_row."bindingEpoch" = binding."auditVersion"
+            AND pilot.doorstar_is_effective_pilot_roster_manager(
+              binding."active",
+              binding."role",
+              binding."canManagePilotRoster"
+            )
+          LIMIT 2`,
+        [pilotScopeId, sessionTokenHash, observedAt],
+      );
+      if (result.rows.length === 0) {
+        return null;
+      }
+      if (result.rows.length !== 1) {
+        throw new Error("pilot_postgres_roster_manager_lookup_ambiguous");
+      }
+      return readEffectiveRosterManager(result.rows[0], pilotScopeId);
+    });
+  }
+
+  public async listDirectAdminBindings(input: Readonly<{
+    pilotScopeId: string;
+    actorSessionTokenHash: string;
+  }>): Promise<readonly PilotRosterUser[]> {
+    const pilotScopeId = this.requireFixedScopeId(input.pilotScopeId);
+    const actorSessionTokenHash = requireSha256Hex(
+      input.actorSessionTokenHash,
+      "pilot_postgres_session_token_hash_invalid",
+    );
+    return this.transactionRunner.scoped(pilotScopeId, async (client) => (
+      this.listDirectAdminBindingsInTransaction(client, actorSessionTokenHash)
+    ));
+  }
+
+  public async provisionDirectAdminBinding(
+    input: DirectRosterBindingProvision,
+  ): Promise<PilotRosterUser> {
+    const provision = validateDirectRosterBindingProvision(input);
+    const pilotScopeId = this.requireFixedScopeId(provision.pilotScopeId);
+    return this.transactionRunner.scoped(pilotScopeId, async (client) => {
+      const result = await client.query(
+        `SELECT pilot.pilot_direct_provision_binding_v1(
+           $1::text, $2::text, $3::text, $4::text, $5::text,
+           $6::pilot."PilotOfficeRole", $7::boolean, $8::uuid
+         ) AS "bindingId"`,
+        [
+          provision.actorSessionTokenHash,
+          provision.issuer,
+          provision.subjectDigest,
+          provision.actorKey,
+          provision.displayName,
+          provision.role,
+          provision.canManagePilotRoster,
+          provision.correlationId,
+        ],
+      );
+      const bindingId = readSingleBindingId(result.rows, "pilot_postgres_roster_provision_invalid_result");
+      return this.requireListedBinding(
+        await this.listDirectAdminBindingsInTransaction(client, provision.actorSessionTokenHash),
+        bindingId,
+        "pilot_postgres_roster_provision_result_not_listed",
+      );
+    });
+  }
+
+  public async updateDirectAdminBinding(
+    input: DirectRosterBindingUpdate,
+  ): Promise<PilotRosterUser> {
+    const update = validateDirectRosterBindingUpdate(input);
+    const pilotScopeId = this.requireFixedScopeId(update.pilotScopeId);
+    return this.transactionRunner.scoped(pilotScopeId, async (client) => {
+      const result = await client.query(
+        `SELECT pilot.pilot_direct_update_binding_v1(
+           $1::text, $2::uuid, $3::integer, $4::pilot."PilotOfficeRole",
+           $5::boolean, $6::boolean, $7::text, $8::uuid
+         ) AS "bindingId"`,
+        [
+          update.actorSessionTokenHash,
+          update.targetBindingId,
+          update.expectedAuditVersion,
+          update.role,
+          update.active,
+          update.canManagePilotRoster,
+          update.reason,
+          update.correlationId,
+        ],
+      );
+      const bindingId = readSingleBindingId(result.rows, "pilot_postgres_roster_update_invalid_result");
+      return this.requireListedBinding(
+        await this.listDirectAdminBindingsInTransaction(client, update.actorSessionTokenHash),
+        bindingId,
+        "pilot_postgres_roster_update_result_not_listed",
+      );
+    });
+  }
+
   private requireResolvedRuntimeScopeId(): string {
     if (this.resolvedRuntimeScopeId === undefined) {
       throw new Error("pilot_postgres_runtime_scope_not_resolved");
@@ -254,6 +381,31 @@ export class PostgresPilotRepositories implements
     if (scopeId !== this.requireResolvedRuntimeScopeId()) {
       throw new Error("pilot_postgres_scope_mismatch");
     }
+  }
+
+  private async listDirectAdminBindingsInTransaction(
+    client: PilotPgClient,
+    actorSessionTokenHash: string,
+  ): Promise<readonly PilotRosterUser[]> {
+    const result = await client.query(
+      `SELECT "bindingId", "displayName", "role", "active", "canManagePilotRoster", "auditVersion"
+         FROM pilot.pilot_list_direct_admin_bindings_v1($1::text)
+        ORDER BY "displayName", "bindingId"`,
+      [actorSessionTokenHash],
+    );
+    return result.rows.map((row) => readPilotRosterUser(row));
+  }
+
+  private requireListedBinding(
+    bindings: readonly PilotRosterUser[],
+    bindingId: string,
+    errorCode: string,
+  ): PilotRosterUser {
+    const match = bindings.filter((binding) => binding.bindingId === bindingId);
+    if (match.length !== 1) {
+      throw new Error(errorCode);
+    }
+    return match[0];
   }
 }
 
@@ -344,6 +496,52 @@ function readActiveOpaqueSession(row: PilotPgRow, expectedScopeId: string): Acti
   };
 }
 
+function readEffectiveRosterManager(
+  row: PilotPgRow,
+  expectedScopeId: string,
+): EffectivePilotRosterManager {
+  const pilotScopeId = requireUuid(row.pilotScopeId, "pilot_postgres_scope_id_invalid");
+  if (pilotScopeId !== expectedScopeId) {
+    throw new Error("pilot_postgres_roster_manager_scope_invalid");
+  }
+  return {
+    bindingId: requireUuid(row.bindingId, "pilot_postgres_binding_id_invalid"),
+    pilotScopeId,
+  };
+}
+
+function readPilotRosterUser(row: PilotPgRow): PilotRosterUser {
+  const active = requireBoolean(row.active, "pilot_postgres_roster_active_invalid");
+  const canManagePilotRoster = requireBoolean(
+    row.canManagePilotRoster,
+    "pilot_postgres_roster_manage_capability_invalid",
+  );
+  const auditVersion = row.auditVersion;
+  if (
+    typeof auditVersion !== "number"
+    || !Number.isSafeInteger(auditVersion)
+    || auditVersion < 1
+    || auditVersion > 2_147_483_647
+  ) {
+    throw new Error("pilot_postgres_roster_audit_version_invalid");
+  }
+  return {
+    bindingId: requireUuid(row.bindingId, "pilot_postgres_binding_id_invalid"),
+    displayName: requireText(row.displayName, 160, "pilot_postgres_display_name_invalid"),
+    role: requireOfficeRole(row.role),
+    active,
+    canManagePilotRoster,
+    auditVersion,
+  };
+}
+
+function readSingleBindingId(rows: readonly PilotPgRow[], errorCode: string): string {
+  if (rows.length !== 1) {
+    throw new Error(errorCode);
+  }
+  return requireUuid(rows[0].bindingId, errorCode);
+}
+
 function requireScopeKey(value: unknown): string {
   if (typeof value !== "string" || !/^[a-z][a-z0-9-]{2,79}$/.test(value)) {
     throw new Error("pilot_postgres_scope_key_invalid");
@@ -389,6 +587,64 @@ function requireOfficeRole(value: unknown): PilotOfficeRole {
     throw new Error("pilot_postgres_role_invalid");
   }
   return value as PilotOfficeRole;
+}
+
+function requireBoolean(value: unknown, errorCode: string): boolean {
+  if (typeof value !== "boolean") {
+    throw new Error(errorCode);
+  }
+  return value;
+}
+
+function validateDirectRosterBindingProvision(
+  input: DirectRosterBindingProvision,
+): DirectRosterBindingProvision {
+  return {
+    pilotScopeId: requireUuid(input.pilotScopeId, "pilot_postgres_scope_id_invalid"),
+    actorSessionTokenHash: requireSha256Hex(
+      input.actorSessionTokenHash,
+      "pilot_postgres_session_token_hash_invalid",
+    ),
+    issuer: requireText(input.issuer, 2_048, "pilot_postgres_issuer_invalid"),
+    subjectDigest: requireSha256Hex(
+      input.subjectDigest,
+      "pilot_postgres_subject_digest_invalid",
+    ),
+    actorKey: requireSha256Hex(input.actorKey, "pilot_postgres_actor_key_invalid"),
+    displayName: requireText(input.displayName, 160, "pilot_postgres_display_name_invalid"),
+    role: requireOfficeRole(input.role),
+    canManagePilotRoster: requireBoolean(
+      input.canManagePilotRoster,
+      "pilot_postgres_roster_manage_capability_invalid",
+    ),
+    correlationId: requireUuid(input.correlationId, "pilot_postgres_correlation_id_invalid"),
+  };
+}
+
+function validateDirectRosterBindingUpdate(
+  input: DirectRosterBindingUpdate,
+): DirectRosterBindingUpdate {
+  const expectedAuditVersion = input.expectedAuditVersion;
+  if (!Number.isSafeInteger(expectedAuditVersion) || expectedAuditVersion < 1 || expectedAuditVersion > 2_147_483_647) {
+    throw new Error("pilot_postgres_roster_audit_version_invalid");
+  }
+  return {
+    pilotScopeId: requireUuid(input.pilotScopeId, "pilot_postgres_scope_id_invalid"),
+    actorSessionTokenHash: requireSha256Hex(
+      input.actorSessionTokenHash,
+      "pilot_postgres_session_token_hash_invalid",
+    ),
+    targetBindingId: requireUuid(input.targetBindingId, "pilot_postgres_binding_id_invalid"),
+    expectedAuditVersion,
+    role: requireOfficeRole(input.role),
+    active: requireBoolean(input.active, "pilot_postgres_roster_active_invalid"),
+    canManagePilotRoster: requireBoolean(
+      input.canManagePilotRoster,
+      "pilot_postgres_roster_manage_capability_invalid",
+    ),
+    reason: requireText(input.reason, 500, "pilot_postgres_roster_reason_invalid"),
+    correlationId: requireUuid(input.correlationId, "pilot_postgres_correlation_id_invalid"),
+  };
 }
 
 function isInactiveBindingRejection(error: unknown): boolean {

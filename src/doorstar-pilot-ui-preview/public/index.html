@@ -39,6 +39,9 @@
           <button type="button" class="view-switcher__button" data-view-target="dashboard">
             Iroda áttekintés
           </button>
+          <button type="button" class="view-switcher__button" data-view-target="users">
+            Felhasználók
+          </button>
         </nav>
 
         <span class="local-chip">
@@ -139,6 +142,9 @@
             </div>
             <div class="heading-actions">
               <span class="date-chip">2026. aug. 27., szerda</span>
+              <button type="button" class="quiet-button" data-view-target="users">
+                Felhasználók · minta
+              </button>
               <button type="button" class="quiet-button" data-view-target="login">
                 Bejelentkezési nézet
               </button>
@@ -196,6 +202,50 @@
               </section>
             </aside>
           </div>
+        </section>
+
+        <section class="users-layout" data-view-panel="users" aria-labelledby="users-title" hidden>
+          <div class="users-heading">
+            <div>
+              <p class="eyebrow">Hozzáféréskezelés · helyi minta</p>
+              <h1 id="users-title">Felhasználók és jogosultságok</h1>
+              <p class="dashboard-subtitle">
+                Az első Doorstar-admin felület tervezett működésének előnézete.
+              </p>
+            </div>
+            <div class="heading-actions">
+              <span class="sample-badge">Nincs küldés</span>
+              <button type="button" class="quiet-button" data-view-target="dashboard">
+                Vissza az áttekintéshez
+              </button>
+            </div>
+          </div>
+
+          <aside class="users-preview-notice" aria-label="Felhasználókezelési előnézeti korlátozás">
+            <span aria-hidden="true">i</span>
+            <p>
+              Helyi minta: a lista és az űrlap csak ebben a böngészőablakban frissül.
+              Nem jön létre fiók, meghívó, munkamenet vagy hálózati kérés.
+            </p>
+          </aside>
+
+          <section class="panel users-roster-panel" aria-labelledby="users-roster-title">
+            <div class="panel-heading users-roster-panel__heading">
+              <div>
+                <p class="panel-kicker">Név szerinti pilot-hozzáférések</p>
+                <h2 id="users-roster-title">Hozzáférési névsor</h2>
+              </div>
+              <button id="preview-add-user" class="primary-action-button" type="button">
+                Új felhasználó
+              </button>
+            </div>
+            <p class="users-roster-panel__intro">
+              Élesben a Doorstar admin itt szervezeti fiókhoz kötött meghívást,
+              Office-szerepet és letiltást kezelne. A jelszó nem része a felületnek.
+            </p>
+            <div id="preview-user-feedback" class="users-feedback" aria-live="polite" hidden></div>
+            <div id="preview-user-list" class="users-list" aria-label="Minta felhasználói névsor"></div>
+          </section>
         </section>
 
         <section class="project-layout" data-view-panel="project" aria-labelledby="project-title" hidden>
@@ -318,6 +368,68 @@
           </div>
         </section>
       </main>
+
+      <dialog id="preview-user-dialog" class="user-dialog" aria-labelledby="preview-user-dialog-title">
+        <form id="preview-user-form" class="user-dialog__form" novalidate>
+          <div class="user-dialog__heading">
+            <div>
+              <p class="panel-kicker">Helyi minta</p>
+              <h2 id="preview-user-dialog-title">Új felhasználó</h2>
+            </div>
+            <button type="button" class="dialog-close-button" data-dialog-close="preview-user-dialog" aria-label="Párbeszédablak bezárása">×</button>
+          </div>
+          <p id="preview-user-form-help" class="user-dialog__description">
+            Ez csak a felület működését mutatja. Nem megy ki meghívó, és nem jön létre fiók.
+          </p>
+          <input id="preview-user-id" name="userId" type="hidden" />
+          <label class="form-field" for="preview-user-name">
+            <span>Név</span>
+            <input id="preview-user-name" name="displayName" type="text" maxlength="80" autocomplete="off" required />
+          </label>
+          <label class="form-field" for="preview-user-email">
+            <span>Céges e-mail</span>
+            <input id="preview-user-email" name="email" type="email" maxlength="120" autocomplete="off" required />
+          </label>
+          <label class="form-field" for="preview-user-role">
+            <span>Office-szerepkör</span>
+            <select id="preview-user-role" name="role">
+              <option value="READER">Olvasó</option>
+              <option value="SALES">Értékesítés</option>
+              <option value="TECHNICAL_PREPARATION">Műszaki előkészítés</option>
+              <option value="ADMINISTRATOR">Office adminisztrátor</option>
+            </select>
+          </label>
+          <label class="form-check" for="preview-user-manager">
+            <input id="preview-user-manager" name="canManage" type="checkbox" />
+            <span>
+              <strong>Felhasználókat kezelhet</strong>
+              <small>Külön adminjog; nem következik automatikusan az Office-szerepből.</small>
+            </span>
+          </label>
+          <div id="preview-user-form-error" class="form-error" role="alert" hidden></div>
+          <div class="dialog-actions">
+            <button type="button" class="secondary-action-button" data-dialog-close="preview-user-dialog">Mégse</button>
+            <button class="primary-action-button" type="submit">Minta mentése</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog id="preview-user-disable-dialog" class="user-dialog user-dialog--compact" aria-labelledby="preview-user-disable-title">
+        <form method="dialog" class="user-dialog__form">
+          <div class="user-dialog__heading">
+            <div>
+              <p class="panel-kicker">Helyi minta</p>
+              <h2 id="preview-user-disable-title">Hozzáférés letiltása</h2>
+            </div>
+            <button type="button" class="dialog-close-button" data-dialog-close="preview-user-disable-dialog" aria-label="Párbeszédablak bezárása">×</button>
+          </div>
+          <p id="preview-user-disable-copy" class="user-dialog__description"></p>
+          <div class="dialog-actions">
+            <button type="button" class="secondary-action-button" data-dialog-close="preview-user-disable-dialog">Mégse</button>
+            <button id="preview-confirm-disable" class="danger-action-button" type="button">Letiltás · minta</button>
+          </div>
+        </form>
+      </dialog>
 
       <footer class="site-footer">
         <span>Doorstar Office előnézet</span>

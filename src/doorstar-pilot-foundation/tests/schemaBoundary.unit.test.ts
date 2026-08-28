@@ -34,6 +34,8 @@ describe("isolated pilot foundation schema", () => {
     expect(verifier).toContain("expectedBuiltFiles");
     expect(verifier).toContain("expectedInitialMigrationSha256");
     expect(verifier).toContain("expectedAPolicyMigrationSha256");
+    expect(verifier).toContain("expectedAdminRosterMigrationSha256");
+    expect(verifier).toContain("20260828140000_pilot_admin_roster");
     expect(verifier).toContain("listPackageFiles");
     expect(verifier).toContain("forbiddenExecutablePatterns");
     expect(verifier).toContain("verifyStaticImports");
@@ -41,5 +43,12 @@ describe("isolated pilot foundation schema", () => {
     expect(verifier).toContain("scripts/validatePrismaSchema.mjs");
     expect(verifier).toContain("packageManifest.bin !== undefined");
     expect(verifier).toContain("packageManifest.exports !== undefined");
+  });
+
+  it("adds the direct-admin initial audit action without adding a new data model", async () => {
+    const schema = await readFile(schemaPath, "utf8");
+    expect(schema).toContain("DIRECT_ADMIN_PROVISION");
+    expect(schema).not.toContain("email");
+    expect(schema).not.toContain("password");
   });
 });
