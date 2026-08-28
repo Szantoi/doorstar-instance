@@ -121,7 +121,11 @@ export class PostgresPilotRepositories implements
     );
     return this.transactionRunner.scoped(this.requireResolvedRuntimeScopeId(), async (client) => {
       const result = await client.query(
-        `SELECT "id", "nonceHash", "codeVerifierCiphertext", "createdAt", "expiresAt"
+        `SELECT "id",
+           "nonceHash",
+           "codeVerifierCiphertext",
+           ("createdAt" AT TIME ZONE pg_catalog.current_setting('TimeZone')) AS "createdAt",
+           ("expiresAt" AT TIME ZONE pg_catalog.current_setting('TimeZone')) AS "expiresAt"
            FROM pilot.pilot_consume_authorization_transaction_v1($1, $2)`,
         [stateHash, browserBindingHash],
       );
@@ -173,7 +177,12 @@ export class PostgresPilotRepositories implements
     try {
       await this.transactionRunner.scoped(session.pilotScopeId, async (client) => {
         const result = await client.query(
-          `SELECT pilot.pilot_issue_opaque_session_v1($1, $2, NULL, $3) AS "id"`,
+          `SELECT pilot.pilot_issue_opaque_session_v1(
+             $1,
+             $2,
+             NULL,
+             ($3::timestamptz AT TIME ZONE pg_catalog.current_setting('TimeZone'))
+           ) AS "id"`,
           [session.bindingId, session.sessionTokenHash, session.expiresAt],
         );
         if (result.rows.length !== 1 || !isUuid(result.rows[0].id)) {
@@ -209,7 +218,8 @@ export class PostgresPilotRepositories implements
            binding."actorKey",
            binding."displayName",
            binding."role",
-           session_row."expiresAt"
+           (session_row."expiresAt" AT TIME ZONE pg_catalog.current_setting('TimeZone'))
+             AS "expiresAt"
          FROM pilot."OpaqueSession" AS session_row
          JOIN pilot."PrincipalBinding" AS binding
            ON binding."id" = session_row."bindingId"
@@ -217,7 +227,7 @@ export class PostgresPilotRepositories implements
         WHERE session_row."pilotScopeId" = $1
           AND session_row."sessionTokenHash" = $2
           AND session_row."revokedAt" IS NULL
-          AND session_row."expiresAt" > $3
+          AND session_row."expiresAt" > ($3::timestamptz AT TIME ZONE pg_catalog.current_setting('TimeZone'))
           AND session_row."bindingEpoch" = binding."auditVersion"
           AND binding."active" = true
           AND binding."pilotScopeId" = $1
@@ -274,7 +284,7 @@ export class PostgresPilotRepositories implements
           WHERE session_row."pilotScopeId" = $1
             AND session_row."sessionTokenHash" = $2
             AND session_row."revokedAt" IS NULL
-            AND session_row."expiresAt" > $3
+            AND session_row."expiresAt" > ($3::timestamptz AT TIME ZONE pg_catalog.current_setting('TimeZone'))
             AND session_row."bindingEpoch" = binding."auditVersion"
             AND pilot.doorstar_is_effective_pilot_roster_manager(
               binding."active",
